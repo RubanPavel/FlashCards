@@ -1,0 +1,10 @@
+{
+	"devDependencies": {
+		"@it-incubator/eslint-config": "^1.0.1",
+		"@it-incubator/prettier-config": "^0.1.2",
+		"@it-incubator/stylelint-config": "^0.1.5",
+		"@types/node": "^20.9.0",
+		"sass": "^1.69.5",
+		"stylelint": "^15.11.0"
+	}
+}
