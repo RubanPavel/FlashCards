@@ -1,10 +1,26 @@
 {
-	"devDependencies": {
-		"@it-incubator/eslint-config": "^1.0.1",
-		"@it-incubator/prettier-config": "^0.1.2",
-		"@it-incubator/stylelint-config": "^0.1.5",
-		"@types/node": "^20.9.0",
-		"sass": "^1.69.5",
-		"stylelint": "^15.11.0"
-	}
+  "devDependencies": {
+    "@it-incubator/eslint-config": "^1.0.1",
+    "@it-incubator/prettier-config": "^0.1.2",
+    "@it-incubator/stylelint-config": "^0.1.5",
+    "@storybook/addon-essentials": "7.5.3",
+    "@storybook/addon-interactions": "7.5.3",
+    "@storybook/addon-links": "7.5.3",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/blocks": "7.5.3",
+    "@storybook/react": "7.5.3",
+    "@storybook/react-vite": "7.5.3",
+    "@storybook/testing-library": "0.2.2",
+    "@types/node": "^20.9.0",
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "sass": "^1.69.5",
+    "storybook": "7.5.3",
+    "stylelint": "^15.11.0"
+  },
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  }
 }
