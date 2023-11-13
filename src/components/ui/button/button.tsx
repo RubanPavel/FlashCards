@@ -1,9 +1,10 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import {ComponentPropsWithoutRef, ElementType, ReactNode} from 'react'
 
 import s from './button.module.scss'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
+  children: ReactNode
   className?: string
   fullWidth?: boolean
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
