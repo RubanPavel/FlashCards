@@ -1,12 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import {Typography} from "@/components/ui/typography/typography";
+import { Typography } from '@/components/ui/typography/typography'
 
 const meta = {
   argTypes: {
     variant: {
       control: { type: 'radio' },
-      options: ['large', 'H1', 'H2', 'H3', 'body-1', 'body-2', 'caption', 'link-1', 'link-2', 'overline', 'subtitle-1', 'subtitle-2'],
+      options: [
+        'large',
+        'H1',
+        'H2',
+        'H3',
+        'body-1',
+        'body-2',
+        'caption',
+        'link-1',
+        'link-2',
+        'overline',
+        'subtitle-1',
+        'subtitle-2',
+      ],
     },
   },
   component: Typography,
