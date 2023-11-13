@@ -14,7 +14,7 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const CheckboxStory: Story = {
+export const CheckboxStoryCheckedChange: Story = {
   args: {},
   render: args => {
     const [checkedValue, setCheckedValue] = useState(false)
@@ -31,7 +31,7 @@ export const CheckboxStory: Story = {
   },
 }
 
-export const CheckboxStoryDisabled: Story = {
+export const CheckboxStoryDisabledAndChecked: Story = {
   args: {
     checked: true,
     disabled: true,
