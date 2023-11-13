@@ -1,0 +1,67 @@
+.base-font {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+
+  &.large {
+    font-size: var(--font-size-xxl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-l);
+  }
+
+  &.H1 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-l);
+  }
+
+  &.H2 {
+    font-size: var(--font-size-l);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &.H3 {
+    font-weight: var(--font-weight-bold);
+  }
+
+  &.body-1 {
+    // базовые стили достаточны
+  }
+
+  &.subtitle-1 {
+    font-weight: var(--font-weight-bold);
+  }
+
+  &.body-2 {
+    font-size: var(--font-size-s);
+  }
+
+  &.subtitle-2 {
+    font-size: var(--font-size-s);
+    font-weight: var(--font-weight-bold);
+  }
+
+  &.caption {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-s);
+  }
+
+  &.overline {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-s);
+  }
+
+  &.link-1 {
+    font-size: var(--font-size-s);
+    color: var(--color-info-500);
+    text-decoration-line: underline;
+  }
+
+  &.link-2 {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-s);
+    color: var(--color-info-500);
+    text-decoration-line: underline;
+  }
+}
