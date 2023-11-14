@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button, ButtonProps } from './'
+
 import { IconLogOut } from '@/components/ui/button/assets/IconLogOut'
+
+import { Button, ButtonProps } from './'
 
 const meta = {
   argTypes: {
@@ -33,9 +35,9 @@ export const PrimaryWithIcon: Story = ({
     <Button {...args} disabled={disabled}>
       <>
         <IconLogOut
-          width={16}
-          height={16}
           color={disabled ? 'var(--color-light-900)' : 'var(--color-light-100)'}
+          height={16}
+          width={16}
         />
         Primary Button
       </>
@@ -64,9 +66,9 @@ export const SecondaryWithIcon: Story = ({
     <Button {...args} disabled={disabled}>
       <>
         <IconLogOut
-          width={16}
-          height={16}
           color={disabled ? 'var(--color-light-900)' : 'var(--color-light-100)'}
+          height={16}
+          width={16}
         />
         Secondary Button
       </>
@@ -99,8 +101,8 @@ export const Link: Story = {
 export const FullWidth: Story = {
   args: {
     children: 'Full Width Button',
-    fullWidth: true,
     disabled: false,
+    fullWidth: true,
     variant: 'primary',
   },
 }
