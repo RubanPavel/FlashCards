@@ -39,20 +39,12 @@ export const CheckboxStoryDisabledAndChecked: Story = {
 }
 
 export const CheckboxStoryWithLabel: Story = {
-  args: {
-    label: 'Check-box',
-  },
   render: args => {
-    const [checkedValue, setCheckedValue] = useState(false)
-
     return (
-      <>
         <CheckboxRadix
           {...args}
-          checked={checkedValue}
-          onChange={() => setCheckedValue(!checkedValue)}
+          label={'click me'}
         />
-      </>
     )
   },
 }
