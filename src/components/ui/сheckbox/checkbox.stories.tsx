@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { useState } from 'react'
-
 import { CheckboxRadix } from './'
 
 const meta = {
@@ -14,45 +12,18 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const CheckboxStoryCheckedChange: Story = {
-  args: {},
-  render: args => {
-    const [checkedValue, setCheckedValue] = useState(false)
-
-    return (
-      <>
-        <CheckboxRadix
-          {...args}
-          checked={checkedValue}
-          onChange={() => setCheckedValue(!checkedValue)}
-        />
-      </>
-    )
+export const CheckboxStoryDefault: Story = {
+  args: {
+    checked: true,
+    disabled: false,
+    title: 'Hello, I am Default',
   },
 }
 
-export const CheckboxStoryDisabledAndChecked: Story = {
+export const CheckboxStoryDisabled: Story = {
   args: {
     checked: true,
     disabled: true,
-  },
-}
-
-export const CheckboxStoryWithLabel: Story = {
-  args: {
-    label: 'Check-box',
-  },
-  render: args => {
-    const [checkedValue, setCheckedValue] = useState(false)
-
-    return (
-      <>
-        <CheckboxRadix
-          {...args}
-          checked={checkedValue}
-          onChange={() => setCheckedValue(!checkedValue)}
-        />
-      </>
-    )
+    title: 'Hello, I am Disabled',
   },
 }
