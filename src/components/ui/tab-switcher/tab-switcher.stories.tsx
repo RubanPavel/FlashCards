@@ -46,7 +46,7 @@ const tabContents = tabs.map(tab => (
   </TabContent>
 ))
 
-export const TabsWithDisabled: Story = {
+export const TabSwitcherWithDisabled: Story = {
   args: {
     children: tabContents,
     defaultValue: 'tab1',
