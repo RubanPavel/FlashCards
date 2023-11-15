@@ -18,60 +18,39 @@ type Story = StoryObj<typeof meta>
 
 const tabs = [
   {
-    title: 'Switcher',
+    label: 'Tab1',
+    title: 'TabSwitcher1',
     value: 'tab1',
   },
   {
-    disabled: false,
-    title: 'Switcher2',
+    disabled: true,
+    label: 'Tab2',
+    title: 'TabSwitcher2',
     value: 'tab2',
   },
   {
-    title: 'Switcher3',
+    label: 'Tab3',
+    title: 'TabSwitcher3',
     value: 'tab3',
+  },
+  {
+    label: 'Tab4',
+    title: 'TabSwitcher4',
+    value: 'tab4',
   },
 ]
 
-export const Tabs: Story = {
-  args: {
-    children: (
-      <>
-        <TabContent value={tabs[0].value}>Content for Switcher.</TabContent>
-        <TabContent value={tabs[1].value}>Content for Switcher2.</TabContent>
-        <TabContent value={tabs[2].value}>Content for Switcher3.</TabContent>
-      </>
-    ),
-    defaultValue: 'tab1',
-    label: 'Title',
-    tabs: tabs,
-  },
-}
+const tabContents = tabs.map(tab => (
+  <TabContent key={tab.value} value={tab.value}>
+    Special information for {tab.label}
+  </TabContent>
+))
 
 export const TabsWithDisabled: Story = {
   args: {
-    children: (
-      <>
-        <TabContent value={tabs[0].value}>Content for Switcher.</TabContent>
-        <TabContent value={tabs[1].value}>Content for Switcher2.</TabContent>
-        <TabContent value={tabs[2].value}>Content for Switcher3.</TabContent>
-      </>
-    ),
+    children: tabContents,
     defaultValue: 'tab1',
     label: 'Title',
-    tabs: [
-      {
-        title: 'SwitcherA',
-        value: 'tab1',
-      },
-      {
-        disabled: true,
-        title: 'SwitcherB',
-        value: 'tab2',
-      },
-      {
-        title: 'SwitcherC',
-        value: 'tab3',
-      },
-    ],
+    tabs: tabs,
   },
 }
