@@ -49,7 +49,7 @@ export const CheckboxStoryWithLabel: Story = {
       <>
         <CheckboxRadix
           {...args}
-          checked ={checkedValue}
+          checked={checkedValue}
           onChange={() => setCheckedValue(!checkedValue)}
         />
       </>
