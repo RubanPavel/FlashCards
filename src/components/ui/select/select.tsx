@@ -1,51 +1,78 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ReactNode } from 'react'
 
-import * as Select from '@radix-ui/react-select'
+import { ChevronDownIcon } from '@radix-ui/react-icons'
+import * as Label from '@radix-ui/react-label'
+import * as SelectRadixUI from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 
-export type TabType = {
-  /** A unique value that associates the trigger with a content. */
+import { Typography } from '../typography'
+
+export type Options = {
   disabled?: boolean
-  title: string
+  label?: string
   value: string
 }
-type TabSwitcherProps = {
+type SelectProps = {
   className?: string
+  defaultValue?: string
+  disabled?: boolean
   label?: string
-  tabs: TabType[]
-} & ComponentPropsWithoutRef<typeof Select.Root>
-export const SelectRadix = ({ className, label, tabs, ...rest }: TabSwitcherProps) => {
+  onValueChange?: (value: string) => void
+  placeholder?: ReactNode
+  selectOptions: Options[]
+  value?: string
+}
+export const Select = ({
+  className,
+  defaultValue,
+  disabled,
+  label,
+  onValueChange,
+  placeholder,
+  selectOptions,
+  value,
+}: SelectProps) => {
   return (
-    <Select.Root>
-      <Select.Trigger>
-        <Select.Value />
-        <Select.Icon />
-      </Select.Trigger>
+    <Label.Root>
+      <Typography
+        as={'label'}
+        className={`${s.label} ${disabled && s.labelDisabled}`}
+        variant={'body-2'}
+      >
+        {label}
+      </Typography>
+      <SelectRadixUI.Root
+        defaultValue={defaultValue}
+        disabled={disabled}
+        onValueChange={onValueChange}
+        required
+        value={value}
+      >
+        <SelectRadixUI.Trigger className={`${s.trigger} ${className}`} tabIndex={1}>
+          <SelectRadixUI.Value placeholder={placeholder} />
+          <ChevronDownIcon className={s.icon} />
+        </SelectRadixUI.Trigger>
 
-      <Select.Portal>
-        <Select.Content>
-          <Select.ScrollUpButton />
-          <Select.Viewport>
-            <Select.Item value={}>
-              <Select.ItemText />
-              <Select.ItemIndicator />
-            </Select.Item>
-
-            <Select.Group>
-              <Select.Label />
-              <Select.Item value={}>
-                <Select.ItemText />
-                <Select.ItemIndicator />
-              </Select.Item>
-            </Select.Group>
-
-            <Select.Separator />
-          </Select.Viewport>
-          <Select.ScrollDownButton />
-          <Select.Arrow />
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
+        <SelectRadixUI.Portal>
+          <SelectRadixUI.Content className={s.content} position={'popper'} sideOffset={-1}>
+            <SelectRadixUI.Viewport>
+              {selectOptions.map(option => {
+                return (
+                  <SelectRadixUI.Item
+                    className={s.item}
+                    disabled={option.disabled}
+                    key={option.value}
+                    value={option.value}
+                  >
+                    <SelectRadixUI.ItemText>{option.value}</SelectRadixUI.ItemText>
+                  </SelectRadixUI.Item>
+                )
+              })}
+            </SelectRadixUI.Viewport>
+          </SelectRadixUI.Content>
+        </SelectRadixUI.Portal>
+      </SelectRadixUI.Root>
+    </Label.Root>
   )
 }

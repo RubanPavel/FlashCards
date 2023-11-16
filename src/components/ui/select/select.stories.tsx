@@ -1,49 +1,49 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SelectRadix } from './'
+import { Select } from './'
 
 const meta = {
   argTypes: {
-    tabs: {
-      options: [],
-    },
+    onValueChange: { action: 'select changes' },
+    selectOptions: [],
   },
-  component: SelectRadix,
+  component: Select,
   tags: ['autodocs'],
   title: 'Components/Select',
-} satisfies Meta<typeof SelectRadix>
+} satisfies Meta<typeof Select>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-const tabs = [
-  {
-    label: 'Tab1',
-    title: 'TabSwitcher1',
-    value: 'tab1',
-  },
-  {
-    disabled: true,
-    label: 'Tab2',
-    title: 'TabSwitcher2',
-    value: 'tab2',
-  },
-  {
-    label: 'Tab3',
-    title: 'TabSwitcher3',
-    value: 'tab3',
-  },
-  {
-    label: 'Tab4',
-    title: 'TabSwitcher4',
-    value: 'tab4',
-  },
-]
+const options = [{ value: 'Select-box 1' }, { value: 'Select-box 2' }, { value: 'Select-box 3' }]
 
-export const TabSwitcherWithDisabled: Story = {
+export const SelectStory: Story = {
   args: {
-    defaultValue: 'tab1',
-    label: 'Title',
-    tabs: tabs,
+    defaultValue: 'Select-box 1',
+    label: 'Select-box',
+    placeholder: 'Select-box 1',
+    selectOptions: options,
+  },
+}
+
+export const SelectStoryWithDisabledItem: Story = {
+  args: {
+    defaultValue: 'Select-box 1',
+    placeholder: 'Select-box 1',
+    selectOptions: [
+      { value: 'Select-box 1' },
+      { disabled: true, value: 'Select-box 2' },
+      { value: 'Select-box 3' },
+    ],
+  },
+}
+
+export const SelectStoryDisabled: Story = {
+  args: {
+    defaultValue: 'Select-box 1',
+    disabled: true,
+    label: 'Select-box',
+    placeholder: 'Select-box 1',
+    selectOptions: options,
   },
 }
