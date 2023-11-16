@@ -1,0 +1,52 @@
+.items {
+  list-style-type: none;
+  padding: 0;
+  li {
+    display: inline-block;
+    margin-right: 15px;
+    width: 24px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  li.leftItems {
+    opacity: .5;
+    cursor: default;
+  }
+
+  li.leftItem {
+    opacity: .5;
+    cursor: default;
+  }
+
+  li.rightItem {
+    opacity: .5;
+    cursor: default;
+  }
+
+  li.rightItems {
+    opacity: .5;
+    cursor: default;
+  }
+
+  span {
+    font-size: 17px;
+  }
+}
+
+.item {
+  background-color: var(--color-light-100);
+  color: var(--color-dark-900);
+}
+
+.hover:not(.item):hover {
+  background-color: #4c4c4c;
+}
+
+
+
+

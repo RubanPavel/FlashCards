@@ -1,12 +1,9 @@
-import { useState } from 'react'
-
-import { Pagination } from '@/components/ui/pagination/pagination'
-import { Meta, StoryObj } from '@storybook/react'
+import {Pagination} from '@/components/ui/pagination/pagination'
+import {Meta, StoryObj} from '@storybook/react'
 
 const meta = {
   args: {
-    currentPage: 1,
-    totalCount: 100,
+    totalCount: 50,
   },
   component: Pagination,
   tags: ['autodocs'],
@@ -19,12 +16,10 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: args => {
-    const [page, setPage] = useState(args.currentPage)
 
     return (
       <Pagination
-        currentPage={page}
-        onChange={pageNumber => setPage(pageNumber)}
+        getPage={() => {}}
         totalCount={args.totalCount}
       />
     )

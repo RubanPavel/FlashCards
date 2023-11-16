@@ -1,3 +1,8 @@
+import {Pagination} from "@/components/ui/pagination";
+
 export function App() {
-  return <div>Hello</div>
+  return <div>
+
+    <Pagination  getPage={() => []} totalCount={50} />
+    </div>
 }
