@@ -1,0 +1,161 @@
+@mixin wrapper-base() {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 2.25rem;
+  padding: 0.375rem 0.75rem;
+
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+
+  &[aria-disabled="true"] {
+    @include switch-off-cursor;
+  }
+}
+
+@mixin text() {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-regular);
+  font-style: normal;
+  line-height: var(--line-height-m);
+}
+
+@mixin flex() {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin switch-off-cursor {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+button {
+  @include flex;
+
+  align-items: center;
+
+  margin: 0;
+  padding: 0;
+
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:disabled {
+    @include switch-off-cursor;
+  }
+}
+
+label {
+  @include text;
+
+  font-size: var(--line-size-s);
+  color: var(--color-dark-100);
+
+  &[aria-disabled="true"] {
+    color: var(--color-dark-300);
+  }
+}
+
+.container {
+  @include flex;
+
+  flex-direction: column;
+  align-items: start;
+  width: 284px;
+
+    &::placeholder {
+      color: var(--color-danger-300);
+    }
+
+  .wrapper {
+    @include wrapper-base;
+
+    &:not([aria-disabled="true"]):hover {
+      background: var(--color-dark-700);
+      border: 1px solid var(--color-dark-100);
+    }
+  }
+
+  .focus {
+    @include wrapper-base;
+
+    border: 2px solid var(--color-info-700);
+  }
+
+  .active {
+    @include wrapper-base;
+
+    border: 1px solid var(--color-light-100);
+  }
+
+  .errorWrapper {
+    @include wrapper-base;
+
+    border: 1px solid var(--color-danger-300);
+
+    &:not([aria-disabled="true"]):hover {
+      background: var(--color-dark-700);
+      border: 1px solid var(--color-dark-100);
+    }
+  }
+
+  .input {
+
+    @include text;
+
+    width: 100%;
+
+    font-size: var(--line-size-m);
+    color: var(--color-light-100);
+
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      color: var(--color-dark-100);
+    }
+
+    &:disabled {
+      @include switch-off-cursor;
+
+      color: var(--color-dark-300);
+
+      &::placeholder {
+        color: var(--color-dark-300);
+      }
+    }
+  }
+
+  .errorInput {
+    color: var(--color-danger-300);
+
+    &::placeholder {
+      color: var(--color-danger-300);
+    }
+
+    &:hover{
+      &::placeholder {
+        color: var(--color-dark-100);
+      }
+    }
+  }
+
+  .error {
+    @include text;
+
+    min-height: 1rem;
+    font-size: var(--font-size-xs);
+    color: var(--color-danger-300);
+  }
+}
+
