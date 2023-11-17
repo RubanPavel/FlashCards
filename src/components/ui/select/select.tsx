@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import { ChevronDownIcon } from '@radix-ui/react-icons'
 import * as Label from '@radix-ui/react-label'
@@ -15,40 +15,21 @@ export type Options = {
 }
 type SelectProps = {
   className?: string
-  defaultValue?: string
-  disabled?: boolean
   label?: string
-  onValueChange?: (value: string) => void
   placeholder?: ReactNode
   selectOptions: Options[]
-  value?: string
-}
-export const Select = ({
-  className,
-  defaultValue,
-  disabled,
-  label,
-  onValueChange,
-  placeholder,
-  selectOptions,
-  value,
-}: SelectProps) => {
+} & ComponentPropsWithoutRef<typeof SelectRadixUI.Root>
+export const Select = ({ className, label, placeholder, selectOptions, ...rest }: SelectProps) => {
   return (
     <Label.Root>
       <Typography
         as={'label'}
-        className={`${s.label} ${disabled && s.labelDisabled}`}
+        className={`${s.label} ${rest.disabled && s.labelDisabled}`}
         variant={'body-2'}
       >
         {label}
       </Typography>
-      <SelectRadixUI.Root
-        defaultValue={defaultValue}
-        disabled={disabled}
-        onValueChange={onValueChange}
-        required
-        value={value}
-      >
+      <SelectRadixUI.Root disabled={rest.disabled} onValueChange={rest.onValueChange} {...rest}>
         <SelectRadixUI.Trigger className={`${s.trigger} ${className}`} tabIndex={1}>
           <SelectRadixUI.Value placeholder={placeholder} />
           <ChevronDownIcon className={s.icon} />
