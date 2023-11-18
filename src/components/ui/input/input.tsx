@@ -1,11 +1,12 @@
 import { ChangeEvent, ComponentPropsWithoutRef, FC, useState } from 'react'
+
+import { IconClose } from '@/components/ui/input/assets/IconClose'
+import { IconEyeOffOutline } from '@/components/ui/input/assets/IconEyeOffOutline'
+import { IconEyeOutline } from '@/components/ui/input/assets/IconEyeOutline'
+import { IconSearch } from '@/components/ui/input/assets/IconSearch'
 import { Typography } from '@/components/ui/typography/typography'
 
 import s from './input.module.scss'
-import { IconClose } from '@/components/ui/input/assets/IconClose'
-import { IconEyeOutline } from '@/components/ui/input/assets/IconEyeOutline'
-import { IconEyeOffOutline } from '@/components/ui/input/assets/IconEyeOffOutline'
-import { IconSearch } from '@/components/ui/input/assets/IconSearch'
 
 export type InputProps = {
   errorMessage?: string
@@ -16,7 +17,7 @@ export type InputProps = {
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input: FC<InputProps> = props => {
-  const { value, className, disabled, errorMessage, label, onChangeValue, search, type, ...rest } =
+  const { className, disabled, errorMessage, label, onChangeValue, search, type, value, ...rest } =
     props
   const [isInputTouched, setIsInputTouched] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
@@ -52,10 +53,10 @@ export const Input: FC<InputProps> = props => {
         <input
           className={classNameInput}
           disabled={disabled}
-          onChange={handleChange}
-          value={value}
-          type={inputType}
           onBlur={handleBlur}
+          onChange={handleChange}
+          type={inputType}
+          value={value}
           {...rest}
         />
         {isShowClearButton && (
