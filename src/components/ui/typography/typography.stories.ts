@@ -65,7 +65,7 @@ export const H3: Story = {
   },
 }
 
-export const body_1: Story = {
+export const Body_1: Story = {
   args: {
     children: 'Body-1 Text',
     disabled: false,
@@ -73,7 +73,7 @@ export const body_1: Story = {
   },
 }
 
-export const body_2: Story = {
+export const Body_2: Story = {
   args: {
     children: 'Body-2 Text',
     disabled: false,
@@ -81,7 +81,7 @@ export const body_2: Story = {
   },
 }
 
-export const caption: Story = {
+export const Caption: Story = {
   args: {
     children: 'Caption Text',
     disabled: false,
@@ -89,7 +89,7 @@ export const caption: Story = {
   },
 }
 
-export const link_1: Story = {
+export const Link_1: Story = {
   args: {
     as: 'a',
     children: 'Link-1 Text',
@@ -98,7 +98,7 @@ export const link_1: Story = {
   },
 }
 
-export const link_2: Story = {
+export const Link_2: Story = {
   args: {
     as: 'a',
     children: 'Link-2 Text',
@@ -107,7 +107,7 @@ export const link_2: Story = {
   },
 }
 
-export const overline: Story = {
+export const Overline: Story = {
   args: {
     children: 'Overline Text',
     disabled: false,
@@ -115,7 +115,7 @@ export const overline: Story = {
   },
 }
 
-export const subtitle_1: Story = {
+export const Subtitle_1: Story = {
   args: {
     children: 'Subtitle-1 Text',
     disabled: false,
@@ -123,7 +123,7 @@ export const subtitle_1: Story = {
   },
 }
 
-export const subtitle_2: Story = {
+export const Subtitle_2: Story = {
   args: {
     children: 'Subtitle-2 Text',
     disabled: false,
