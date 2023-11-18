@@ -14,22 +14,22 @@
   }
 
   li.leftItems {
-    opacity: .5;
+    opacity: 0.5;
     cursor: default;
   }
 
   li.leftItem {
-    opacity: .5;
+    opacity: 0.5;
     cursor: default;
   }
 
   li.rightItem {
-    opacity: .5;
+    opacity: 0.5;
     cursor: default;
   }
 
   li.rightItems {
-    opacity: .5;
+    opacity: 0.5;
     cursor: default;
   }
 
@@ -46,7 +46,3 @@
 .hover:not(.item):hover {
   background-color: #4c4c4c;
 }
-
-
-
-

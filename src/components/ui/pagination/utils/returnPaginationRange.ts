@@ -13,31 +13,30 @@ export const returnPaginationRange = (totalPage: number, page: number, siblings:
   if (!showLeftDots && showRightDots) {
     let leftItemCount = 3 + 2 * siblings
     let leftRange = range(1, leftItemCount + 1)
-    return [...leftRange, " ...", totalPage]
+    return [...leftRange, ' ...', totalPage]
   } else if (showLeftDots && !showRightDots) {
     let rightItemCount = 3 + 2 * siblings
     let rightRange = range(totalPage - rightItemCount + 1, totalPage + 1)
-    return [1, "... ", ...rightRange]
+    return [1, '... ', ...rightRange]
   } else {
     let middleRange = range(leftSiblingsIndex, rightSiblingsIndex + 1)
-    return [1, "... ", ...middleRange, " ...", totalPage]
+    return [1, '... ', ...middleRange, ' ...', totalPage]
   }
 }
 
-
 function range(start: number, end: number) {
   if (end === undefined) {
-    end = start;
-    start = 0;
+    end = start
+    start = 0
   }
 
-  const result = [];
-  let current = start;
+  const result = []
+  let current = start
 
   while (current < end) {
-    result.push(current);
-    current += 1;
+    result.push(current)
+    current += 1
   }
 
-  return result;
+  return result
 }

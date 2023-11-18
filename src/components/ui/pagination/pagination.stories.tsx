@@ -1,5 +1,5 @@
-import {Pagination} from '@/components/ui/pagination/pagination'
-import {Meta, StoryObj} from '@storybook/react'
+import { Pagination } from '@/components/ui/pagination/pagination'
+import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   args: {
@@ -16,12 +16,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: args => {
-
-    return (
-      <Pagination
-        getPage={() => {}}
-        totalCount={args.totalCount}
-      />
-    )
+    return <Pagination getPage={() => {}} totalCount={args.totalCount} />
   },
 }

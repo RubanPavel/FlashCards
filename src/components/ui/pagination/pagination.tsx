@@ -1,7 +1,7 @@
-import React, {useState} from "react";
-import {returnPaginationRange} from "@/components/ui/pagination/utils/returnPaginationRange";
+import React, { useState } from 'react'
+import { returnPaginationRange } from '@/components/ui/pagination/utils/returnPaginationRange'
 import s from './pagination.module.scss'
-import {hahdlePageChange} from "@/components/ui/pagination/utils/hahdlePageChange";
+import { hahdlePageChange } from '@/components/ui/pagination/utils/hahdlePageChange'
 
 export type Props = {
   className?: string
@@ -9,11 +9,11 @@ export type Props = {
   totalCount: number
 }
 
-export const Pagination = ({className, getPage, totalCount}: Props) => {
+export const Pagination = ({ className, getPage, totalCount }: Props) => {
   const [limit, setLimit] = useState<number>(5)
   const [page, setPage] = useState<number>(1)
 
-  let totalPage = Math.ceil(totalCount / limit )
+  let totalPage = Math.ceil(totalCount / limit)
   if (totalPage < page) {
     setPage(totalPage)
   }
@@ -38,12 +38,10 @@ export const Pagination = ({className, getPage, totalCount}: Props) => {
         <li
           className={page === 1 ? s.leftItems : ''}
           tabIndex={!(page === 1) ? 1 : undefined}
-          onClick={() => !(page === 1) && onPageClick( '&laquo;')}
+          onClick={() => !(page === 1) && onPageClick('&laquo;')}
           onKeyUp={e => !(page === 1) && onPageKeyPress(e, '&laquo;')}
         >
-          <span>
-            &laquo;
-          </span>
+          <span>&laquo;</span>
         </li>
         <li
           className={page === 1 ? s.leftItem : ''}
@@ -51,10 +49,7 @@ export const Pagination = ({className, getPage, totalCount}: Props) => {
           onClick={() => !(page === 1) && onPageClick('&lsaquo;')}
           onKeyUp={e => !(page === 1) && onPageKeyPress(e, '&lsaquo;')}
         >
-
-          <span>
-            &lsaquo;
-          </span>
+          <span>&lsaquo;</span>
         </li>
 
         {array.map((value, id) => (
@@ -75,19 +70,15 @@ export const Pagination = ({className, getPage, totalCount}: Props) => {
           onClick={() => !(page === totalPage) && onPageClick('&rsaquo;')}
           onKeyUp={e => !(page === totalPage) && onPageKeyPress(e, '&rsaquo;')}
         >
-          <span>
-            &rsaquo;
-          </span>
+          <span>&rsaquo;</span>
         </li>
         <li
           className={page === totalPage ? s.rightItems : ''}
-          tabIndex={!(page === totalPage) ? array.length + 3  : undefined}
+          tabIndex={!(page === totalPage) ? array.length + 3 : undefined}
           onClick={() => !(page === totalPage) && onPageClick('&raquo;')}
           onKeyUp={e => !(page === totalPage) && onPageKeyPress(e, '&raquo;')}
         >
-          <span>
-            &raquo;
-          </span>
+          <span>&raquo;</span>
         </li>
       </ul>
     </div>

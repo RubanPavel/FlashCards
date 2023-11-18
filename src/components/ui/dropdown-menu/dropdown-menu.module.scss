@@ -31,7 +31,6 @@
 //  //display: contents;
 //}
 
-
 /* reset */
 button {
   all: unset;
@@ -61,7 +60,7 @@ button {
   position: absolute;
   top: -6px;
   left: 19px;
-  z-index: 999
+  z-index: 999;
 }
 .iconLine {
   width: 16px;
@@ -95,7 +94,6 @@ button {
   }
 }
 
-
 .DropdownMenuSeparator {
   height: 1px;
   background-color: var(--color-dark-100);
@@ -105,4 +103,3 @@ button {
 .DropdownMenuArrow {
   fill: var(--color-dark-500);
 }
-
