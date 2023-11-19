@@ -2,7 +2,7 @@ button {
   all: unset;
 }
 
-.RadioGroupRoot {
+.root {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -10,11 +10,11 @@ button {
 
   padding: 16px;
 
-  .RadioGroupWrapper {
+  .wrapper {
     display: flex;
     align-items: center;
 
-    .RadioGroupItem {
+    .item {
       width: 10px;
       height: 10px;
 
@@ -23,29 +23,32 @@ button {
       border-radius: 100%;
       box-shadow: 0 0 0.5px 11px transparent;
 
-      &:hover:not([data-disabled]) {
-        background-color: var(--color-dark-500);
-        box-shadow: 0 0 0.5px 11px var(--color-dark-500);
-      }
+      transition: all 0.3s ease;
 
-      &:focus:not(:hover) {
+      &:focus-visible {
         background-color: var(--color-dark-700);
         box-shadow: 0 0 0.5px 11px var(--color-dark-700);
       }
 
-      &:active:not([data-disabled]) {
+      &:hover {
+        cursor: pointer;
+        background-color: var(--color-dark-500);
+        box-shadow: 0 0 0.5px 11px var(--color-dark-500);
+      }
+
+      &:active {
         background-color: var(--color-accent-900);
         box-shadow: 0 0 0.5px 11px var(--color-accent-900);
       }
 
-      &[data-disabled] {
-        color: transparent;
+      &:disabled {
+        background-color: transparent;
         border: 1.5px solid var(--color-accent-900);
         box-shadow: none;
       }
     }
 
-    .RadioGroupIndicator {
+    .indicator {
       position: relative;
 
       display: flex;
@@ -65,6 +68,8 @@ button {
 
         background-color: var(--color-accent-500);
         border-radius: 50%;
+
+        transition: all 0.3s ease;
       }
 
       &[data-disabled]::after {
@@ -72,15 +77,10 @@ button {
       }
     }
 
-    .Label {
+    .label {
       padding-left: 12px;
-
-      font-family: var(--font-family-primary);
-      font-size: var(--font-size-s);
-      font-weight: var(--font-weight-regular);
-      font-style: normal;
-      line-height: var(--line-height-m);
       color: var(--color-light-100);
+      transition: all 0.3s ease;
 
       &[aria-label='disabled'] {
         color: var(--color-light-900);
