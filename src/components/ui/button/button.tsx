@@ -1,8 +1,14 @@
-import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
+  ElementType,
+  forwardRef,
+  ReactNode,
+} from 'react'
 
 import s from './button.module.scss'
 
-export type ButtonProps<T extends ElementType = 'button'> = {
+export type Props<T extends ElementType = 'button'> = {
   as?: T
   children: ReactNode
   className?: string
@@ -10,12 +16,21 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 } & ComponentPropsWithoutRef<T>
 
-export const Button = <T extends ElementType = 'button'>(
-  props: ButtonProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>
-) => {
-  const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
+export type PolymorphicRef<T extends ElementType> = ComponentPropsWithRef<T>['ref']
 
-  return (
-    <Component className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`} {...rest} />
-  )
-}
+export const Button = forwardRef(
+  <T extends ElementType = 'button'>(
+    props: Props<T> & Omit<ComponentPropsWithoutRef<T>, keyof Props<T>>,
+    ref: PolymorphicRef<T>
+  ) => {
+    const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
+
+    return (
+      <Component
+        ref={ref}
+        className={`s.button ${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
+        {...rest}
+      />
+    )
+  }
+)
