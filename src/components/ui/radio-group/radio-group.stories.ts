@@ -11,10 +11,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const options = ['One', 'Two', 'Three']
+
 export const Default: Story = {
   args: {
     disabled: false,
-    defaultValue: 'One',
-    options: ['One', 'Two', 'Three'],
+    defaultValue: options[0],
+    options: options,
   },
 }
