@@ -27,9 +27,8 @@ export const Button = forwardRef(
   ) => {
     const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
 
-    const ClassNameComponent = clsx(
-      `s.button ${s[variant]} ${fullWidth && s.fullWidth} ${className}`
-    )
+    const ClassNameComponent = clsx(s.button, s[variant], fullWidth && s.fullWidth, className)
+
     return <Component ref={ref} className={ClassNameComponent} {...rest} />
   }
 )
