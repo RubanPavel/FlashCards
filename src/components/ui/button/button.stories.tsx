@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Button, ButtonProps } from './'
+import { Button, Props } from './'
 import { IconLogOut } from './assets/IconLogOut'
 
 const meta = {
@@ -26,10 +26,7 @@ export const Primary: Story = {
   },
 }
 
-export const PrimaryWithIcon: Story = ({
-  disabled,
-  ...args
-}: { disabled: boolean } & ButtonProps) => {
+export const PrimaryWithIcon: Story = ({ disabled, ...args }: Props) => {
   return (
     <Button {...args} disabled={disabled}>
       <>
@@ -57,10 +54,7 @@ export const Secondary: Story = {
   },
 }
 
-export const SecondaryWithIcon: Story = ({
-  disabled,
-  ...args
-}: { disabled: boolean } & ButtonProps) => {
+export const SecondaryWithIcon: Story = ({ disabled, ...args }: Props) => {
   return (
     <Button {...args} disabled={disabled}>
       <>

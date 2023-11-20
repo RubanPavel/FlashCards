@@ -1,22 +1,22 @@
 import { FC, memo } from 'react'
 
 type Props = {
+  className?: string
   color?: string
   fill?: string
   height?: number
   strokeWidth?: number
   width?: number
-  className?: string
 }
 
 export const IconSearch: FC<Props> = (props: Props) => {
   const {
+    className,
     color = `var(--color-light-100)`,
     fill = 'none',
     height = 24,
     strokeWidth = 2,
     width = 24,
-    className,
     ...rest
   } = props
 
