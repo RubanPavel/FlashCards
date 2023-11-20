@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import {FC, memo} from 'react'
 
 type Props = {
   color?: string

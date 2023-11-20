@@ -1,35 +1,3 @@
-//.DropdownMenuContent {
-//  display: flex;
-//  width: 217px;
-//  padding: 8px;
-//  flex-direction: column;
-//  align-items: flex-start;
-//  border-radius: 4px;
-//  background-color: var(--color-dark-500);
-//  margin-left: -150px;
-//}
-//
-//.DropdownMenuArrow {
-//  fill: var(--color-dark-500);
-//}
-//
-//.DropdownMenuSeparator {
-//  width: 200px;
-//  border: .7px solid var(--color-dark-100);
-//}
-//.DropdownMenuItem {
-//  margin: 3px 0;
-//  display: flex;
-//  align-items: center;
-//
-//  & :first-child {
-//    margin-right: 10px;
-//  }
-//}
-//
-//.IconButton {
-//  //display: contents;
-//}
 
 /* reset */
 button {
@@ -37,49 +5,35 @@ button {
 }
 
 .DropdownMenuContent {
-  width: 220px;
   background-color: var(--color-dark-500);
   border-radius: 6px;
   padding: 5px;
-  margin-left: -170px;
   border: 1px solid var(--color-dark-100);
 }
 
-.secondViewContent {
-  width: 100px;
-  margin-left: -50px;
-}
-
 .iconTriangle {
-  width: 13px;
-  height: 12px;
-  transform: rotate(45deg);
+  width: 7px;
+  height: 7px;
+  transform: rotate(225deg);
   transform-origin: center center;
+  background-color: var(--color-dark-500);
   border-left: 1px solid var(--color-dark-100);
   border-top: 1px solid var(--color-dark-100);
   position: absolute;
-  top: -6px;
-  left: 19px;
+  top: -4px;
+  left: -4px;
   z-index: 999;
-}
-.iconLine {
-  width: 16px;
-  border-top: 1px solid var(--color-dark-500);
-  position: absolute;
-  top: 0px;
-  left: 17px;
-  z-index: 9999;
 }
 
 .DropdownMenuItem {
   font-size: 13px;
   line-height: 1;
-  color: var(--violet-11);
+  color: var(--color-light-100);
   border-radius: 3px;
   display: flex;
   align-items: center;
   height: 25px;
-  padding: 22px 0 22px 12px;
+  padding: 20px 6px 20px 6px;
   position: relative;
   user-select: none;
   outline: none;

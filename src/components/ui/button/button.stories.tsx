@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type {Meta, StoryObj} from '@storybook/react'
 
-import { Button, ButtonProps } from './'
-import { IconLogOut } from './assets/IconLogOut'
+import {Button, ButtonProps} from './'
+import {IconLogOut} from './assets/IconLogOut'
 
 const meta = {
   argTypes: {
     variant: {
-      control: { type: 'radio' },
+      control: {type: 'radio'},
       options: ['primary', 'secondary', 'tertiary', 'link'],
     },
   },
@@ -27,9 +27,9 @@ export const Primary: Story = {
 }
 
 export const PrimaryWithIcon: Story = ({
-  disabled,
-  ...args
-}: { disabled: boolean } & ButtonProps) => {
+                                         disabled,
+                                         ...args
+                                       }: { disabled: boolean } & ButtonProps) => {
   return (
     <Button {...args} disabled={disabled}>
       <>
@@ -58,9 +58,9 @@ export const Secondary: Story = {
 }
 
 export const SecondaryWithIcon: Story = ({
-  disabled,
-  ...args
-}: { disabled: boolean } & ButtonProps) => {
+                                           disabled,
+                                           ...args
+                                         }: { disabled: boolean } & ButtonProps) => {
   return (
     <Button {...args} disabled={disabled}>
       <>
