@@ -26,10 +26,7 @@ export const Primary: Story = {
   },
 }
 
-export const PrimaryWithIcon: Story = ({
-  disabled,
-  ...args
-}: { disabled: boolean } & ButtonProps) => {
+export const PrimaryWithIcon: Story = ({ disabled, ...args }: ButtonProps) => {
   return (
     <Button {...args} disabled={disabled}>
       <>
@@ -57,10 +54,7 @@ export const Secondary: Story = {
   },
 }
 
-export const SecondaryWithIcon: Story = ({
-  disabled,
-  ...args
-}: { disabled: boolean } & ButtonProps) => {
+export const SecondaryWithIcon: Story = ({ disabled, ...args }: ButtonProps) => {
   return (
     <Button {...args} disabled={disabled}>
       <>
