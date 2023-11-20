@@ -8,6 +8,8 @@ import {
 
 import s from './button.module.scss'
 
+import { clsx } from 'clsx'
+
 export type Props<T extends ElementType = 'button'> = {
   as?: T
   children: ReactNode
@@ -25,12 +27,9 @@ export const Button = forwardRef(
   ) => {
     const { as: Component = 'button', className, fullWidth, variant = 'primary', ...rest } = props
 
-    return (
-      <Component
-        ref={ref}
-        className={`s.button ${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
-        {...rest}
-      />
+    const ClassNameComponent = clsx(
+      `s.button ${s[variant]} ${fullWidth && s.fullWidth} ${className}`
     )
+    return <Component ref={ref} className={ClassNameComponent} {...rest} />
   }
 )
