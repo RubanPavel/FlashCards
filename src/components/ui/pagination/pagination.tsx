@@ -102,7 +102,7 @@ export const Pagination = ({
         <div className={s.select}>
           <Select selectOptions={selectOptions} />
         </div>
-        <Typography variant={'body-2'}>На странице</Typography>
+        <Typography variant={'body-2'}>на странице</Typography>
       </div>
     </div>
   )
