@@ -1,3 +1,10 @@
+.container {
+  display: flex;
+  & :last-child {
+    align-items: center;
+  }
+}
+
 .items {
   list-style-type: none;
   padding: 0;
@@ -45,4 +52,14 @@
 
 .hover:not(.item):hover {
   background-color: #4c4c4c;
+}
+
+.select {
+  width: 48px;
+  height: 24px;
+  margin: 0 7px;
+}
+
+.wrapperForSelect {
+  display: flex;
 }

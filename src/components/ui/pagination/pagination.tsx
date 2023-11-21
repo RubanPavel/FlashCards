@@ -2,16 +2,30 @@ import React, { useState } from 'react'
 
 import { hahdlePageChange } from '@/components/ui/pagination/utils/hahdlePageChange'
 import { returnPaginationRange } from '@/components/ui/pagination/utils/returnPaginationRange'
+import { Options, Select } from '@/components/ui/select'
+import { Typography } from '@/components/ui/typography'
 
 import s from './pagination.module.scss'
 
 export type Props = {
   className?: string
   getPage: (pageNumber: number, pageSize: number) => void
+  selectOptions?: Options[]
   totalCount: number
 }
 
-export const Pagination = ({ className, getPage, totalCount }: Props) => {
+export const Pagination = ({
+  className,
+  getPage,
+  selectOptions = [
+    { value: '10' },
+    { value: '20' },
+    { value: '30' },
+    { value: '50' },
+    { value: '100' },
+  ],
+  totalCount,
+}: Props) => {
   const [limit] = useState<number>(5)
   const [page, setPage] = useState<number>(1)
 
@@ -35,7 +49,7 @@ export const Pagination = ({ className, getPage, totalCount }: Props) => {
   }
 
   return (
-    <div className={className}>
+    <div className={`${s.container} ${className}`}>
       <ul className={s.items}>
         <li
           className={page === 1 ? s.leftItems : ''}
@@ -83,6 +97,13 @@ export const Pagination = ({ className, getPage, totalCount }: Props) => {
           <span>&raquo;</span>
         </li>
       </ul>
+      <div className={s.wrapperForSelect}>
+        <Typography variant={'body-2'}>Показать</Typography>
+        <div className={s.select}>
+          <Select selectOptions={selectOptions} />
+        </div>
+        <Typography variant={'body-2'}>на странице</Typography>
+      </div>
     </div>
   )
 }
