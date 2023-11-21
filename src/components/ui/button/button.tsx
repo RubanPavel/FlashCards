@@ -15,7 +15,7 @@ export type Props<T extends ElementType = 'button'> = {
   children: ReactNode
   className?: string
   fullWidth?: boolean
-  variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
+  variant?: 'link' | 'primary' | 'secondary' | 'tertiary' | 'icon'
 } & ComponentPropsWithoutRef<T>
 
 export type PolymorphicRef<T extends ElementType> = ComponentPropsWithRef<T>['ref']
