@@ -1,12 +1,10 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+import { Typography } from '@/components/ui/typography'
 import * as RadioGroupRadixUi from '@radix-ui/react-radio-group'
-
-import s from './radio-group.module.scss'
-
 import { clsx } from 'clsx'
 
-import { Typography } from '@/components/ui/typography'
+import s from './radio-group.module.scss'
 
 export type Props = {
   className?: string
@@ -24,16 +22,16 @@ export const RadioGroup = ({ className, defaultValue, disabled, options, ...rest
       {...rest}
     >
       {options?.map(option => (
-        <div key={option} className={s.wrapper}>
+        <div className={s.wrapper} key={option}>
           <RadioGroupRadixUi.Item className={s.item} id={option} value={option}>
             <RadioGroupRadixUi.Indicator className={s.indicator} />
           </RadioGroupRadixUi.Item>
           <Typography
-            className={s.label}
+            aria-label={clsx(disabled && 'disabled')}
             as={'label'}
+            className={s.label}
             htmlFor={option}
             variant={'body-2'}
-            aria-label={clsx(disabled && 'disabled')}
           >
             {option}
           </Typography>

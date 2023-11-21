@@ -15,8 +15,8 @@ const options = ['One', 'Two', 'Three']
 
 export const Default: Story = {
   args: {
-    disabled: false,
     defaultValue: options[0],
+    disabled: false,
     options: options,
   },
 }
