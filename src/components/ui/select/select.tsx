@@ -29,7 +29,7 @@ export const Select = ({ className, label, placeholder, selectOptions, ...rest }
       >
         {label}
       </Typography>
-      <SelectRadixUI.Root disabled={rest.disabled} onValueChange={rest.onValueChange} {...rest}>
+      <SelectRadixUI.Root defaultValue={selectOptions[0].value} disabled={rest.disabled} onValueChange={rest.onValueChange} {...rest}>
         <SelectRadixUI.Trigger className={`${s.trigger} ${className}`} tabIndex={1}>
           <SelectRadixUI.Value placeholder={placeholder} />
           <ChevronDownIcon className={s.icon} />
