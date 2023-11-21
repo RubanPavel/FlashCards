@@ -1,32 +1,31 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
-import {hahdlePageChange} from '@/components/ui/pagination/utils/hahdlePageChange'
-import {returnPaginationRange} from '@/components/ui/pagination/utils/returnPaginationRange'
+import { hahdlePageChange } from '@/components/ui/pagination/utils/hahdlePageChange'
+import { returnPaginationRange } from '@/components/ui/pagination/utils/returnPaginationRange'
+import { Options, Select } from '@/components/ui/select'
+import { Typography } from '@/components/ui/typography'
 
 import s from './pagination.module.scss'
-import {Options, Select} from "@/components/ui/select";
-import {Typography} from "@/components/ui/typography";
 
 export type Props = {
   className?: string
-  selectOptions?: Options[]
   getPage: (pageNumber: number, pageSize: number) => void
+  selectOptions?: Options[]
   totalCount: number
 }
 
-export const Pagination = (
-  {
-    className,
-    getPage,
-    totalCount,
-    selectOptions = [
-      {value: '10'},
-      {value: '20'},
-      {value: '30'},
-      {value: '50'},
-      {value: '100'}
-    ]
-  }: Props) => {
+export const Pagination = ({
+  className,
+  getPage,
+  selectOptions = [
+    { value: '10' },
+    { value: '20' },
+    { value: '30' },
+    { value: '50' },
+    { value: '100' },
+  ],
+  totalCount,
+}: Props) => {
   const [limit] = useState<number>(5)
   const [page, setPage] = useState<number>(1)
 
@@ -99,9 +98,11 @@ export const Pagination = (
         </li>
       </ul>
       <div className={s.wrapperForSelect}>
-        <Typography variant={"body-2"}>Показать</Typography>
-        <div className={s.select} ><Select selectOptions={selectOptions}/></div>
-        <Typography variant={"body-2"}>На странице</Typography>
+        <Typography variant={'body-2'}>Показать</Typography>
+        <div className={s.select}>
+          <Select selectOptions={selectOptions} />
+        </div>
+        <Typography variant={'body-2'}>На странице</Typography>
       </div>
     </div>
   )
