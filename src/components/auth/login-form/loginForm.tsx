@@ -4,7 +4,7 @@ import {z} from 'zod'
 import {Button} from '../../ui/button'
 import {zodResolver} from "@hookform/resolvers/zod";
 import {ControlledCheckbox} from "@/components/ui/controlled/controlCheckbox";
-import {Input} from "@/components/ui/input";
+import {ControlInput} from "@/components/ui/controlled/controlInput";
 
 
 const loginSchema = z.object({
@@ -32,8 +32,18 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Input {...register('email')} label={'email'} errorMessage={errors.email?.message}/>
-      <Input {...register('password')} label={'password'} errorMessage={errors.password?.message}/>
+      <ControlInput
+        {...register('email')}
+        label={'email'}
+        control={control}
+        errorMessage={errors.email?.message}
+      />
+      <ControlInput
+        {...register('password')}
+        label={'password'}
+        control={control}
+        errorMessage={errors.password?.message}
+      />
       <ControlledCheckbox name={'rememberMe'} title={'remember me'} control={control}/>
       <Button type="submit">Submit</Button>
     </form>
