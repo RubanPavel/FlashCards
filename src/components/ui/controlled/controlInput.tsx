@@ -1,38 +1,41 @@
-import {Input} from "@/components/ui/input";
-import {FieldValues, useController, UseControllerProps} from "react-hook-form";
-import {ComponentPropsWithoutRef} from "react";
+import { ComponentPropsWithoutRef } from 'react'
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
+
+import { Input } from '@/components/ui/input'
 
 type Props<T extends FieldValues> = UseControllerProps<T> & ComponentPropsWithoutRef<typeof Input>
 
-export const ControlInput = <T extends FieldValues>(
-  {
-    label,
-    name,
-    control,
-    errorMessage,
-    disabled,
-    shouldUnregister,
-    rules,
-    defaultValue,
-    ...rest
-  }: Props<T>) => {
-
+export const ControlInput = <T extends FieldValues>({
+  control,
+  defaultValue,
+  disabled,
+  errorMessage,
+  label,
+  name,
+  rules,
+  shouldUnregister,
+  ...rest
+}: Props<T>) => {
   const {
-    field: {onChange, value},
+    field: { onChange, value },
   } = useController({
-    name,
     control,
+    defaultValue,
     disabled,
-    shouldUnregister,
+    name,
     rules,
-    defaultValue
+    shouldUnregister,
   })
 
-  return <Input {...{
-    ...rest,
-    label,
-    errorMessage,
-    onChange,
-    value
-  }}/>
+  return (
+    <Input
+      {...{
+        ...rest,
+        errorMessage,
+        label,
+        onChange,
+        value,
+      }}
+    />
+  )
 }

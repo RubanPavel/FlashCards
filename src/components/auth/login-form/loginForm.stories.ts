@@ -3,9 +3,9 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { LoginForm } from './loginForm'
 
 const meta = {
-  title: 'Auth/LoginForm',
   component: LoginForm,
   tags: ['autodocs'],
+  title: 'Auth/LoginForm',
 } satisfies Meta<typeof LoginForm>
 
 export default meta
