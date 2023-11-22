@@ -10,7 +10,7 @@ import {ControlInput} from "@/components/ui/controlled/controlInput";
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(3),
-  rememberMe: z.boolean().default(false),
+  rememberMe: z.boolean().default(false)
 })
 
 type FormValues = z.infer<typeof loginSchema>
