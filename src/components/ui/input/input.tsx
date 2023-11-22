@@ -16,6 +16,7 @@ export type Props = {
   label?: string
   onChangeValue?: (value: string) => void
   value?: string
+  name?: string
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -70,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           )}
           <input
             ref={ref}
-            className={clsx(errorMessage && s.errorInput)}
+            className={clsx(s.input, errorMessage && s.errorInput)}
             disabled={disabled}
             onBlur={handleInputBlurred}
             onFocus={handleFocus}
