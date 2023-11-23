@@ -1,18 +1,16 @@
 import {useForm} from 'react-hook-form'
 
 import {Button} from '@//components/ui/button'
-import {ControlledCheckbox} from '@/components/ui/controlled/controlCheckbox'
 import {ControlInput} from '@/components/ui/controlled/controlInput'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {z} from 'zod'
 import {Card} from "@/components/ui/card";
 import {Typography} from "@/components/ui/typography";
-import s from './sign-in.module.scss'
+import s from './forgot-password.module.scss'
+
 
 const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(3),
-  rememberMe: z.boolean().default(false),
 })
 
 type FormValues = z.infer<typeof loginSchema>
@@ -21,7 +19,7 @@ type Props = {
   onHandleChange: (value: boolean) => void
 }
 
-export const SignIn = ({onSubmitValue, onHandleChange}: Props) => {
+export const ForgotPassword = ({onSubmitValue, onHandleChange}: Props) => {
   const {
     control,
     formState: {errors},
@@ -36,14 +34,14 @@ export const SignIn = ({onSubmitValue, onHandleChange}: Props) => {
   }
 
   return (
-    <Card className={s.wrapperSignIn}>
+    <Card className={s.wrapperForgot}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography
           as={'div'}
-          className={s.textSignIn}
+          className={s.textForgot}
           variant={'large'}
         >
-          Sign In
+          Forgot your password?
         </Typography>
         <ControlInput
           {...register('email')}
@@ -51,31 +49,28 @@ export const SignIn = ({onSubmitValue, onHandleChange}: Props) => {
           errorMessage={errors.email?.message}
           label={'email'}
         />
-        <ControlInput
-          {...register('password')}
-          control={control}
-          errorMessage={errors.password?.message}
-          label={'password'}
-          type={'password'}
-        />
-        <ControlledCheckbox control={control} name={'rememberMe'} title={'remember me'}/>
         <Typography
           as={'div'}
-          className={s.forgotPassword}
+          className={s.textEmailAddress}
           variant={'body-2'}
-          onClick={() => onHandleChange(true)}
         >
-          Forgot Password?
+          Enter your email address and we will send you further instructions
         </Typography>
-        <Button fullWidth type={'submit'}>Sign In</Button>
-        <Typography as={'div'} className={s.dontAccount} variant={'body-2'}>Don't have an account?</Typography>
+        <Button fullWidth type={'submit'}>Send instructions</Button>
         <Typography
           as={'div'}
-          className={s.signUp}
+          className={s.textAskOfPassword}
+          variant={'body-2'}
+        >
+          Did you remember your password?
+        </Typography>
+        <Typography
+          as={'div'}
+          className={s.textTry}
           variant={'subtitle-1'}
           onClick={() => onHandleChange(true)}
         >
-          Sign Up
+          Try logging in
         </Typography>
       </form>
     </Card>
