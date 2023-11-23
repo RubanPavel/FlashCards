@@ -1,13 +1,13 @@
-import {useForm} from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
-import {Button} from '@//components/ui/button'
-import {ControlInput} from '@/components/ui/controlled/controlInput'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {z} from 'zod'
-import {Card} from "@/components/ui/card";
-import {Typography} from "@/components/ui/typography";
+import { Button } from '@//components/ui/button'
+import { ControlInput } from '@/components/ui/controlled/controlInput'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import { Card } from '@/components/ui/card'
+import { Typography } from '@/components/ui/typography'
 import s from './forgot-password.module.scss'
-
+import {DevTool} from "@hookform/devtools";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -19,10 +19,10 @@ type Props = {
   onHandleChange: (value: boolean) => void
 }
 
-export const ForgotPassword = ({onSubmitValue, onHandleChange}: Props) => {
+export const ForgotPassword = ({ onSubmitValue, onHandleChange }: Props) => {
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     register,
   } = useForm<FormValues>({
@@ -36,11 +36,8 @@ export const ForgotPassword = ({onSubmitValue, onHandleChange}: Props) => {
   return (
     <Card className={s.wrapperForgot}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Typography
-          as={'div'}
-          className={s.textForgot}
-          variant={'large'}
-        >
+        <DevTool control={control} />
+        <Typography as={'div'} className={s.textForgot} variant={'large'}>
           Forgot your password?
         </Typography>
         <ControlInput
@@ -49,19 +46,13 @@ export const ForgotPassword = ({onSubmitValue, onHandleChange}: Props) => {
           errorMessage={errors.email?.message}
           label={'email'}
         />
-        <Typography
-          as={'div'}
-          className={s.textEmailAddress}
-          variant={'body-2'}
-        >
+        <Typography as={'div'} className={s.textEmailAddress} variant={'body-2'}>
           Enter your email address and we will send you further instructions
         </Typography>
-        <Button fullWidth type={'submit'}>Send instructions</Button>
-        <Typography
-          as={'div'}
-          className={s.textAskOfPassword}
-          variant={'body-2'}
-        >
+        <Button fullWidth type={'submit'}>
+          Send instructions
+        </Button>
+        <Typography as={'div'} className={s.textAskOfPassword} variant={'body-2'}>
           Did you remember your password?
         </Typography>
         <Typography
