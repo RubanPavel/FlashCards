@@ -89,7 +89,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             <Button
               disabled={disabled}
               onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-              type={'button'}
               variant={'icon'}
             >
               {isPasswordVisible ? (
