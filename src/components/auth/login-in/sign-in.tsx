@@ -1,14 +1,14 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@//components/ui/button'
-import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
-import { Typography } from '@/components/ui/typography'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
+import { Card } from '@/components/ui/card'
+import { Typography } from '@/components/ui/typography'
 import s from './sign-in.module.scss'
+import {DevTool} from "@hookform/devtools";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -18,11 +18,11 @@ const loginSchema = z.object({
 
 type FormValues = z.infer<typeof loginSchema>
 type Props = {
-  onHandleChange: (value: boolean) => void
   onSubmitValue: (data: FormValues) => void
+  onHandleChange: (value: boolean) => void
 }
 
-export const SignIn = ({ onHandleChange, onSubmitValue }: Props) => {
+export const SignIn = ({ onSubmitValue, onHandleChange }: Props) => {
   const {
     control,
     formState: { errors },
@@ -39,6 +39,7 @@ export const SignIn = ({ onHandleChange, onSubmitValue }: Props) => {
   return (
     <Card className={s.wrapperSignIn}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <DevTool control={control} />
         <Typography as={'div'} className={s.textSignIn} variant={'large'}>
           Sign In
         </Typography>
@@ -59,8 +60,8 @@ export const SignIn = ({ onHandleChange, onSubmitValue }: Props) => {
         <Typography
           as={'div'}
           className={s.forgotPassword}
-          onClick={() => onHandleChange(true)}
           variant={'body-2'}
+          onClick={() => onHandleChange(true)}
         >
           Forgot Password?
         </Typography>
@@ -68,13 +69,13 @@ export const SignIn = ({ onHandleChange, onSubmitValue }: Props) => {
           Sign In
         </Button>
         <Typography as={'div'} className={s.dontAccount} variant={'body-2'}>
-          Don`t have an account?
+          Don't have an account?
         </Typography>
         <Typography
           as={'div'}
           className={s.signUp}
-          onClick={() => onHandleChange(true)}
           variant={'subtitle-1'}
+          onClick={() => onHandleChange(true)}
         >
           Sign Up
         </Typography>

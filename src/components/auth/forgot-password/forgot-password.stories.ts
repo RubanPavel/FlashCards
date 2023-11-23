@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-
 import { ForgotPassword } from '@/components/auth/forgot-password/forgot-password'
 
 const meta = {
