@@ -1,5 +1,5 @@
-import {Meta, StoryObj} from "@storybook/react";
-import {Modals} from "@/components/ui/modals/modals";
+import { Modals } from '@/components/ui/modals/modals'
+import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: Modals,
@@ -11,11 +11,11 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  parameters: {
-    layout: 'centered'
-  },
   args: {
+    children: <b>Content</b>,
     trigger: <button>click</button>,
-    children: <b>Content</b>
-  }
+  },
+  parameters: {
+    layout: 'centered',
+  },
 }
