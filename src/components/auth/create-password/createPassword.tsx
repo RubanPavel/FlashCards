@@ -21,8 +21,12 @@ export const CreatePassword = () => {
     control,
     formState: { errors },
     handleSubmit,
-    register,
   } = useForm<FormValues>({
+    defaultValues: {
+      password: '',
+    },
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: zodResolver(createPasswordSchema),
   })
 
@@ -38,11 +42,11 @@ export const CreatePassword = () => {
       <form className={s.formWrapper} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <ControlInput
-          type={'password'}
-          {...register('password', { required: 'The field is required' })}
           control={control}
           errorMessage={errors.password?.message}
           label={'Password'}
+          name={'password'}
+          type={'password'}
         />
         <Typography as={'p'} className={s.info} variant={'body-2'}>
           Create new password and we will send you further instructions to email
