@@ -1,15 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Header } from './'
-import { Button } from '@/components/ui/button'
-import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
-import s from '@/components/ui/dropdown-menu/dropdown-menu.module.scss'
-import { Typography } from '@/components/ui/typography'
-import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { DropdownMenu } from '@/components/ui/dropdown-menu'
+
 import AvatarRadix from '@/components/ui/avatar/avatar'
-import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
+import { Button } from '@/components/ui/button'
 import { IconLogOut } from '@/components/ui/button/assets/IconLogOut'
+import { DropdownMenu } from '@/components/ui/dropdown-menu'
+import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
+import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
+import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import IconLogo from '@/components/ui/header/assets/Iconlogo'
+import { Typography } from '@/components/ui/typography'
+
+import s from '@/components/ui/dropdown-menu/dropdown-menu.module.scss'
+
+import { Header } from './'
 
 const meta = {
   component: Header,
@@ -22,8 +25,8 @@ type Story = StoryObj<typeof meta>
 
 export const HeaderSignIn: Story = {
   args: {
+    children: <Button type={'primary'}>Sign In</Button>,
     logo: <IconLogo />,
-    children: <Button type="primary">Sign In</Button>,
   },
 }
 
@@ -40,21 +43,20 @@ const trigger = (
 
 export const HeaderWithAvatar: Story = {
   args: {
-    logo: <IconLogo />,
     children: (
       <div
         style={{
-          flexGrow: '1',
-          display: 'flex',
-          gap: '0.875rem',
           alignItems: 'center',
+          display: 'flex',
+          flexGrow: '1',
+          gap: '0.875rem',
           justifyContent: 'end',
         }}
       >
         <Typography
+          color={'var(--color-light-100)'}
           style={{ borderBottom: '1px dashed white' }}
           variant={'subtitle-2'}
-          color={'var(--color-light-100)'}
         >
           User
         </Typography>
@@ -93,5 +95,6 @@ export const HeaderWithAvatar: Story = {
         </DropdownMenu>
       </div>
     ),
+    logo: <IconLogo />,
   },
 }

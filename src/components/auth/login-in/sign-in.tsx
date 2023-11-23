@@ -1,12 +1,13 @@
-import {useForm} from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
-import {Button} from '@//components/ui/button'
-import {ControlledCheckbox} from '@/components/ui/controlled/controlCheckbox'
-import {ControlInput} from '@/components/ui/controlled/controlInput'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {z} from 'zod'
-import {Card} from "@/components/ui/card";
-import {Typography} from "@/components/ui/typography";
+import { Button } from '@//components/ui/button'
+import { Card } from '@/components/ui/card'
+import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
+import { ControlInput } from '@/components/ui/controlled/controlInput'
+import { Typography } from '@/components/ui/typography'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import s from './sign-in.module.scss'
 
 const loginSchema = z.object({
@@ -17,14 +18,14 @@ const loginSchema = z.object({
 
 type FormValues = z.infer<typeof loginSchema>
 type Props = {
-  onSubmitValue: (data: FormValues) => void
   onHandleChange: (value: boolean) => void
+  onSubmitValue: (data: FormValues) => void
 }
 
-export const SignIn = ({onSubmitValue, onHandleChange}: Props) => {
+export const SignIn = ({ onHandleChange, onSubmitValue }: Props) => {
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     handleSubmit,
     register,
   } = useForm<FormValues>({
@@ -38,11 +39,7 @@ export const SignIn = ({onSubmitValue, onHandleChange}: Props) => {
   return (
     <Card className={s.wrapperSignIn}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Typography
-          as={'div'}
-          className={s.textSignIn}
-          variant={'large'}
-        >
+        <Typography as={'div'} className={s.textSignIn} variant={'large'}>
           Sign In
         </Typography>
         <ControlInput
@@ -58,22 +55,26 @@ export const SignIn = ({onSubmitValue, onHandleChange}: Props) => {
           label={'password'}
           type={'password'}
         />
-        <ControlledCheckbox control={control} name={'rememberMe'} title={'remember me'}/>
+        <ControlledCheckbox control={control} name={'rememberMe'} title={'remember me'} />
         <Typography
           as={'div'}
           className={s.forgotPassword}
-          variant={'body-2'}
           onClick={() => onHandleChange(true)}
+          variant={'body-2'}
         >
           Forgot Password?
         </Typography>
-        <Button fullWidth type={'submit'}>Sign In</Button>
-        <Typography as={'div'} className={s.dontAccount} variant={'body-2'}>Don't have an account?</Typography>
+        <Button fullWidth type={'submit'}>
+          Sign In
+        </Button>
+        <Typography as={'div'} className={s.dontAccount} variant={'body-2'}>
+          Don`t have an account?
+        </Typography>
         <Typography
           as={'div'}
           className={s.signUp}
-          variant={'subtitle-1'}
           onClick={() => onHandleChange(true)}
+          variant={'subtitle-1'}
         >
           Sign Up
         </Typography>
