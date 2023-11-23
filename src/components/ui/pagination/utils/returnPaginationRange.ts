@@ -1,25 +1,29 @@
 export const returnPaginationRange = (totalPage: number, page: number, siblings: number) => {
-  let totalPageNoInArray = 7 + siblings
+  const totalPageNoInArray = 7 + siblings
+
   if (totalPageNoInArray >= totalPage) {
     return range(1, totalPage + 1)
   }
 
-  let leftSiblingsIndex = Math.max(page - siblings, 1)
-  let rightSiblingsIndex = Math.min(page + siblings, totalPage)
+  const leftSiblingsIndex = Math.max(page - siblings, 1)
+  const rightSiblingsIndex = Math.min(page + siblings, totalPage)
 
-  let showLeftDots = leftSiblingsIndex > 2
-  let showRightDots = rightSiblingsIndex < totalPage - 2
+  const showLeftDots = leftSiblingsIndex > 2
+  const showRightDots = rightSiblingsIndex < totalPage - 2
 
   if (!showLeftDots && showRightDots) {
-    let leftItemCount = 3 + 2 * siblings
-    let leftRange = range(1, leftItemCount + 1)
+    const leftItemCount = 3 + 2 * siblings
+    const leftRange = range(1, leftItemCount + 1)
+
     return [...leftRange, ' ...', totalPage]
   } else if (showLeftDots && !showRightDots) {
-    let rightItemCount = 3 + 2 * siblings
-    let rightRange = range(totalPage - rightItemCount + 1, totalPage + 1)
+    const rightItemCount = 3 + 2 * siblings
+    const rightRange = range(totalPage - rightItemCount + 1, totalPage + 1)
+
     return [1, '... ', ...rightRange]
   } else {
-    let middleRange = range(leftSiblingsIndex, rightSiblingsIndex + 1)
+    const middleRange = range(leftSiblingsIndex, rightSiblingsIndex + 1)
+
     return [1, '... ', ...middleRange, ' ...', totalPage]
   }
 }

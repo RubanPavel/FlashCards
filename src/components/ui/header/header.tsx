@@ -1,16 +1,17 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, ReactNode, forwardRef } from 'react'
+
+import { clsx } from 'clsx'
 
 import s from './header.module.scss'
-import { clsx } from 'clsx'
 
 type Props = {
   logo?: ReactNode
 } & ComponentPropsWithoutRef<'header'>
 
 export const Header = forwardRef<HTMLHeadElement, Props>(
-  ({ className, logo, children, ...rest }, ref) => {
+  ({ children, className, logo, ...rest }, ref) => {
     return (
-      <header ref={ref} className={clsx(s.header, className)} {...rest}>
+      <header className={clsx(s.header, className)} ref={ref} {...rest}>
         {logo}
         {children}
       </header>
