@@ -1,29 +1,29 @@
 import { ChangeEvent, ComponentPropsWithoutRef, forwardRef, useState } from 'react'
 
+import { Button } from '@/components/ui/button'
 import { IconClose } from '@/components/ui/input/assets/IconClose'
 import { IconEyeOffOutline } from '@/components/ui/input/assets/IconEyeOffOutline'
 import { IconEyeOutline } from '@/components/ui/input/assets/IconEyeOutline'
 import { IconSearch } from '@/components/ui/input/assets/IconSearch'
 import { Typography } from '@/components/ui/typography/typography'
+import { clsx } from 'clsx'
 
 import s from './input.module.scss'
-import { clsx } from 'clsx'
-import { Button } from '@/components/ui/button'
 
 export type Props = {
   className?: string
   errorMessage?: string
   label?: string
+  name?: string
   onChangeValue?: (value: string) => void
   value?: string
-  name?: string
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
   ({ className, disabled, errorMessage, label, onChangeValue, type, value, ...rest }, ref) => {
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
-    const [error, setError] = useState<string | null>(errorMessage || null)
+    const [error, setError] = useState<null | string>(errorMessage || null)
 
     function handleInputChanged(e: ChangeEvent<HTMLInputElement>) {
       onChangeValue?.(e.target.value)
@@ -53,15 +53,15 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     const colorIconClose = isInputFocused && isDirtyInput ? 'var(--color-light-100)' : 'transparent'
 
     const classNameWrapper = clsx(s.wrapper, {
-      [s.focusWrapper]: isInputFocused && !isDirtyInput,
       [s.activeWrapper]: isInputFocused && isDirtyInput,
       [s.errorWrapper]: error && !isInputFocused,
+      [s.focusWrapper]: isInputFocused && !isDirtyInput,
     })
 
     return (
       <div aria-disabled={disabled} className={`${s.root} ${className}`}>
         {label && (
-          <label className={s.label} aria-disabled={disabled}>
+          <label aria-disabled={disabled} className={s.label}>
             {label}
           </label>
         )}
@@ -70,27 +70,27 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             <IconSearch className={s.searchIcon} color={colorIconSearch} height={20} width={20} />
           )}
           <input
-            ref={ref}
             className={clsx(s.input, errorMessage && s.errorInput)}
             disabled={disabled}
             onBlur={handleInputBlurred}
-            onFocus={handleFocus}
             onChange={handleInputChanged}
+            onFocus={handleFocus}
+            ref={ref}
             type={inputType}
             value={value}
             {...rest}
           />
           {isShowSearchInputClearButton && (
-            <Button variant={'icon'} disabled={disabled} onClick={handleClearClicked}>
+            <Button disabled={disabled} onClick={handleClearClicked} variant={'icon'}>
               <IconClose color={colorIconClose} height={20} width={20} />
             </Button>
           )}
           {isTogglePasswordInput && (
             <Button
-              variant={'icon'}
               disabled={disabled}
               type={'button'}
               onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              variant={'icon'}
             >
               {isPasswordVisible ? (
                 <IconEyeOutline color={colorIconEye} height={20} width={20} />
