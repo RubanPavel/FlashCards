@@ -1,4 +1,4 @@
-import {ChangeEvent, ComponentPropsWithoutRef, FocusEvent, forwardRef, useState} from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, FocusEvent, forwardRef, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { IconClose } from '@/components/ui/input/assets/IconClose'
@@ -20,7 +20,10 @@ export type Props = {
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
-  ({ className, disabled, errorMessage, label, onChangeValue, type, value, onBlur, ...rest }, ref) => {
+  (
+    { className, disabled, errorMessage, label, onBlur, onChangeValue, type, value, ...rest },
+    ref
+  ) => {
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
 
@@ -29,7 +32,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     }
 
     function handleInputBlurred(e: FocusEvent<HTMLInputElement>) {
-        onBlur?.(e)
+      onBlur?.(e)
       setIsInputFocused(false)
     }
 
@@ -50,11 +53,11 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     const colorIconEye = disabled ? 'var(--color-dark-300)' : 'var(--color-light-100)'
     const colorIconClose = isInputFocused && isDirtyInput ? 'var(--color-light-100)' : 'transparent'
 
-      const classNameWrapper = clsx(s.wrapper, {
-          [s.activeWrapper]: isInputFocused && isDirtyInput,
-          [s.errorWrapper]: errorMessage && !isInputFocused,
-          [s.focusWrapper]: isInputFocused && !isDirtyInput,
-      })
+    const classNameWrapper = clsx(s.wrapper, {
+      [s.activeWrapper]: isInputFocused && isDirtyInput,
+      [s.errorWrapper]: errorMessage && !isInputFocused,
+      [s.focusWrapper]: isInputFocused && !isDirtyInput,
+    })
 
     return (
       <div aria-disabled={disabled} className={`${s.root} ${className}`}>
@@ -68,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             <IconSearch className={s.searchIcon} color={colorIconSearch} height={20} width={20} />
           )}
           <input
-              {...rest}
+            {...rest}
             className={clsx(s.input, errorMessage && s.errorInput)}
             disabled={disabled}
             onBlur={handleInputBlurred}
@@ -79,15 +82,20 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             value={value}
           />
           {isShowSearchInputClearButton && (
-            <Button type={'button'} disabled={disabled} onClick={handleClearClicked} variant={'icon'}>
+            <Button
+              disabled={disabled}
+              onClick={handleClearClicked}
+              type={'button'}
+              variant={'icon'}
+            >
               <IconClose color={colorIconClose} height={20} width={20} />
             </Button>
           )}
           {isTogglePasswordInput && (
             <Button
-                type={'button'}
               disabled={disabled}
               onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              type={'button'}
               variant={'icon'}
             >
               {isPasswordVisible ? (

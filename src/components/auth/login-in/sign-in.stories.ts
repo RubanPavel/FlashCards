@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+
 import { SignIn } from '@/components/auth/login-in/sign-in'
 
 const meta = {

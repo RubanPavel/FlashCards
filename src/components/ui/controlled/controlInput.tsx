@@ -17,7 +17,7 @@ export const ControlInput = <T extends FieldValues>({
   ...rest
 }: Props<T>) => {
   const {
-    field: { onChange, value, onBlur },
+    field: { onBlur, onChange, value },
   } = useController({
     control,
     defaultValue,
@@ -28,6 +28,13 @@ export const ControlInput = <T extends FieldValues>({
   })
 
   return (
-    <Input {...rest} value={value} errorMessage={errorMessage} label={label} onChangeValue={onChange} onBlur={onBlur}/>
+    <Input
+      {...rest}
+      errorMessage={errorMessage}
+      label={label}
+      onBlur={onBlur}
+      onChangeValue={onChange}
+      value={value}
+    />
   )
 }
