@@ -4,11 +4,9 @@ import { clsx } from 'clsx'
 
 import s from './tables.module.scss'
 
-import { Typography } from '../typography'
+export type TableProps = ComponentProps<'table'>
 
-export type RootProps = ComponentProps<'table'>
-
-export const Root: FC<RootProps> = ({ className, ...rest }) => {
+export const Table: FC<TableProps> = ({ className, ...rest }) => {
   const classNames = {
     table: clsx(className, s.table),
   }
@@ -16,27 +14,27 @@ export const Root: FC<RootProps> = ({ className, ...rest }) => {
   return <table className={classNames.table} {...rest} />
 }
 
-export type HeadProps = ComponentProps<'thead'>
+export type TableHeadProps = ComponentProps<'thead'>
 
-export const Head: FC<HeadProps> = props => {
+export const TableHead: FC<TableHeadProps> = props => {
   return <thead {...props} />
 }
 
-export type BodyProps = ComponentProps<'tbody'>
+export type TableBodyProps = ComponentProps<'tbody'>
 
-export const Body: FC<BodyProps> = props => {
+export const TableBody: FC<TableBodyProps> = props => {
   return <tbody {...props} />
 }
 
-export type RowProps = ComponentProps<'tr'>
+export type TableRowProps = ComponentProps<'tr'>
 
-export const Row: FC<RowProps> = props => {
+export const TableRow: FC<TableRowProps> = props => {
   return <tr {...props} />
 }
 
-export type HeadCellProps = ComponentProps<'th'>
+export type TableHeadCellProps = ComponentProps<'th'>
 
-export const HeadCell: FC<HeadCellProps> = ({ className, ...rest }) => {
+export const TableHeadCell: FC<TableHeadCellProps> = ({ className, ...rest }) => {
   const classNames = {
     headCell: clsx(className, s.headCell),
   }
@@ -44,42 +42,12 @@ export const HeadCell: FC<HeadCellProps> = ({ className, ...rest }) => {
   return <th className={classNames.headCell} {...rest} />
 }
 
-export type CellProps = ComponentProps<'td'>
+export type TableCellProps = ComponentProps<'td'>
 
-export const Cell: FC<CellProps> = ({ className, ...rest }) => {
+export const TableCell: FC<TableCellProps> = ({ className, ...rest }) => {
   const classNames = {
     cell: clsx(className, s.tableCell),
   }
 
   return <td className={classNames.cell} {...rest} />
-}
-
-export const Empty: FC<ComponentProps<'div'> & { mb?: string; mt?: string }> = ({
-  className,
-  mb,
-  mt = '89px',
-}) => {
-  const classNames = {
-    empty: clsx(className, s.empty),
-  }
-
-  return (
-    <Typography
-      className={classNames.empty}
-      style={{ marginBottom: mb, marginTop: mt }}
-      variant={'H2'}
-    >
-      Пока тут еще нет данных! :(
-    </Typography>
-  )
-}
-
-export const Table = {
-  Body,
-  Cell,
-  Empty,
-  Head,
-  HeadCell,
-  Root,
-  Row,
 }
