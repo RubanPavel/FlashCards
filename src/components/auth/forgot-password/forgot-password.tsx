@@ -24,8 +24,10 @@ export const ForgotPassword = ({ onSubmitValue, onHandleChange }: Props) => {
     control,
     formState: { errors },
     handleSubmit,
-    register,
   } = useForm<FormValues>({
+    defaultValues: {
+      email: ''
+    },
     resolver: zodResolver(loginSchema),
   })
 
@@ -41,7 +43,7 @@ export const ForgotPassword = ({ onSubmitValue, onHandleChange }: Props) => {
           Forgot your password?
         </Typography>
         <ControlInput
-          {...register('email')}
+          name={'email'}
           control={control}
           errorMessage={errors.email?.message}
           label={'email'}
