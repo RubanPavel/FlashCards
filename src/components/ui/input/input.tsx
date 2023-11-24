@@ -1,10 +1,10 @@
 import { ChangeEvent, ComponentPropsWithoutRef, FocusEvent, forwardRef, useState } from 'react'
 
+import { IconClose } from '@/components/assets/icons/IconClose'
+import { IconEyeOffOutline } from '@/components/assets/icons/IconEyeOffOutline'
+import { IconEyeOutline } from '@/components/assets/icons/IconEyeOutline'
+import { IconSearch } from '@/components/assets/icons/IconSearch'
 import { Button } from '@/components/ui/button'
-import { IconClose } from '@/components/ui/input/assets/IconClose'
-import { IconEyeOffOutline } from '@/components/ui/input/assets/IconEyeOffOutline'
-import { IconEyeOutline } from '@/components/ui/input/assets/IconEyeOutline'
-import { IconSearch } from '@/components/ui/input/assets/IconSearch'
 import { Typography } from '@/components/ui/typography/typography'
 import { clsx } from 'clsx'
 

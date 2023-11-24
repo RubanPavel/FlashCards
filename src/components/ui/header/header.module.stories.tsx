@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { IconLogOut } from '@/components/assets/icons/IconLogOut'
+import IconLogo from '@/components/assets/icons/Iconlogo'
 import AvatarRadix from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
-import { IconLogOut } from '@/components/ui/button/assets/IconLogOut'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import IconLogo from '@/components/ui/header/assets/Iconlogo'
 import { Typography } from '@/components/ui/typography'
 
 import s from '@/components/ui/dropdown-menu/dropdown-menu.module.scss'

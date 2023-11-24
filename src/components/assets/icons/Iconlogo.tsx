@@ -2,6 +2,7 @@ import { Ref, SVGProps, forwardRef, memo } from 'react'
 
 const SvgLogo = (
   {
+    className,
     color = `var(--color-light-100)`,
     fill = 'none',
     height = '36',
@@ -11,6 +12,7 @@ const SvgLogo = (
   ref: Ref<SVGSVGElement>
 ) => (
   <svg
+    className={className}
     fill={fill}
     height={height}
     ref={ref}
