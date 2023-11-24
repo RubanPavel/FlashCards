@@ -1,6 +1,11 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@//components/ui/button'
+import {
+  confirmPasswordSchema,
+  emailSchema,
+  passwordSchema,
+} from '@/components/auth/validate/validate'
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
@@ -9,31 +14,25 @@ import { z } from 'zod'
 
 import s from './sign-up.module.scss'
 
-const loginSchema = z
+export const signInFormSchema = z
   .object({
-    confirm: z
-      .string()
-      .min(3, { message: 'Password must contain at least 3 characters' })
-      .max(30, { message: 'Password must be at most 30 characters long' }),
-    email: z.string().email({ message: 'Invalid email address' }),
-    password: z
-      .string()
-      .min(3, { message: 'Password must contain at least 3 characters' })
-      .max(30, { message: 'Password must be at most 30 characters long' }),
+    confirm: confirmPasswordSchema,
+    email: emailSchema,
+    password: passwordSchema,
   })
   .refine(data => data.password === data.confirm, {
     message: "Passwords don't match",
     path: ['confirm'],
   })
 
-type FormValues = z.infer<typeof loginSchema>
+export type FormsValues = z.infer<typeof signInFormSchema>
 
 export const SignUp = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormValues>({
+  } = useForm<FormsValues>({
     defaultValues: {
       confirm: '',
       email: '',
@@ -41,12 +40,18 @@ export const SignUp = () => {
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(signInFormSchema),
   })
 
   // TODO
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+  const onSubmit = (data: FormsValues) => {
+    return data
+    // console.log(data)
+  }
+
+  // TODO
+  const handleNavButtonClicked = () => {
+    // return <Navigate to="/sign-in" />;
   }
 
   return (
@@ -80,9 +85,7 @@ export const SignUp = () => {
       <Typography className={s.message} variant={'body-2'}>
         Already have an account?
       </Typography>
-      {/* TODO fix Link*/}
-      {/* <Button variant={'link'} as={'Link'} to="/sign-in">Sign In</Button>*/}
-      <Button as={'a'} className={s.button} variant={'link'}>
+      <Button className={s.navButton} onClick={handleNavButtonClicked} variant={'link'}>
         Sign In
       </Button>
     </Card>
