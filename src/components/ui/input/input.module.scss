@@ -53,7 +53,7 @@
     width: 100%;
     padding: 0 0.75rem;
 
-    color: var(--color-dark-100);
+    color: var(--color-light-100);
 
     border: 1px solid var(--color-dark-300);
     border-radius: 2px;
@@ -126,6 +126,12 @@
         &::placeholder {
           color: var(--color-danger-300);
         }
+
+        &:hover {
+          &::placeholder {
+            color: var(--color-dark-100);
+          }
+        }
       }
 
       &[type='search']::-webkit-search-decoration,
@@ -159,7 +165,7 @@
   .errorMessage {
     @include text;
 
-    min-height: 1rem;
+    min-height: 1.5rem;
     font-size: var(--font-size-xs);
     color: var(--color-danger-300);
   }

@@ -1,13 +1,14 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@//components/ui/button'
+import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
+import { Typography } from '@/components/ui/typography'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Card } from '@/components/ui/card'
-import { Typography } from '@/components/ui/typography'
+
 import s from './forgot-password.module.scss'
-import {DevTool} from "@hookform/devtools";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -15,11 +16,11 @@ const loginSchema = z.object({
 
 type FormValues = z.infer<typeof loginSchema>
 type Props = {
-  onSubmitValue: (data: FormValues) => void
   onHandleChange: (value: boolean) => void
+  onSubmitValue: (data: FormValues) => void
 }
 
-export const ForgotPassword = ({ onSubmitValue, onHandleChange }: Props) => {
+export const ForgotPassword = ({ onHandleChange, onSubmitValue }: Props) => {
   const {
     control,
     formState: { errors },
@@ -58,8 +59,8 @@ export const ForgotPassword = ({ onSubmitValue, onHandleChange }: Props) => {
         <Typography
           as={'div'}
           className={s.textTry}
-          variant={'subtitle-1'}
           onClick={() => onHandleChange(true)}
+          variant={'subtitle-1'}
         >
           Try logging in
         </Typography>
