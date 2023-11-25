@@ -27,7 +27,7 @@ export const ForgotPassword = ({ onHandleChange, onSubmitValue }: Props) => {
     handleSubmit,
   } = useForm<FormValues>({
     defaultValues: {
-      email: ''
+      email: '',
     },
     resolver: zodResolver(loginSchema),
   })
@@ -44,10 +44,10 @@ export const ForgotPassword = ({ onHandleChange, onSubmitValue }: Props) => {
           Forgot your password?
         </Typography>
         <ControlInput
-          name={'email'}
           control={control}
           errorMessage={errors.email?.message}
           label={'email'}
+          name={'email'}
         />
         <Typography as={'div'} className={s.textEmailAddress} variant={'body-2'}>
           Enter your email address and we will send you further instructions
