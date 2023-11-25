@@ -1,5 +1,6 @@
 import { Ref, SVGProps, forwardRef, memo } from 'react'
-const SvgClose = (
+
+const SvgSearch = (
   {
     className,
     color = `var(--color-light-100)`,
@@ -22,13 +23,12 @@ const SvgClose = (
   >
     <path
       d={
-        'm13.4 12 4.3-4.3a1 1 0 1 0-1.4-1.4L12 10.6 7.7 6.3a1 1 0 0 0-1.4 1.4l4.3 4.3-4.3 4.3A1 1 0 0 0 7 18a1 1 0 0 0 .7-.3l4.3-4.3 4.3 4.3a1 1 0 1 0 1.4-1.4L13.4 12Z'
+        'm20.7 19.3-3.4-3.4a8 8 0 0 0 .4-9.3 8 8 0 1 0-1.8 10.7l3.4 3.4a1 1 0 1 0 1.4-1.4ZM5 11a6 6 0 1 1 12 0 6 6 0 0 1-12 0Z'
       }
       fill={color}
     />
   </svg>
 )
-const ForwardRef = forwardRef(SvgClose)
-const IconClose = memo(ForwardRef)
+const ForwardRef = forwardRef(SvgSearch)
 
-export default IconClose
+export const IconSearch = memo(ForwardRef)

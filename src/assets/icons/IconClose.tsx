@@ -1,5 +1,5 @@
 import { Ref, SVGProps, forwardRef, memo } from 'react'
-const SvgLogOut = (
+const SvgClose = (
   {
     className,
     color = `var(--color-light-100)`,
@@ -22,13 +22,12 @@ const SvgLogOut = (
   >
     <path
       d={
-        'M7 6a1 1 0 0 0 0-2H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h2a1 1 0 0 0 0-2H6V6h1Zm13.8 5.4-2.8-4a1 1 0 1 0-1.6 1.2L18 11h-8a1 1 0 0 0 0 2h8l-1.8 2.4a1 1 0 0 0 1.6 1.2l3-4a1 1 0 0 0 0-1.2Z'
+        'm13.4 12 4.3-4.3a1 1 0 1 0-1.4-1.4L12 10.6 7.7 6.3a1 1 0 0 0-1.4 1.4l4.3 4.3-4.3 4.3A1 1 0 0 0 7 18a1 1 0 0 0 .7-.3l4.3-4.3 4.3 4.3a1 1 0 1 0 1.4-1.4L13.4 12Z'
       }
       fill={color}
     />
   </svg>
 )
-const ForwardRef = forwardRef(SvgLogOut)
-const IconLogOut = memo(ForwardRef)
+const ForwardRef = forwardRef(SvgClose)
 
-export default IconLogOut
+export const IconClose = memo(ForwardRef)

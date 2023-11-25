@@ -33,6 +33,5 @@ const SvgEyeOutline = (
   </svg>
 )
 const ForwardRef = forwardRef(SvgEyeOutline)
-const IconEyeOutline = memo(ForwardRef)
 
-export default IconEyeOutline
+export const IconEyeOutline = memo(ForwardRef)

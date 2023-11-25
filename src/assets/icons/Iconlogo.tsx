@@ -44,6 +44,5 @@ const SvgLogo = (
   </svg>
 )
 const ForwardRef = forwardRef(SvgLogo)
-const IconLogo = memo(ForwardRef)
 
-export default IconLogo
+export const IconLogo = memo(ForwardRef)
