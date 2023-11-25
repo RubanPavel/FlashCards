@@ -10,4 +10,12 @@ export const passwordSchema = z
 
 export const confirmPasswordSchema = z.string().min(1, 'Confirm password is required')
 
-export const rememberMe = z.boolean().default(false)
+export const rememberMe = z.boolean().optional()
+
+export const nicknameSchema = z
+  .string()
+  .min(3, 'Nickname must contain at least 3 characters')
+  .max(30, 'Nickname must be at most 30 characters long')
+
+//Todo
+export const avatarSchema = z.string()
