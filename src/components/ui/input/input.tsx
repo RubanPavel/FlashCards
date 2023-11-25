@@ -1,10 +1,10 @@
 import { ChangeEvent, ComponentPropsWithoutRef, FocusEvent, forwardRef, useState } from 'react'
 
+import { IconClose } from '@/assets/icons/IconClose'
+import { IconEyeOffOutline } from '@/assets/icons/IconEyeOffOutline'
+import { IconEyeOutline } from '@/assets/icons/IconEyeOutline'
+import { IconSearch } from '@/assets/icons/IconSearch'
 import { Button } from '@/components/ui/button'
-import { IconClose } from '@/components/ui/input/assets/IconClose'
-import { IconEyeOffOutline } from '@/components/ui/input/assets/IconEyeOffOutline'
-import { IconEyeOutline } from '@/components/ui/input/assets/IconEyeOutline'
-import { IconSearch } from '@/components/ui/input/assets/IconSearch'
 import { Typography } from '@/components/ui/typography/typography'
 import { clsx } from 'clsx'
 
@@ -31,17 +31,23 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       onChangeValue?.(e.target.value)
     }
 
-    function handleInputBlurred(e: FocusEvent<HTMLInputElement>) {
-      onBlur?.(e)
+    function handleInputBlurred(
+      e: FocusEvent<HTMLInputElement & HTMLButtonElement & SVGSVGElement>
+    ) {
+      e.target instanceof HTMLInputElement && onBlur?.(e)
       setIsInputFocused(false)
     }
 
-    function handleFocus() {
+    function handleFocused() {
       setIsInputFocused(true)
     }
 
     const handleClearClicked = () => {
       onChangeValue?.('')
+    }
+
+    const toggleButtonClicked = () => {
+      setIsPasswordVisible(!isPasswordVisible)
     }
 
     const inputType = type === 'password' && isPasswordVisible ? 'text' : type
@@ -68,7 +74,14 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         )}
         <div aria-disabled={disabled} className={classNameWrapper}>
           {isSearchInput && (
-            <IconSearch className={s.searchIcon} color={colorIconSearch} height={20} width={20} />
+            <IconSearch
+              className={s.searchIcon}
+              color={colorIconSearch}
+              height={20}
+              onBlur={handleInputBlurred}
+              onFocus={handleFocused}
+              width={20}
+            />
           )}
           <input
             {...rest}
@@ -76,7 +89,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             disabled={disabled}
             onBlur={handleInputBlurred}
             onChange={handleInputChanged}
-            onFocus={handleFocus}
+            onFocus={handleFocused}
             ref={ref}
             type={inputType}
             value={value}
@@ -84,7 +97,9 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           {isShowSearchInputClearButton && (
             <Button
               disabled={disabled}
+              onBlur={handleInputBlurred}
               onClick={handleClearClicked}
+              onFocus={handleFocused}
               type={'button'}
               variant={'icon'}
             >
@@ -94,7 +109,9 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           {isTogglePasswordInput && (
             <Button
               disabled={disabled}
-              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              onBlur={handleInputBlurred}
+              onClick={toggleButtonClicked}
+              onFocus={handleFocused}
               type={'button'}
               variant={'icon'}
             >

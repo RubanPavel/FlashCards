@@ -1,0 +1,59 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  max-width: 420px;
+  padding: 33px 36px 29px;
+
+  background-color: var(--color-dark-700);
+
+  .avatarWrapper {
+    position: relative;
+    margin: 25px 0 6px;
+
+    .avatar {
+      min-width: 96px;
+      min-height: 96px;
+    }
+
+    .avatarButton {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      display: flex;
+
+      min-width: 24px;
+      min-height: 24px;
+
+      background: var(--color-dark-300);
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .infoWrapper {
+      position: relative;
+
+      .nicknameButton {
+        position: absolute;
+        right: -1.5rem;
+      }
+    }
+
+    .email {
+      padding-bottom: 16px;
+    }
+  }
+
+  .form {
+    width: 100%;
+    padding: 27px 0 20px;
+  }
+}
