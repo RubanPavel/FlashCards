@@ -85,11 +85,14 @@ export const DropDownMenuWithAvatar: Story = {
     return (
       <DropdownMenu trigger={args.trigger}>
         <DropDownItem className={s.DropdownMenuItem}>
-          <AvatarRadix
-            callback={() => {}}
-            imageUrl={'https://i.pinimg.com/736x/19/63/b2/1963b290b9856d479b432734029ff2ee.jpg'}
-            userName={'User'}
-          />
+          <div style={{ display: 'flex', gap: 20, marginRight: 15 }}>
+            <AvatarRadix
+              callback={() => {}}
+              className={s.Avatar}
+              imageUrl={'https://i.pinimg.com/736x/19/63/b2/1963b290b9856d479b432734029ff2ee.jpg'}
+              userName={'User'}
+            />
+          </div>
           <div>
             <div style={{ marginBottom: 2 }}>
               <Typography variant={'subtitle-2'}>User</Typography>

@@ -25,14 +25,14 @@ export const signInFormSchema = z
     path: ['confirm'],
   })
 
-export type FormsValues = z.infer<typeof signInFormSchema>
+export type FormValues = z.infer<typeof signInFormSchema>
 
 export const SignUp = () => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormsValues>({
+  } = useForm<FormValues>({
     defaultValues: {
       confirm: '',
       email: '',
@@ -44,9 +44,8 @@ export const SignUp = () => {
   })
 
   // TODO
-  const onSubmit = (data: FormsValues) => {
+  const onSubmit = (data: FormValues) => {
     return data
-    // console.log(data)
   }
 
   // TODO
@@ -79,7 +78,7 @@ export const SignUp = () => {
           type={'password'}
         />
         <Button className={s.button} fullWidth type={'submit'}>
-          Submit
+          Sign Up
         </Button>
       </form>
       <Typography className={s.message} variant={'body-2'}>
