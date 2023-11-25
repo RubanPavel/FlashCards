@@ -1,0 +1,30 @@
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  color: var(--color-light-100);
+  border: 1px solid var(--color-dark-300);
+}
+
+.headCell {
+  padding: 6px 24px;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-m);
+  text-align: left;
+
+  background-color: var(--color-dark-500);
+  border-bottom: 1px solid var(--color-dark-300);
+}
+
+.tableCell {
+  padding: 6px 24px;
+
+  font-size: var(--font-size-s);
+  line-height: var(--line-height-m);
+
+  background-color: var(--color-bg-table);
+  border-bottom: 1px solid var(--color-dark-300);
+
+}
+
