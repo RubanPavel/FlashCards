@@ -1,4 +1,4 @@
-import { IconLogOut } from '@/components/assets/icons/IconLogOut'
+import { IconLogOut } from '@/assets/icons/IconLogOut'
 import AvatarRadix from '@/components/ui/avatar/avatar'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
