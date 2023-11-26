@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, FocusEvent, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, FocusEvent, forwardRef, useState } from 'react'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconEyeOffOutline } from '@/assets/icons/IconEyeOffOutline'
@@ -15,21 +15,16 @@ export type Props = {
   errorMessage?: string
   label?: string
   name?: string
-  onChangeValue?: (value: string) => void
-  value?: string
+  setValue?: (value: string)=>void
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
   (
-    { className, disabled, errorMessage, label, onBlur, onChangeValue, type, value, ...rest },
+    { className, disabled, errorMessage, label, onBlur, onChange,setValue , type, value, ...rest },
     ref
   ) => {
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
-
-    function handleInputChanged(e: ChangeEvent<HTMLInputElement>) {
-      onChangeValue?.(e.target.value)
-    }
 
     function handleInputBlurred(
       e: FocusEvent<HTMLInputElement & HTMLButtonElement & SVGSVGElement>
@@ -43,7 +38,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     }
 
     const handleClearClicked = () => {
-      onChangeValue?.('')
+       setValue?.('')
     }
 
     const toggleButtonClicked = () => {
@@ -51,7 +46,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     }
 
     const inputType = type === 'password' && isPasswordVisible ? 'text' : type
-    const isDirtyInput = value?.length! > 0
+    const isDirtyInput =  typeof value === "string" ? value?.length > 0 : !!value
     const isSearchInput = type === 'search'
     const isTogglePasswordInput = type === 'password' || isPasswordVisible
     const isShowSearchInputClearButton = type === 'search' && isDirtyInput
@@ -85,12 +80,12 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           )}
           <input
             {...rest}
+            ref={ref}
             className={clsx(s.input, errorMessage && s.errorInput)}
             disabled={disabled}
             onBlur={handleInputBlurred}
-            onChange={handleInputChanged}
+            onChange={onChange}
             onFocus={handleFocused}
-            ref={ref}
             type={inputType}
             value={value}
           />

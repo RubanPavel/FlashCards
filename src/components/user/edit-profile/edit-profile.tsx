@@ -12,7 +12,9 @@ import s from './edit-profile.module.scss'
 
 import { EditProfileForm } from './edit-profile-form/'
 
-export type Variant = 'Avatar' | 'Nickname'
+//export type Variant = 'Avatar' | 'Nickname'
+
+export type Variant = 'Avatar'
 
 export const EditProfile = () => {
   const [editingVariant, setEditingVariant] = useState<Variant | null>(null)
@@ -49,13 +51,13 @@ export const EditProfile = () => {
         <div className={s.container}>
           <div className={s.infoWrapper}>
             <Typography variant={'H1'}>{User.name}</Typography>
-            <Button
-              className={s.nicknameButton}
-              onClick={() => handleEditClick('Nickname')}
-              variant={'icon'}
-            >
-              <IconEdit height={16} width={16} />
-            </Button>
+            {/*<Button*/}
+            {/*  className={s.nicknameButton}*/}
+            {/*  onClick={() => handleEditClick('Nickname')}*/}
+            {/*  variant={'icon'}*/}
+            {/*>*/}
+            {/*  <IconEdit height={16} width={16} />*/}
+            {/*</Button>*/}
           </div>
           <Typography className={s.email} variant={'body-2'}>
             {User.email}

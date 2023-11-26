@@ -1,62 +1,75 @@
 import { ComponentPropsWithoutRef } from 'react'
-import { useForm } from 'react-hook-form'
-
-import { User } from '@/assets/userDataForTest'
-import { nicknameSchema } from '@/components/auth/validate/validate'
+import {Controller, useForm} from 'react-hook-form'
+import {avatarSchema, emailSchema, nicknameSchema} from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
-import { ControlInput } from '@/components/ui/controlled/controlInput'
-import { Variant } from '@/components/user/edit-profile/edit-profile'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
 import s from './edit-pfofile-form.module.scss'
+import {Input} from "@/components/ui/input";
+import {ControlInput} from "@/components/ui/controlled/controlInput";
+import {User} from "@/assets/userDataForTest";
 
-export const editNicknameSchema = z.object({
-  Nickname: nicknameSchema,
+export const editEditProfileSchema = z.object({
+  avatar: avatarSchema,
+  nickname: nicknameSchema,
+  email: emailSchema,
 })
 
-export const editAvatarSchema = z.object({
-  Avatar: nicknameSchema,
-})
-
-type FormValue = z.infer<typeof editAvatarSchema | typeof editNicknameSchema>
+type FormValues = z.infer<typeof editEditProfileSchema>
 
 type Props = {
   onCancel: () => void
-  variant: Variant
 } & ComponentPropsWithoutRef<'form'>
 
-export const EditProfileForm = ({ onCancel, variant }: Props) => {
-  const defaultValue = variant === 'Nickname' ? User.name : User.avatar
-  const zodResolverSchema = variant === 'Nickname' ? editNicknameSchema : editAvatarSchema
-
+export const EditProfileForm = ({ onCancel }: Props) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormValue>({
+  } = useForm<FormValues>({
     defaultValues: {
-      [variant]: defaultValue,
+      avatar: undefined,
+      nickname: User.name,
+      email: User.email,
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    resolver: zodResolver(zodResolverSchema),
+    resolver: zodResolver(editEditProfileSchema),
   })
 
   // TODO
-  const onSubmit = (data: FormValue) => {
+  const onSubmit = (data: FormValues) => {
+    console.log(data)
     onCancel()
-
-    return data
   }
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <Controller
+          name={'avatar'}
+          control={control}
+          render={({ field }) => (
+              <Input
+                  type="file"
+                  onChange={(e) => field.onChange(e.target.files)}
+                  errorMessage={errors.avatar?.message}
+                  label={'Avatar'}
+              />
+          )}
+      />
       <ControlInput
         control={control}
-        errorMessage={errors[variant as keyof typeof errors]?.message}
-        label={variant}
-        name={variant}
+        errorMessage={errors.nickname?.message}
+        label={'Nickname'}
+        name={'nickname'}
+        type={'text'}
+      />
+      <ControlInput
+          control={control}
+          errorMessage={errors.email?.message}
+          label={'Email'}
+          name={'email'}
+          type={'text'}
       />
       <Button fullWidth type={'submit'}>
         Save Changes

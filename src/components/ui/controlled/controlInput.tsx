@@ -33,8 +33,8 @@ export const ControlInput = <T extends FieldValues>({
       errorMessage={errorMessage}
       label={label}
       onBlur={onBlur}
-      onChangeValue={onChange}
       value={value}
+      onChange={onChange}
     />
   )
 }
