@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@//components/ui/button'
+import { emailSchema } from '@/components/auth/validate/validate'
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
@@ -11,7 +12,7 @@ import { z } from 'zod'
 import s from './forgot-password.module.scss'
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: emailSchema,
 })
 
 type FormValues = z.infer<typeof loginSchema>
@@ -25,8 +26,10 @@ export const ForgotPassword = ({ onHandleChange, onSubmitValue }: Props) => {
     control,
     formState: { errors },
     handleSubmit,
-    register,
   } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+    },
     resolver: zodResolver(loginSchema),
   })
 
@@ -42,16 +45,16 @@ export const ForgotPassword = ({ onHandleChange, onSubmitValue }: Props) => {
           Forgot your password?
         </Typography>
         <ControlInput
-          {...register('email')}
           control={control}
           errorMessage={errors.email?.message}
           label={'email'}
+          name={'email'}
         />
         <Typography as={'div'} className={s.textEmailAddress} variant={'body-2'}>
           Enter your email address and we will send you further instructions
         </Typography>
         <Button fullWidth type={'submit'}>
-          Send instructions
+          <Typography variant={'subtitle-2'}>Send instructions</Typography>
         </Button>
         <Typography as={'div'} className={s.textAskOfPassword} variant={'body-2'}>
           Did you remember your password?
