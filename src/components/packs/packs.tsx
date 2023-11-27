@@ -102,7 +102,7 @@ export const Packs = () => {
         </Button>
       </div>
       <div className={s.controlPanel}>
-        <Input type={'search'} />
+        <Input name={'search'} type={'search'} />
         <TabSwitcher
           label={'Show packs cards'}
           onValueChange={() => {}}
