@@ -24,11 +24,20 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 
 import s from '@/components/packs/packs.module.scss'
 
+const dateOptions: Intl.DateTimeFormatOptions = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+}
+
 export const Packs = () => {
   const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
+  const { data } = useGetDecksQuery()
+  const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
 
   const columnsData = [
     { id: '1', title: 'Name' },
@@ -38,18 +47,9 @@ export const Packs = () => {
     { id: '5', title: '' },
   ]
 
-  const data = [
-    {
-      cards: 4,
-      createdBy: 'Ivan Ivanov',
-      id: '00',
-      lastUpdated: '25.11.2023',
-      name: 'Pack Name 1',
-    },
-  ]
-
   return (
     <div className={s.container}>
+      {isDeckCreated && <div>isDeckCreated.....</div>}
       <Header>
         <IconLogo />
         <div>
@@ -97,7 +97,11 @@ export const Packs = () => {
       </Header>
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button>
+        <Button
+          onClick={() => {
+            createDeck({ name: 'New world!' })
+          }}
+        >
           <Typography variant={'subtitle-1'}>Add new Pack</Typography>
         </Button>
       </div>
@@ -144,7 +148,7 @@ export const Packs = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map(d => (
+            {data?.items.map(d => (
               <TableRow key={d.id}>
                 <TableCell>
                   <Typography as={'p'} variant={'body-2'}>
@@ -153,17 +157,17 @@ export const Packs = () => {
                 </TableCell>
                 <TableCell>
                   <Typography as={'p'} variant={'body-2'}>
-                    {d.cards}
+                    {d.cardsCount}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography as={'p'} variant={'body-2'}>
-                    {d.lastUpdated}
+                    {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
                   </Typography>
                 </TableCell>
                 <TableCell>
                   <Typography as={'p'} variant={'body-2'}>
-                    {d.createdBy}
+                    {d.author.name}
                   </Typography>
                 </TableCell>
                 <TableCell>
