@@ -6,9 +6,12 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { Packs } from '@/components/packs'
+
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    /*element: <div>login</div>,*/
+    element: <Packs />,
     path: '/login',
   },
   {
