@@ -4,10 +4,11 @@ button {
 }
 
 .DropdownMenuContent {
-  background-color: var(--color-dark-500);
-  border-radius: 6px;
+  background-color: var(--color-dark-700);
+  border-radius: 4px;
   padding: 5px;
-  border: 1px solid var(--color-dark-100);
+  border: 1px solid var(--color-dark-500);
+  z-index: 11;
 }
 
 .iconTriangle {
@@ -15,9 +16,9 @@ button {
   height: 7px;
   transform: rotate(225deg);
   transform-origin: center center;
-  background-color: var(--color-dark-500);
-  border-left: 1px solid var(--color-dark-100);
-  border-top: 1px solid var(--color-dark-100);
+  background-color: var(--color-dark-700);
+  border-left: 1px solid var(--color-dark-500);
+  border-top: 1px solid var(--color-dark-500);
   position: absolute;
   top: -4px;
   left: -4px;
@@ -38,12 +39,6 @@ button {
   outline: none;
   svg {
     margin-right: 5px;
-  }
-  .iconAndDescription {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
   }
 }
 

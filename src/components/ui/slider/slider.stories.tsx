@@ -13,9 +13,14 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  args: {
+    value: [1, 10],
+  },
   render: args => {
-    const [, setValueSlider] = useState<number | number[]>(0)
+    const [valueSlider, setValueSlider] = useState<number[]>(args.value)
 
-    return <SliderRadix {...args} onValueChange={value => setValueSlider(value)} />
+    return (
+      <SliderRadix {...args} onValueChange={value => setValueSlider(value)} value={valueSlider} />
+    )
   },
 }

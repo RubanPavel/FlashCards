@@ -1,0 +1,39 @@
+.container {
+  padding: 0 10vw;
+}
+
+.iconAndDescription {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.avatar {
+  display: flex;
+  gap: 20px;
+  margin-right: 15px;
+}
+
+.packsList {
+  display: flex;
+  justify-content: space-between;
+  padding: 104px 0 5px 0;
+}
+
+.controlPanel {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: end;
+}
+
+.wrapperTable {
+  margin-top: 50px;
+}
+
+.lastCell {
+  display: flex;
+  justify-content: end;
+  gap: 7px;
+  cursor: pointer;
+}
