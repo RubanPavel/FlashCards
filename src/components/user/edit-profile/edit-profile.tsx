@@ -10,11 +10,14 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './edit-profile.module.scss'
 
-import { EditProfileForm } from './edit-profile-form/'
+import {EditProfileForm, Variant} from './edit-profile-form/'
 
-//export type Variant = 'Avatar' | 'Nickname'
-
-export type Variant = 'Avatar'
+//TODO
+export const formFieldsVariant = {
+    avatar: "avatar",
+    nickname: "nickname",
+    email: "email",
+} as const
 
 export const EditProfile = () => {
   const [editingVariant, setEditingVariant] = useState<Variant | null>(null)
@@ -38,7 +41,7 @@ export const EditProfile = () => {
         {!editingVariant && (
           <Button
             className={s.avatarButton}
-            onClick={() => handleEditClick('Avatar')}
+            onClick={() => handleEditClick(formFieldsVariant.avatar)}
             variant={'icon'}
           >
             <IconEdit height={16} width={16} />
@@ -51,13 +54,13 @@ export const EditProfile = () => {
         <div className={s.container}>
           <div className={s.infoWrapper}>
             <Typography variant={'H1'}>{User.name}</Typography>
-            {/*<Button*/}
-            {/*  className={s.nicknameButton}*/}
-            {/*  onClick={() => handleEditClick('Nickname')}*/}
-            {/*  variant={'icon'}*/}
-            {/*>*/}
-            {/*  <IconEdit height={16} width={16} />*/}
-            {/*</Button>*/}
+            <Button
+              className={s.nicknameButton}
+              onClick={() => handleEditClick(formFieldsVariant.nickname)}
+              variant={'icon'}
+            >
+              <IconEdit height={16} width={16} />
+            </Button>
           </div>
           <Typography className={s.email} variant={'body-2'}>
             {User.email}

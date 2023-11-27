@@ -30,6 +30,7 @@ export const ControlInput = <T extends FieldValues>({
   return (
     <Input
       {...rest}
+      name={name}
       errorMessage={errorMessage}
       label={label}
       onBlur={onBlur}
