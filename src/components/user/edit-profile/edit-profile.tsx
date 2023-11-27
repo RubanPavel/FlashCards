@@ -10,13 +10,13 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './edit-profile.module.scss'
 
-import {EditProfileForm, Variant} from './edit-profile-form/'
+import { EditProfileForm, Variant } from './edit-profile-form/'
 
 //TODO
 export const formFieldsVariant = {
-    avatar: "avatar",
-    nickname: "nickname",
-    email: "email",
+  avatar: 'avatar',
+  email: 'email',
+  nickname: 'nickname',
 } as const
 
 export const EditProfile = () => {
@@ -30,14 +30,15 @@ export const EditProfile = () => {
     setEditingVariant(null)
   }
 
+  const logoutButtonClicked = () => {
+    //TODO logout
+  }
+
   return (
     <Card className={s.card}>
       <Typography variant={'large'}>Personal Information</Typography>
-      {/*  TODO alt*/}
       <div className={s.avatarWrapper}>
         <AvatarRadix className={s.avatar} imageUrl={User.imageUrl} userName={User.name} />
-        {/*TODO*/}
-        {/*<img src={User.avatar} alt="avatar" />*/}
         {!editingVariant && (
           <Button
             className={s.avatarButton}
@@ -65,7 +66,7 @@ export const EditProfile = () => {
           <Typography className={s.email} variant={'body-2'}>
             {User.email}
           </Typography>
-          <Button className={s.logoutButton} variant={'secondary'}>
+          <Button className={s.logoutButton} onClick={logoutButtonClicked} variant={'secondary'}>
             <IconLogOut height={16} width={16} />
             Logout
           </Button>

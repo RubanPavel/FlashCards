@@ -1,43 +1,43 @@
 import { ComponentPropsWithoutRef } from 'react'
-import {Controller, useForm} from 'react-hook-form'
-import {avatarSchema, emailSchema, nicknameSchema, searchSchema} from '@/components/auth/validate/validate'
+import { Controller, useForm } from 'react-hook-form'
+
+import { User } from '@/assets/userDataForTest'
+import { avatarSchema, emailSchema, nicknameSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
+import { ControlInput } from '@/components/ui/controlled/controlInput'
+import { Input } from '@/components/ui/input'
+import { formFieldsVariant } from '@/components/user/edit-profile'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
 import s from './edit-pfofile-form.module.scss'
-import {Input} from "@/components/ui/input";
-import {ControlInput} from "@/components/ui/controlled/controlInput";
-import {User} from "@/assets/userDataForTest";
-import {formFieldsVariant} from "@/components/user/edit-profile";
 
 export const editEditProfileSchema = z.object({
   avatar: avatarSchema,
-  nickname: nicknameSchema,
   email: emailSchema,
-  search: searchSchema
+  nickname: nicknameSchema,
 })
 
 type FormValues = z.infer<typeof editEditProfileSchema>
 
-export type Variant = typeof formFieldsVariant[keyof typeof formFieldsVariant]
+export type Variant = (typeof formFieldsVariant)[keyof typeof formFieldsVariant]
 
 type Props = {
-    variant: Variant
   onCancel: () => void
+  variant: Variant
 } & ComponentPropsWithoutRef<'form'>
 
-export const EditProfileForm = ({ variant, onCancel }: Props) => {
+export const EditProfileForm = ({ onCancel, variant }: Props) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
-    setValue,
   } = useForm<FormValues>({
     defaultValues: {
       avatar: undefined,
-      nickname: User.name,
       email: User.email,
-      search: '',
+      nickname: User.name,
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -46,51 +46,50 @@ export const EditProfileForm = ({ variant, onCancel }: Props) => {
 
   // TODO
   const onSubmit = (data: FormValues) => {
-    console.log(data)
     onCancel()
+
+    return data
   }
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        {(variant === formFieldsVariant.avatar) && <Controller
-          name={"avatar"}
+      <DevTool control={control} />
+      {variant === formFieldsVariant.avatar && (
+        <Controller
           control={control}
+          name={'avatar'}
           render={({ field }) => (
-              <Input
-                  type="file"
-                  name={"avatar"}
-                  onChange={(e) => field.onChange(e.target.files)}
-                  errorMessage={errors.avatar?.message}
-                  label={'Avatar'}
-                  accept="image/jpeg, image/jpg, image/png, image/webp"
-                  size={5*1024*1024}
-              />
+            // TODO поправить ограничения по аватару
+            <Input
+              accept={'image/jpeg, image/jpg, image/png, image/webp'}
+              errorMessage={errors.avatar?.message}
+              label={'Avatar'}
+              name={'avatar'}
+              onChange={e => field.onChange(e.target.files)}
+              size={5 * 1024 * 1024}
+              type={'file'}
+            />
           )}
-      />}
-        {(variant === formFieldsVariant.nickname) && <ControlInput
-        control={control}
-        errorMessage={errors.nickname?.message}
-        label={'Nickname'}
-        name={'nickname'}
-        type={'text'}
-      />
-        }
-        {(variant === formFieldsVariant.email) && <ControlInput
+        />
+      )}
+      {variant === formFieldsVariant.nickname && (
+        <ControlInput
+          control={control}
+          errorMessage={errors.nickname?.message}
+          label={'Nickname'}
+          name={'nickname'}
+          type={'text'}
+        />
+      )}
+      {variant === formFieldsVariant.email && (
+        <ControlInput
           control={control}
           errorMessage={errors.email?.message}
           label={'Email'}
           name={'email'}
           type={'text'}
         />
-        }
-      <ControlInput
-          control={control}
-          errorMessage={errors.search?.message}
-          label={'Search'}
-          name={'search'}
-          type={'search'}
-          setValue={setValue}
-      />
+      )}
       <Button fullWidth type={'submit'}>
         Save Changes
       </Button>

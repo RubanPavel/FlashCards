@@ -1,28 +1,42 @@
-import {ComponentPropsWithoutRef, FocusEvent, forwardRef, useState} from 'react'
+import { ComponentPropsWithoutRef, FocusEvent, forwardRef, useState } from 'react'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconEyeOffOutline } from '@/assets/icons/IconEyeOffOutline'
 import { IconEyeOutline } from '@/assets/icons/IconEyeOutline'
 import { IconSearch } from '@/assets/icons/IconSearch'
-import {Button} from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography/typography'
-import {clsx} from 'clsx'
+import { clsx } from 'clsx'
+
 import s from './input.module.scss'
 
-export type Props<T extends string ='search'> = {
-  className?: string;
-  errorMessage?: string;
-  label?: string;
-  name: T;
-  setValue?: (name: T, value: string) => void;
-} & ComponentPropsWithoutRef<'input'>;
+//TODO setValueSearch сделать более универсальной
+export type Props = {
+  className?: string
+  errorMessage?: string
+  label?: string
+  name: string
+  setValue?: (name: string, value: string) => void
+} & ComponentPropsWithoutRef<'input'>
 
-export const Input = forwardRef(
-    <T extends string = 'search'>(
-        props: Props<T>,
-        ref: HTMLInputElement
-    ) => {
-      const { name, className, disabled, errorMessage, label, onBlur, onChange, setValue, type, value, ...rest } = props
+export const Input = forwardRef<HTMLInputElement, Props>(
+  (
+    {
+      className,
+      disabled,
+      errorMessage,
+      label,
+      name,
+      onBlur,
+      onChange,
+      setValue,
+      type,
+      value,
+      ...rest
+    },
+    ref
+  ) => {
+    // const { name, className, disabled, errorMessage, label, onBlur, onChange, setValue, type, value, ...rest } = props
 
     const [isInputFocused, setIsInputFocused] = useState(false)
     const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
@@ -39,7 +53,7 @@ export const Input = forwardRef(
     }
 
     const handleClearClicked = () => {
-      setValue?.(name, '');
+      setValue?.(name, '')
     }
 
     const toggleButtonClicked = () => {
@@ -47,7 +61,7 @@ export const Input = forwardRef(
     }
 
     const inputType = type === 'password' && isPasswordVisible ? 'text' : type
-    const isDirtyInput =  typeof value === "string" ? value?.length > 0 : !!value
+    const isDirtyInput = typeof value === 'string' ? value?.length > 0 : !!value
     const isSearchInput = type === 'search'
     const isTogglePasswordInput = type === 'password' || isPasswordVisible
     const isShowSearchInputClearButton = type === 'search' && isDirtyInput
@@ -81,13 +95,13 @@ export const Input = forwardRef(
           )}
           <input
             {...rest}
-            ref={ref}
-            name={name}
             className={clsx(s.input, errorMessage && s.errorInput)}
             disabled={disabled}
+            name={name}
             onBlur={handleInputBlurred}
             onChange={onChange}
             onFocus={handleFocused}
+            ref={ref}
             type={inputType}
             value={value}
           />

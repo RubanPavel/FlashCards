@@ -1,7 +1,8 @@
+import { ChangeEvent, useState } from 'react'
+
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Input } from './'
-import {ChangeEvent, useState} from "react";
 
 const meta: Meta = {
   component: Input,
@@ -20,7 +21,7 @@ export const Primary: Story = ({ ...args }) => {
     setInputValue(e.currentTarget.value)
   }
 
-  return <Input {...args} name={'primary'} value={inputValue} onChange={onChange}/>
+  return <Input {...args} name={'primary'} onChange={onChange} value={inputValue} />
 }
 
 Primary.args = {
@@ -40,7 +41,9 @@ export const SearchInput: Story = ({ ...args }) => {
     name === 'search' && setInputValue(value)
   }
 
-  return <Input {...args} name={'search'} value={inputValue} onChange={onChange} setValue={setValue}/>
+  return (
+    <Input {...args} name={'search'} onChange={onChange} setValue={setValue} value={inputValue} />
+  )
 }
 
 SearchInput.args = {
@@ -55,14 +58,21 @@ export const PasswordInput: Story = ({ ...args }) => {
     setInputValue(e.currentTarget.value)
   }
 
-  return <Input {...args} name={'password'} setValue={setInputValue} type={'password'} value={inputValue}
-                onChange={onChange}/>
+  return (
+    <Input
+      {...args}
+      name={'password'}
+      onChange={onChange}
+      setValue={setInputValue}
+      type={'password'}
+      value={inputValue}
+    />
+  )
 }
 
 PasswordInput.args = {
   disabled: false,
   label: 'Input',
-  type: 'password',
   placeholder: 'Input',
+  type: 'password',
 }
-
