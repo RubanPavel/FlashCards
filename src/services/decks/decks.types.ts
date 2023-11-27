@@ -19,15 +19,17 @@ export type DecksResponseItemsAuthor = {
 export type Deck = {
   author: DecksResponseItemsAuthor
   cardsCount: number
-  cover?: any
+  cover?: null | string
   created: string
   id: string
   isBlocked?: any
   isDeleted?: any
-  isPrivate: boolean
+  isPrivate?: boolean
   name: string
   rating: number
   shots: number
   updated: string
   userId: string
 }
+
+export type CreateDeckType = Pick<Deck, 'cover' | 'isPrivate' | 'name'>

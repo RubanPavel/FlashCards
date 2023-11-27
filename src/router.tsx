@@ -1,11 +1,11 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
-import { Hello } from '@/services/Hello'
-import { useGetDecksQuery } from '@/services/decks/base-api'
+import { Packs } from '@/components/packs'
+import { useGetDecksQuery } from '@/services/decks/decks.service'
 
 const router = createBrowserRouter([
   {
-    element: <Hello />,
+    element: <Packs />,
     path: '/',
   },
 ])
