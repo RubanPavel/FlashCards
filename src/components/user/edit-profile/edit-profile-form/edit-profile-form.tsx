@@ -1,25 +1,27 @@
 import { ComponentPropsWithoutRef } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { User } from '@/assets/userDataForTest'
-import { nicknameSchema } from '@/components/auth/validate/validate'
+import { avatarSchema, emailSchema, nicknameSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
-import { Variant } from '@/components/user/edit-profile/edit-profile'
+import { Input } from '@/components/ui/input'
+import { formFieldsVariant } from '@/components/user/edit-profile'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './edit-pfofile-form.module.scss'
 
-export const editNicknameSchema = z.object({
-  Nickname: nicknameSchema,
+export const editEditProfileSchema = z.object({
+  avatar: avatarSchema,
+  email: emailSchema,
+  nickname: nicknameSchema,
 })
 
-export const editAvatarSchema = z.object({
-  Avatar: nicknameSchema,
-})
+type FormValues = z.infer<typeof editEditProfileSchema>
 
-type FormValue = z.infer<typeof editAvatarSchema | typeof editNicknameSchema>
+export type Variant = (typeof formFieldsVariant)[keyof typeof formFieldsVariant]
 
 type Props = {
   onCancel: () => void
@@ -27,24 +29,23 @@ type Props = {
 } & ComponentPropsWithoutRef<'form'>
 
 export const EditProfileForm = ({ onCancel, variant }: Props) => {
-  const defaultValue = variant === 'Nickname' ? User.name : User.avatar
-  const zodResolverSchema = variant === 'Nickname' ? editNicknameSchema : editAvatarSchema
-
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormValue>({
+  } = useForm<FormValues>({
     defaultValues: {
-      [variant]: defaultValue,
+      avatar: undefined,
+      email: User.email,
+      nickname: User.name,
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
-    resolver: zodResolver(zodResolverSchema),
+    resolver: zodResolver(editEditProfileSchema),
   })
 
   // TODO
-  const onSubmit = (data: FormValue) => {
+  const onSubmit = (data: FormValues) => {
     onCancel()
 
     return data
@@ -52,12 +53,43 @@ export const EditProfileForm = ({ onCancel, variant }: Props) => {
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-      <ControlInput
-        control={control}
-        errorMessage={errors[variant as keyof typeof errors]?.message}
-        label={variant}
-        name={variant}
-      />
+      <DevTool control={control} />
+      {variant === formFieldsVariant.avatar && (
+        <Controller
+          control={control}
+          name={'avatar'}
+          render={({ field }) => (
+            // TODO поправить ограничения по аватару
+            <Input
+              accept={'image/jpeg, image/jpg, image/png, image/webp'}
+              errorMessage={errors.avatar?.message}
+              label={'Avatar'}
+              name={'avatar'}
+              onChange={e => field.onChange(e.target.files)}
+              size={5 * 1024 * 1024}
+              type={'file'}
+            />
+          )}
+        />
+      )}
+      {variant === formFieldsVariant.nickname && (
+        <ControlInput
+          control={control}
+          errorMessage={errors.nickname?.message}
+          label={'Nickname'}
+          name={'nickname'}
+          type={'text'}
+        />
+      )}
+      {variant === formFieldsVariant.email && (
+        <ControlInput
+          control={control}
+          errorMessage={errors.email?.message}
+          label={'Email'}
+          name={'email'}
+          type={'text'}
+        />
+      )}
       <Button fullWidth type={'submit'}>
         Save Changes
       </Button>
