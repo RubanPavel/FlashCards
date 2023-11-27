@@ -23,7 +23,11 @@ export const TabSwitcher = ({ className, label, tabs, ...rest }: TabSwitcherProp
       <Typography className={s.title} variant={'body-2'}>
         {label}
       </Typography>
-      <TabsRadixUI.Root className={`${s.root} ${className}`} {...rest}>
+      <TabsRadixUI.Root
+        className={`${s.root} ${className}`}
+        defaultValue={`${tabs[1].value}`}
+        {...rest}
+      >
         <TabsRadixUI.List className={s.list}>
           {tabs.map(tab => {
             return (
@@ -33,7 +37,9 @@ export const TabSwitcher = ({ className, label, tabs, ...rest }: TabSwitcherProp
                 key={tab.value}
                 value={tab.value}
               >
-                {tab.title}
+                <Typography style={{ whiteSpace: 'nowrap' }} variant={'body-1'}>
+                  {tab.title}
+                </Typography>
               </TabsRadixUI.Trigger>
             )
           })}
