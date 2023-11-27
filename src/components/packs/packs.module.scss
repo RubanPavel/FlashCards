@@ -37,3 +37,15 @@
   gap: 7px;
   cursor: pointer;
 }
+
+.iconVector {
+  padding: 2px;
+  svg {
+    display: inline-grid;
+    place-content: center;
+  }
+}
+
+.onChangeVector {
+  cursor: pointer;
+}
