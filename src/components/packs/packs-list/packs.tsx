@@ -14,6 +14,7 @@ import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { IconVectorUp } from '@/assets/icons/IconVectorUp'
 // import { Header } from '@/components/ui/header'
+// import { HeaderPack } from '@/components/packs/common/Header'
 import { Input } from '@/components/ui/input'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
@@ -28,7 +29,7 @@ import {
 import { Typography } from '@/components/ui/typography'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 
-import s from '@/components/packs/packs.module.scss'
+import s from './packs.module.scss'
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
@@ -62,16 +63,6 @@ export const Packs = () => {
     { id: '4', title: 'Create by' },
     { id: '5', title: '' },
   ]
-
-  // const data = [
-  //   {
-  //     cards: 4,
-  //     createdBy: 'Ivan Ivanov',
-  //     id: '00',
-  //     lastUpdated: '25.11.2023',
-  //     name: 'Pack Name 1',
-  //   },
-  // ]
 
   return (
     <div className={s.container}>
@@ -122,6 +113,7 @@ export const Packs = () => {
       {/*    </DropdownMenu>*/}
       {/*  </div>*/}
       {/*</Header>*/}
+      {/*<HeaderPack />*/}
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Button

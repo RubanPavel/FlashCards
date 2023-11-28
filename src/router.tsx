@@ -8,7 +8,8 @@ import {
 
 import { useAuth } from '@/assets/isAuthContext'
 import { ContentLayout } from '@/components/layout/content-layout'
-import { Packs } from '@/components/packs'
+import { PackFriend } from "@/components/packs/friends-pack"
+import { Packs } from '@/components/packs/packs-list'
 
 import { MyProfile } from './components/user/my-profile'
 
@@ -16,6 +17,10 @@ const publicRoutes: RouteObject[] = [
   {
     element: <div>login</div>,
     path: '/login',
+  },
+  {
+    element: <PackFriend />,
+    path: '/1',
   },
   {
     element: <div>sign-up</div>,
@@ -35,6 +40,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <Packs />,
     path: '/',
+  },
+  {
+    element: <PackFriend />,
+    path: '/1',
   },
   {
     element: <MyProfile />,

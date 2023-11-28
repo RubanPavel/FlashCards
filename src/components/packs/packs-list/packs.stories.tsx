@@ -1,8 +1,18 @@
-import { Packs } from '@/components/packs/packs'
+import { Provider } from 'react-redux'
+
+import { Packs } from './'
+import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: Packs,
+  decorators: [
+    Story => (
+      <Provider store={store}>
+        <Story />
+      </Provider>
+    ),
+  ],
   tags: ['auto-docs'],
   title: 'Components/Packs',
 } satisfies Meta<typeof Packs>
