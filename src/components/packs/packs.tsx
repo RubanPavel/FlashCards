@@ -27,6 +27,8 @@ import { Typography } from '@/components/ui/typography'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 
 import s from '@/components/packs/packs.module.scss'
+import {IconVectorDown} from "@/assets/icons/IconVectorDown";
+import {IconVectorUp} from "@/assets/icons/IconVectorUp";
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
@@ -36,6 +38,15 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 
 export const Packs = () => {
   const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
+  const [sort, setSort] = useState('lastUpdate-asc')
+
+  const iconVector = sort === 'lastUpdate-asc' ? <IconVectorDown/> : <IconVectorUp/>
+
+  const onVectorChange = () => {
+    if (sort === 'lastUpdate-asc') setSort('lastUpdate-desc')
+    if (sort === 'lastUpdate-desc') setSort('lastUpdate-asc')
+    return sort
+  }
   const { data } = useGetDecksQuery()
   const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
 
@@ -46,6 +57,16 @@ export const Packs = () => {
     { id: '4', title: 'Create by' },
     { id: '5', title: '' },
   ]
+
+  // const data = [
+  //   {
+  //     cards: 4,
+  //     createdBy: 'Ivan Ivanov',
+  //     id: '00',
+  //     lastUpdated: '25.11.2023',
+  //     name: 'Pack Name 1',
+  //   },
+  // ]
 
   return (
     <div className={s.container}>
@@ -140,9 +161,19 @@ export const Packs = () => {
             <TableRow>
               {columnsData.map(el => (
                 <TableHeadCell key={el.id}>
-                  <Typography as={'h3'} variant={'subtitle-2'}>
-                    {el.title}
-                  </Typography>
+                  {el.title === 'Last Updated'
+                    ? <>
+                      <Typography className={s.onChangeVector} onClick={onVectorChange} variant={'subtitle-2'}>
+                        {el.title}
+                      </Typography>
+                      <span className={s.iconVector}>
+                        {iconVector}
+                      </span>
+                    </>
+                    : <Typography variant={'subtitle-2'}>
+                      {el.title}
+                    </Typography>
+                  }
                 </TableHeadCell>
               ))}
             </TableRow>
