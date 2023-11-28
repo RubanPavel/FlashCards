@@ -1,4 +1,4 @@
-import {Ref, SVGProps, forwardRef, memo} from 'react'
+import { Ref, SVGProps, forwardRef, memo } from 'react'
 
 const Svg = (
   {

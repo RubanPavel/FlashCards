@@ -11,7 +11,7 @@ import { Typography } from '@/components/ui/typography'
 import s from './my-profile.module.scss'
 
 import { EditProfileForm, Variant } from './edit-profile-form/'
-import {useAuth} from "@/assets/isAuthContext";
+import { useAuth } from '@/assets/isAuthContext'
 
 //TODO
 export const formFieldsVariant = {
@@ -23,7 +23,7 @@ export const formFieldsVariant = {
 export const MyProfile = () => {
   const [editingVariant, setEditingVariant] = useState<Variant | null>(null)
   //TODO удалить
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated } = useAuth()
 
   const handleEditClick = (variant: Variant) => {
     setEditingVariant(variant)
@@ -34,7 +34,7 @@ export const MyProfile = () => {
   }
 
   const logoutButtonClicked = () => {
-    setIsAuthenticated (false)
+    setIsAuthenticated(false)
   }
 
   return (
