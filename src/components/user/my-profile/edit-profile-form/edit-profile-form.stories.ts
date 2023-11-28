@@ -10,7 +10,7 @@ const meta = {
   },
   component: EditProfileForm,
   tags: ['autodocs'],
-  title: 'User/EditProfile/EditProfileForm',
+  title: 'User/MyProfile/EditProfileForm',
 } satisfies Meta<typeof EditProfileForm>
 
 export default meta

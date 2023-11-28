@@ -6,7 +6,7 @@ import { avatarSchema, emailSchema, nicknameSchema } from '@/components/auth/val
 import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
-import { formFieldsVariant } from '@/components/user/edit-profile'
+import { formFieldsVariant } from '@/components/user/my-profile'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'

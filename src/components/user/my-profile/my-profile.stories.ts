@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { EditProfile } from './'
+import { MyProfile } from './'
 
 const meta = {
-  component: EditProfile,
+  component: MyProfile,
   tags: ['autodocs'],
-  title: 'User/EditProfile',
-} satisfies Meta<typeof EditProfile>
+  title: 'User/MyProfile',
+} satisfies Meta<typeof MyProfile>
 
 export default meta
 type Story = StoryObj<typeof meta>

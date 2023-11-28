@@ -6,45 +6,73 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { Packs } from '@/components/packs'
+import { useAuth } from '@/assets/isAuthContext'
+import { ContentLayout } from '@/components/layout/content-layout'
+import { PackFriend } from '@/components/packs/friends-pack'
+import { Packs } from '@/components/packs/packs-list'
+
+import { MyProfile } from './components/user/my-profile'
 
 const publicRoutes: RouteObject[] = [
   {
-    /*element: <div>login</div>,*/
-    element: <Packs />,
+    element: <div>login</div>,
     path: '/login',
+  },
+  {
+    element: <PackFriend />,
+    path: '/1',
   },
   {
     element: <div>sign-up</div>,
     path: '/sign-up',
   },
   {
-    element: <div>forgot password</div>,
+    element: <div>forgot-password</div>,
     path: '/forgot-password',
   },
   {
-    element: <div>check email</div>,
+    element: <div>check-email</div>,
     path: '/check-email',
   },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <div>main</div>,
+    element: <Packs />,
     path: '/',
   },
   {
-    element: <div>edit profile</div>,
-    path: '/edit-profile',
+    element: <PackFriend />,
+    path: '/1',
+  },
+  {
+    element: <MyProfile />,
+    path: '/my-profile',
+  },
+]
+
+const notFoundRout: RouteObject[] = [
+  {
+    element: <div>404</div>,
+    path: '*',
   },
 ]
 
 const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      {
+        children: publicRoutes,
+        element: <PublicRoutes />,
+      },
+      ...notFoundRout,
+    ],
+    element: <ContentLayout />,
   },
-  ...publicRoutes,
 ])
 
 export const Router = () => {
@@ -52,8 +80,15 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  //TODO актуализировать авторизацию
-  const isAuthenticated = false
+  //TODO удалить useAuth
+  const { isAuthenticated } = useAuth()
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
+}
+
+function PublicRoutes() {
+  //TODO удалить useAuth
+  const { isAuthenticated } = useAuth()
+
+  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }
