@@ -1,8 +1,9 @@
 import { Provider } from 'react-redux'
 
-import { PackFriend } from "./"
 import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
+
+import { PackFriend } from './'
 
 const meta = {
   component: PackFriend,

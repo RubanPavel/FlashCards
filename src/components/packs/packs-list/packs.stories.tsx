@@ -1,8 +1,9 @@
 import { Provider } from 'react-redux'
 
-import { Packs } from './'
 import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
+
+import { Packs } from './'
 
 const meta = {
   component: Packs,

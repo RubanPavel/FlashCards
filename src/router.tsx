@@ -8,7 +8,7 @@ import {
 
 import { useAuth } from '@/assets/isAuthContext'
 import { ContentLayout } from '@/components/layout/content-layout'
-import { PackFriend } from "@/components/packs/friends-pack"
+import { PackFriend } from '@/components/packs/friends-pack'
 import { Packs } from '@/components/packs/packs-list'
 
 import { MyProfile } from './components/user/my-profile'

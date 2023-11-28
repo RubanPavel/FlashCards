@@ -8,7 +8,7 @@ import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparat
 import { Header } from '@/components/ui/header'
 import { Typography } from '@/components/ui/typography'
 
-import s from "./packFriend.module.scss"
+import s from './packFriend.module.scss'
 
 export const HeaderPack = () => {
   return (
