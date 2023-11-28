@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { Meta, StoryObj } from '@storybook/react'
 
@@ -15,40 +15,64 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = ({ ...args }) => {
-  const [inputValue, setInputValue] = useState<string>(args.value || '')
+  const [inputValue, setInputValue] = useState<string>('')
 
-  return <Input {...args} onChangeValue={setInputValue} value={inputValue} />
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value)
+  }
+
+  return <Input {...args} name={'primary'} onChange={onChange} value={inputValue} />
 }
 
 Primary.args = {
   disabled: false,
   label: 'Input',
   placeholder: 'Input',
-  value: '',
-}
-
-export const InputWithIconRight: Story = ({ ...args }) => {
-  const [inputValue, setInputValue] = useState<string>(args.value || '')
-
-  return <Input {...args} onChangeValue={setInputValue} type={'password'} value={inputValue} />
-}
-
-InputWithIconRight.args = {
-  disabled: false,
-  label: 'Input',
-  placeholder: 'Input',
-  value: '',
+  type: 'text',
 }
 
 export const SearchInput: Story = ({ ...args }) => {
-  const [inputValue, setInputValue] = useState<string>(args.value || '')
+  const [inputValue, setInputValue] = useState<string>('')
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value)
+  }
 
-  return <Input {...args} onChangeValue={setInputValue} type={'search'} value={inputValue} />
+  const setValue = (name: string, value: string) => {
+    name === 'search' && setInputValue(value)
+  }
+
+  return (
+    <Input {...args} name={'search'} onChange={onChange} setValue={setValue} value={inputValue} />
+  )
 }
 
 SearchInput.args = {
   disabled: false,
   label: 'Input',
   placeholder: 'Input',
-  value: '',
+  type: 'search',
+}
+export const PasswordInput: Story = ({ ...args }) => {
+  const [inputValue, setInputValue] = useState<string>(args.value || '')
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value)
+  }
+
+  return (
+    <Input
+      {...args}
+      name={'password'}
+      onChange={onChange}
+      setValue={setInputValue}
+      type={'password'}
+      value={inputValue}
+    />
+  )
+}
+
+PasswordInput.args = {
+  disabled: false,
+  label: 'Input',
+  placeholder: 'Input',
+  type: 'password',
 }

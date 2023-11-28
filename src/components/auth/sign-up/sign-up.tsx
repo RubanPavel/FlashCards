@@ -9,6 +9,7 @@ import {
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -57,6 +58,7 @@ export const SignUp = () => {
     <Card className={s.card}>
       <Typography variant={'large'}>Sign Up</Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+        <DevTool control={control} />
         <ControlInput
           control={control}
           errorMessage={errors.email?.message}
