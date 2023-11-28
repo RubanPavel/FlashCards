@@ -6,13 +6,18 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { Packs } from '@/components/packs'
+import { PackFriend } from "@/components/packs/friend's-pack"
+import { Packs } from '@/components/packs/packs-list'
 
 const publicRoutes: RouteObject[] = [
   {
     /*element: <div>login</div>,*/
     element: <Packs />,
     path: '/login',
+  },
+  {
+    element: <PackFriend />,
+    path: '/1',
   },
   {
     element: <div>sign-up</div>,
