@@ -1,5 +1,11 @@
 import {Router} from "@/router";
+import {AuthProvider} from "@/assets/isAuthContext";
 
 export function App() {
-  return <Router />
+    // Todo удалить Auth Provider
+    return (
+        <AuthProvider>
+                <Router/>
+        </AuthProvider>
+    )
 }

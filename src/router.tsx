@@ -1,4 +1,7 @@
 import {createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider} from 'react-router-dom'
+import {ContentLayout} from "@/components/layout/content-layout";
+import {useAuth} from "@/assets/isAuthContext";
+import {MyProfile} from "./components/user/my-profile";
 
 const publicRoutes: RouteObject[] = [
     {
@@ -7,15 +10,15 @@ const publicRoutes: RouteObject[] = [
     },
     {
         path: '/sign-up',
-        element: <div>sign-up</div>,
+        element: <div>sign-up</div>
     },
     {
         path: '/forgot-password',
-        element: <div>forgot password</div>,
+        element: <div>forgot-password</div>,
     },
     {
         path: '/check-email',
-        element: <div>check email</div>,
+        element: <div>check-email</div>,
     },
 ]
 
@@ -25,17 +28,33 @@ const privateRoutes: RouteObject[] = [
         element: <div>main</div>,
     },
     {
-        path: '/edit-profile',
-        element: <div>edit profile</div>,
+        path: '/my-profile',
+        element: <MyProfile />,
+    },
+]
+
+const notFoundRout: RouteObject[] = [
+    {
+        path: '*',
+        element: <div>404</div>,
     },
 ]
 
 const router = createBrowserRouter([
     {
-        element: <PrivateRoutes />,
-        children: privateRoutes,
-    },
-    ...publicRoutes,
+        element: <ContentLayout />,
+        children: [
+            {
+                element: <PrivateRoutes/>,
+                children: privateRoutes,
+            },
+            {
+                element: <PublicRoutes/>,
+                children: publicRoutes,
+            },
+            ...notFoundRout,
+        ]
+    }
 ])
 
 export const Router = () => {
@@ -43,8 +62,11 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-    //TODO актуализировать авторизацию
-    const isAuthenticated = false
-
+    const { isAuthenticated } = useAuth();
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
+}
+
+function PublicRoutes() {
+    const { isAuthenticated } = useAuth();
+    return isAuthenticated ? <Navigate to="/" /> : <Outlet />
 }

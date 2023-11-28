@@ -8,9 +8,10 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 
-import s from './edit-profile.module.scss'
+import s from './my-profile.module.scss'
 
 import { EditProfileForm, Variant } from './edit-profile-form/'
+import {useAuth} from "@/assets/isAuthContext";
 
 //TODO
 export const formFieldsVariant = {
@@ -19,8 +20,10 @@ export const formFieldsVariant = {
   nickname: 'nickname',
 } as const
 
-export const EditProfile = () => {
+export const MyProfile = () => {
   const [editingVariant, setEditingVariant] = useState<Variant | null>(null)
+  //TODO удалить
+  const { setIsAuthenticated } = useAuth();
 
   const handleEditClick = (variant: Variant) => {
     setEditingVariant(variant)
@@ -31,14 +34,14 @@ export const EditProfile = () => {
   }
 
   const logoutButtonClicked = () => {
-    //TODO logout
+    setIsAuthenticated (false)
   }
 
   return (
     <Card className={s.card}>
       <Typography variant={'large'}>Personal Information</Typography>
       <div className={s.avatarWrapper}>
-        <AvatarRadix className={s.avatar} imageUrl={User.imageUrl} userName={User.name} />
+        <AvatarRadix className={s.avatar} imageUrl={User.avatar} userName={User.name} />
         {!editingVariant && (
           <Button
             className={s.avatarButton}
