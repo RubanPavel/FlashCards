@@ -1,66 +1,68 @@
 import {
-  createBrowserRouter,
   Navigate,
   Outlet,
   RouteObject,
   RouterProvider,
+  createBrowserRouter,
 } from 'react-router-dom'
-import { ContentLayout } from '@/components/layout/content-layout'
+
 import { useAuth } from '@/assets/isAuthContext'
-import { MyProfile } from './components/user/my-profile'
+import { ContentLayout } from '@/components/layout/content-layout'
 import { Packs } from '@/components/packs'
+
+import { MyProfile } from './components/user/my-profile'
 
 const publicRoutes: RouteObject[] = [
   {
-    path: '/login',
     element: <div>login</div>,
+    path: '/login',
   },
   {
-    path: '/sign-up',
     element: <div>sign-up</div>,
+    path: '/sign-up',
   },
   {
-    path: '/forgot-password',
     element: <div>forgot-password</div>,
+    path: '/forgot-password',
   },
   {
-    path: '/check-email',
     element: <div>check-email</div>,
+    path: '/check-email',
   },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
-    path: '/',
     element: <Packs />,
+    path: '/',
   },
   {
-    path: '/my-profile',
     element: <MyProfile />,
+    path: '/my-profile',
   },
 ]
 
 const notFoundRout: RouteObject[] = [
   {
-    path: '*',
     element: <div>404</div>,
+    path: '*',
   },
 ]
 
 const router = createBrowserRouter([
   {
-    element: <ContentLayout />,
     children: [
       {
-        element: <PrivateRoutes />,
         children: privateRoutes,
+        element: <PrivateRoutes />,
       },
       {
-        element: <PublicRoutes />,
         children: publicRoutes,
+        element: <PublicRoutes />,
       },
       ...notFoundRout,
     ],
+    element: <ContentLayout />,
   },
 ])
 
@@ -71,11 +73,13 @@ export const Router = () => {
 function PrivateRoutes() {
   //TODO удалить useAuth
   const { isAuthenticated } = useAuth()
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
+
+  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }
 
 function PublicRoutes() {
   //TODO удалить useAuth
   const { isAuthenticated } = useAuth()
-  return isAuthenticated ? <Navigate to="/" /> : <Outlet />
+
+  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }

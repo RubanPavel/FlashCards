@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLogOut } from '@/assets/icons/IconLogOut'
+import { useAuth } from '@/assets/isAuthContext'
 import { User } from '@/assets/userDataForTest'
 import AvatarRadix from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
@@ -11,7 +12,6 @@ import { Typography } from '@/components/ui/typography'
 import s from './my-profile.module.scss'
 
 import { EditProfileForm, Variant } from './edit-profile-form/'
-import { useAuth } from '@/assets/isAuthContext'
 
 //TODO
 export const formFieldsVariant = {

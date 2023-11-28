@@ -11,6 +11,8 @@ import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 // import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
 // import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 // import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
+import { IconVectorDown } from '@/assets/icons/IconVectorDown'
+import { IconVectorUp } from '@/assets/icons/IconVectorUp'
 // import { Header } from '@/components/ui/header'
 import { Input } from '@/components/ui/input'
 import { SliderRadix } from '@/components/ui/slider'
@@ -27,8 +29,6 @@ import { Typography } from '@/components/ui/typography'
 import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 
 import s from '@/components/packs/packs.module.scss'
-import { IconVectorDown } from '@/assets/icons/IconVectorDown'
-import { IconVectorUp } from '@/assets/icons/IconVectorUp'
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
@@ -43,8 +43,13 @@ export const Packs = () => {
   const iconVector = sort === 'lastUpdate-asc' ? <IconVectorDown /> : <IconVectorUp />
 
   const onVectorChange = () => {
-    if (sort === 'lastUpdate-asc') setSort('lastUpdate-desc')
-    if (sort === 'lastUpdate-desc') setSort('lastUpdate-asc')
+    if (sort === 'lastUpdate-asc') {
+      setSort('lastUpdate-desc')
+    }
+    if (sort === 'lastUpdate-desc') {
+      setSort('lastUpdate-asc')
+    }
+
     return sort
   }
   const { data } = useGetDecksQuery()

@@ -1,17 +1,19 @@
-import { Header } from '@/components/ui/header'
-import { User } from '@/assets/userDataForTest'
-import { Button } from '@/components/ui/button'
-import { IconLogo } from '@/assets/icons/Iconlogo'
-import { Typography } from '@/components/ui/typography'
-import { DropdownMenu } from '@/components/ui/dropdown-menu'
-import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
-import s from './content-layout.module.scss'
-import AvatarRadix from '@/components/ui/avatar/avatar'
-import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
-import { IconLogOut } from '@/assets/icons/IconLogOut'
-import { useAuth } from '@/assets/isAuthContext'
 import { Outlet, useNavigate } from 'react-router-dom'
+
+import { IconLogOut } from '@/assets/icons/IconLogOut'
+import { IconLogo } from '@/assets/icons/Iconlogo'
+import { useAuth } from '@/assets/isAuthContext'
+import { User } from '@/assets/userDataForTest'
+import AvatarRadix from '@/components/ui/avatar/avatar'
+import { Button } from '@/components/ui/button'
+import { DropdownMenu } from '@/components/ui/dropdown-menu'
+import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
+import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
+import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
+import { Header } from '@/components/ui/header'
+import { Typography } from '@/components/ui/typography'
+
+import s from './content-layout.module.scss'
 
 export const ContentLayout = () => {
   const navigate = useNavigate()
@@ -28,14 +30,14 @@ export const ContentLayout = () => {
   const trigger = (
     <AvatarRadix
       imageUrl={User.avatar}
-      userName={User.name}
       style={{
         backgroundColor: 'var(--color-dark-900)',
         borderRadius: '50%',
         height: 50,
-        width: 50,
         marginLeft: '5px',
+        width: 50,
       }}
+      userName={User.name}
     ></AvatarRadix>
   )
 
@@ -59,7 +61,7 @@ export const ContentLayout = () => {
         {User.name}
       </Typography>
       <DropdownMenu position={'end'} trigger={trigger}>
-        <DropDownItem style={{ gap: '0.5rem' }} className={s.dropdown}>
+        <DropDownItem className={s.dropdown} style={{ gap: '0.5rem' }}>
           <AvatarRadix
             // callback={() => {}}
             imageUrl={User.avatar}
@@ -79,40 +81,41 @@ export const ContentLayout = () => {
         <DropdownSeparator />
         <DropDownItem className={s.wrapper}>
           <Button
-            style={{
-              padding: '0',
-              backgroundColor: 'transparent',
-              outline: 'none',
-              boxShadow: 'none',
-              gap: '0.5rem',
-            }}
             className={s.button}
             onClick={myProfileButtonClicked}
+            style={{
+              backgroundColor: 'transparent',
+              boxShadow: 'none',
+              gap: '0.5rem',
+              outline: 'none',
+              padding: '0',
+            }}
           >
-            <IconPerson width={16} height={16} />
+            <IconPerson height={16} width={16} />
             <Typography variant={'caption'}>My Profile</Typography>
           </Button>
         </DropDownItem>
         <DropdownSeparator />
         <DropDownItem className={s.wrapper}>
           <Button
-            style={{
-              padding: '0',
-              backgroundColor: 'transparent',
-              outline: 'none',
-              boxShadow: 'none',
-              gap: '0.5rem',
-            }}
             className={s.button}
             onClick={logoutButtonClicked}
+            style={{
+              backgroundColor: 'transparent',
+              boxShadow: 'none',
+              gap: '0.5rem',
+              outline: 'none',
+              padding: '0',
+            }}
           >
-            <IconLogOut style={{ margin: '0', padding: '0' }} width={16} height={16} />
+            <IconLogOut height={16} style={{ margin: '0', padding: '0' }} width={16} />
             <Typography variant={'caption'}>Logout</Typography>
           </Button>
         </DropDownItem>
       </DropdownMenu>
     </div>
   )
+
   return (
     <>
       <Header logo={<IconLogo />}>{headerContent}</Header>
