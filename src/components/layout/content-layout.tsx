@@ -61,7 +61,7 @@ export const ContentLayout = () => {
         {User.name}
       </Typography>
       <DropdownMenu position={'end'} trigger={trigger}>
-        <DropDownItem className={s.dropdown} style={{ gap: '0.5rem' }}>
+        <DropDownItem className={s.dropdown} onSelect={e => e.preventDefault()} style={{ gap: '0.5rem' }}>
           <AvatarRadix
             // callback={() => {}}
             imageUrl={User.avatar}

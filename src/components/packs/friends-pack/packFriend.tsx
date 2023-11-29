@@ -2,8 +2,6 @@ import { useState } from 'react'
 
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { IconVectorUp } from '@/assets/icons/IconVectorUp'
-// TODO Удалить лишние импорты
-// import { HeaderPack } from '@/components/packs/common/Header'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -53,8 +51,6 @@ export const PackFriend = () => {
 
   return (
     <div className={s.container}>
-      {/*//TODO Удалить header*/}
-      {/*<HeaderPack />*/}
       <div className={s.packsList}>
         <Typography variant={'large'}>Friend's Pack</Typography>
         <Button onClick={() => {}}>
