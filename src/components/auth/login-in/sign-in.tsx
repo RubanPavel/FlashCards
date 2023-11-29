@@ -28,7 +28,6 @@ export const SignIn = ({ onHandleChange, onSubmitValue }: Props) => {
     control,
     formState: { errors },
     handleSubmit,
-    register,
   } = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
   })
@@ -45,16 +44,16 @@ export const SignIn = ({ onHandleChange, onSubmitValue }: Props) => {
           Sign In
         </Typography>
         <ControlInput
-          {...register('email')}
           control={control}
           errorMessage={errors.email?.message}
           label={'email'}
+          name={'email'}
         />
         <ControlInput
-          {...register('password')}
           control={control}
           errorMessage={errors.password?.message}
           label={'password'}
+          name={'password'}
           type={'password'}
         />
         <ControlledCheckbox control={control} name={'rememberMe'} title={'remember me'} />

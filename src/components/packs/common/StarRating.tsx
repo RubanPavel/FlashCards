@@ -12,7 +12,7 @@ export const StarRating = ({ filledStars }: Props) => {
     for (let i = 1; i <= maxStars; i++) {
       const isFilled = i <= filledStars
 
-      stars.push(isFilled ? <IconRating color={'yellow'} /> : <IconRating />)
+      stars.push(isFilled ? <IconRating color={'yellow'} key={i} /> : <IconRating key={i} />)
     }
 
     return stars

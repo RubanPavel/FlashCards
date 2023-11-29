@@ -23,12 +23,11 @@
 
 .root {
   @include flex;
-  /*
-  flex-direction: column;
-  align-items: start; */
 
-  /*  width: 284px; */
-  width: 100%;
+  flex-direction: column;
+  align-items: start;
+
+  width: 284px;
 
   .label {
     @include text;
