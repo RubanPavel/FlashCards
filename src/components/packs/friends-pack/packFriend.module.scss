@@ -2,12 +2,24 @@
   padding: 0 10vw;
 }
 
+.fieldBack {
+  display: inline-flex;
+  gap: 5px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
 .packsList {
   display: flex;
   justify-content: space-between;
-  padding: 104px 0 30px 0;
+  padding: 80px 0 30px 0;
 }
 
 .searchItem {
   margin-bottom: 30px;
+}
+
+.searchInput {
+  flex-direction: row;
+  width: 100% !important;
 }

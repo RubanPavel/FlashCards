@@ -13,6 +13,7 @@ export const ControlInput = <T extends FieldValues>({
   label,
   name,
   rules,
+  setValue,
   shouldUnregister,
   ...rest
 }: Props<T>) => {
@@ -35,6 +36,7 @@ export const ControlInput = <T extends FieldValues>({
       name={name}
       onBlur={onBlur}
       onChange={onChange}
+      setValue={setValue}
       value={value}
     />
   )
