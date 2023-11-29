@@ -1,13 +1,13 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import { IconLogOut } from '@/assets/icons/IconLogOut'
+import IconPerson from '@/assets/icons/IconPerson'
 import { IconLogo } from '@/assets/icons/Iconlogo'
 import { useAuth } from '@/assets/isAuthContext'
 import { User } from '@/assets/userDataForTest'
 import AvatarRadix from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
-import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { Header } from '@/components/ui/header'
 import { Typography } from '@/components/ui/typography'
@@ -34,17 +34,17 @@ export const ContentLayout = () => {
     <Button type={'primary'}>Sign In</Button>
   ) : (
     <div className={s.root}>
-      <Typography className={s.userName} variant={'subtitle-2'}>
+      <Typography as={'p'} className={s.userName} variant={'subtitle-2'}>
         {User.name}
       </Typography>
       <DropdownMenu position={'end'} trigger={trigger}>
         <DropDownItem className={s.dropdownItem} onSelect={e => e.preventDefault()}>
           <AvatarRadix imageUrl={User.avatar} userName={User.name} />
           <div className={s.userInfoWrapper}>
-            <Typography className={s.userInfoName} variant={'subtitle-2'}>
+            <Typography as={'p'} className={s.userInfoName} variant={'subtitle-2'}>
               {User.name}
             </Typography>
-            <Typography className={s.userInfoEmail} variant={'caption'}>
+            <Typography as={'p'} className={s.userInfoEmail} variant={'caption'}>
               {User.email}
             </Typography>
           </div>

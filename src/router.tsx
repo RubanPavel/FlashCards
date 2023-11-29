@@ -7,10 +7,10 @@ import {
 } from 'react-router-dom'
 
 import { useAuth } from '@/assets/isAuthContext'
-import { ContentLayout } from '@/components/layout/content-layout'
 import { PackFriend } from '@/components/packs/friends-pack'
 import { Packs } from '@/components/packs/packs-list'
 
+import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
 
 const publicRoutes: RouteObject[] = [
