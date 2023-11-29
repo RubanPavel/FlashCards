@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/componen
 import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
+import {IconLeftArrow} from "@/assets/icons/IconLeftArrow";
 
 export const PackFriend = () => {
   const [sort, setSort] = useState('lastUpdate-asc')
@@ -54,8 +55,18 @@ export const PackFriend = () => {
     console.log(value)
   }
 
+  const onClickHandler = () => {
+    alert('Назад на Packs List')
+  }
+
   return (
     <div className={s.container}>
+      <div className={s.fieldBack} onClick={onClickHandler}>
+        <IconLeftArrow transform="translate(0, 2)" />
+        <Typography variant={'body-2'}>
+          Back to Packs List
+        </Typography>
+      </div>
       <div className={s.packsList}>
         <Typography variant={'large'}>Friend's Pack</Typography>
         <Button onClick={() => {}}>
