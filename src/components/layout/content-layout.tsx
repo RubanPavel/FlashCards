@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
-import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Header } from '@/components/ui/header'
 import { Typography } from '@/components/ui/typography'
 
@@ -28,92 +27,38 @@ export const ContentLayout = () => {
   }
 
   const trigger = (
-    <AvatarRadix
-      imageUrl={User.avatar}
-      style={{
-        backgroundColor: 'var(--color-dark-900)',
-        borderRadius: '50%',
-        height: 50,
-        marginLeft: '5px',
-        width: 50,
-      }}
-      userName={User.name}
-    ></AvatarRadix>
+    <AvatarRadix className={s.trigger} imageUrl={User.avatar} userName={User.name}></AvatarRadix>
   )
 
   const headerContent = !isAuthenticated ? (
     <Button type={'primary'}>Sign In</Button>
   ) : (
-    <div
-      style={{
-        alignItems: 'center',
-        display: 'flex',
-        flexGrow: '1',
-        gap: '0.5rem',
-        justifyContent: 'end',
-      }}
-    >
-      <Typography
-        color={'var(--color-light-100)'}
-        style={{ borderBottom: '1px dashed white' }}
-        variant={'subtitle-2'}
-      >
+    <div className={s.root}>
+      <Typography className={s.userName} variant={'subtitle-2'}>
         {User.name}
       </Typography>
       <DropdownMenu position={'end'} trigger={trigger}>
-        <DropDownItem
-          className={s.dropdown}
-          onSelect={e => e.preventDefault()}
-          style={{ gap: '0.5rem' }}
-        >
-          <AvatarRadix
-            // callback={() => {}}
-            imageUrl={User.avatar}
-            userName={User.name}
-          />
-          <div>
-            <div style={{ marginBottom: 2 }}>
-              <Typography variant={'subtitle-2'}>{User.name}</Typography>
-            </div>
-            <div>
-              <Typography style={{ color: 'var(--color-dark-100)' }} variant={'caption'}>
-                {User.email}
-              </Typography>
-            </div>
+        <DropDownItem className={s.dropdownItem} onSelect={e => e.preventDefault()}>
+          <AvatarRadix imageUrl={User.avatar} userName={User.name} />
+          <div className={s.userInfoWrapper}>
+            <Typography className={s.userInfoName} variant={'subtitle-2'}>
+              {User.name}
+            </Typography>
+            <Typography className={s.userInfoEmail} variant={'caption'}>
+              {User.email}
+            </Typography>
           </div>
         </DropDownItem>
-        <DropdownSeparator />
-        <DropDownItem className={s.wrapper}>
-          <Button
-            className={s.button}
-            onClick={myProfileButtonClicked}
-            style={{
-              backgroundColor: 'transparent',
-              boxShadow: 'none',
-              gap: '0.5rem',
-              outline: 'none',
-              padding: '0',
-            }}
-          >
+        <DropDownItem className={s.dropdownItem}>
+          <Button className={s.button} onClick={myProfileButtonClicked} variant={'fullWidth'}>
             <IconPerson height={16} width={16} />
-            <Typography variant={'caption'}>My Profile</Typography>
+            My Profile
           </Button>
         </DropDownItem>
-        <DropdownSeparator />
-        <DropDownItem className={s.wrapper}>
-          <Button
-            className={s.button}
-            onClick={logoutButtonClicked}
-            style={{
-              backgroundColor: 'transparent',
-              boxShadow: 'none',
-              gap: '0.5rem',
-              outline: 'none',
-              padding: '0',
-            }}
-          >
-            <IconLogOut height={16} style={{ margin: '0', padding: '0' }} width={16} />
-            <Typography variant={'caption'}>Logout</Typography>
+        <DropDownItem className={s.dropdownItem}>
+          <Button className={s.button} onClick={logoutButtonClicked} variant={'fullWidth'}>
+            <IconLogOut height={16} width={16} />
+            Logout
           </Button>
         </DropDownItem>
       </DropdownMenu>
