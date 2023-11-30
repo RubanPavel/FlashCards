@@ -15,7 +15,7 @@ const meta = {
     ),
   ],
   tags: ['auto-docs'],
-  title: 'Components/PackFriend',
+  title: 'Components/Packs',
 } satisfies Meta<typeof PackFriend>
 
 export default meta
