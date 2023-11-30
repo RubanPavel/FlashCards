@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@//components/ui/button'
 import {
@@ -14,7 +15,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './sign-up.module.scss'
-import {useNavigate} from "react-router-dom";
 
 export const signInFormSchema = z
   .object({
@@ -30,7 +30,7 @@ export const signInFormSchema = z
 export type FormValues = z.infer<typeof signInFormSchema>
 
 export const SignUp = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const {
     control,
     formState: { errors },
@@ -53,7 +53,7 @@ export const SignUp = () => {
 
   // TODO
   const handleNavButtonClicked = () => {
-      navigate("/login")
+    navigate('/login')
   }
 
   return (

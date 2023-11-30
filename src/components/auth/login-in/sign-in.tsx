@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -10,7 +11,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './sign-in.module.scss'
-import {useNavigate} from "react-router-dom";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -37,13 +37,12 @@ export const SignIn = () => {
   }
 
   const handleNavButtonClicked = () => {
-    navigate("/sign-up")
+    navigate('/sign-up')
   }
 
   const handleForgotPasswordClicked = () => {
-    navigate("/forgot-password")
+    navigate('/forgot-password')
   }
-
 
   return (
     <Card className={s.wrapperSignIn}>
@@ -66,19 +65,24 @@ export const SignIn = () => {
           type={'password'}
         />
         <ControlledCheckbox control={control} name={'rememberMe'} title={'Remember me'} />
-        <Button type={'button'} variant={'icon'} className={s.forgotPassword} onClick={handleForgotPasswordClicked} >
+        <Button
+          className={s.forgotPassword}
+          onClick={handleForgotPasswordClicked}
+          type={'button'}
+          variant={'icon'}
+        >
           Forgot Password?
         </Button>
         <Button className={s.formButton} fullWidth type={'submit'}>
           Sign In
         </Button>
-        </form>
-        <Typography as={'p'} className={s.dontAccount} variant={'body-2'}>
-          Don't have an account?
-        </Typography>
-        <Button className={s.navButton} onClick={handleNavButtonClicked} variant={'link'}>
+      </form>
+      <Typography as={'p'} className={s.dontAccount} variant={'body-2'}>
+        Don&apos;t have an account?
+      </Typography>
+      <Button className={s.navButton} onClick={handleNavButtonClicked} variant={'link'}>
         Sign Up
-        </Button>
+      </Button>
     </Card>
   )
 }

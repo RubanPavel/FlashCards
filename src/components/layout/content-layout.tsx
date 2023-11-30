@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom'
 
 import { IconLogOut } from '@/assets/icons/IconLogOut'
+import IconPerson from '@/assets/icons/IconPerson'
 import { IconLogo } from '@/assets/icons/Iconlogo'
 import { useAuth } from '@/assets/isAuthContext'
 import { User } from '@/assets/userDataForTest'
@@ -12,7 +13,6 @@ import { Header } from '@/components/ui/header'
 import { Typography } from '@/components/ui/typography'
 
 import s from './content-layout.module.scss'
-import IconPerson from "@/assets/icons/IconPerson";
 
 export const ContentLayout = () => {
   const navigate = useNavigate()
@@ -23,7 +23,7 @@ export const ContentLayout = () => {
     navigate('/login')
   }
   const myProfileButtonClicked = () => {
-    navigate( '/my-profile')
+    navigate('/my-profile')
   }
   const logoutButtonClicked = () => {
     setIsAuthenticated(false)
@@ -34,7 +34,9 @@ export const ContentLayout = () => {
   )
 
   const headerContent = !isAuthenticated ? (
-    <Button type={'primary'} onClick={loginButtonClicked}>Sign In</Button>
+    <Button onClick={loginButtonClicked} type={'primary'}>
+      Sign In
+    </Button>
   ) : (
     <div className={s.root}>
       <Typography as={'h5'} className={s.userName} variant={'subtitle-2'}>

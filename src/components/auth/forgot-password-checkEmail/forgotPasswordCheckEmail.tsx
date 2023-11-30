@@ -1,18 +1,19 @@
+import { useNavigate } from 'react-router-dom'
+
 import IconCheckEmail from '@/assets/icons/IconCheckEmail'
+import { User } from '@/assets/userDataForTest'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 
 import s from '@/components/auth/forgot-password-checkEmail/forgotPassCheckE.module.scss'
-import {User} from "@/assets/userDataForTest";
-import {useNavigate} from "react-router-dom";
-
 
 export const ForgotPasswordCheckEmail = () => {
-    const navigate = useNavigate()
-    const handleNavButtonClicked = () => {
-        navigate('/login')
-    }
+  const navigate = useNavigate()
+  const handleNavButtonClicked = () => {
+    navigate('/login')
+  }
+
   return (
     <Card className={s.wrapperCheckEmail}>
       <Typography as={'h1'} className={s.headerCheckEmail} variant={'large'}>

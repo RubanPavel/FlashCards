@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
 
+import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { IconVectorUp } from '@/assets/icons/IconVectorUp'
 import { StarRating } from '@/components/packs/common/StarRating'
@@ -10,7 +11,6 @@ import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/componen
 import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
-import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 
 export const PackFriend = () => {
   const [sort, setSort] = useState('lastUpdate-asc')
@@ -52,7 +52,7 @@ export const PackFriend = () => {
   ]
 
   const getValue = (value: FieldValues) => {
-    console.log(value)
+    return value
   }
 
   const onClickHandler = () => {
@@ -62,11 +62,11 @@ export const PackFriend = () => {
   return (
     <div className={s.container}>
       <div className={s.fieldBack} onClick={onClickHandler}>
-        <IconLeftArrow transform="translate(0, 2)" />
+        <IconLeftArrow transform={'translate(0, 2)'} />
         <Typography variant={'body-2'}>Back to Packs List</Typography>
       </div>
       <div className={s.packsList}>
-        <Typography variant={'large'}>Friend's Pack</Typography>
+        <Typography variant={'large'}>Friend&apos;s Pack</Typography>
         <Button onClick={() => {}}>
           <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
         </Button>

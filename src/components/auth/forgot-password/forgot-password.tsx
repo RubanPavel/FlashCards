@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@//components/ui/button'
 import { emailSchema } from '@/components/auth/validate/validate'
@@ -10,7 +11,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './forgot-password.module.scss'
-import {useNavigate} from "react-router-dom";
 
 const loginSchema = z.object({
   email: emailSchema,
@@ -19,7 +19,7 @@ const loginSchema = z.object({
 type FormValues = z.infer<typeof loginSchema>
 
 export const ForgotPassword = () => {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const {
     control,
     formState: { errors },
@@ -34,21 +34,22 @@ export const ForgotPassword = () => {
   })
 
   const onSubmit = (data: FormValues) => {
-        // TODO Убрать отсюда navigate
-      navigate("/check-email")
+    // TODO Убрать отсюда navigate
+    navigate('/check-email')
+
     return data
   }
 
   const handleNavButtonClicked = () => {
-      navigate("/login")
+    navigate('/login')
   }
 
   return (
     <Card className={s.wrapperForgot}>
-        <Typography as={'h1'} className={s.headerForgot} variant={'large'}>
-          Forgot your password?
-        </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <Typography as={'h1'} className={s.headerForgot} variant={'large'}>
+        Forgot your password?
+      </Typography>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <ControlInput
           control={control}
@@ -62,12 +63,12 @@ export const ForgotPassword = () => {
         <Button fullWidth type={'submit'}>
           <Typography variant={'subtitle-2'}>Send instructions</Typography>
         </Button>
-        </form>
-        <Typography as={'p'} className={s.textAskOfPassword} variant={'body-2'}>
-          Did you remember your password?
-        </Typography>
+      </form>
+      <Typography as={'p'} className={s.textAskOfPassword} variant={'body-2'}>
+        Did you remember your password?
+      </Typography>
       <Button className={s.navButton} onClick={handleNavButtonClicked} variant={'link'}>
-          Try logging in
+        Try logging in
       </Button>
     </Card>
   )

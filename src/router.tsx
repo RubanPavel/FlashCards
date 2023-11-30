@@ -7,17 +7,16 @@ import {
 } from 'react-router-dom'
 
 import { useAuth } from '@/assets/isAuthContext'
+import { CreatePassword } from '@/components/auth/create-password'
+import { ForgotPassword } from '@/components/auth/forgot-password'
+import { ForgotPasswordCheckEmail } from '@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail'
+import { SignIn } from '@/components/auth/login-in'
+import { SignUp } from '@/components/auth/sign-up'
 import { PackFriend } from '@/components/packs/friends-pack'
 import { Packs } from '@/components/packs/packs-list'
 
 import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
-
-import {SignUp} from "@/components/auth/sign-up";
-import {SignIn} from "@/components/auth/login-in";
-import {ForgotPassword} from "@/components/auth/forgot-password";
-import {ForgotPasswordCheckEmail} from "@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail";
-import {CreatePassword} from "@/components/auth/create-password";
 
 const publicRoutes: RouteObject[] = [
   {

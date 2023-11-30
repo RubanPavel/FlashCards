@@ -31,7 +31,7 @@ export const CreatePassword = () => {
   })
 
   const onSubmit = (data: FormValues) => {
-    console.log(data)
+    return data
   }
 
   return (

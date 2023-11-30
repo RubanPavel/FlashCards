@@ -57,7 +57,7 @@ export const Packs = () => {
   ]
 
   const getValue = (value: FieldValues) => {
-    console.log(value)
+    return value
   }
 
   return (

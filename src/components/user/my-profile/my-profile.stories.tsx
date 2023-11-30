@@ -1,22 +1,24 @@
+import type { Meta, StoryObj } from '@storybook/react'
+
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
-import { AuthProvider } from '@/assets/isAuthContext'
-import type { Meta, StoryObj } from '@storybook/react'
-import { MyProfile } from './'
-import {store} from "@/services/store";
 
+import { AuthProvider } from '@/assets/isAuthContext'
+import { store } from '@/services/store'
+
+import { MyProfile } from './'
 
 const meta = {
   component: MyProfile,
   decorators: [
     Story => (
-        <Provider store={store}>
-            <AuthProvider>
-                <MemoryRouter>
-                    <Story />
-            </MemoryRouter>
-            </AuthProvider>
-            </Provider>
+      <Provider store={store}>
+        <AuthProvider>
+          <MemoryRouter>
+            <Story />
+          </MemoryRouter>
+        </AuthProvider>
+      </Provider>
     ),
   ],
   tags: ['autodocs'],
