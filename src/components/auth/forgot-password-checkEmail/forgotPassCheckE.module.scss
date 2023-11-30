@@ -1,20 +1,18 @@
-.wrapperForgot {
-  display: grid;
-  justify-items: center;
+.wrapperCheckEmail {
+  width: 420px;
+  padding: 37px 36px 44px;
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
-  width: 420px;
-  padding: 37px 36px 44px 36px;
-}
 
-.textCheckEmail {
-  text-align: center;
-  margin-bottom: 30px;
-  color: var(--color-light-100);
-}
+  .headerCheckEmail {
+    margin-bottom: 27px;
+    color: var(--color-light-100);
+    text-align: center;
+  }
 
-.textSentEmail {
-  text-align: center;
-  margin: 20px 0 50px 0;
-  color: var(--color-light-900);
+  .textSentEmail {
+    margin: 20px 0 50px;
+    color: var(--color-light-900);
+    text-align: center;
+  }
 }

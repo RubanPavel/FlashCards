@@ -38,8 +38,10 @@ export const MyProfile = () => {
   }
 
   return (
-    <Card className={s.card}>
-      <Typography variant={'large'}>Personal Information</Typography>
+    <Card className={s.wrapperMyProfile}>
+      <Typography as={'h1'} className={s.headerMyProfile} variant={'large'}>
+        Personal Information
+      </Typography>
       <div className={s.avatarWrapper}>
         <AvatarRadix className={s.avatar} imageUrl={User.avatar} userName={User.name} />
         {!editingVariant && (
@@ -57,7 +59,9 @@ export const MyProfile = () => {
       ) : (
         <div className={s.container}>
           <div className={s.infoWrapper}>
-            <Typography variant={'H1'}>{User.name}</Typography>
+            <Typography as={'p'} variant={'H1'}>
+              {User.name}
+            </Typography>
             <Button
               className={s.nicknameButton}
               onClick={() => handleEditClick(formFieldsVariant.nickname)}
@@ -66,7 +70,7 @@ export const MyProfile = () => {
               <IconEdit height={16} width={16} />
             </Button>
           </div>
-          <Typography className={s.email} variant={'body-2'}>
+          <Typography as={'p'} className={s.email} variant={'body-2'}>
             {User.email}
           </Typography>
           <Button className={s.logoutButton} onClick={logoutButtonClicked} variant={'secondary'}>

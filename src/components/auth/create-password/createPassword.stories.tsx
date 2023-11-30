@@ -4,11 +4,12 @@ import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
 import { AuthProvider } from '@/assets/isAuthContext'
-import { ForgotPasswordCheckEmail } from '@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail'
 import { store } from '@/services/store'
 
+import { CreatePassword } from './createPassword'
+
 const meta = {
-  component: ForgotPasswordCheckEmail,
+  component: CreatePassword,
   decorators: [
     Story => (
       <Provider store={store}>
@@ -21,8 +22,8 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Auth/ForgotPasswordCheckEmail',
-} satisfies Meta<typeof ForgotPasswordCheckEmail>
+  title: 'Auth/CreatePassword',
+} satisfies Meta<typeof CreatePassword>
 
 export default meta
 type Story = StoryObj<typeof meta>

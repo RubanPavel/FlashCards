@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@//components/ui/button'
 import { emailSchema } from '@/components/auth/validate/validate'
@@ -16,12 +17,9 @@ const loginSchema = z.object({
 })
 
 type FormValues = z.infer<typeof loginSchema>
-type Props = {
-  onHandleChange: (value: boolean) => void
-  onSubmitValue: (data: FormValues) => void
-}
 
-export const ForgotPassword = ({ onHandleChange, onSubmitValue }: Props) => {
+export const ForgotPassword = () => {
+  const navigate = useNavigate()
   const {
     control,
     formState: { errors },
@@ -30,44 +28,48 @@ export const ForgotPassword = ({ onHandleChange, onSubmitValue }: Props) => {
     defaultValues: {
       email: '',
     },
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
     resolver: zodResolver(loginSchema),
   })
 
   const onSubmit = (data: FormValues) => {
-    onSubmitValue(data)
+    // TODO Убрать отсюда navigate
+    navigate('/check-email')
+
+    return data
+  }
+
+  const handleNavButtonClicked = () => {
+    navigate('/login')
   }
 
   return (
     <Card className={s.wrapperForgot}>
+      <Typography as={'h1'} className={s.headerForgot} variant={'large'}>
+        Forgot your password?
+      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
-        <Typography as={'div'} className={s.textForgot} variant={'large'}>
-          Forgot your password?
-        </Typography>
         <ControlInput
           control={control}
           errorMessage={errors.email?.message}
-          label={'email'}
+          label={'Email'}
           name={'email'}
         />
-        <Typography as={'div'} className={s.textEmailAddress} variant={'body-2'}>
+        <Typography as={'p'} className={s.textEmailAddress} variant={'body-2'}>
           Enter your email address and we will send you further instructions
         </Typography>
         <Button fullWidth type={'submit'}>
           <Typography variant={'subtitle-2'}>Send instructions</Typography>
         </Button>
-        <Typography as={'div'} className={s.textAskOfPassword} variant={'body-2'}>
-          Did you remember your password?
-        </Typography>
-        <Typography
-          as={'div'}
-          className={s.textTry}
-          onClick={() => onHandleChange(true)}
-          variant={'subtitle-1'}
-        >
-          Try logging in
-        </Typography>
       </form>
+      <Typography as={'p'} className={s.textAskOfPassword} variant={'body-2'}>
+        Did you remember your password?
+      </Typography>
+      <Button className={s.navButton} onClick={handleNavButtonClicked} variant={'link'}>
+        Try logging in
+      </Button>
     </Card>
   )
 }
