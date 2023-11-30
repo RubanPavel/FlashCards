@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { IconVectorDown } from '@/assets/icons/IconVectorDown'
+import { IconVectorUp } from '@/assets/icons/IconVectorUp'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -38,7 +41,7 @@ export const PackFriend = () => {
   ]
 
   const getValue = (value: FieldValues) => {
-    console.log(value)
+    return value
   }
 
   const onClickHandler = () => {
@@ -52,7 +55,7 @@ export const PackFriend = () => {
         <Typography variant={'body-2'}>Back to Packs List</Typography>
       </div>
       <div className={s.packsList}>
-        <Typography variant={'large'}>Friend's Pack</Typography>
+        <Typography variant={'large'}>Friend&apos;s Pack</Typography>
         <Button onClick={() => {}}>
           <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
         </Button>

@@ -19,6 +19,9 @@ export const ContentLayout = () => {
   // TODO Удалить use Auth
   const { isAuthenticated, setIsAuthenticated } = useAuth()
 
+  const loginButtonClicked = () => {
+    navigate('/login')
+  }
   const myProfileButtonClicked = () => {
     navigate('/my-profile')
   }
@@ -31,17 +34,19 @@ export const ContentLayout = () => {
   )
 
   const headerContent = !isAuthenticated ? (
-    <Button type={'primary'}>Sign In</Button>
+    <Button onClick={loginButtonClicked} type={'primary'}>
+      Sign In
+    </Button>
   ) : (
     <div className={s.root}>
-      <Typography as={'p'} className={s.userName} variant={'subtitle-2'}>
+      <Typography as={'h5'} className={s.userName} variant={'subtitle-2'}>
         {User.name}
       </Typography>
       <DropdownMenu position={'end'} trigger={trigger}>
         <DropDownItem className={s.dropdownItem} onSelect={e => e.preventDefault()}>
           <AvatarRadix imageUrl={User.avatar} userName={User.name} />
           <div className={s.userInfoWrapper}>
-            <Typography as={'p'} className={s.userInfoName} variant={'subtitle-2'}>
+            <Typography as={'h5'} className={s.userInfoName} variant={'subtitle-2'}>
               {User.name}
             </Typography>
             <Typography as={'p'} className={s.userInfoEmail} variant={'caption'}>

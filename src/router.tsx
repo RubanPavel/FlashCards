@@ -7,6 +7,11 @@ import {
 } from 'react-router-dom'
 
 import { useAuth } from '@/assets/isAuthContext'
+import { CreatePassword } from '@/components/auth/create-password'
+import { ForgotPassword } from '@/components/auth/forgot-password'
+import { ForgotPasswordCheckEmail } from '@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail'
+import { SignIn } from '@/components/auth/login-in'
+import { SignUp } from '@/components/auth/sign-up'
 import { PackFriend } from '@/components/packs/friends-pack'
 import { Packs } from '@/components/packs/packs-list'
 
@@ -15,23 +20,19 @@ import { MyProfile } from './components/user/my-profile'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    element: <SignIn />,
     path: '/login',
   },
   {
-    element: <PackFriend />,
-    path: '/1',
-  },
-  {
-    element: <div>sign-up</div>,
+    element: <SignUp />,
     path: '/sign-up',
   },
   {
-    element: <div>forgot-password</div>,
+    element: <ForgotPassword />,
     path: '/forgot-password',
   },
   {
-    element: <div>check-email</div>,
+    element: <ForgotPasswordCheckEmail />,
     path: '/check-email',
   },
 ]
@@ -44,6 +45,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <PackFriend />,
     path: '/1',
+  },
+  {
+    element: <CreatePassword />,
+    path: '/create-password',
   },
   {
     element: <MyProfile />,

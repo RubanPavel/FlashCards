@@ -1,27 +1,30 @@
-import IconCheckEmail from '@/components/auth/forgot-password-checkEmail/assets/IconCheckEmail'
+import { useNavigate } from 'react-router-dom'
+
+import IconCheckEmail from '@/assets/icons/IconCheckEmail'
+import { User } from '@/assets/userDataForTest'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 
 import s from '@/components/auth/forgot-password-checkEmail/forgotPassCheckE.module.scss'
 
-type Props = {
-  callback: () => void
-  email: string
-}
+export const ForgotPasswordCheckEmail = () => {
+  const navigate = useNavigate()
+  const handleNavButtonClicked = () => {
+    navigate('/login')
+  }
 
-export const ForgotPasswordCheckEmail = ({ callback, email }: Props) => {
   return (
-    <Card className={s.wrapperForgot}>
-      <Typography as={'div'} className={s.textCheckEmail} variant={'large'}>
+    <Card className={s.wrapperCheckEmail}>
+      <Typography as={'h1'} className={s.headerCheckEmail} variant={'large'}>
         Check Email
       </Typography>
       <IconCheckEmail />
-      <Typography as={'div'} className={s.textSentEmail} variant={'body-2'}>
-        We’ve sent an Email with instructions to {email}
+      <Typography as={'p'} className={s.textSentEmail} variant={'body-2'}>
+        We’ve sent an Email with instructions to {User.email}
       </Typography>
-      <Button fullWidth onClick={callback}>
-        <Typography variant={'subtitle-2'}>Back to Sign In</Typography>
+      <Button fullWidth onClick={handleNavButtonClicked}>
+        Back to Sign In
       </Button>
     </Card>
   )

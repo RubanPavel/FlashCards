@@ -76,7 +76,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     })
 
     return (
-      <div aria-disabled={disabled} className={`${s.root} ${className}`}>
+      <div aria-disabled={disabled} className={clsx(s.root, className)}>
         {label && (
           <label aria-disabled={disabled} className={s.label}>
             {label}

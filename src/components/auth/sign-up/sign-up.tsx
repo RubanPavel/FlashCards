@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@//components/ui/button'
 import {
@@ -29,6 +30,7 @@ export const signInFormSchema = z
 export type FormValues = z.infer<typeof signInFormSchema>
 
 export const SignUp = () => {
+  const navigate = useNavigate()
   const {
     control,
     formState: { errors },
@@ -40,7 +42,7 @@ export const SignUp = () => {
       password: '',
     },
     mode: 'onBlur',
-    reValidateMode: 'onChange',
+    reValidateMode: 'onBlur',
     resolver: zodResolver(signInFormSchema),
   })
 
@@ -51,13 +53,15 @@ export const SignUp = () => {
 
   // TODO
   const handleNavButtonClicked = () => {
-    // return <Navigate to="/sign-in" />;
+    navigate('/login')
   }
 
   return (
-    <Card className={s.card}>
-      <Typography variant={'large'}>Sign Up</Typography>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+    <Card className={s.wrapperSignUp}>
+      <Typography as={'h1'} className={s.headerSignUp} variant={'large'}>
+        Sign Up
+      </Typography>
+      <form className={s.formSignUp} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <ControlInput
           control={control}
@@ -79,11 +83,11 @@ export const SignUp = () => {
           name={'confirm'}
           type={'password'}
         />
-        <Button className={s.button} fullWidth type={'submit'}>
+        <Button className={s.formButtonSignUp} fullWidth type={'submit'}>
           Sign Up
         </Button>
       </form>
-      <Typography className={s.message} variant={'body-2'}>
+      <Typography as={'p'} className={s.messageSignUp} variant={'body-2'}>
         Already have an account?
       </Typography>
       <Button className={s.navButton} onClick={handleNavButtonClicked} variant={'link'}>
