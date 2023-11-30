@@ -30,7 +30,6 @@ export const ControlInput = <T extends FieldValues>({
 
   return (
     <Input
-      {...rest}
       errorMessage={errorMessage}
       label={label}
       name={name}
@@ -38,6 +37,7 @@ export const ControlInput = <T extends FieldValues>({
       onChange={onChange}
       setValue={setValue}
       value={value}
+      {...rest}
     />
   )
 }
