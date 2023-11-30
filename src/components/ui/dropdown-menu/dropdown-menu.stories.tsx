@@ -84,7 +84,7 @@ export const DropDownMenuWithAvatar: Story = {
   render: args => {
     return (
       <DropdownMenu trigger={args.trigger}>
-        <DropDownItem className={s.DropdownMenuItem} onSelect={e => e.preventDefault()} >
+        <DropDownItem className={s.DropdownMenuItem} onSelect={e => e.preventDefault()}>
           <div style={{ display: 'flex', gap: 20, marginRight: 15 }}>
             <AvatarRadix
               callback={() => {}}
