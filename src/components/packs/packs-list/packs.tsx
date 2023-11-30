@@ -1,11 +1,25 @@
-import { useState } from 'react'
-import { FieldValues } from 'react-hook-form'
-
-import { IconVectorDown } from '@/assets/icons/IconVectorDown'
-import { IconVectorUp } from '@/assets/icons/IconVectorUp'
-import { SearchInput } from '@/components/packs/common/searchInput'
-import { Button } from '@/components/ui/button'
+import {useState} from 'react'
+import {Button} from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
+import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
+import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
+import { Input } from '@/components/ui/input'
+import { SliderRadix } from '@/components/ui/slider'
+import { TabSwitcher } from '@/components/ui/tab-switcher'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/tables'
+import { Typography } from '@/components/ui/typography'
+import {
+  useCreateDeckMutation,
+  useDeleteDeskMutation,
+  useGetDecksQuery,
+} from '@/services/decks/decks.service'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { SliderRadix } from '@/components/ui/slider'
@@ -46,8 +60,8 @@ export const Packs = () => {
     return sort
   }
   const { data } = useGetDecksQuery()
+  const [deleteDeck, {}] = useDeleteDeskMutation()
   const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
-
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
@@ -58,6 +72,10 @@ export const Packs = () => {
 
   const getValue = (value: FieldValues) => {
     return value
+  }
+
+  const handleDelete = (id: string) => {
+    deleteDeck(id)
   }
 
   return (
@@ -152,7 +170,9 @@ export const Packs = () => {
                 <TableCell>
                   <div className={s.lastCell}>
                     <IconLearn />
-                    <IconEdit />
+                    <button onClick={() => handleDelete(d.id)}>
+                      <IconEdit />
+                    </button>
                     <IconDelete />
                   </div>
                 </TableCell>
