@@ -1,9 +1,13 @@
-import {useState} from 'react'
-import {Button} from '@/components/ui/button'
+import { useState } from 'react'
+import { FieldValues } from 'react-hook-form'
+
+import { IconVectorDown } from '@/assets/icons/IconVectorDown'
+import { IconVectorUp } from '@/assets/icons/IconVectorUp'
+import { SearchInput } from '@/components/packs/common/searchInput'
+import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
-import { Input } from '@/components/ui/input'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import {
@@ -20,20 +24,6 @@ import {
   useDeleteDeskMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service'
-import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
-import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
-import { SliderRadix } from '@/components/ui/slider'
-import { TabSwitcher } from '@/components/ui/tab-switcher'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeadCell,
-  TableRow,
-} from '@/components/ui/tables'
-import { Typography } from '@/components/ui/typography'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 
 import s from './packs.module.scss'
 
