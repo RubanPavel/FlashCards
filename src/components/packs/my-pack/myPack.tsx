@@ -1,16 +1,23 @@
 import { FieldValues } from 'react-hook-form'
 
+import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
+import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
+import { DropdownMenu } from '@/components/ui/dropdown-menu'
+import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
+import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
+import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
+import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 
-import s from './packFriend.module.scss'
+import s from './myPack.module.scss'
 
-export const PackFriend = () => {
+export const MyPack = () => {
   const { iconVector, onVectorChange } = useSort()
 
   const columnsData = [
@@ -52,9 +59,29 @@ export const PackFriend = () => {
         <Typography variant={'body-2'}>Back to Packs List</Typography>
       </div>
       <div className={s.packsList}>
-        <Typography variant={'large'}>Friend's Pack</Typography>
+        <div className={s.myPackWrapper}>
+          <Typography as={'h1'} variant={'large'}>
+            My Pack
+          </Typography>
+          <DropdownMenu position={'end'} trigger={<IconBurgerMenu />}>
+            <DropDownItem className={s.dropItem}>
+              <IconLearn />
+              <Typography variant={'caption'}>Learn</Typography>
+            </DropDownItem>
+            <DropdownSeparator />
+            <DropDownItem className={s.dropItem}>
+              <IconEdit />
+              <Typography variant={'caption'}>Edit</Typography>
+            </DropDownItem>
+            <DropdownSeparator />
+            <DropDownItem className={s.dropItem}>
+              <IconDelete />
+              <Typography variant={'caption'}>Delete</Typography>
+            </DropDownItem>
+          </DropdownMenu>
+        </div>
         <Button onClick={() => {}}>
-          <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
+          <Typography variant={'subtitle-2'}>Add New Card</Typography>
         </Button>
       </div>
       <SearchInput className={s.searchInput} valueInput={getValue} />
@@ -64,11 +91,7 @@ export const PackFriend = () => {
             <TableHeadCell key={el.id}>
               {el.title === 'Last Updated' ? (
                 <>
-                  <Typography
-                    className={s.onChangeVector}
-                    onClick={onVectorChange}
-                    variant={'subtitle-2'}
-                  >
+                  <Typography className={s.pointer} onClick={onVectorChange} variant={'subtitle-2'}>
                     {el.title}
                   </Typography>
                   <span className={s.iconVector}>{iconVector}</span>
@@ -97,8 +120,12 @@ export const PackFriend = () => {
                   {d.lastUpdate}
                 </Typography>
               </TableCell>
-              <TableCell>
+              <TableCell className={s.starsAndIcons}>
                 <StarRating filledStars={d.rating} />
+                <div className={s.pointer}>
+                  <IconEdit />
+                  <IconDelete />
+                </div>
               </TableCell>
             </TableRow>
           ))}

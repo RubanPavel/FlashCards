@@ -3,10 +3,10 @@ import { Provider } from 'react-redux'
 import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Packs } from './'
+import { MyPack } from './'
 
 const meta = {
-  component: Packs,
+  component: MyPack,
   decorators: [
     Story => (
       <Provider store={store}>
@@ -16,9 +16,9 @@ const meta = {
   ],
   tags: ['auto-docs'],
   title: 'Components/Packs',
-} satisfies Meta<typeof Packs>
+} satisfies Meta<typeof MyPack>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const PacksExample: Story = {}
+export const MyPackExample: Story = {}
