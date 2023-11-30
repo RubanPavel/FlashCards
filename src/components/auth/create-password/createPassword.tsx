@@ -26,7 +26,7 @@ export const CreatePassword = () => {
       password: '',
     },
     mode: 'onBlur',
-    reValidateMode: 'onChange',
+    reValidateMode: 'onBlur',
     resolver: zodResolver(createPasswordSchema),
   })
 
@@ -35,11 +35,11 @@ export const CreatePassword = () => {
   }
 
   return (
-    <Card className={s.createWrapper}>
-      <Typography className={s.title} variant={'large'}>
+    <Card className={s.wrapperCreatePassword}>
+      <Typography as={'h1'} className={s.titleCreatePassword} variant={'large'}>
         Create new password
       </Typography>
-      <form className={s.formWrapper} onSubmit={handleSubmit(onSubmit)}>
+      <form className={s.formCreatePassword} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <ControlInput
           control={control}
@@ -51,7 +51,7 @@ export const CreatePassword = () => {
         <Typography as={'p'} className={s.info} variant={'body-2'}>
           Create new password and we will send you further instructions to email
         </Typography>
-        <Button className={s.buttonSubmit} fullWidth type={'submit'}>
+        <Button className={s.submitCreatePassword} fullWidth type={'submit'}>
           Create New Password
         </Button>
       </form>

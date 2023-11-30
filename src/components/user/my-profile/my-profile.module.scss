@@ -1,13 +1,18 @@
-.card {
+.wrapperMyProfile {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  max-width: 420px;
+  width: 420px;
   padding: 33px 36px 29px;
 
   background-color: var(--color-dark-700);
+
+  .headerMyProfile {
+    color: var(--color-light-100);
+    text-align: center;
+  }
 
   .avatarWrapper {
     position: relative;
@@ -43,17 +48,14 @@
 
       .nicknameButton {
         position: absolute;
+        top: 50%;
         right: -1.5rem;
+        transform: translateY(-50%);
       }
     }
 
     .email {
       padding-bottom: 16px;
     }
-  }
-
-  .form {
-    width: 100%;
-    padding: 27px 0 20px;
   }
 }

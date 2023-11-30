@@ -13,25 +13,27 @@ import { Packs } from '@/components/packs/packs-list'
 import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
 
+import {SignUp} from "@/components/auth/sign-up";
+import {SignIn} from "@/components/auth/login-in";
+import {ForgotPassword} from "@/components/auth/forgot-password";
+import {ForgotPasswordCheckEmail} from "@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail";
+import {CreatePassword} from "@/components/auth/create-password";
+
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    element: <SignIn />,
     path: '/login',
   },
   {
-    element: <PackFriend />,
-    path: '/1',
-  },
-  {
-    element: <div>sign-up</div>,
+    element: <SignUp />,
     path: '/sign-up',
   },
   {
-    element: <div>forgot-password</div>,
+    element: <ForgotPassword />,
     path: '/forgot-password',
   },
   {
-    element: <div>check-email</div>,
+    element: <ForgotPasswordCheckEmail />,
     path: '/check-email',
   },
 ]
@@ -44,6 +46,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <PackFriend />,
     path: '/1',
+  },
+  {
+    element: <CreatePassword />,
+    path: '/create-password',
   },
   {
     element: <MyProfile />,

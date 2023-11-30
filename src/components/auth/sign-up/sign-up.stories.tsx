@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { ForgotPasswordCheckEmail } from '@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail'
+import { SignUp } from './sign-up'
 import {Provider} from "react-redux";
 import {store} from "@/services/store";
 import {AuthProvider} from "@/assets/isAuthContext";
 import {MemoryRouter} from "react-router-dom";
 
 const meta = {
-  component: ForgotPasswordCheckEmail,
+  component: SignUp,
   decorators: [
     Story => (
         <Provider store={store}>
@@ -20,8 +20,8 @@ const meta = {
     ),
   ],
   tags: ['autodocs'],
-  title: 'Auth/ForgotPasswordCheckEmail',
-} satisfies Meta<typeof ForgotPasswordCheckEmail>
+  title: 'Auth/SignUp',
+} satisfies Meta<typeof SignUp>
 
 export default meta
 type Story = StoryObj<typeof meta>

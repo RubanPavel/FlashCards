@@ -1,5 +1,5 @@
 import { Ref, SVGProps, forwardRef, memo } from 'react'
-const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
+const SvgIconCheckEmail = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     fill={'none'}
     height={96}
@@ -95,7 +95,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
     />
   </svg>
 )
-const ForwardRef = forwardRef(SvgComponent)
-const Memo = memo(ForwardRef)
+const ForwardRef = forwardRef(SvgIconCheckEmail)
+const IconCheckEmail = memo(ForwardRef)
 
-export default Memo
+export default IconCheckEmail

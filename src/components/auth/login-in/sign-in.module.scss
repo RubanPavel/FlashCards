@@ -1,31 +1,42 @@
 .wrapperSignIn {
   width: 420px;
-  padding: 33px 36px 29px 36px;
+  padding: 33px 36px 29px;
   background-color: var(--color-dark-700);
-}
 
-.textSignIn {
-  text-align: center;
-  color: var(--color-light-100);
-  margin-bottom: 30px;
-}
+  .headerSignIn {
+    margin-bottom: 27px;
+    color: var(--color-light-100);
+    text-align: center;
+  }
 
-.forgotPassword {
-  color: var(--color-light-100);
-  text-align: right;
-  margin-bottom: 50px;
-  cursor: pointer;
-}
+  .formSignIn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 
-.dontAccount {
-  color: var(--color-light-900);
-  text-align: center;
-  margin: 20px 0;
-}
+    .forgotPassword {
+      align-self: end;
 
-.signUp {
-  color: var(--color-accent-500);
-  text-align: center;
-  cursor: pointer;
-  text-decoration-line: underline;
+      margin: 0 0 56px;
+      padding: 0;
+
+      font-family: var(--font-family-primary);
+      font-size: var(--font-size-s);
+      font-weight: var(--font-weight-regular);
+      line-height: var(--line-height-m);
+      color: var(--color-light-100);
+    }
+  }
+
+  .dontAccount {
+    margin: 20px 0 11px;
+    color: var(--color-light-900);
+    text-align: center;
+  }
+
+  .navButton {
+    margin: 0;
+    padding:0;
+    text-decoration-line: underline;
+  }
 }
