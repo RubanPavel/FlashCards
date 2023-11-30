@@ -1,12 +1,12 @@
-import {FieldValues} from 'react-hook-form'
+import { FieldValues } from 'react-hook-form'
 
-import {IconLeftArrow} from '@/assets/icons/IconLeftArrow'
-import {StarRating} from '@/components/packs/common/StarRating'
-import {SearchInput} from '@/components/packs/common/searchInput'
-import {useSort} from '@/components/packs/hook/useSort'
-import {Button} from '@/components/ui/button'
-import {Table, TableBody, TableCell, TableHeadCell, TableRow} from '@/components/ui/tables'
-import {Typography} from '@/components/ui/typography'
+import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { StarRating } from '@/components/packs/common/StarRating'
+import { SearchInput } from '@/components/packs/common/searchInput'
+import { useSort } from '@/components/packs/hook/useSort'
+import { Button } from '@/components/ui/button'
+import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
+import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
 
