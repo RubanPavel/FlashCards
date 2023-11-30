@@ -19,7 +19,11 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/decks/decks.service'
+import {
+  useCreateDeckMutation,
+  useDeleteDeskMutation,
+  useGetDecksQuery,
+} from '@/services/decks/decks.service'
 
 import s from './packs.module.scss'
 
@@ -46,8 +50,8 @@ export const Packs = () => {
     return sort
   }
   const { data } = useGetDecksQuery()
+  const [deleteDeck, {}] = useDeleteDeskMutation()
   const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
-
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
@@ -58,6 +62,10 @@ export const Packs = () => {
 
   const getValue = (value: FieldValues) => {
     return value
+  }
+
+  const handleDelete = (id: string) => {
+    deleteDeck(id)
   }
 
   return (
@@ -152,7 +160,9 @@ export const Packs = () => {
                 <TableCell>
                   <div className={s.lastCell}>
                     <IconLearn />
-                    <IconEdit />
+                    <button onClick={() => handleDelete(d.id)}>
+                      <IconEdit />
+                    </button>
                     <IconDelete />
                   </div>
                 </TableCell>
