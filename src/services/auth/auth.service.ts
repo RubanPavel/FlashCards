@@ -18,11 +18,11 @@ export const AuthService = authApi.injectEndpoints({
     return {
       createNewUser: builder.mutation<createNewUserResponse, createNewUserType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...arg }) => ({
-          method: 'POST',
-          params: {
-            ...arg,
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/auth/sign-up`,
         }),
       }),
@@ -35,11 +35,11 @@ export const AuthService = authApi.injectEndpoints({
       }),
       login: builder.mutation<loginResponse, loginType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...arg }) => ({
-          method: 'POST',
-          params: {
-            ...arg,
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/auth/login`,
         }),
       }),
@@ -52,48 +52,51 @@ export const AuthService = authApi.injectEndpoints({
       }),
       recoveryPassword: builder.mutation<void, recoveryPasswordType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...arg }) => ({
-          method: 'POST',
-          params: {
-            ...arg,
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/auth/recover-password`,
         }),
       }),
       resetPassword: builder.mutation<void, resetPasswordType>({
         invalidatesTags: ['Auth'],
-        query: ({ token, ...arg }) => ({
-          method: 'POST',
-          params: {
-            ...arg,
+        query: ({ token, ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/auth/reset-password/${token}`,
         }),
       }),
       updateUser: builder.mutation<updateUserResponse, updateUserType>({
         invalidatesTags: ['Auth'],
-        query: () => ({
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
+          },
           method: 'PATCH',
           url: `v1/auth/me`,
         }),
       }),
       verifyEmail: builder.mutation<void, verifyEmailType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...arg }) => ({
-          method: 'POST',
-          params: {
-            ...arg,
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/auth/verify-email`,
         }),
       }),
       verifyEmailResend: builder.mutation<void, verifyEmailResendType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...arg }) => ({
-          method: 'POST',
-          params: {
-            ...arg,
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/auth/resend-verification-email`,
         }),
       }),
