@@ -80,12 +80,12 @@ export type CardResponse = {
 
 export type CreateCardType = {
   answer: string
-  answerImg: string
-  answerVideo: string
+  answerImg?: string
+  answerVideo?: string
   id: string
   question: string
-  questionImg: string
-  questionVideo: string
+  questionImg?: string
+  questionVideo?: string
 }
 
 export type getRandomCardResponse = {
@@ -112,4 +112,14 @@ export type saveGradeType = {
   cardId: string
   grade: number
   id: string
+}
+
+export type GetDecksType = {
+  authorId?: string
+  currentPage?: number
+  itemsPerPage?: number
+  maxCardsCount?: string
+  minCardsCount?: string
+  name?: string
+  orderBy?: string
 }
