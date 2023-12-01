@@ -23,10 +23,6 @@ button {
       background: var(--color-dark-500);
     }
 
-    &:focus-within {
-      background: var(--color-dark-100);
-    }
-
     &:active:not(.disabled) {
       background: var(--color-dark-100);
     }

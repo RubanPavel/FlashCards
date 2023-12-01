@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Button } from './'
 
+import { IconLogOut } from '@/assets/icons/IconLogOut'
+
+import { Button, Props } from './'
 
 const meta = {
   argTypes: {
@@ -25,6 +27,26 @@ export const Primary: Story = {
   },
 }
 
+export const PrimaryWithIcon: Story = ({ disabled, ...args }: Props) => {
+  return (
+    <Button {...args} disabled={disabled}>
+      <>
+        <IconLogOut
+          color={disabled ? 'var(--color-light-900)' : 'var(--color-light-100)'}
+          height={16}
+          width={16}
+        />
+        Primary Button
+      </>
+    </Button>
+  )
+}
+
+PrimaryWithIcon.args = {
+  disabled: false,
+  variant: 'primary',
+}
+
 export const Secondary: Story = {
   args: {
     children: 'Secondary Button',
@@ -32,6 +54,27 @@ export const Secondary: Story = {
     variant: 'secondary',
   },
 }
+
+export const SecondaryWithIcon: Story = ({ disabled, ...args }: Props) => {
+  return (
+    <Button {...args} disabled={disabled}>
+      <>
+        <IconLogOut
+          color={disabled ? 'var(--color-light-900)' : 'var(--color-light-100)'}
+          height={16}
+          width={16}
+        />
+        Secondary Button
+      </>
+    </Button>
+  )
+}
+
+SecondaryWithIcon.args = {
+  disabled: false,
+  variant: 'secondary',
+}
+
 export const Tertiary: Story = {
   args: {
     children: 'Tertiary Button',
@@ -39,9 +82,11 @@ export const Tertiary: Story = {
     variant: 'tertiary',
   },
 }
+
 export const Link: Story = {
   args: {
-    children: 'Tertiary Button',
+    as: 'a',
+    children: 'Link Button',
     disabled: false,
     variant: 'link',
   },
@@ -52,14 +97,6 @@ export const FullWidth: Story = {
     children: 'Full Width Button',
     disabled: false,
     fullWidth: true,
-    variant: 'primary',
-  },
-}
-
-export const AsLink: Story = {
-  args: {
-    as: 'a',
-    children: 'Link that looks like a button',
     variant: 'primary',
   },
 }

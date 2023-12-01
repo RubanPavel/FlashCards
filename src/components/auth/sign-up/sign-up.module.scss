@@ -1,0 +1,34 @@
+.wrapperSignUp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 420px;
+  padding: 33px 36px 29px;
+
+  background-color: var(--color-dark-700);
+
+  .headerSignUp {
+    margin-bottom: 27px;
+  }
+
+  .formSignUp {
+    width: 100%;
+
+    .formButtonSignUp {
+      margin-top: 30px;
+    }
+  }
+
+  .messageSignUp {
+    margin: 20px 0 11px;
+    color: var(--color-light-900);
+  }
+
+  .navButton {
+    margin: 0;
+    padding: 0;
+    text-decoration-line: underline;
+  }
+}

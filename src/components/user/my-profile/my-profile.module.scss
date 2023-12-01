@@ -1,0 +1,61 @@
+.wrapperMyProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 420px;
+  padding: 33px 36px 29px;
+
+  background-color: var(--color-dark-700);
+
+  .headerMyProfile {
+    color: var(--color-light-100);
+    text-align: center;
+  }
+
+  .avatarWrapper {
+    position: relative;
+    margin: 25px 0 6px;
+
+    .avatar {
+      min-width: 96px;
+      min-height: 96px;
+    }
+
+    .avatarButton {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      display: flex;
+
+      min-width: 24px;
+      min-height: 24px;
+
+      background: var(--color-dark-300);
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .infoWrapper {
+      position: relative;
+
+      .nicknameButton {
+        position: absolute;
+        top: 50%;
+        right: -1.5rem;
+        transform: translateY(-50%);
+      }
+    }
+
+    .email {
+      padding-bottom: 16px;
+    }
+  }
+}

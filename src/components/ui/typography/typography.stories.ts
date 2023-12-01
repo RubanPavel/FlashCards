@@ -1,12 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import {Typography} from "@/components/ui/typography/typography";
+import { Typography } from '@/components/ui/typography/typography'
 
 const meta = {
   argTypes: {
     variant: {
       control: { type: 'radio' },
-      options: ['large', 'H1', 'H2', 'H3', 'body-1', 'body-2', 'caption', 'link-1', 'link-2', 'overline', 'subtitle-1', 'subtitle-2'],
+      options: [
+        'large',
+        'H1',
+        'H2',
+        'H3',
+        'body-1',
+        'body-2',
+        'caption',
+        'link-1',
+        'link-2',
+        'overline',
+        'subtitle-1',
+        'subtitle-2',
+      ],
     },
   },
   component: Typography,
@@ -52,7 +65,7 @@ export const H3: Story = {
   },
 }
 
-export const body_1: Story = {
+export const Body_1: Story = {
   args: {
     children: 'Body-1 Text',
     disabled: false,
@@ -60,7 +73,7 @@ export const body_1: Story = {
   },
 }
 
-export const body_2: Story = {
+export const Body_2: Story = {
   args: {
     children: 'Body-2 Text',
     disabled: false,
@@ -68,7 +81,7 @@ export const body_2: Story = {
   },
 }
 
-export const caption: Story = {
+export const Caption: Story = {
   args: {
     children: 'Caption Text',
     disabled: false,
@@ -76,7 +89,7 @@ export const caption: Story = {
   },
 }
 
-export const link_1: Story = {
+export const Link_1: Story = {
   args: {
     as: 'a',
     children: 'Link-1 Text',
@@ -85,7 +98,7 @@ export const link_1: Story = {
   },
 }
 
-export const link_2: Story = {
+export const Link_2: Story = {
   args: {
     as: 'a',
     children: 'Link-2 Text',
@@ -94,7 +107,7 @@ export const link_2: Story = {
   },
 }
 
-export const overline: Story = {
+export const Overline: Story = {
   args: {
     children: 'Overline Text',
     disabled: false,
@@ -102,7 +115,7 @@ export const overline: Story = {
   },
 }
 
-export const subtitle_1: Story = {
+export const Subtitle_1: Story = {
   args: {
     children: 'Subtitle-1 Text',
     disabled: false,
@@ -110,7 +123,7 @@ export const subtitle_1: Story = {
   },
 }
 
-export const subtitle_2: Story = {
+export const Subtitle_2: Story = {
   args: {
     children: 'Subtitle-2 Text',
     disabled: false,

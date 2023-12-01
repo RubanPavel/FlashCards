@@ -1,0 +1,63 @@
+/* reset */
+button {
+  all: unset;
+}
+
+.DropdownMenuContent {
+  z-index: 11;
+
+  padding: 5px;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+  border-radius: 4px;
+}
+
+.iconTriangle {
+  position: absolute;
+  z-index: 999;
+  top: -4px;
+  left: -4px;
+  transform-origin: center center;
+  transform: rotate(225deg);
+
+  width: 7px;
+  height: 7px;
+
+  background-color: var(--color-dark-700);
+  border-top: 1px solid var(--color-dark-500);
+  border-left: 1px solid var(--color-dark-500);
+}
+
+.DropdownMenuItem {
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 25px;
+  padding: 20px 6px;
+
+  font-size: 13px;
+  line-height: 1;
+  color: var(--color-light-100);
+
+  //border-radius: 3px;
+  outline: none;
+
+  svg {
+    margin-right: 5px;
+  }
+}
+
+.DropdownMenuSeparator {
+  height: 1px;
+  margin: 5px;
+  background-color: var(--color-dark-500);
+}
+
+.DropdownMenuArrow {
+  fill: var(--color-dark-500);
+}
