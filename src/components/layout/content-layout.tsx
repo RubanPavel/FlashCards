@@ -25,6 +25,9 @@ export const ContentLayout = () => {
   const myProfileButtonClicked = () => {
     navigate('/my-profile')
   }
+  const onLogoClick = () => {
+    navigate('/')
+  }
   const logoutButtonClicked = () => {
     setIsAuthenticated(false)
   }
@@ -72,7 +75,9 @@ export const ContentLayout = () => {
 
   return (
     <>
-      <Header logo={<IconLogo />}>{headerContent}</Header>
+      <Header logo={<IconLogo className={s.setPointer} onClick={onLogoClick} />}>
+        {headerContent}
+      </Header>
       <main>
         <Outlet />
       </main>
