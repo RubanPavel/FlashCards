@@ -2,7 +2,6 @@ import { FieldValues, useForm } from 'react-hook-form'
 
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import {ChangeEvent, useEffect, useState} from "react";
-import {useGetSearchQuery} from "@/services/decks";
 
 type FormValue = {
   search: string
@@ -24,23 +23,9 @@ export const SearchInput = ({ className, valueInput,  ...rest }: Props) => {
 
 
   useEffect(() => {
-    console.log(1)
     const debounceTimeout = setTimeout(() => {
       if (debouncedValue !== null) {
-        // TODO Поиск по карточкам
-        const { data, error } = useGetSearchQuery({
-          name: debouncedValue,
-        });
-
-        if (error) {
-          console.error('Error:', error);
-        }
-
-        if (data) {
-          // Обработка полученных данных
-          console.log(data);
-        }
-        // console.log('Search data:', { search: debouncedValue });
+        console.log('Search data:', { search: debouncedValue });
         setDebouncedValue(null);
       }
     }, 1000);

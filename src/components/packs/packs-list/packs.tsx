@@ -22,7 +22,7 @@ import { Typography } from '@/components/ui/typography'
 import {
     useCreateDeckMutation,
     useDeleteDeskMutation,
-    useGetDecksQuery,
+    useGetDecksQuery, useGetFilteredDataQuery,
 } from '@/services/decks/decks.service'
 
 import s from './packs.module.scss'
@@ -49,7 +49,10 @@ export const Packs = () => {
 
         return sort
     }
-    const { data } = useGetDecksQuery()
+
+    const [filter, setFilter] = useState<any>('');
+    const {} = useGetDecksQuery();
+    const { data: filteredData} = useGetFilteredDataQuery(filter);
     const [deleteDeck, {}] = useDeleteDeskMutation()
     const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
     const columnsData = [
@@ -61,6 +64,7 @@ export const Packs = () => {
     ]
 
     const getValue = (value: FieldValues) => {
+        // searchRefetch()
         return value
     }
 
@@ -68,8 +72,16 @@ export const Packs = () => {
         deleteDeck(id)
     }
 
+    const handleCliked = () => {
+        setFilter({ name: 'Java' })
+    }
+
+
+
+
     return (
-        <div className={s.container}>
+        <div className={s.containerOnClick}>
+            <button onClick={handleCliked}>Отфильтровать</button>
             {isDeckCreated && <div>isDeckCreated.....</div>}
             <div className={s.packsList}>
                 <Typography variant={'large'}>Packs list</Typography>
@@ -135,7 +147,7 @@ export const Packs = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.items.map(d => (
+                        {filteredData?.items.map(d => (
                             <TableRow key={d.id}>
                                 <TableCell>
                                     <Typography as={'p'} variant={'body-2'}>

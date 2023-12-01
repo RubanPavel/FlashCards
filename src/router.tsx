@@ -17,7 +17,7 @@ import { Packs } from '@/components/packs/packs-list'
 
 import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
-import {useGetDecksQuery} from "@/services/decks";
+//import {useGetDecksQuery} from "@/services/decks";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -82,10 +82,10 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
-  const { isLoading, isError} = useGetDecksQuery()
-    // TODO потом поправить
-    if (isLoading) return <p>Loading...</p>
-    if (isError) return <p>error</p>
+  // const { isLoading, isError} = useGetDecksQuery({name: ''})
+  //   // TODO потом поправить
+  //   if (isLoading) return <p>Loading...</p>
+  //   if (isError) return <p>error</p>
 
 
   return <RouterProvider router={router} />

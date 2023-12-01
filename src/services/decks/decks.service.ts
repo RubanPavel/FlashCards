@@ -39,7 +39,6 @@ export const DecksService = decksApi.injectEndpoints({
         invalidatesTags: ['Decks'],
         query: id => ({ method: 'DELETE', url: `v1/decks/${id}` }),
       }),
-
       getDeckById: builder.query<Deck, string>({
         providesTags: ['Decks'],
         query: id => ({
@@ -51,7 +50,23 @@ export const DecksService = decksApi.injectEndpoints({
       getDecks: builder.query<DecksResponse, void>({
         providesTags: ['Decks'],
         query: () => `v1/decks`,
+
       }),
+      getFilteredData: builder.query<DecksResponse, { name: string }>({
+        providesTags: ['Decks'],
+        query: arg => ({
+          url: 'v1/decks',
+          params: arg,
+        }),
+      }),
+      // getDecks: builder.query<DecksResponse, { name?: string }>({
+      //   providesTags: ['Decks'],
+      //   query: args => ({
+      //     url: 'v1/decks',
+      //     params: { ...filterParams, ...args },
+      //   }),
+      // }),
+
       getDecksCards: builder.query<DecksResponse, GetDecksCardsParams>({
         providesTags: ['Decks'],
         query: ({ id, ...rest }) => ({
@@ -91,4 +106,4 @@ export const DecksService = decksApi.injectEndpoints({
   },
 })
 
-export const { useCreateDeckMutation, useDeleteDeskMutation, useGetDecksQuery } = DecksService
+export const { useCreateDeckMutation, useDeleteDeskMutation, useGetDecksQuery, useGetFilteredDataQuery } = DecksService
