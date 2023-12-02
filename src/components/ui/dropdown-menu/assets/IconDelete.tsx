@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC, SVGProps, memo } from 'react'
 
 type Props = {
   color?: string
@@ -6,7 +6,7 @@ type Props = {
   height?: number
   strokeWidth?: number
   width?: number
-}
+} & SVGProps<SVGSVGElement>
 
 export const IconEdit: FC<Props> = (props: Props) => {
   const {

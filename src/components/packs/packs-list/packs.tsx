@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
 
-import { IconVectorDown } from '@/assets/icons/IconVectorDown'
-import { IconVectorUp } from '@/assets/icons/IconVectorUp'
 import { SearchInput } from '@/components/packs/common/searchInput'
+import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
@@ -35,20 +34,8 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 
 export const Packs = () => {
   const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
-  const [sort, setSort] = useState('lastUpdate-asc')
+  const { iconVector, onVectorChange } = useSort()
 
-  const iconVector = sort === 'lastUpdate-asc' ? <IconVectorDown /> : <IconVectorUp />
-
-  const onVectorChange = () => {
-    if (sort === 'lastUpdate-asc') {
-      setSort('lastUpdate-desc')
-    }
-    if (sort === 'lastUpdate-desc') {
-      setSort('lastUpdate-asc')
-    }
-
-    return sort
-  }
   const { data } = useGetDecksQuery()
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
@@ -160,10 +147,8 @@ export const Packs = () => {
                 <TableCell>
                   <div className={s.lastCell}>
                     <IconLearn />
-                    <button onClick={() => handleDelete(d.id)}>
-                      <IconEdit />
-                    </button>
-                    <IconDelete />
+                    <IconEdit />
+                    <IconDelete onClick={() => handleDelete(d.id)} />
                   </div>
                 </TableCell>
               </TableRow>
