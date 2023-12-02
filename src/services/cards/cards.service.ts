@@ -21,11 +21,11 @@ export const CardsService = cardsApi.injectEndpoints({
       }),
       updateCard: builder.mutation<updateCardResponse, updateCardType>({
         invalidatesTags: ['Cards'],
-        query: ({ id, ...arg }) => ({
-          method: 'PATCH',
-          params: {
-            ...arg,
+        query: ({ id, ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'PATCH',
           url: `/v1/cards/${id}`,
         }),
       }),

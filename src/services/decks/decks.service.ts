@@ -6,6 +6,7 @@ import {
   DecksResponse,
   DeleteResponse,
   GetDecksCardsParams,
+  GetDecksType,
   UpdateDeckRequest,
   getRandomCardResponse,
   getRandomCardType,
@@ -18,19 +19,21 @@ export const DecksService = decksApi.injectEndpoints({
     return {
       createCard: builder.mutation<CardResponse, CreateCardType>({
         invalidatesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
-          method: 'POST',
-          params: {
-            ...rest,
+        query: ({ id, ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/decks/${id}/cards`,
         }),
       }),
 
       createDeck: builder.mutation<Deck, CreateDeckType>({
         invalidatesTags: ['Decks'],
-        query: body => ({
-          body,
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
+          },
           method: 'POST',
           url: `v1/decks`,
         }),
@@ -48,16 +51,21 @@ export const DecksService = decksApi.injectEndpoints({
           url: `v1/decks/${id}`,
         }),
       }),
-      getDecks: builder.query<DecksResponse, void>({
+      getDecks: builder.query<DecksResponse, GetDecksType | void>({
         providesTags: ['Decks'],
-        query: () => `v1/decks`,
+        query: (...args) => ({
+          params: {
+            ...args,
+          },
+          url: `v1/decks`,
+        }),
       }),
       getDecksCards: builder.query<DecksResponse, GetDecksCardsParams>({
         providesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
+        query: ({ id, ...args }) => ({
           method: 'GET',
           params: {
-            ...rest,
+            ...args,
           },
           url: `/v1/decks/${id}/cards`,
         }),
@@ -65,21 +73,21 @@ export const DecksService = decksApi.injectEndpoints({
 
       getRandomCard: builder.query<getRandomCardResponse, getRandomCardType>({
         providesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
+        query: ({ id, ...args }) => ({
           method: 'GET',
           params: {
-            ...rest,
+            ...args,
           },
           url: `/v1/decks/${id}/learn`,
         }),
       }),
       saveGrade: builder.mutation<{}, saveGradeType>({
         invalidatesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
-          method: 'POST',
-          params: {
-            ...rest,
+        query: ({ id, ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/decks/${id}/learn`,
         }),
       }),
