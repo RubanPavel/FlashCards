@@ -57,8 +57,8 @@ export type verifyEmailType = {
 }
 
 export type verifyEmailResendType = {
-  html?: string
-  subject?: string
+  html: string
+  subject: string
   userId: string
 }
 
