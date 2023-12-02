@@ -1,15 +1,14 @@
-import {useState} from 'react'
-import {FieldValues} from 'react-hook-form'
+import { useState } from 'react'
+import { FieldValues } from 'react-hook-form'
 
-import {IconVectorDown} from '@/assets/icons/IconVectorDown'
-import {IconVectorUp} from '@/assets/icons/IconVectorUp'
-import {SearchInput} from '@/components/packs/common/searchInput'
-import {Button} from '@/components/ui/button'
+import { SearchInput } from '@/components/packs/common/searchInput'
+import { useSort } from '@/components/packs/hook/useSort'
+import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
-import {IconEdit} from '@/components/ui/dropdown-menu/assets/IconEdit'
-import {IconLearn} from '@/components/ui/dropdown-menu/assets/IconLearn'
-import {SliderRadix} from '@/components/ui/slider'
-import {TabSwitcher} from '@/components/ui/tab-switcher'
+import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
+import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
+import { SliderRadix } from '@/components/ui/slider'
+import { TabSwitcher } from '@/components/ui/tab-switcher'
 import {
   Table,
   TableBody,
@@ -18,7 +17,7 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/tables'
-import {Typography} from '@/components/ui/typography'
+import { Typography } from '@/components/ui/typography'
 import {
   useCreateDeckMutation,
   useDeleteDeskMutation,
@@ -35,29 +34,17 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 
 export const Packs = () => {
   const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
-  const [sort, setSort] = useState('lastUpdate-asc')
+  const { iconVector, onVectorChange } = useSort()
 
-  const iconVector = sort === 'lastUpdate-asc' ? <IconVectorDown/> : <IconVectorUp/>
-
-  const onVectorChange = () => {
-    if (sort === 'lastUpdate-asc') {
-      setSort('lastUpdate-desc')
-    }
-    if (sort === 'lastUpdate-desc') {
-      setSort('lastUpdate-asc')
-    }
-
-    return sort
-  }
-  const {data} = useGetDecksQuery()
+  const { data } = useGetDecksQuery()
   const [deleteDeck, {}] = useDeleteDeskMutation()
-  const [createDeck, {isLoading: isDeckCreated}] = useCreateDeckMutation()
+  const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
   const columnsData = [
-    {id: '1', title: 'Name'},
-    {id: '2', title: 'Cards'},
-    {id: '3', title: 'Last Updated'},
-    {id: '4', title: 'Create by'},
-    {id: '5', title: ''},
+    { id: '1', title: 'Name' },
+    { id: '2', title: 'Cards' },
+    { id: '3', title: 'Last Updated' },
+    { id: '4', title: 'Create by' },
+    { id: '5', title: '' },
   ]
 
   const getValue = (value: FieldValues) => {
@@ -75,18 +62,17 @@ export const Packs = () => {
         <Typography variant={'large'}>Packs list</Typography>
         <Button
           onClick={() => {
-            createDeck({name: 'New world!'})
+            createDeck({ name: 'New world!' })
           }}
         >
           <Typography variant={'subtitle-1'}>Add new Pack</Typography>
         </Button>
       </div>
       <div className={s.controlPanel}>
-        <SearchInput className={s.searchInput} valueInput={getValue}/>
+        <SearchInput className={s.searchInput} valueInput={getValue} />
         <TabSwitcher
           label={'Show packs cards'}
-          onValueChange={() => {
-          }}
+          onValueChange={() => {}}
           tabs={[
             {
               title: 'My Cards',
@@ -100,12 +86,12 @@ export const Packs = () => {
         />
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
-          <SliderRadix onValueChange={setValueSlider} value={valueSlider}/>
+          <SliderRadix onValueChange={setValueSlider} value={valueSlider} />
         </div>
-        <div style={{marginLeft: 20}}>
+        <div style={{ marginLeft: 20 }}>
           <Button variant={'secondary'}>
-            <IconDelete/>
-            <Typography style={{whiteSpace: 'nowrap'}} variant={'subtitle-2'}>
+            <IconDelete />
+            <Typography style={{ whiteSpace: 'nowrap' }} variant={'subtitle-2'}>
               Clear Filter
             </Typography>
           </Button>
@@ -160,9 +146,9 @@ export const Packs = () => {
                 </TableCell>
                 <TableCell>
                   <div className={s.lastCell}>
-                    <IconLearn/>
-                    <IconEdit/>
-                    <IconDelete onClick={() => handleDelete(d.id)}/>
+                    <IconLearn />
+                    <IconEdit />
+                    <IconDelete onClick={() => handleDelete(d.id)} />
                   </div>
                 </TableCell>
               </TableRow>

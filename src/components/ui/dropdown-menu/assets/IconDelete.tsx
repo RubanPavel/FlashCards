@@ -1,4 +1,4 @@
-import {FC, memo, SVGProps} from 'react'
+import { FC, SVGProps, memo } from 'react'
 
 type Props = {
   color?: string
