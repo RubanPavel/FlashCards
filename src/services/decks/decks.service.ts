@@ -6,6 +6,7 @@ import {
   DecksResponse,
   DeleteResponse,
   GetDecksCardsParams,
+  GetDecksType,
   UpdateDeckRequest,
   getRandomCardResponse,
   getRandomCardType,
@@ -18,19 +19,21 @@ export const DecksService = decksApi.injectEndpoints({
     return {
       createCard: builder.mutation<CardResponse, CreateCardType>({
         invalidatesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
-          method: 'POST',
-          params: {
-            ...rest,
+        query: ({ id, ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/decks/${id}/cards`,
         }),
       }),
 
       createDeck: builder.mutation<Deck, CreateDeckType>({
         invalidatesTags: ['Decks'],
-        query: body => ({
-          body,
+        query: ({ ...args }) => ({
+          body: {
+            ...args,
+          },
           method: 'POST',
           url: `v1/decks`,
         }),
@@ -39,6 +42,7 @@ export const DecksService = decksApi.injectEndpoints({
         invalidatesTags: ['Decks'],
         query: id => ({ method: 'DELETE', url: `v1/decks/${id}` }),
       }),
+
       getDeckById: builder.query<Deck, string>({
         providesTags: ['Decks'],
         query: id => ({
@@ -47,32 +51,21 @@ export const DecksService = decksApi.injectEndpoints({
           url: `v1/decks/${id}`,
         }),
       }),
-      getDecks: builder.query<DecksResponse, void>({
+      getDecks: builder.query<DecksResponse, GetDecksType | void>({
         providesTags: ['Decks'],
-        query: () => `v1/decks`,
-
-      }),
-      getFilteredData: builder.query<DecksResponse, { name: string }>({
-        providesTags: ['Decks'],
-        query: arg => ({
-          url: 'v1/decks',
-          params: arg,
+        query: (...args) => ({
+          params: {
+            ...args,
+          },
+          url: `v1/decks`,
         }),
       }),
-      // getDecks: builder.query<DecksResponse, { name?: string }>({
-      //   providesTags: ['Decks'],
-      //   query: args => ({
-      //     url: 'v1/decks',
-      //     params: { ...filterParams, ...args },
-      //   }),
-      // }),
-
       getDecksCards: builder.query<DecksResponse, GetDecksCardsParams>({
         providesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
+        query: ({ id, ...args }) => ({
           method: 'GET',
           params: {
-            ...rest,
+            ...args,
           },
           url: `/v1/decks/${id}/cards`,
         }),
@@ -80,21 +73,21 @@ export const DecksService = decksApi.injectEndpoints({
 
       getRandomCard: builder.query<getRandomCardResponse, getRandomCardType>({
         providesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
+        query: ({ id, ...args }) => ({
           method: 'GET',
           params: {
-            ...rest,
+            ...args,
           },
           url: `/v1/decks/${id}/learn`,
         }),
       }),
       saveGrade: builder.mutation<{}, saveGradeType>({
         invalidatesTags: ['Decks'],
-        query: ({ id, ...rest }) => ({
-          method: 'POST',
-          params: {
-            ...rest,
+        query: ({ id, ...args }) => ({
+          body: {
+            ...args,
           },
+          method: 'POST',
           url: `/v1/decks/${id}/learn`,
         }),
       }),
@@ -106,4 +99,4 @@ export const DecksService = decksApi.injectEndpoints({
   },
 })
 
-export const { useCreateDeckMutation, useDeleteDeskMutation, useGetDecksQuery, useGetFilteredDataQuery } = DecksService
+export const { useCreateDeckMutation, useDeleteDeskMutation, useGetDecksQuery } = DecksService
