@@ -1,5 +1,5 @@
 import { CardsResponse, updateCardResponse, updateCardType } from './cards.types'
-import {baseApi} from "@/services/base-api";
+import { baseApi } from '@/services/base-api'
 
 export const CardsService = baseApi.injectEndpoints({
   endpoints: builder => {

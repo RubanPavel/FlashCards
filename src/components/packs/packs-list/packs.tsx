@@ -63,7 +63,7 @@ export const Packs = () => {
   }
 
   const setSearch = (name: string) => {
-    dispatch(decksActions.setNameToSearch({ name }))
+    dispatch(decksActions.setName({ name }))
   }
 
   return (
