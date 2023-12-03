@@ -3,7 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { authApi } from '@/services/auth/auth-api'
 import { cardsApi } from '@/services/cards/cards-api'
 import { decksApi } from '@/services/decks/decks-api'
-import { decksReducer } from '@/services/decks/desks.slice'
+import { decksReducer } from '@/services/decks/decks.slice'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({

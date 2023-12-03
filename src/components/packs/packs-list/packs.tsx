@@ -23,7 +23,7 @@ import {
   useDeleteDeskMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service'
-import { decksActions } from '@/services/decks/desks.slice'
+import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './packs.module.scss'
