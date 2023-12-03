@@ -1,7 +1,7 @@
 import { CardsResponse, updateCardResponse, updateCardType } from './cards.types'
-import { cardsApi } from './cards-api'
+import {baseApi} from "@/services/base-api";
 
-export const CardsService = cardsApi.injectEndpoints({
+export const CardsService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       deleteCard: builder.mutation<void, string>({

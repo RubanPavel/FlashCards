@@ -1,21 +1,14 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-
-import { authApi } from '@/services/auth/auth-api'
-import { cardsApi } from '@/services/cards/cards-api'
-import { decksApi } from '@/services/decks/decks-api'
 import { decksReducer } from '@/services/decks/decks.slice'
 import { configureStore } from '@reduxjs/toolkit'
+import {baseApi} from "@/services/base-api";
 
 export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware()
-      .concat(authApi.middleware)
-      .concat(decksApi.middleware)
-      .concat(cardsApi.middleware),
+      .concat(baseApi.middleware),
   reducer: {
-    [authApi.reducerPath]: authApi.reducer,
-    [cardsApi.reducerPath]: cardsApi.reducer,
-    [decksApi.reducerPath]: decksApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
     decksParams: decksReducer,
   },
 })
