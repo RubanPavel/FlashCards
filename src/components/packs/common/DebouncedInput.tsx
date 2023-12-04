@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input'
 
 type Props = {
   callback: (value: string) => void
-
 } & Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 
 export const DebouncedInput = ({ callback, ...rest }: Props) => {
