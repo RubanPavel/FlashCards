@@ -1,9 +1,10 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
+
 import { Input } from '@/components/ui/input'
 
 type Props = {
   callback: (name: string) => void
-} & Omit<ComponentPropsWithoutRef<'input'>, 'value' | 'onChange'>
+} & Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 
 export const DebouncedInput = ({ callback, ...rest }: Props) => {
   const [debouncedValue, setDebouncedValue] = useState<null | string>(null)
@@ -26,6 +27,6 @@ export const DebouncedInput = ({ callback, ...rest }: Props) => {
   }
 
   return (
-    <Input {...rest} value={inputValue} onChange={handleInputChange} setValue={setInputValue} />
+    <Input {...rest} onChange={handleInputChange} setValue={setInputValue} value={inputValue} />
   )
 }

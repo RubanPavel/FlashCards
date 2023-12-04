@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
@@ -79,10 +80,10 @@ export const Packs = () => {
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
+          callback={setSearch}
+          className={s.searchInput}
           name={'search'}
           type={'search'}
-          className={s.searchInput}
-          callback={setSearch}
         />
         <TabSwitcher
           label={'Show packs cards'}
