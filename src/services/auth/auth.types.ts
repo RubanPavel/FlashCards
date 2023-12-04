@@ -8,11 +8,12 @@ export type AuthResponse = {
   updated: string
 }
 
-export type updateUserType = {
-  avatar: string
-  email: string
-  name: string
-}
+export type updateUserType = FormData
+// {
+//   avatar?: string
+//   email?: string
+//   name?: string
+// }
 
 export type updateUserResponse = {
   avatar: string

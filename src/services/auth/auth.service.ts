@@ -73,12 +73,10 @@ export const AuthService = baseApi.injectEndpoints({
       }),
       updateUser: builder.mutation<updateUserResponse, updateUserType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...args }) => ({
-          body: {
-            ...args,
-          },
+        query: args => ({
+          body: args,
           method: 'PATCH',
-          url: `v1/auth/me`,
+          url: 'v1/auth/me',
         }),
       }),
       verifyEmail: builder.mutation<void, verifyEmailType>({
@@ -105,4 +103,4 @@ export const AuthService = baseApi.injectEndpoints({
   },
 })
 
-export const { useGetAuthMeQuery } = AuthService
+export const { useGetAuthMeQuery, useUpdateUserMutation } = AuthService
