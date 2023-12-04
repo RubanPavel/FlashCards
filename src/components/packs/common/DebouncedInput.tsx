@@ -1,9 +1,10 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
+
 import { Input } from '@/components/ui/input'
 
 type Props = {
-  callback: (name: string) => void
-} & Omit<ComponentPropsWithoutRef<'input'>, 'value' | 'onChange'>
+  callback: (value: string) => void
+} & Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 
 export const DebouncedInput = ({ callback, ...rest }: Props) => {
   const [debouncedValue, setDebouncedValue] = useState<null | string>(null)
@@ -18,14 +19,19 @@ export const DebouncedInput = ({ callback, ...rest }: Props) => {
     }, 500)
 
     return () => clearTimeout(debounceTimeout)
-  }, [debouncedValue])
+  }, [debouncedValue, callback])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
     setDebouncedValue(e.currentTarget.value)
   }
 
+  const handleInputValue = (value: string) => {
+    setInputValue(value)
+    callback?.(value)
+  }
+
   return (
-    <Input {...rest} value={inputValue} onChange={handleInputChange} setValue={setInputValue} />
+    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={inputValue} />
   )
 }
