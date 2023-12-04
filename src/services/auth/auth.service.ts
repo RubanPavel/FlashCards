@@ -11,9 +11,9 @@ import {
   verifyEmailResendType,
   verifyEmailType,
 } from './auth.types'
-import { authApi } from './auth-api'
+import { baseApi } from '@/services/base-api'
 
-export const AuthService = authApi.injectEndpoints({
+export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       createNewUser: builder.mutation<createNewUserResponse, createNewUserType>({

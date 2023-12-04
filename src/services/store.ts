@@ -1,15 +1,17 @@
-import { authApi } from '@/services/auth/auth-api'
-import { decksApi } from '@/services/decks/decks-api'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import { decksReducer } from '@/services/decks/decks.slice'
 import { configureStore } from '@reduxjs/toolkit'
+import { baseApi } from '@/services/base-api'
 
 export const store = configureStore({
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(decksApi.middleware).concat(authApi.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
   reducer: {
-    [authApi.reducerPath]: authApi.reducer,
-    [decksApi.reducerPath]: decksApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
+    decksParams: decksReducer,
   },
 })
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
+export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

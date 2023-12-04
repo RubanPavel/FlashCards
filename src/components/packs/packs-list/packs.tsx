@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { FieldValues } from 'react-hook-form'
 
 import { IconClose } from '@/assets/icons/IconClose'
@@ -28,6 +29,8 @@ import {
   useDeleteDeskMutation,
   useGetDecksQuery,
 } from '@/services/decks/decks.service'
+import { decksActions } from '@/services/decks/decks.slice'
+import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './packs.module.scss'
 
@@ -38,13 +41,17 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 }
 
 export const Packs = () => {
+  const dispatch = useAppDispatch()
+  const params = useAppSelector(state => state.decksParams)
+
+  console.log(params)
+
   const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
   const { iconVector, onVectorChange } = useSort()
 
-  const { data } = useGetDecksQuery()
+  const { data } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
-
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
@@ -53,9 +60,9 @@ export const Packs = () => {
     { id: '5', title: '' },
   ]
 
-  const getValue = (value: FieldValues) => {
-    return value
-  }
+  // const getValue = (value: FieldValues) => {
+  //   return value
+  // }
 
   const handleDelete = (id: string) => {
     deleteDeck(id)
@@ -63,6 +70,10 @@ export const Packs = () => {
 
   const pageValue = <T extends GetDecksType>(currentPage: T, itemsPerPage: T) => {
     useGetDecksQuery(currentPage, itemsPerPage)
+  }
+
+  const setSearch = (name: string) => {
+    dispatch(decksActions.setName({ name }))
   }
 
   return (
@@ -86,7 +97,12 @@ export const Packs = () => {
         </Modals>
       </div>
       <div className={s.controlPanel}>
-        <SearchInput className={s.searchInput} valueInput={getValue} />
+        <DebouncedInput
+          name={'search'}
+          type={'search'}
+          className={s.searchInput}
+          callback={setSearch}
+        />
         <TabSwitcher
           label={'Show packs cards'}
           onValueChange={() => {}}

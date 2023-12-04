@@ -17,6 +17,7 @@ import { Packs } from '@/components/packs/packs-list'
 
 import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
+//import {useGetDecksQuery} from "@/services/decks";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -39,12 +40,16 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <Packs />,
+    element: <Navigate to={'/packs'} />,
     path: '/',
   },
   {
+    element: <Packs />,
+    path: '/packs',
+  },
+  {
     element: <PackFriend />,
-    path: '/1',
+    path: '/friends-packs',
   },
   {
     element: <CreatePassword />,
@@ -81,6 +86,11 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  // const { isLoading, isError} = useGetDecksQuery({name: ''})
+  //   // TODO потом поправить
+  //   if (isLoading) return <p>Loading...</p>
+  //   if (isError) return <p>error</p>
+
   return <RouterProvider router={router} />
 }
 

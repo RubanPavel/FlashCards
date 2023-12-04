@@ -12,9 +12,10 @@ import {
   getRandomCardType,
   saveGradeType,
 } from './decks.types'
-import { decksApi } from './decks-api'
+// import { decksApi } from './decks-api'
+import { baseApi } from '@/services/base-api'
 
-export const DecksService = decksApi.injectEndpoints({
+export const DecksService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       createCard: builder.mutation<CardResponse, CreateCardType>({
@@ -51,12 +52,10 @@ export const DecksService = decksApi.injectEndpoints({
           url: `v1/decks/${id}`,
         }),
       }),
-      getDecks: builder.query<DecksResponse, GetDecksType | void>({
+      getDecks: builder.query<DecksResponse, GetDecksType | any>({
         providesTags: ['Decks'],
-        query: (...args) => ({
-          params: {
-            ...args,
-          },
+        query: args => ({
+          params: args,
           url: `v1/decks`,
         }),
       }),
