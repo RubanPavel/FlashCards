@@ -7,8 +7,8 @@ import s from './avatar.module.scss'
 type Props = {
   callback?: () => void
   className?: string
-  imageUrl: null | string
-  userName: null | string
+  imageUrl?: null | string
+  userName?: null | string
 } & ComponentPropsWithoutRef<typeof Avatar.Root>
 
 const AvatarRadix = forwardRef<HTMLButtonElement, Props>(

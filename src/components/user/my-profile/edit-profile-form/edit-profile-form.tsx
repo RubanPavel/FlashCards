@@ -12,6 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './edit-pfofile-form.module.scss'
+import { useUpdateUserMutation } from '@/services/auth'
 
 export const editEditProfileSchema = z.object({
   avatar: avatarSchema,
@@ -29,6 +30,7 @@ type Props = {
 } & ComponentPropsWithoutRef<'form'>
 
 export const EditProfileForm = ({ onCancel, variant }: Props) => {
+  const [updateUser] = useUpdateUserMutation()
   const {
     control,
     formState: { errors },
@@ -45,10 +47,22 @@ export const EditProfileForm = ({ onCancel, variant }: Props) => {
   })
 
   // TODO
-  const onSubmit = (data: FormValues) => {
-    onCancel()
+  const onSubmit = (updatedData: FormValues) => {
+    const payload = new FormData()
+    if (updatedData.nickname) {
+      payload.append('name', 'testUser')
+    }
 
-    return data
+    if (updatedData.avatar) {
+      payload.append('avatar', updatedData.avatar[0])
+    }
+
+    if (updatedData.email) {
+      payload.append('email', updatedData.email)
+    }
+
+    updateUser(payload)
+    onCancel()
   }
 
   return (
