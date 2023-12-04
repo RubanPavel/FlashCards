@@ -78,7 +78,12 @@ export const Packs = () => {
         </Button>
       </div>
       <div className={s.controlPanel}>
-        <DebouncedInput name={'search'} type={'search'} className={s.searchInput} callback={setSearch}/>
+        <DebouncedInput
+          name={'search'}
+          type={'search'}
+          className={s.searchInput}
+          callback={setSearch}
+        />
         <TabSwitcher
           label={'Show packs cards'}
           onValueChange={() => {}}

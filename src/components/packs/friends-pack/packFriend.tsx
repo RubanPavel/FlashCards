@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/componen
 import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
-import {DebouncedInput} from "@/components/packs/common/DebouncedInput";
+import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 
 export const PackFriend = () => {
   const { iconVector, onVectorChange } = useSort()
@@ -55,7 +55,12 @@ export const PackFriend = () => {
           <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
         </Button>
       </div>
-      <DebouncedInput name={'search'} type={'search'} className={s.searchInput} callback={getValue} />
+      <DebouncedInput
+        name={'search'}
+        type={'search'}
+        className={s.searchInput}
+        callback={getValue}
+      />
       <Table>
         <TableRow>
           {columnsData.map(el => (

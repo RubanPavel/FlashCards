@@ -28,14 +28,14 @@ export const ControlInput = <T extends FieldValues>({
   })
 
   return (
-      <Input
-          {...rest}
-          errorMessage={errorMessage}
-          label={label}
-          name={name}
-          onBlur={onBlur}
-          onChange={onChange}
-          value={value}
-      />
+    <Input
+      {...rest}
+      errorMessage={errorMessage}
+      label={label}
+      name={name}
+      onBlur={onBlur}
+      onChange={onChange}
+      value={value}
+    />
   )
 }

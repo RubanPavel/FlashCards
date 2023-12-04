@@ -38,7 +38,13 @@ export const SearchInput: Story = ({ ...args }) => {
   }
 
   return (
-    <Input {...args} name={'search'} onChange={onChange} setValue={setInputValue} value={inputValue} />
+    <Input
+      {...args}
+      name={'search'}
+      onChange={onChange}
+      setValue={setInputValue}
+      value={inputValue}
+    />
   )
 }
 
