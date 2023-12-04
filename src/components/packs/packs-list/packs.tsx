@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -17,6 +17,7 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { useGetAuthMeQuery } from '@/services/auth'
 import {
   useCreateDeckMutation,
   useDeleteDeskMutation,
@@ -39,10 +40,10 @@ export const Packs = () => {
 
   console.log(params)
 
-  const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
   const { iconVector, onVectorChange } = useSort()
 
-  const { data } = useGetDecksQuery(params)
+  const { data: user } = useGetAuthMeQuery()
+  const { data: decks } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
   const columnsData = [
@@ -52,17 +53,53 @@ export const Packs = () => {
     { id: '4', title: 'Create by' },
     { id: '5', title: '' },
   ]
+  const tabsData = [
+    {
+      title: 'My Cards',
+      value: 'My Cards',
+    },
+    {
+      title: 'All Cards',
+      value: 'All Cards',
+    },
+  ]
 
-  // const getValue = (value: FieldValues) => {
-  //   return value
-  // }
+  const [valueSlider, setValueSlider] = useState<number[]>([0, Infinity])
+
+  useEffect(() => {
+    if (decks) {
+      dispatch(decksActions.setMaxCardsCount({ maxCardsCount: decks.maxCardsCount.toString() }))
+      setValueSlider([parseInt(params.minCardsCount, 10), decks.maxCardsCount])
+    }
+  }, [dispatch, params.minCardsCount, decks])
 
   const handleDelete = (id: string) => {
     deleteDeck(id)
   }
 
-  const setSearch = (name: string) => {
-    dispatch(decksActions.setName({ name }))
+  // TODO поменять имя функциям
+  const handleSearch = (searchValue: string) => {
+    dispatch(decksActions.setName({ name: searchValue }))
+  }
+
+  const handleTabSwitcher = (tabValue: string) => {
+    if (user && tabValue === tabsData[0].value) {
+      dispatch(decksActions.setAuthorId({ authorId: user.id }))
+    } else {
+      dispatch(decksActions.setAuthorId({ authorId: undefined }))
+    }
+  }
+
+  const handleClearFilter = () => {
+    dispatch(decksActions.setAuthorId({ authorId: undefined }))
+    dispatch(decksActions.setName({ name: '' }))
+    dispatch(decksActions.setMinCardsCount({ minCardsCount: '0' }))
+    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: undefined }))
+  }
+
+  const handleSliderValues = (sliderValues: number[]) => {
+    dispatch(decksActions.setMinCardsCount({ minCardsCount: sliderValues[0].toString() }))
+    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: sliderValues[1].toString() }))
   }
 
   return (
@@ -80,31 +117,23 @@ export const Packs = () => {
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
-          callback={setSearch}
+          callback={handleSearch}
           className={s.searchInput}
           name={'search'}
           type={'search'}
         />
-        <TabSwitcher
-          label={'Show packs cards'}
-          onValueChange={() => {}}
-          tabs={[
-            {
-              title: 'My Cards',
-              value: 'My Cards',
-            },
-            {
-              title: 'All Cards',
-              value: 'All Cards',
-            },
-          ]}
-        />
+        <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
-          <SliderRadix onValueChange={setValueSlider} value={valueSlider} />
+          <SliderRadix
+            max={decks?.maxCardsCount}
+            min={0}
+            onValueCommit={handleSliderValues}
+            value={valueSlider}
+          />
         </div>
         <div style={{ marginLeft: 20 }}>
-          <Button variant={'secondary'}>
+          <Button onClick={handleClearFilter} variant={'secondary'}>
             <IconDelete />
             <Typography style={{ whiteSpace: 'nowrap' }} variant={'subtitle-2'}>
               Clear Filter
@@ -137,7 +166,7 @@ export const Packs = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.items.map(d => (
+            {decks?.items.map(d => (
               <TableRow key={d.id}>
                 <TableCell>
                   <Typography as={'p'} variant={'body-2'}>

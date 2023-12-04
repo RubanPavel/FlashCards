@@ -3,7 +3,8 @@ import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'reac
 import { Input } from '@/components/ui/input'
 
 type Props = {
-  callback: (name: string) => void
+  callback: (value: string) => void
+
 } & Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 
 export const DebouncedInput = ({ callback, ...rest }: Props) => {
@@ -19,14 +20,19 @@ export const DebouncedInput = ({ callback, ...rest }: Props) => {
     }, 500)
 
     return () => clearTimeout(debounceTimeout)
-  }, [debouncedValue])
+  }, [debouncedValue, callback])
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.currentTarget.value)
     setDebouncedValue(e.currentTarget.value)
   }
 
+  const handleInputValue = (value: string) => {
+    setInputValue(value)
+    callback?.(value)
+  }
+
   return (
-    <Input {...rest} onChange={handleInputChange} setValue={setInputValue} value={inputValue} />
+    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={inputValue} />
   )
 }
