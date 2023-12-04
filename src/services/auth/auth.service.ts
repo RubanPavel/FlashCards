@@ -1,3 +1,5 @@
+import { baseApi } from '@/services/base-api'
+
 import {
   AuthResponse,
   createNewUserResponse,
@@ -11,7 +13,6 @@ import {
   verifyEmailResendType,
   verifyEmailType,
 } from './auth.types'
-import { baseApi } from '@/services/base-api'
 
 export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {

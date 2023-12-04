@@ -21,7 +21,6 @@ export type Props = {
 export const Input = forwardRef<HTMLInputElement, Props>(
   (
     {
-      setValue,
       className,
       disabled,
       errorMessage,
@@ -29,6 +28,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       name,
       onBlur,
       onChange,
+      setValue,
       type,
       value,
       ...rest

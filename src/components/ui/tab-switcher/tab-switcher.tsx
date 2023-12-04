@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, ReactNode } from 'react'
 
 import * as TabsRadixUI from '@radix-ui/react-tabs'
+import clsx from 'clsx'
 
 import s from './tab-switcher.module.scss'
 
@@ -24,7 +25,7 @@ export const TabSwitcher = ({ className, label, tabs, ...rest }: TabSwitcherProp
         {label}
       </Typography>
       <TabsRadixUI.Root
-        className={`${s.root} ${className}`}
+        className={clsx(s.root, className)}
         defaultValue={`${tabs[1].value}`}
         {...rest}
       >
