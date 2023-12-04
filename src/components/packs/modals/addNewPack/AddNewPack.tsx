@@ -7,11 +7,12 @@ import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
+import { useCreateDeckMutation } from '@/services/decks'
 
 import s from './AddNewPack.module.scss'
 
 type FormValue = {
-  cover: {}
+  cover: ArrayBuffer | null | string
   name: string
   private: boolean
 }
@@ -21,7 +22,7 @@ export const AddNewPack = () => {
   const [selectedImage, setSelectedImage] = useState('')
   const { control, handleSubmit, setValue } = useForm<FormValue>({
     defaultValues: {
-      cover: {},
+      cover: '',
       name: '',
       private: false,
     },
@@ -29,16 +30,13 @@ export const AddNewPack = () => {
     reValidateMode: 'onBlur',
   })
 
-  const onSubmit = (data: any) => {
-    return data
+  const [createDeck, isFetching] = useCreateDeckMutation()
+
+  const onSubmit = (data: FormValue) => {
+    createDeck({ cover: String(data.cover), isPrivate: data.private, name: data.name })
   }
 
-  const handleButtonClick = () => {
-    if (inputRef.current) {
-      inputRef.current.click()
-    }
-  }
-
+  // TODO фото не уходит....надо исправить
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
 
@@ -46,10 +44,19 @@ export const AddNewPack = () => {
       const imageUrl = URL.createObjectURL(file)
 
       setSelectedImage(imageUrl)
-      const formData = new FormData()
 
-      formData.append('image', file)
-      setValue('cover', formData)
+      const reader = new FileReader()
+
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        setValue('cover', reader.result)
+      }
+    }
+  }
+
+  const handleButtonClick = () => {
+    if (inputRef.current) {
+      inputRef.current.click()
     }
   }
 
@@ -103,7 +110,7 @@ export const AddNewPack = () => {
                 Cancel
               </Typography>
             </Button>
-            <Button>
+            <Button disabled={!isFetching}>
               <Typography as={'p'} variant={'subtitle-2'}>
                 Add New Pack
               </Typography>

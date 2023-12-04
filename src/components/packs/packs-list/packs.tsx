@@ -1,9 +1,7 @@
 import { useState } from 'react'
-import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
-import { FieldValues } from 'react-hook-form'
 
 import { IconClose } from '@/assets/icons/IconClose'
-import { SearchInput } from '@/components/packs/common/searchInput'
+import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
@@ -23,12 +21,7 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { GetDecksType } from '@/services/decks'
-import {
-  useCreateDeckMutation,
-  useDeleteDeskMutation,
-  useGetDecksQuery,
-} from '@/services/decks/decks.service'
+import { useDeleteDeskMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
@@ -44,14 +37,12 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
 
-  console.log(params)
-
   const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
   const { iconVector, onVectorChange } = useSort()
 
   const { data } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
-  const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
+  // const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
@@ -68,8 +59,9 @@ export const Packs = () => {
     deleteDeck(id)
   }
 
-  const pageValue = <T extends GetDecksType>(currentPage: T, itemsPerPage: T) => {
-    useGetDecksQuery(currentPage, itemsPerPage)
+  const pageValue = (currentPage: number, itemsPerPage: number) => {
+    dispatch(decksActions.setCurrentPage({ currentPage }))
+    dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
   const setSearch = (name: string) => {
@@ -78,7 +70,7 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      {isDeckCreated && <div>isDeckCreated.....</div>}
+      {/*{isDeckCreated && <div>isDeckCreated.....</div>}*/}
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
@@ -98,10 +90,10 @@ export const Packs = () => {
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
+          callback={setSearch}
+          className={s.searchInput}
           name={'search'}
           type={'search'}
-          className={s.searchInput}
-          callback={setSearch}
         />
         <TabSwitcher
           label={'Show packs cards'}
@@ -189,10 +181,7 @@ export const Packs = () => {
           </TableBody>
         </Table>
       </div>
-      <Pagination<GetDecksType>
-        getPage={pageValue}
-        totalCount={data ? data.pagination.totalItems : 0}
-      />
+      <Pagination getPage={pageValue} totalCount={data ? data.pagination.totalItems : 1} />
     </div>
   )
 }

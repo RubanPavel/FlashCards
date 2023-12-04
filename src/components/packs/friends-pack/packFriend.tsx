@@ -1,4 +1,5 @@
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
@@ -6,7 +7,6 @@ import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/componen
 import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
-import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 
 export const PackFriend = () => {
   const { iconVector, onVectorChange } = useSort()
@@ -56,10 +56,10 @@ export const PackFriend = () => {
         </Button>
       </div>
       <DebouncedInput
+        callback={getValue}
+        className={s.searchInput}
         name={'search'}
         type={'search'}
-        className={s.searchInput}
-        callback={getValue}
       />
       <Table>
         <TableRow>

@@ -7,14 +7,14 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './pagination.module.scss'
 
-export type Props<T> = {
+export type Props = {
   className?: string
-  getPage: (pageNumber: T, pageSize: T) => void
+  getPage: (pageNumber: number, pageSize: number) => void
   selectOptions?: Options[]
   totalCount: number
 }
 
-export const Pagination = <T,>({
+export const Pagination = ({
   className,
   getPage,
   selectOptions = [
@@ -25,8 +25,8 @@ export const Pagination = <T,>({
     { value: '100' },
   ],
   totalCount,
-}: Props<T>) => {
-  const [limit] = useState<number>(5)
+}: Props) => {
+  const [limit, setLimit] = useState<number>(10)
   const [page, setPage] = useState<number>(1)
 
   const totalPage = Math.ceil(totalCount / limit)
@@ -36,18 +36,26 @@ export const Pagination = <T,>({
   }
 
   const array = returnPaginationRange(totalPage, page, 1)
+
   const onPageClick = (value: number | string) => {
+    if (typeof value === 'number') {
+      getPage(value, limit)
+    }
     hahdlePageChange(value, page, setPage, totalPage)
-    // @ts-ignore
-    getPage(page, limit)
   }
 
   const onPageKeyPress = (e: React.KeyboardEvent, value: number | string) => {
     if (e.code === 'Enter') {
+      if (typeof value === 'number') {
+        getPage(value, limit)
+      }
       hahdlePageChange(value, page, setPage, totalPage)
-      // @ts-ignore
-      getPage(page, limit)
     }
+  }
+
+  const onLimitChange = (value: number) => {
+    getPage(page, value)
+    setLimit(value)
   }
 
   return (
@@ -102,7 +110,7 @@ export const Pagination = <T,>({
       <div className={s.wrapperForSelect}>
         <Typography variant={'body-2'}>Показать</Typography>
         <div className={s.select}>
-          <Select selectOptions={selectOptions} />
+          <Select onValueChange={value => onLimitChange(+value)} selectOptions={selectOptions} />
         </div>
         <Typography variant={'body-2'}>на странице</Typography>
       </div>

@@ -1,3 +1,6 @@
+// import { decksApi } from './decks-api'
+import { baseApi } from '@/services/base-api'
+
 import {
   CardResponse,
   CreateCardType,
@@ -12,8 +15,6 @@ import {
   getRandomCardType,
   saveGradeType,
 } from './decks.types'
-// import { decksApi } from './decks-api'
-import { baseApi } from '@/services/base-api'
 
 export const DecksService = baseApi.injectEndpoints({
   endpoints: builder => {
