@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
 
+import { IconClose } from '@/assets/icons/IconClose'
 import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
+import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
+import { Modals } from '@/components/ui/modals'
+import { Pagination } from '@/components/ui/pagination'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import {
@@ -18,6 +22,7 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { GetDecksType } from '@/services/decks'
 import {
   useCreateDeckMutation,
   useDeleteDeskMutation,
@@ -39,6 +44,7 @@ export const Packs = () => {
   const { data } = useGetDecksQuery()
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
+
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
@@ -55,18 +61,29 @@ export const Packs = () => {
     deleteDeck(id)
   }
 
+  const pageValue = <T extends GetDecksType>(currentPage: T, itemsPerPage: T) => {
+    useGetDecksQuery(currentPage, itemsPerPage)
+  }
+
   return (
     <div className={s.container}>
       {isDeckCreated && <div>isDeckCreated.....</div>}
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button
-          onClick={() => {
-            createDeck({ name: 'New world!' })
-          }}
+        <Modals
+          icon={
+            <Button as={'button'} className={s.IconButton} variant={'icon'}>
+              <IconClose />
+            </Button>
+          }
+          trigger={
+            <Button>
+              <Typography variant={'subtitle-1'}>Add new Pack</Typography>
+            </Button>
+          }
         >
-          <Typography variant={'subtitle-1'}>Add new Pack</Typography>
-        </Button>
+          <AddNewPack />
+        </Modals>
       </div>
       <div className={s.controlPanel}>
         <SearchInput className={s.searchInput} valueInput={getValue} />
@@ -156,6 +173,10 @@ export const Packs = () => {
           </TableBody>
         </Table>
       </div>
+      <Pagination<GetDecksType>
+        getPage={pageValue}
+        totalCount={data ? data.pagination.totalItems : 0}
+      />
     </div>
   )
 }

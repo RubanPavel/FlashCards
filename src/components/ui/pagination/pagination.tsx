@@ -7,14 +7,14 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './pagination.module.scss'
 
-export type Props = {
+export type Props<T> = {
   className?: string
-  getPage: (pageNumber: number, pageSize: number) => void
+  getPage: (pageNumber: T, pageSize: T) => void
   selectOptions?: Options[]
   totalCount: number
 }
 
-export const Pagination = ({
+export const Pagination = <T,>({
   className,
   getPage,
   selectOptions = [
@@ -25,7 +25,7 @@ export const Pagination = ({
     { value: '100' },
   ],
   totalCount,
-}: Props) => {
+}: Props<T>) => {
   const [limit] = useState<number>(5)
   const [page, setPage] = useState<number>(1)
 
@@ -38,12 +38,14 @@ export const Pagination = ({
   const array = returnPaginationRange(totalPage, page, 1)
   const onPageClick = (value: number | string) => {
     hahdlePageChange(value, page, setPage, totalPage)
+    // @ts-ignore
     getPage(page, limit)
   }
 
   const onPageKeyPress = (e: React.KeyboardEvent, value: number | string) => {
     if (e.code === 'Enter') {
       hahdlePageChange(value, page, setPage, totalPage)
+      // @ts-ignore
       getPage(page, limit)
     }
   }
