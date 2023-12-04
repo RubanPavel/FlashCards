@@ -40,12 +40,16 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <Packs />,
+    element: <Navigate to={'/packs'} />,
     path: '/',
   },
   {
+    element: <Packs />,
+    path: '/packs',
+  },
+  {
     element: <PackFriend />,
-    path: '/1',
+    path: '/friends-packs',
   },
   {
     element: <CreatePassword />,
