@@ -10,18 +10,18 @@ import { clsx } from 'clsx'
 
 import s from './input.module.scss'
 
-//TODO setValueSearch сделать более универсальной
 export type Props = {
-  className?: string
-  errorMessage?: string
-  label?: string
-  name: string
-  setValue?: (name: string, value: string) => void
+    className?: string
+    errorMessage?: string
+    label?: string
+    name?: string
+    setValue?: (value: string) => void
 } & ComponentPropsWithoutRef<'input'>
 
 export const Input = forwardRef<HTMLInputElement, Props>(
   (
     {
+        setValue,
       className,
       disabled,
       errorMessage,
@@ -29,7 +29,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       name,
       onBlur,
       onChange,
-      setValue,
       type,
       value,
       ...rest
@@ -53,7 +52,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     }
 
     const handleClearClicked = () => {
-      setValue?.(name, '')
+        setValue?.('')
     }
 
     const toggleButtonClicked = () => {
@@ -64,8 +63,8 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     const isDirtyInput = typeof value === 'string' ? value?.length > 0 : !!value
     const isSearchInput = type === 'search'
     const isTogglePasswordInput = type === 'password' || isPasswordVisible
-    const isShowSearchInputClearButton = type === 'search' && isDirtyInput
-    const colorIconSearch = isInputFocused ? 'var(--color-light-100)' : 'var(--color-dark-300)'
+    const isShowSearchInputClearButton = (type === 'search' && isDirtyInput)
+    const colorIconSearch = isInputFocused && isDirtyInput ? 'var(--color-light-100)' : 'var(--color-dark-300)'
     const colorIconEye = disabled ? 'var(--color-dark-300)' : 'var(--color-light-100)'
     const colorIconClose = isInputFocused && isDirtyInput ? 'var(--color-light-100)' : 'transparent'
 

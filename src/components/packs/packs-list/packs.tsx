@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import { FieldValues } from 'react-hook-form'
-
-import { SearchInput } from '@/components/packs/common/searchInput'
+import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
@@ -54,9 +52,9 @@ export const Packs = () => {
     { id: '5', title: '' },
   ]
 
-  const getValue = (value: FieldValues) => {
-    return value
-  }
+  // const getValue = (value: FieldValues) => {
+  //   return value
+  // }
 
   const handleDelete = (id: string) => {
     deleteDeck(id)
@@ -80,7 +78,7 @@ export const Packs = () => {
         </Button>
       </div>
       <div className={s.controlPanel}>
-        <SearchInput className={s.searchInput} setSearch={setSearch} valueInput={getValue} />
+        <DebouncedInput name={'search'} type={'search'} className={s.searchInput} callback={setSearch}/>
         <TabSwitcher
           label={'Show packs cards'}
           onValueChange={() => {}}

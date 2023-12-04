@@ -1,10 +1,10 @@
-import { FieldValues } from 'react-hook-form'
+// import { FieldValues } from 'react-hook-form'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { StarRating } from '@/components/packs/common/StarRating'
-import { SearchInput } from '@/components/packs/common/searchInput'
+// import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
@@ -44,9 +44,9 @@ export const MyPack = () => {
     },
   ]
 
-  const getValue = (value: FieldValues) => {
-    console.log(value)
-  }
+  // const getValue = (value: FieldValues) => {
+  //   console.log(value)
+  // }
 
   const onClickHandler = () => {
     alert('Назад на Packs List')
@@ -84,7 +84,7 @@ export const MyPack = () => {
           <Typography variant={'subtitle-2'}>Add New Card</Typography>
         </Button>
       </div>
-      <SearchInput className={s.searchInput} valueInput={getValue} />
+      {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
       <Table>
         <TableRow>
           {columnsData.map(el => (

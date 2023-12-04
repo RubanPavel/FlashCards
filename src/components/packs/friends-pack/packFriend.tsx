@@ -1,14 +1,12 @@
-import { FieldValues } from 'react-hook-form'
-
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { StarRating } from '@/components/packs/common/StarRating'
-import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
+import {DebouncedInput} from "@/components/packs/common/DebouncedInput";
 
 export const PackFriend = () => {
   const { iconVector, onVectorChange } = useSort()
@@ -37,7 +35,7 @@ export const PackFriend = () => {
     },
   ]
 
-  const getValue = (value: FieldValues) => {
+  const getValue = (value: string) => {
     return value
   }
 
@@ -57,7 +55,7 @@ export const PackFriend = () => {
           <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
         </Button>
       </div>
-      <SearchInput className={s.searchInput} valueInput={getValue} />
+      <DebouncedInput name={'search'} type={'search'} className={s.searchInput} callback={getValue} />
       <Table>
         <TableRow>
           {columnsData.map(el => (
