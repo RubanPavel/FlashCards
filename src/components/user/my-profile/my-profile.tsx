@@ -7,11 +7,11 @@ import AvatarRadix from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
+import { useGetAuthMeQuery } from '@/services/auth'
 
 import s from './my-profile.module.scss'
 
 import { EditProfileForm, Variant } from './edit-profile-form/'
-import { useGetAuthMeQuery } from '@/services/auth'
 
 // TODO
 export const formFieldsVariant = {

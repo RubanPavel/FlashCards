@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { RefObject, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { IconImage } from '@/assets/icons/IconImage'
@@ -16,8 +16,11 @@ type FormValue = {
   name: string
   private: boolean
 }
+type Props = {
+  closeRef: RefObject<HTMLButtonElement>
+}
 
-export const AddNewPack = () => {
+export const AddNewPack = ({ closeRef }: Props) => {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState('')
   const { control, handleSubmit, setValue } = useForm<FormValue>({
@@ -34,6 +37,9 @@ export const AddNewPack = () => {
 
   const onSubmit = (data: FormValue) => {
     createDeck({ cover: String(data.cover), isPrivate: data.private, name: data.name })
+    if (closeRef.current) {
+      closeRef.current.click()
+    }
   }
 
   // TODO фото не уходит....надо исправить
@@ -57,6 +63,12 @@ export const AddNewPack = () => {
   const handleButtonClick = () => {
     if (inputRef.current) {
       inputRef.current.click()
+    }
+  }
+
+  const onCloseClick = () => {
+    if (closeRef.current) {
+      closeRef.current.click()
     }
   }
 
@@ -105,7 +117,7 @@ export const AddNewPack = () => {
             <Typography variant={'body-2'}>Private Pack</Typography>
           </div>
           <div className={s.footer}>
-            <Button type={'button'}>
+            <Button onClick={onCloseClick} type={'button'}>
               <Typography as={'p'} variant={'subtitle-2'}>
                 Cancel
               </Typography>

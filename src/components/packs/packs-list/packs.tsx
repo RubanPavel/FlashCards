@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
+
+import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewPack } from '@/components/packs/modals/addNewPack'
@@ -20,11 +22,7 @@ import {
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { useGetAuthMeQuery } from '@/services/auth'
-import {
-  useCreateDeckMutation,
-  useDeleteDeskMutation,
-  useGetDecksQuery,
-} from '@/services/decks/decks.service'
+import { useDeleteDeskMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
@@ -42,13 +40,11 @@ export const Packs = () => {
 
   console.log(params)
 
-  const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
   const { iconVector, onVectorChange } = useSort()
 
   const { data: user } = useGetAuthMeQuery()
   const { data: decks } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
-  const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
@@ -66,6 +62,7 @@ export const Packs = () => {
       value: 'All Cards',
     },
   ]
+  const closeRef = createRef<HTMLButtonElement>()
 
   const [valueSlider, setValueSlider] = useState<number[]>([0, Infinity])
 
@@ -85,8 +82,6 @@ export const Packs = () => {
     dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
-  const setSearch = (name: string) => {
-    dispatch(decksActions.setName({ name }))
   // TODO поменять имя функциям
   const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
@@ -114,12 +109,11 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      {isDeckCreated && <div>isDeckCreated.....</div>}
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
           icon={
-            <Button as={'button'} className={s.IconButton} variant={'icon'}>
+            <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
               <IconClose />
             </Button>
           }
@@ -129,15 +123,15 @@ export const Packs = () => {
             </Button>
           }
         >
-          <AddNewPack />
+          <AddNewPack closeRef={closeRef} />
         </Modals>
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
+          callback={handleSearch}
+          className={s.searchInput}
           name={'search'}
           type={'search'}
-          className={s.searchInput}
-          callback={setSearch}
         />
         <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
         <div>
@@ -216,6 +210,7 @@ export const Packs = () => {
             ))}
           </TableBody>
         </Table>
+        <Pagination getPage={pageValue} totalCount={decks ? decks.pagination.totalItems : 1} />
       </div>
     </div>
   )

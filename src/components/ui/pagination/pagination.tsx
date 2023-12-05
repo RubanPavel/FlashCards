@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { hahdlePageChange } from '@/components/ui/pagination/utils/hahdlePageChange'
 import { returnPaginationRange } from '@/components/ui/pagination/utils/returnPaginationRange'
@@ -38,25 +38,22 @@ export const Pagination = ({
   const array = returnPaginationRange(totalPage, page, 1)
 
   const onPageClick = (value: number | string) => {
-    if (typeof value === 'number') {
-      getPage(value, limit)
-    }
     hahdlePageChange(value, page, setPage, totalPage)
   }
 
   const onPageKeyPress = (e: React.KeyboardEvent, value: number | string) => {
     if (e.code === 'Enter') {
-      if (typeof value === 'number') {
-        getPage(value, limit)
-      }
       hahdlePageChange(value, page, setPage, totalPage)
     }
   }
 
   const onLimitChange = (value: number) => {
-    getPage(page, value)
     setLimit(value)
   }
+
+  useEffect(() => {
+    getPage(page, limit)
+  }, [page, limit])
 
   return (
     <div className={`${s.container} ${className}`}>

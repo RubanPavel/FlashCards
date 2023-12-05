@@ -9,7 +9,7 @@ type Props = {
   children: ReactNode
   className?: string
   icon?: ReactNode
-  trigger: ReactNode
+  trigger?: ReactNode
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
 export const Modals = ({ children, className, icon, trigger }: Props) => {
