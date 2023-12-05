@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 
+import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
+import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
+import { Modals } from '@/components/ui/modals'
+import { Pagination } from '@/components/ui/pagination'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import {
@@ -18,11 +22,7 @@ import {
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { useGetAuthMeQuery } from '@/services/auth'
-import {
-  useCreateDeckMutation,
-  useDeleteDeskMutation,
-  useGetDecksQuery,
-} from '@/services/decks/decks.service'
+import { useDeleteDeskMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
@@ -45,7 +45,6 @@ export const Packs = () => {
   const { data: user } = useGetAuthMeQuery()
   const { data: decks } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
-  const [createDeck, { isLoading: isDeckCreated }] = useCreateDeckMutation()
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
@@ -63,6 +62,7 @@ export const Packs = () => {
       value: 'All Cards',
     },
   ]
+  const closeRef = createRef<HTMLButtonElement>()
 
   const [valueSlider, setValueSlider] = useState<number[]>([0, Infinity])
 
@@ -75,6 +75,11 @@ export const Packs = () => {
 
   const handleDelete = (id: string) => {
     deleteDeck(id)
+  }
+
+  const pageValue = (currentPage: number, itemsPerPage: number) => {
+    dispatch(decksActions.setCurrentPage({ currentPage }))
+    dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
   // TODO поменять имя функциям
@@ -104,16 +109,22 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      {isDeckCreated && <div>isDeckCreated.....</div>}
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button
-          onClick={() => {
-            createDeck({ name: 'New world!' })
-          }}
+        <Modals
+          icon={
+            <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
+              <IconClose />
+            </Button>
+          }
+          trigger={
+            <Button>
+              <Typography variant={'subtitle-1'}>Add new Pack</Typography>
+            </Button>
+          }
         >
-          <Typography variant={'subtitle-1'}>Add new Pack</Typography>
-        </Button>
+          <AddNewPack closeRef={closeRef} />
+        </Modals>
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
@@ -199,6 +210,7 @@ export const Packs = () => {
             ))}
           </TableBody>
         </Table>
+        <Pagination getPage={pageValue} totalCount={decks ? decks.pagination.totalItems : 1} />
       </div>
     </div>
   )

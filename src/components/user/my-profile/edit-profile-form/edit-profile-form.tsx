@@ -7,12 +7,12 @@ import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { formFieldsVariant } from '@/components/user/my-profile'
+import { useUpdateUserMutation } from '@/services/auth'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './edit-pfofile-form.module.scss'
-import { useUpdateUserMutation } from '@/services/auth'
 
 export const editEditProfileSchema = z.object({
   avatar: avatarSchema,
@@ -49,6 +49,7 @@ export const EditProfileForm = ({ onCancel, variant }: Props) => {
   // TODO
   const onSubmit = (updatedData: FormValues) => {
     const payload = new FormData()
+
     if (updatedData.nickname) {
       payload.append('name', 'testUser')
     }

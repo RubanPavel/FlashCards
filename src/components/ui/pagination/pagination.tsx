@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { hahdlePageChange } from '@/components/ui/pagination/utils/hahdlePageChange'
 import { returnPaginationRange } from '@/components/ui/pagination/utils/returnPaginationRange'
@@ -26,7 +26,7 @@ export const Pagination = ({
   ],
   totalCount,
 }: Props) => {
-  const [limit] = useState<number>(5)
+  const [limit, setLimit] = useState<number>(10)
   const [page, setPage] = useState<number>(1)
 
   const totalPage = Math.ceil(totalCount / limit)
@@ -36,17 +36,24 @@ export const Pagination = ({
   }
 
   const array = returnPaginationRange(totalPage, page, 1)
+
   const onPageClick = (value: number | string) => {
     hahdlePageChange(value, page, setPage, totalPage)
-    getPage(page, limit)
   }
 
   const onPageKeyPress = (e: React.KeyboardEvent, value: number | string) => {
     if (e.code === 'Enter') {
       hahdlePageChange(value, page, setPage, totalPage)
-      getPage(page, limit)
     }
   }
+
+  const onLimitChange = (value: number) => {
+    setLimit(value)
+  }
+
+  useEffect(() => {
+    getPage(page, limit)
+  }, [page, limit])
 
   return (
     <div className={`${s.container} ${className}`}>
@@ -100,7 +107,7 @@ export const Pagination = ({
       <div className={s.wrapperForSelect}>
         <Typography variant={'body-2'}>Показать</Typography>
         <div className={s.select}>
-          <Select selectOptions={selectOptions} />
+          <Select onValueChange={value => onLimitChange(+value)} selectOptions={selectOptions} />
         </div>
         <Typography variant={'body-2'}>на странице</Typography>
       </div>
