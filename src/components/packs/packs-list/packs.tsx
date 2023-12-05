@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import {useEffect, useState} from 'react'
 
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
-import { SliderRadix } from '@/components/ui/slider'
+
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import {
   Table,
@@ -27,6 +27,7 @@ import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './packs.module.scss'
+import {SliderRadix} from "@/components/ui/slider";
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
@@ -63,15 +64,15 @@ export const Packs = () => {
       value: 'All Cards',
     },
   ]
-
+  // dispatch(decksActions.setMaxCardsCount({ maxCardsCount: decks?.maxCardsCount.toString() }))
   const [valueSlider, setValueSlider] = useState<number[]>([0, Infinity])
 
   useEffect(() => {
-    if (decks) {
+    if (decks?.maxCardsCount) {
       dispatch(decksActions.setMaxCardsCount({ maxCardsCount: decks.maxCardsCount.toString() }))
       setValueSlider([parseInt(params.minCardsCount, 10), decks.maxCardsCount])
     }
-  }, [dispatch, params.minCardsCount, decks])
+  }, [dispatch, params.minCardsCount, decks?.maxCardsCount])
 
   const handleDelete = (id: string) => {
     deleteDeck(id)
@@ -94,7 +95,7 @@ export const Packs = () => {
     dispatch(decksActions.setAuthorId({ authorId: undefined }))
     dispatch(decksActions.setName({ name: '' }))
     dispatch(decksActions.setMinCardsCount({ minCardsCount: '0' }))
-    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: undefined }))
+    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: '2000' }))
   }
 
   const handleSliderValues = (sliderValues: number[]) => {
@@ -128,8 +129,9 @@ export const Packs = () => {
           <SliderRadix
             max={decks?.maxCardsCount}
             min={0}
-            onValueCommit={handleSliderValues}
             value={valueSlider}
+            onValueCommit={handleSliderValues}
+            onValueChange={setValueSlider}
           />
         </div>
         <div style={{ marginLeft: 20 }}>
