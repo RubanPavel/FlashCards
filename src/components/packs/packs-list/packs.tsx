@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react'
-
+import { useState } from 'react'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
+import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
+import { Modals } from '@/components/ui/modals'
+import { Pagination } from '@/components/ui/pagination'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import {
@@ -40,6 +42,7 @@ export const Packs = () => {
 
   console.log(params)
 
+  const [valueSlider, setValueSlider] = useState<number[]>([1, 10])
   const { iconVector, onVectorChange } = useSort()
 
   const { data: user } = useGetAuthMeQuery()
@@ -77,6 +80,13 @@ export const Packs = () => {
     deleteDeck(id)
   }
 
+  const pageValue = (currentPage: number, itemsPerPage: number) => {
+    dispatch(decksActions.setCurrentPage({ currentPage }))
+    dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
+  }
+
+  const setSearch = (name: string) => {
+    dispatch(decksActions.setName({ name }))
   // TODO поменять имя функциям
   const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
@@ -107,20 +117,27 @@ export const Packs = () => {
       {isDeckCreated && <div>isDeckCreated.....</div>}
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button
-          onClick={() => {
-            createDeck({ name: 'New world!' })
-          }}
+        <Modals
+          icon={
+            <Button as={'button'} className={s.IconButton} variant={'icon'}>
+              <IconClose />
+            </Button>
+          }
+          trigger={
+            <Button>
+              <Typography variant={'subtitle-1'}>Add new Pack</Typography>
+            </Button>
+          }
         >
-          <Typography variant={'subtitle-1'}>Add new Pack</Typography>
-        </Button>
+          <AddNewPack />
+        </Modals>
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
-          callback={handleSearch}
-          className={s.searchInput}
           name={'search'}
           type={'search'}
+          className={s.searchInput}
+          callback={setSearch}
         />
         <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
         <div>

@@ -32,6 +32,6 @@ export const DebouncedInput = ({ callback, ...rest }: Props) => {
   }
 
   return (
-    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={inputValue} />
+    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={inputValue} value={inputValue} />
   )
 }
