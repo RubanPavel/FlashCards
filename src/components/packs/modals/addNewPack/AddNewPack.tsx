@@ -12,7 +12,7 @@ import { useCreateDeckMutation } from '@/services/decks'
 import s from './AddNewPack.module.scss'
 
 type FormValue = {
-  cover: ArrayBuffer | null | string
+  cover: File | null
   name: string
   private: boolean
 }
@@ -23,9 +23,9 @@ type Props = {
 export const AddNewPack = ({ closeRef }: Props) => {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState('')
-  const { control, handleSubmit, setValue } = useForm<FormValue>({
+  const { control, getValues, handleSubmit, setValue } = useForm<FormValue>({
     defaultValues: {
-      cover: '',
+      cover: null,
       name: '',
       private: false,
     },
@@ -36,13 +36,23 @@ export const AddNewPack = ({ closeRef }: Props) => {
   const [createDeck, isFetching] = useCreateDeckMutation()
 
   const onSubmit = (data: FormValue) => {
-    createDeck({ cover: String(data.cover), isPrivate: data.private, name: data.name })
+    const cover = getValues('cover')
+
+    if (cover) {
+      const formData = new FormData()
+
+      formData.append('cover', cover)
+      formData.append('name', data.name)
+      formData.append('isPrivate', data.private.toString())
+
+      createDeck(formData)
+    }
+
     if (closeRef.current) {
       closeRef.current.click()
     }
   }
 
-  // TODO фото не уходит....надо исправить
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
 
@@ -51,12 +61,7 @@ export const AddNewPack = ({ closeRef }: Props) => {
 
       setSelectedImage(imageUrl)
 
-      const reader = new FileReader()
-
-      reader.readAsDataURL(file)
-      reader.onload = () => {
-        setValue('cover', reader.result)
-      }
+      setValue('cover', file)
     }
   }
 
@@ -95,6 +100,7 @@ export const AddNewPack = ({ closeRef }: Props) => {
                   Cover
                 </Typography>
                 <Input
+                  accept={'image/jpeg, image/jpg, image/png, image/webp'}
                   className={s.cover}
                   name={'cover'}
                   onChange={onFileChange}

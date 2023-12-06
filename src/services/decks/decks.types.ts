@@ -19,7 +19,8 @@ export type DecksResponseItemsAuthor = {
 export type Deck = {
   author: DecksResponseItemsAuthor
   cardsCount: number
-  cover?: null | string
+  // cover?: null | string
+  cover?: FormData
   created: string
   id: string
   isBlocked?: any
@@ -32,7 +33,7 @@ export type Deck = {
   userId: string
 }
 
-export type CreateDeckType = Pick<Deck, 'cover' | 'isPrivate' | 'name'>
+/* export type CreateDeckType = Pick<Deck, 'cover' | 'isPrivate' | 'name'> */
 
 export type DeleteResponse = {
   cardsCount: number

@@ -4,7 +4,6 @@ import { baseApi } from '@/services/base-api'
 import {
   CardResponse,
   CreateCardType,
-  CreateDeckType,
   Deck,
   DecksResponse,
   DeleteResponse,
@@ -30,12 +29,10 @@ export const DecksService = baseApi.injectEndpoints({
         }),
       }),
 
-      createDeck: builder.mutation<Deck, CreateDeckType>({
+      createDeck: builder.mutation<Deck, FormData>({
         invalidatesTags: ['Decks'],
-        query: ({ ...args }) => ({
-          body: {
-            ...args,
-          },
+        query: formData => ({
+          body: formData,
           method: 'POST',
           url: `v1/decks`,
         }),
