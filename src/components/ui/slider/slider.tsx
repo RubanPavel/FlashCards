@@ -1,4 +1,4 @@
-import {ComponentPropsWithoutRef} from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 
@@ -20,7 +20,6 @@ export const SliderRadix = ({
   value,
   ...rest
 }: Props) => {
-
   return (
     <div className={s.wrapper}>
       <span className={s.value}>{value?.[0]}</span>

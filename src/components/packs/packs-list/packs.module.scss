@@ -71,3 +71,15 @@
 .IconButton:hover {
   background-color: var(--color-dark-100);
 }
+
+.coverStyle {
+  max-width: 150px;
+  max-height: 50px;
+  //float: left;
+  margin-right: 10px;
+}
+
+.wrapCell {
+  display: flex;
+  align-items: center;
+}
