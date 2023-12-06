@@ -48,6 +48,7 @@ export const EditProfileForm = ({ onCancel, variant }: Props) => {
 
   // TODO
   const onSubmit = (updatedData: FormValues) => {
+    console.log(updatedData)
     const payload = new FormData()
 
     if (updatedData.nickname) {

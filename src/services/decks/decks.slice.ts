@@ -14,8 +14,6 @@ const initialState: InitialState = {
   authorId: undefined,
   currentPage: 1,
   itemsPerPage: 10,
-  //TODO maxCardsCount возможно поменять на undefined, проверить работу слайдера
-  //maxCardsCount: Number.MAX_SAFE_INTEGER.toString(),
   maxCardsCount: undefined,
   minCardsCount: '0',
   name: '',

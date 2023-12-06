@@ -1,5 +1,4 @@
-import { createRef, useEffect, useState } from 'react'
-
+import { createRef } from 'react'
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -41,7 +40,7 @@ export const Packs = () => {
   const { iconVector, onVectorChange } = useSort()
 
   const { data: user } = useGetAuthMeQuery()
-  const { data: decks } = useGetDecksQuery(params)
+  const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const columnsData = [
     { id: '1', title: 'Name' },
@@ -61,15 +60,6 @@ export const Packs = () => {
     },
   ]
   const closeRef = createRef<HTMLButtonElement>()
-
-  const [valueSlider, setValueSlider] = useState<number[]>([0, Infinity])
-
-  useEffect(() => {
-    if (decks) {
-      dispatch(decksActions.setMaxCardsCount({ maxCardsCount: decks.maxCardsCount.toString() }))
-      setValueSlider([parseInt(params.minCardsCount, 10), decks.maxCardsCount])
-    }
-  }, [dispatch, params.minCardsCount, decks])
 
   const handleDelete = (id: string) => {
     deleteDeck(id)
@@ -110,10 +100,11 @@ export const Packs = () => {
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
+          ref={closeRef}
           icon={
-            <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
-              <IconClose />
-            </Button>
+            // <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
+            <IconClose className={s.IconButton} />
+            // </Button>
           }
           trigger={
             <Button>
@@ -134,12 +125,12 @@ export const Packs = () => {
         <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
-          <SliderRadix
-            max={decks?.maxCardsCount}
-            min={0}
-            onValueCommit={handleSliderValues}
-            value={valueSlider}
-          />
+          {decksIsLoading ? (
+            // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
+            <p>SliderRadix...</p>
+          ) : (
+            <SliderRadix max={decks?.maxCardsCount} min={0} onValueCommit={handleSliderValues} />
+          )}
         </div>
         <div style={{ marginLeft: 20 }}>
           <Button onClick={handleClearFilter} variant={'secondary'}>
@@ -178,7 +169,9 @@ export const Packs = () => {
             {decks?.items.map(d => (
               <TableRow key={d.id}>
                 <TableCell className={s.wrapCell}>
-                  {d.cover && <img className={s.coverStyle} src={d.cover?.toString()} alt={'img'} />}
+                  {d.cover && (
+                    <img className={s.coverStyle} src={d.cover?.toString()} alt={'img'} />
+                  )}
                   <Typography as={'p'} variant={'body-2'}>
                     {d.name}
                   </Typography>
