@@ -38,8 +38,6 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
 
-  console.log(params)
-
   const { iconVector, onVectorChange } = useSort()
 
   const { data: user } = useGetAuthMeQuery()
@@ -179,7 +177,8 @@ export const Packs = () => {
           <TableBody>
             {decks?.items.map(d => (
               <TableRow key={d.id}>
-                <TableCell>
+                <TableCell className={s.wrapCell}>
+                  {d.cover && <img className={s.coverStyle} src={d.cover?.toString()} alt={'img'} />}
                   <Typography as={'p'} variant={'body-2'}>
                     {d.name}
                   </Typography>
