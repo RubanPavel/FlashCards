@@ -4,7 +4,7 @@ type InitialState = {
   authorId: string | undefined
   currentPage: number
   itemsPerPage: number
-  maxCardsCount: string
+  maxCardsCount: string | undefined
   minCardsCount: string
   name: string
   orderBy: string
@@ -14,8 +14,7 @@ const initialState: InitialState = {
   authorId: undefined,
   currentPage: 1,
   itemsPerPage: 10,
-  //TODO maxCardsCount возможно поменять на undefined, проверить работу слайдера
-  maxCardsCount: Number.MAX_SAFE_INTEGER.toString(),
+  maxCardsCount: undefined,
   minCardsCount: '0',
   name: '',
   //TODO возможно поменять orderBy и протипизировать более узко, возможно строка слишком широко
@@ -35,7 +34,7 @@ const slice = createSlice({
     setItemsPerPage: (state, action: PayloadAction<{ itemsPerPage: number }>) => {
       state.itemsPerPage = action.payload.itemsPerPage
     },
-    setMaxCardsCount: (state, action: PayloadAction<{ maxCardsCount: string }>) => {
+    setMaxCardsCount: (state, action: PayloadAction<{ maxCardsCount: string | undefined }>) => {
       state.maxCardsCount = action.payload.maxCardsCount
     },
     setMinCardsCount: (state, action: PayloadAction<{ minCardsCount: string }>) => {

@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from 'react'
+import { createRef } from 'react'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
@@ -37,11 +37,9 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-
   const { iconVector, onVectorChange } = useSort()
-
   const { data: user } = useGetAuthMeQuery()
-  const { data: decks } = useGetDecksQuery(params)
+  const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const columnsData = [
     { id: '1', title: 'Name' },
@@ -61,15 +59,6 @@ export const Packs = () => {
     },
   ]
   const closeRef = createRef<HTMLButtonElement>()
-
-  const [valueSlider, setValueSlider] = useState<number[]>([0, Infinity])
-
-  useEffect(() => {
-    if (decks) {
-      dispatch(decksActions.setMaxCardsCount({ maxCardsCount: decks.maxCardsCount.toString() }))
-      setValueSlider([parseInt(params.minCardsCount, 10), decks.maxCardsCount])
-    }
-  }, [dispatch, params.minCardsCount, decks])
 
   const handleDelete = (id: string) => {
     deleteDeck(id)
@@ -97,7 +86,7 @@ export const Packs = () => {
     dispatch(decksActions.setAuthorId({ authorId: undefined }))
     dispatch(decksActions.setName({ name: '' }))
     dispatch(decksActions.setMinCardsCount({ minCardsCount: '0' }))
-    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: Number.MAX_SAFE_INTEGER.toString() }))
+    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: undefined }))
   }
 
   const handleSliderValues = (sliderValues: number[]) => {
@@ -134,12 +123,12 @@ export const Packs = () => {
         <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
-          <SliderRadix
-            max={decks?.maxCardsCount}
-            min={0}
-            onValueCommit={handleSliderValues}
-            value={valueSlider}
-          />
+          {decksIsLoading ? (
+            // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
+            <p>SliderRadix...</p>
+          ) : (
+            <SliderRadix max={decks?.maxCardsCount} min={0} onValueCommit={handleSliderValues} />
+          )}
         </div>
         <div style={{ marginLeft: 20 }}>
           <Button onClick={handleClearFilter} variant={'secondary'}>
