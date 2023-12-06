@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactNode } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
 
 import * as DialogRadix from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
@@ -12,15 +12,17 @@ type Props = {
   trigger?: ReactNode
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
-export const Modals = ({ children, className, icon, trigger }: Props) => {
-  return (
-    <DialogRadix.Root>
-      <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>
-      <DialogRadix.Overlay className={s.DialogOverlay} />
-      <DialogRadix.Content className={clsx(s.DialogContent, className)}>
-        {children}
-        <DialogRadix.Close>{icon}</DialogRadix.Close>
-      </DialogRadix.Content>
-    </DialogRadix.Root>
-  )
-}
+export const Modals = forwardRef<HTMLButtonElement, Props>(
+  ({ children, className, icon, trigger }, ref) => {
+    return (
+      <DialogRadix.Root>
+        <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>
+        <DialogRadix.Overlay className={s.DialogOverlay} />
+        <DialogRadix.Content className={clsx(s.DialogContent, className)}>
+          {children}
+          <DialogRadix.Close ref={ref}>{icon}</DialogRadix.Close>
+        </DialogRadix.Content>
+      </DialogRadix.Root>
+    )
+  }
+)

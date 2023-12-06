@@ -1,5 +1,4 @@
 import { createRef } from 'react'
-
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -37,7 +36,9 @@ const dateOptions: Intl.DateTimeFormatOptions = {
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
+
   const { iconVector, onVectorChange } = useSort()
+
   const { data: user } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
@@ -99,10 +100,11 @@ export const Packs = () => {
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
+          ref={closeRef}
           icon={
-            <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
-              <IconClose />
-            </Button>
+            // <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
+            <IconClose className={s.IconButton} />
+            // </Button>
           }
           trigger={
             <Button>
