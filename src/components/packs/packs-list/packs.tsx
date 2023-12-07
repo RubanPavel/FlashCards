@@ -1,4 +1,5 @@
 import { createRef } from 'react'
+
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -70,6 +71,7 @@ export const Packs = () => {
     dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
+  console.log(decks)
   // TODO поменять имя функциям
   const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
@@ -95,17 +97,25 @@ export const Packs = () => {
     dispatch(decksActions.setMaxCardsCount({ maxCardsCount: sliderValues[1].toString() }))
   }
 
+  const setCurrentPage = (currentPage: number) => {
+    dispatch(decksActions.setCurrentPage({ currentPage }))
+  }
+
+  const setItemsPerPage = (itemsPerPage: number) => {
+    dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
+  }
+
   return (
     <div className={s.container}>
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
-          ref={closeRef}
           icon={
             // <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
             <IconClose className={s.IconButton} />
             // </Button>
           }
+          ref={closeRef}
           trigger={
             <Button>
               <Typography variant={'subtitle-1'}>Add new Pack</Typography>
@@ -170,7 +180,7 @@ export const Packs = () => {
               <TableRow key={d.id}>
                 <TableCell className={s.wrapCell}>
                   {d.cover && (
-                    <img className={s.coverStyle} src={d.cover?.toString()} alt={'img'} />
+                    <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
                   )}
                   <Typography as={'p'} variant={'body-2'}>
                     {d.name}
@@ -202,7 +212,19 @@ export const Packs = () => {
             ))}
           </TableBody>
         </Table>
-        <Pagination getPage={pageValue} totalCount={decks ? decks.pagination.totalItems : 1} />
+        {decks?.items.length === 0 && (
+          <Typography as={'p'} className={s.notFound} variant={'H2'}>
+            По вашему запросу ничего не найдено
+          </Typography>
+        )}
+        <Pagination
+          getPage={pageValue}
+          limit={decks ? decks.pagination.itemsPerPage : 10}
+          page={decks ? decks.pagination.currentPage : 1}
+          setLimit={setItemsPerPage}
+          setPage={setCurrentPage}
+          totalPages={decks ? decks.pagination.totalPages : 1}
+        />
       </div>
     </div>
   )

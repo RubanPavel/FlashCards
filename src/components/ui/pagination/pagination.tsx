@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { hahdlePageChange } from '@/components/ui/pagination/utils/hahdlePageChange'
 import { returnPaginationRange } from '@/components/ui/pagination/utils/returnPaginationRange'
@@ -10,13 +10,19 @@ import s from './pagination.module.scss'
 export type Props = {
   className?: string
   getPage: (pageNumber: number, pageSize: number) => void
+  limit: number
+  page: number
   selectOptions?: Options[]
-  totalCount: number
+  setLimit: (itemsPerPage: number) => void
+  setPage: (currentPage: number) => void
+  totalPages: number
 }
 
 export const Pagination = ({
   className,
   getPage,
+  limit,
+  page,
   selectOptions = [
     { value: '10' },
     { value: '20' },
@@ -24,26 +30,26 @@ export const Pagination = ({
     { value: '50' },
     { value: '100' },
   ],
-  totalCount,
+  setLimit,
+  setPage,
+  totalPages,
 }: Props) => {
-  const [limit, setLimit] = useState<number>(10)
-  const [page, setPage] = useState<number>(1)
-
-  const totalPage = Math.ceil(totalCount / limit)
-
-  if (totalPage < page) {
-    setPage(totalPage)
+  if (totalPages < page) {
+    setPage(totalPages ? totalPages : 1)
+  }
+  if (totalPages === 0) {
+    totalPages = 1
   }
 
-  const array = returnPaginationRange(totalPage, page, 1)
+  const array = returnPaginationRange(totalPages, page, 1)
 
   const onPageClick = (value: number | string) => {
-    hahdlePageChange(value, page, setPage, totalPage)
+    hahdlePageChange(value, page, setPage, totalPages)
   }
 
   const onPageKeyPress = (e: React.KeyboardEvent, value: number | string) => {
     if (e.code === 'Enter') {
-      hahdlePageChange(value, page, setPage, totalPage)
+      hahdlePageChange(value, page, setPage, totalPages)
     }
   }
 
@@ -88,18 +94,18 @@ export const Pagination = ({
         ))}
 
         <li
-          className={page === totalPage ? s.rightItem : ''}
-          onClick={() => !(page === totalPage) && onPageClick('&rsaquo;')}
-          onKeyUp={e => !(page === totalPage) && onPageKeyPress(e, '&rsaquo;')}
-          tabIndex={!(page === totalPage) ? array.length + 2 : undefined}
+          className={page === totalPages ? s.rightItem : ''}
+          onClick={() => !(page === totalPages) && onPageClick('&rsaquo;')}
+          onKeyUp={e => !(page === totalPages) && onPageKeyPress(e, '&rsaquo;')}
+          tabIndex={!(page === totalPages) ? array.length + 2 : undefined}
         >
           <span>&rsaquo;</span>
         </li>
         <li
-          className={page === totalPage ? s.rightItems : ''}
-          onClick={() => !(page === totalPage) && onPageClick('&raquo;')}
-          onKeyUp={e => !(page === totalPage) && onPageKeyPress(e, '&raquo;')}
-          tabIndex={!(page === totalPage) ? array.length + 3 : undefined}
+          className={page === totalPages ? s.rightItems : ''}
+          onClick={() => !(page === totalPages) && onPageClick('&raquo;')}
+          onKeyUp={e => !(page === totalPages) && onPageKeyPress(e, '&raquo;')}
+          tabIndex={!(page === totalPages) ? array.length + 3 : undefined}
         >
           <span>&raquo;</span>
         </li>
