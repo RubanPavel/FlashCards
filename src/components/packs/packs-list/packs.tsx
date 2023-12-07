@@ -40,7 +40,7 @@ export const Packs = () => {
   const { iconVector, onVectorChange } = useSort()
 
   const { data: user } = useGetAuthMeQuery()
-  const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
+  const { currentData: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const columnsData = [
     { id: '1', title: 'Name' },
@@ -86,7 +86,7 @@ export const Packs = () => {
   const handleClearFilter = () => {
     dispatch(decksActions.setAuthorId({ authorId: undefined }))
     dispatch(decksActions.setName({ name: '' }))
-    dispatch(decksActions.setMinCardsCount({ minCardsCount: '0' }))
+    dispatch(decksActions.setMinCardsCount({ minCardsCount: '1' }))
     dispatch(decksActions.setMaxCardsCount({ maxCardsCount: undefined }))
   }
 
