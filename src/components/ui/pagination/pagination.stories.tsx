@@ -1,10 +1,22 @@
 import { Pagination } from '@/components/ui/pagination/pagination'
 import { Meta, StoryObj } from '@storybook/react'
+import {Provider} from "react-redux";
+import {store} from "@/services/store";
+import {useState} from "react";
 
 const meta = {
   args: {
-    totalCount: 50,
+    page: 1,
+    limit: 10,
+    totalPages: 50,
   },
+  decorators: [
+    Story => (
+      <Provider store={store}>
+        <Story />
+      </Provider>
+    ),
+  ],
   component: Pagination,
   tags: ['autodocs'],
   title: 'Components/Pagination',
@@ -16,6 +28,16 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render: args => {
-    return <Pagination getPage={() => {}} totalCount={args.totalCount} />
+    const [page, setPage] = useState(args.page)
+    const [limit, setLimit] = useState(args.limit)
+
+    return <Pagination
+      getPage={() => {}}
+      page={page}
+      limit={limit}
+      totalPages={args.totalPages}
+      setLimit={(itemsPerPage) => {setLimit(itemsPerPage)}}
+      setPage={(currentPage) => {setPage(currentPage)}}
+    />
   },
 }
