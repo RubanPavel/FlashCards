@@ -1,17 +1,17 @@
-import React, {RefObject, useState} from 'react'
-import {useForm} from 'react-hook-form'
+import React, { RefObject, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import {IconImage} from '@/assets/icons/IconImage'
-import {Button} from '@/components/ui/button'
-import {ControlledCheckbox} from '@/components/ui/controlled/controlCheckbox'
-import {ControlInput} from '@/components/ui/controlled/controlInput'
-import {Input} from '@/components/ui/input'
-import {Typography} from '@/components/ui/typography'
-import {useCreateDeckMutation} from '@/services/decks'
+import { IconImage } from '@/assets/icons/IconImage'
+import { Button } from '@/components/ui/button'
+import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
+import { ControlInput } from '@/components/ui/controlled/controlInput'
+import { Input } from '@/components/ui/input'
+import { Typography } from '@/components/ui/typography'
+import { useCreateDeckMutation } from '@/services/decks'
+import { decksActions } from '@/services/decks/decks.slice'
+import { useAppDispatch } from '@/services/store'
 
 import s from './AddNewPack.module.scss'
-import {useAppDispatch} from "@/services/store";
-import {decksActions} from "@/services/decks/decks.slice";
 
 type FormValue = {
   cover: File | null
@@ -22,10 +22,10 @@ type Props = {
   closeRef: RefObject<HTMLButtonElement>
 }
 
-export const AddNewPack = ({closeRef}: Props) => {
+export const AddNewPack = ({ closeRef }: Props) => {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState('')
-  const {control, getValues, handleSubmit, setValue} = useForm<FormValue>({
+  const { control, getValues, handleSubmit, setValue } = useForm<FormValue>({
     defaultValues: {
       cover: null,
       name: '',
@@ -41,6 +41,7 @@ export const AddNewPack = ({closeRef}: Props) => {
   const onSubmit = (data: FormValue) => {
     const cover = getValues('cover')
     const formData = new FormData()
+
     if (cover) {
       formData.append('cover', cover)
     }
@@ -48,7 +49,7 @@ export const AddNewPack = ({closeRef}: Props) => {
     formData.append('isPrivate', data.private.toString())
 
     createDeck(formData)
-    dispatch(decksActions.setCurrentPage({currentPage: 1}))
+    dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
 
     if (closeRef.current) {
       closeRef.current.click()
@@ -91,13 +92,13 @@ export const AddNewPack = ({closeRef}: Props) => {
           <div className={s.item}>
             <div className={s.imageWrap}>
               {selectedImage ? (
-                <img alt={'image'} className={s.image} src={selectedImage}/>
+                <img alt={'image'} className={s.image} src={selectedImage} />
               ) : (
                 <span>No Image</span>
               )}
             </div>
             <div className={s.infoWrap}>
-              <div style={{textAlign: 'center'}}>
+              <div style={{ textAlign: 'center' }}>
                 <Typography as={'p'} variant={'H3'}>
                   Cover
                 </Typography>
@@ -110,7 +111,7 @@ export const AddNewPack = ({closeRef}: Props) => {
                   type={'file'}
                 />
                 <Button onClick={handleButtonClick} type={'button'} variant={'secondary'}>
-                  <IconImage/>
+                  <IconImage />
                   <Typography variant={'subtitle-2'}>Change Cover</Typography>
                 </Button>
               </div>
@@ -119,9 +120,9 @@ export const AddNewPack = ({closeRef}: Props) => {
           <Typography as={'p'} variant={'body-2'}>
             Name Pack
           </Typography>
-          <ControlInput control={control} name={'name'}/>
-          <div style={{alignItems: 'center', display: 'flex'}}>
-            <ControlledCheckbox control={control} name={'private'}/>
+          <ControlInput control={control} name={'name'} />
+          <div style={{ alignItems: 'center', display: 'flex' }}>
+            <ControlledCheckbox control={control} name={'private'} />
             <Typography variant={'body-2'}>Private Pack</Typography>
           </div>
           <div className={s.footer}>
