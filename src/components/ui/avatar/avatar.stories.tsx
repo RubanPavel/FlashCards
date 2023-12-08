@@ -10,7 +10,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const withImage: Story = {
+export const WithImage: Story = {
   args: {
     imageUrl: 'https://i.pinimg.com/736x/19/63/b2/1963b290b9856d479b432734029ff2ee.jpg',
     userName: 'User',
@@ -20,7 +20,7 @@ export const withImage: Story = {
   },
 }
 
-export const withoutImage: Story = {
+export const WithoutImage: Story = {
   args: {
     imageUrl: '',
     userName: 'User',
