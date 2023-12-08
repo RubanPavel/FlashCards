@@ -1,4 +1,4 @@
-import AvatarRadix from '@/components/ui/avatar/avatar'
+import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { IconLogOut } from '@/assets/icons/IconLogOut'
 import { IconLogo } from '@/assets/icons/Iconlogo'
-import AvatarRadix from '@/components/ui/avatar/avatar'
+import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'

@@ -1,15 +1,17 @@
+import { useState } from 'react'
+import { Provider } from 'react-redux'
+
 import { Pagination } from '@/components/ui/pagination/pagination'
+import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
-import {Provider} from "react-redux";
-import {store} from "@/services/store";
-import {useState} from "react";
 
 const meta = {
   args: {
-    page: 1,
     limit: 10,
+    page: 1,
     totalPages: 50,
   },
+  component: Pagination,
   decorators: [
     Story => (
       <Provider store={store}>
@@ -17,7 +19,6 @@ const meta = {
       </Provider>
     ),
   ],
-  component: Pagination,
   tags: ['autodocs'],
   title: 'Components/Pagination',
 } satisfies Meta<typeof Pagination>
@@ -31,13 +32,19 @@ export const Default: Story = {
     const [page, setPage] = useState(args.page)
     const [limit, setLimit] = useState(args.limit)
 
-    return <Pagination
-      getPage={() => {}}
-      page={page}
-      limit={limit}
-      totalPages={args.totalPages}
-      setLimit={(itemsPerPage) => {setLimit(itemsPerPage)}}
-      setPage={(currentPage) => {setPage(currentPage)}}
-    />
+    return (
+      <Pagination
+        getPage={() => {}}
+        limit={limit}
+        page={page}
+        setLimit={itemsPerPage => {
+          setLimit(itemsPerPage)
+        }}
+        setPage={currentPage => {
+          setPage(currentPage)
+        }}
+        totalPages={args.totalPages}
+      />
+    )
   },
 }

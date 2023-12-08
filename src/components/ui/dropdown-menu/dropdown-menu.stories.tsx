@@ -1,5 +1,5 @@
 import { IconLogOut } from '@/assets/icons/IconLogOut'
-import AvatarRadix from '@/components/ui/avatar/avatar'
+import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
