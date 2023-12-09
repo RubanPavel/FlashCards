@@ -27,11 +27,13 @@ export const MyPackPage = () => {
   const { data: user } = useGetAuthMeQuery()
 
   const { data: Datac } = useGetDeckByIdQuery({ id })
+  const idd = Datac?.author.id
+  const CardsCou = Datac?.cardsCount
 
   console.log('Datac---' + Datac)
   console.log('id---' + id)
-  console.log(user?.id + '---' + Datac?.author.id)
-  console.log('---' + Datac?.cardsCount)
+  console.log(user?.id + '---' + idd)
+  console.log('---' + CardsCou)
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -39,6 +41,10 @@ export const MyPackPage = () => {
     { id: '3', title: 'Last Updated' },
     { id: '4', title: 'Grade' },
   ]
+
+  if (CardsCou == 0) {
+    return alert('Hello')
+  }
 
   return (
     <div className={s.container}>
