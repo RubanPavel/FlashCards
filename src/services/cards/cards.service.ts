@@ -34,4 +34,4 @@ export const CardsService = baseApi.injectEndpoints({
   },
 })
 
-export const {} = CardsService
+export const { useDeleteCardMutation } = CardsService

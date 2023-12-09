@@ -1,11 +1,12 @@
-// import { FieldValues } from 'react-hook-form'
+import { Link, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { StarRating } from '@/components/packs/common/StarRating'
-// import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
+import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
@@ -14,11 +15,32 @@ import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
+import { useDeleteCardMutation } from '@/services/cards'
+import { useCreateCardMutation, useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { decksActions } from '@/services/decks/decks.slice'
+import { useAppDispatch } from '@/services/store'
 
 import s from './myPack.module.scss'
 
-export const MyPack = () => {
+export const MyPackPage = () => {
+  const dispatch = useAppDispatch()
   const { iconVector, onVectorChange } = useSort()
+  const { id } = useParams()
+  const { data: CardsData } = useGetDecksCardsQuery({ id })
+  const { data: packData } = useGetDeckByIdQuery({ id })
+
+  const [createCard] = useCreateCardMutation()
+  const [deleteCard] = useDeleteCardMutation()
+  const createCardHandler = () => {
+    createCard({ answer: 'Hello world', id, question: 'Hello friend' })
+  }
+  const deleteCardHandler = (id: string) => {
+    deleteCard(id)
+  }
+  const handleSearch = (searchValue: string) => {
+    dispatch(decksActions.setName({ name: searchValue }))
+  }
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -27,43 +49,21 @@ export const MyPack = () => {
     { id: '4', title: 'Grade' },
   ]
 
-  const data = [
-    {
-      answer: 'This is how "This" works in JavaScript',
-      id: 5,
-      lastUpdate: '28.11.2023',
-      question: 'How "This" works in JavaScript?',
-      rating: 3,
-    },
-    {
-      answer: 'This is how "This" works in JavaScript',
-      id: 6,
-      lastUpdate: '27.11.2023',
-      question: 'How "This" works in JavaScript?',
-      rating: 2,
-    },
-  ]
-
-  // const getValue = (value: FieldValues) => {
-  //   console.log(value)
-  // }
-
-  const onClickHandler = () => {
-    alert('Назад на Packs List')
+  if (packData?.cardsCount === 0) {
+    return <EmptyPack id={id} isMyPack packName={packData?.name} />
   }
 
   return (
     <div className={s.container}>
-      <div className={s.fieldBack} onClick={onClickHandler}>
+      <Link className={s.fieldBack} to={'/packs'}>
         <IconLeftArrow transform={'translate(0, 2)'} />
         <Typography variant={'body-2'}>Back to Packs List</Typography>
-      </div>
+      </Link>
       <div className={s.packsList}>
         <div className={s.myPackWrapper}>
           <Typography as={'h1'} variant={'large'}>
-            My Pack
+            My Pack/{packData?.name}
           </Typography>
-
           <DropdownMenu position={'end'} trigger={<IconBurgerMenu />}>
             <DropDownItem className={s.dropItem}>
               <IconLearn />
@@ -81,11 +81,21 @@ export const MyPack = () => {
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Button onClick={() => {}}>
+        <Button
+          onClick={() => {
+            createCardHandler()
+          }}
+        >
           <Typography variant={'subtitle-2'}>Add New Card</Typography>
         </Button>
       </div>
-      {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
+      <DebouncedInput
+        callback={handleSearch}
+        className={s.searchInput}
+        id={'inputMy'}
+        name={'search'}
+        type={'search'}
+      />
       <Table>
         <TableRow>
           {columnsData.map(el => (
@@ -104,7 +114,7 @@ export const MyPack = () => {
           ))}
         </TableRow>
         <TableBody>
-          {data.map(d => (
+          {CardsData?.items.map(d => (
             <TableRow key={d.id}>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
@@ -118,14 +128,18 @@ export const MyPack = () => {
               </TableCell>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.lastUpdate}
+                  {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
                 </Typography>
               </TableCell>
               <TableCell className={s.starsAndIcons}>
-                <StarRating filledStars={d.rating} />
+                <StarRating filledStars={d.grade} />
                 <div className={s.pointer}>
                   <IconEdit />
-                  <IconDelete />
+                  <IconDelete
+                    onClick={() => {
+                      deleteCardHandler(d.id)
+                    }}
+                  />
                 </div>
               </TableCell>
             </TableRow>

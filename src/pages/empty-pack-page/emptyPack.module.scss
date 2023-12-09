@@ -1,0 +1,28 @@
+.container {
+  padding: 0 10vw;
+}
+
+.fieldBack {
+  display: inline-flex;
+  gap: 5px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.namePack {
+  margin: 30px 0 70px 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    width: fit-content;
+    margin-top: 30px;
+  }
+}
+
+.text {
+  color: var(--color-dark-100);
+}
