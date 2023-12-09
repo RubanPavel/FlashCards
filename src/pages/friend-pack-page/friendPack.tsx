@@ -16,14 +16,16 @@ import s from './friendPack.module.scss'
 export const FriendPackPage = () => {
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
-  const { data: CardsData } = useGetDecksCardsQuery({ id })
-  const { data: user } = useGetAuthMeQuery()
-  const { data: Datac } = useGetDeckByIdQuery({ id })
 
-  console.log('Datac---' + Datac)
   console.log('id---' + id)
-  console.log(user?.id + '---' + Datac?.author.id)
-  console.log('---' + Datac?.cardsCount)
+  const { data: CardsData } = useGetDecksCardsQuery({ id })
+  const { data: DataC } = useGetDeckByIdQuery({ id })
+  /*const { data: user } = useGetAuthMeQuery()*/
+
+  console.log(DataC?.cardsCount)
+
+  /*  console.log(user?.id + '---' + Datac?.author.id)
+  console.log('---' + Datac?.cardsCount)*!/*/
 
   const columnsData = [
     { id: '1', title: 'Question' },
