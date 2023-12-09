@@ -23,23 +23,6 @@ export const PackFriend = () => {
     { id: '4', title: 'Grade' },
   ]
 
-  /*  const data = [
-    {
-      answer: 'This is how "This" works in JavaScript',
-      id: 5,
-      lastUpdate: '28.11.2023',
-      question: 'How "This" works in JavaScript?',
-      rating: 3,
-    },
-    {
-      answer: 'This is how "This" works in JavaScript',
-      id: 6,
-      lastUpdate: '27.11.2023',
-      question: 'How "This" works in JavaScript?',
-      rating: 2,
-    },
-  ]*/
-
   const getValue = (value: string) => {
     return value
   }
@@ -106,7 +89,7 @@ export const PackFriend = () => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <StarRating filledStars={d.shots} />
+                <StarRating filledStars={d.grade} />
               </TableCell>
             </TableRow>
           ))}

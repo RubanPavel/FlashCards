@@ -43,6 +43,7 @@ export const Packs = () => {
   const { data: user } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
+
   const columnsData = [
     { id: '1', title: 'Name' },
     { id: '2', title: 'Cards' },
