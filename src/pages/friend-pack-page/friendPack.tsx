@@ -8,7 +8,6 @@ import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { useGetAuthMeQuery } from '@/services/auth'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 
 import s from './friendPack.module.scss'
@@ -16,16 +15,9 @@ import s from './friendPack.module.scss'
 export const FriendPackPage = () => {
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
-
-  console.log('id---' + id)
-  const { data: CardsData } = useGetDecksCardsQuery({ id })
-  const { data: DataC } = useGetDeckByIdQuery({ id })
+  const { data: cardsData } = useGetDecksCardsQuery({ id })
+  const { data: cardData } = useGetDeckByIdQuery({ id })
   /*const { data: user } = useGetAuthMeQuery()*/
-
-  console.log(DataC?.cardsCount)
-
-  /*  console.log(user?.id + '---' + Datac?.author.id)
-  console.log('---' + Datac?.cardsCount)*!/*/
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -45,7 +37,7 @@ export const FriendPackPage = () => {
         <Typography variant={'body-2'}>Back to Packs List</Typography>
       </Link>
       <div className={s.packsList}>
-        <Typography variant={'large'}>Friend&apos;s Pack</Typography>
+        <Typography variant={'large'}>Friend&apos;s Pack/{cardData?.name}</Typography>
         <Button onClick={() => {}}>
           <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
         </Button>
@@ -78,7 +70,7 @@ export const FriendPackPage = () => {
           ))}
         </TableRow>
         <TableBody>
-          {CardsData?.items.map(d => (
+          {cardsData?.items.map(d => (
             <TableRow key={d.id}>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>

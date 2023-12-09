@@ -98,6 +98,7 @@ export const DecksService = baseApi.injectEndpoints({
 })
 
 export const {
+  useCreateCardMutation,
   useCreateDeckMutation,
   useDeleteDeskMutation,
   useGetDeckByIdQuery,

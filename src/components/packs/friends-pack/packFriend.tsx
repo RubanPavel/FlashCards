@@ -8,7 +8,7 @@ import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
 
-export const FriendPack = () => {
+export const PackFriend = () => {
   const { iconVector, onVectorChange } = useSort()
 
   const columnsData = [

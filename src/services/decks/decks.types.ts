@@ -83,7 +83,7 @@ export type CreateCardType = {
   answer: string
   answerImg?: string
   answerVideo?: string
-  id: string
+  id?: string
   question: string
   questionImg?: string
   questionVideo?: string

@@ -14,10 +14,10 @@ import { SignIn } from '@/components/auth/login-in'
 import { SignUp } from '@/components/auth/sign-up'
 import { Packs } from '@/components/packs/packs-list'
 import { FriendPackPage } from '@/pages/friend-pack-page/friendPack'
-import { MyPackPage } from '@/pages/my-pack-page/myPack'
 
 import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
+import { MyPackPage } from './pages/my-pack-page'
 //import {useGetDecksQuery} from "@/services/decks";
 
 const publicRoutes: RouteObject[] = [

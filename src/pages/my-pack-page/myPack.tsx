@@ -14,8 +14,8 @@ import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { useGetAuthMeQuery } from '@/services/auth'
-import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { useDeleteCardMutation } from '@/services/cards'
+import { useCreateCardMutation, useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 
 import s from './myPack.module.scss'
 
@@ -24,17 +24,16 @@ export const MyPackPage = () => {
 
   const { id } = useParams()
   const { data: CardsData } = useGetDecksCardsQuery({ id })
-  const { data: user } = useGetAuthMeQuery()
+  const { data: cardData } = useGetDeckByIdQuery({ id })
 
-  const { data: Datac } = useGetDeckByIdQuery({ id })
-  const idd = Datac?.author.id
-  const CardsCou = Datac?.cardsCount
-
-  console.log('Datac---' + Datac)
-  console.log('id---' + id)
-  console.log(user?.id + '---' + idd)
-  console.log('---' + CardsCou)
-
+  const [createCard] = useCreateCardMutation()
+  const [deleteCard] = useDeleteCardMutation()
+  const createCardHandler = () => {
+    createCard({ answer: 'Hello world', id, question: 'Hello friend' })
+  }
+  const deleteCardHandler = (id: string) => {
+    deleteCard(id)
+  }
   const columnsData = [
     { id: '1', title: 'Question' },
     { id: '2', title: 'Answer' },
@@ -42,21 +41,16 @@ export const MyPackPage = () => {
     { id: '4', title: 'Grade' },
   ]
 
-  if (CardsCou == 0) {
-    return alert('Hello')
-  }
-
   return (
     <div className={s.container}>
       <Link className={s.fieldBack} to={'/packs'}>
         <IconLeftArrow transform={'translate(0, 2)'} />
         <Typography variant={'body-2'}>Back to Packs List</Typography>
       </Link>
-
       <div className={s.packsList}>
         <div className={s.myPackWrapper}>
           <Typography as={'h1'} variant={'large'}>
-            My Pack
+            My Pack/{cardData?.name}
           </Typography>
           <DropdownMenu position={'end'} trigger={<IconBurgerMenu />}>
             <DropDownItem className={s.dropItem}>
@@ -75,7 +69,11 @@ export const MyPackPage = () => {
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Button onClick={() => {}}>
+        <Button
+          onClick={() => {
+            createCardHandler()
+          }}
+        >
           <Typography variant={'subtitle-2'}>Add New Card</Typography>
         </Button>
       </div>
@@ -119,7 +117,11 @@ export const MyPackPage = () => {
                 <StarRating filledStars={d.grade} />
                 <div className={s.pointer}>
                   <IconEdit />
-                  <IconDelete />
+                  <IconDelete
+                    onClick={() => {
+                      deleteCardHandler(d.id)
+                    }}
+                  />
                 </div>
               </TableCell>
             </TableRow>

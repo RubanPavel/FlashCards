@@ -215,8 +215,12 @@ export const Packs = () => {
                       <Link to={`/friend-pack/${d.id}`}>
                         <IconLearn />
                       </Link>
-                      <IconEdit />
-                      <IconDelete onClick={() => handleDelete(d.id)} />
+                      {d.author.id === userData?.id && (
+                        <>
+                          <IconEdit />
+                          <IconDelete onClick={() => handleDelete(d.id)} />
+                        </>
+                      )}
                     </div>
                   </TableCell>
                 </TableRow>
