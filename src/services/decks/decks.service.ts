@@ -43,7 +43,7 @@ export const DecksService = baseApi.injectEndpoints({
         query: id => ({ method: 'DELETE', url: `v1/decks/${id}` }),
       }),
 
-      getDeckById: builder.query<Deck, string>({
+      getDeckById: builder.query<Deck, any | string>({
         providesTags: ['Decks'],
         query: id => ({
           id,
@@ -100,6 +100,7 @@ export const DecksService = baseApi.injectEndpoints({
 export const {
   useCreateDeckMutation,
   useDeleteDeskMutation,
+  useGetDeckByIdQuery,
   useGetDecksCardsQuery,
   useGetDecksQuery,
 } = DecksService

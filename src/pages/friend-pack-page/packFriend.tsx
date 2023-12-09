@@ -7,7 +7,8 @@ import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { useGetDecksCardsQuery } from '@/services/decks'
+import { useGetAuthMeQuery } from '@/services/auth'
+import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 
 import s from './packFriend.module.scss'
 
@@ -15,6 +16,11 @@ export const PackFriend = () => {
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
   const { data: CardsData } = useGetDecksCardsQuery({ id })
+
+  const { data: user } = useGetAuthMeQuery()
+  const { data: Datac } = useGetDeckByIdQuery({ id })
+
+  console.log(user?.id + '---' + Datac?.author.id)
 
   const columnsData = [
     { id: '1', title: 'Question' },
