@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { useSort } from '@/components/packs/hook/useSort'
 import { dateOptions } from '@/components/packs/packs-list'
@@ -14,17 +15,20 @@ import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
 import { useDeleteCardMutation } from '@/services/cards'
 import { useCreateCardMutation, useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { decksActions } from '@/services/decks/decks.slice'
+import { useAppDispatch } from '@/services/store'
 
 import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
+  const dispatch = useAppDispatch()
   const { iconVector, onVectorChange } = useSort()
-
   const { id } = useParams()
   const { data: CardsData } = useGetDecksCardsQuery({ id })
-  const { data: cardData } = useGetDeckByIdQuery({ id })
+  const { data: packData } = useGetDeckByIdQuery({ id })
 
   const [createCard] = useCreateCardMutation()
   const [deleteCard] = useDeleteCardMutation()
@@ -34,12 +38,20 @@ export const MyPackPage = () => {
   const deleteCardHandler = (id: string) => {
     deleteCard(id)
   }
+  const handleSearch = (searchValue: string) => {
+    dispatch(decksActions.setName({ name: searchValue }))
+  }
+
   const columnsData = [
     { id: '1', title: 'Question' },
     { id: '2', title: 'Answer' },
     { id: '3', title: 'Last Updated' },
     { id: '4', title: 'Grade' },
   ]
+
+  if (packData?.cardsCount === 0) {
+    return <EmptyPack id={id} isMyPack packName={packData?.name} />
+  }
 
   return (
     <div className={s.container}>
@@ -50,7 +62,7 @@ export const MyPackPage = () => {
       <div className={s.packsList}>
         <div className={s.myPackWrapper}>
           <Typography as={'h1'} variant={'large'}>
-            My Pack/{cardData?.name}
+            My Pack/{packData?.name}
           </Typography>
           <DropdownMenu position={'end'} trigger={<IconBurgerMenu />}>
             <DropDownItem className={s.dropItem}>
@@ -77,7 +89,13 @@ export const MyPackPage = () => {
           <Typography variant={'subtitle-2'}>Add New Card</Typography>
         </Button>
       </div>
-      {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
+      <DebouncedInput
+        callback={handleSearch}
+        className={s.searchInput}
+        id={'inputMy'}
+        name={'search'}
+        type={'search'}
+      />
       <Table>
         <TableRow>
           {columnsData.map(el => (

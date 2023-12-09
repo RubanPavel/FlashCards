@@ -9,14 +9,19 @@ import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { decksActions } from '@/services/decks/decks.slice'
+import { useAppDispatch } from '@/services/store'
 
 import s from './friendPack.module.scss'
 
+import { EmptyPack } from '../empty-pack-page/empty-pack'
+
 export const FriendPackPage = () => {
+  const dispatch = useAppDispatch()
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({ id })
-  const { data: cardData } = useGetDeckByIdQuery({ id })
+  const { data: packData } = useGetDeckByIdQuery({ id })
   /*const { data: user } = useGetAuthMeQuery()*/
 
   const columnsData = [
@@ -26,8 +31,12 @@ export const FriendPackPage = () => {
     { id: '4', title: 'Grade' },
   ]
 
-  const getValue = (value: string) => {
-    return value
+  const handleSearch = (searchValue: string) => {
+    dispatch(decksActions.setName({ name: searchValue }))
+  }
+
+  if (packData?.cardsCount === 0) {
+    return <EmptyPack isMyPack={false} packName={packData?.name} />
   }
 
   return (
@@ -37,14 +46,15 @@ export const FriendPackPage = () => {
         <Typography variant={'body-2'}>Back to Packs List</Typography>
       </Link>
       <div className={s.packsList}>
-        <Typography variant={'large'}>Friend&apos;s Pack/{cardData?.name}</Typography>
+        <Typography variant={'large'}>Friend&apos;s Pack/{packData?.name}</Typography>
         <Button onClick={() => {}}>
           <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
         </Button>
       </div>
       <DebouncedInput
-        callback={getValue}
+        callback={handleSearch}
         className={s.searchInput}
+        id={'inputFriends'}
         name={'search'}
         type={'search'}
       />
