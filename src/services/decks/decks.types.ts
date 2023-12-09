@@ -57,7 +57,7 @@ export type UpdateDeckRequest = {
 export type GetDecksCardsParams = {
   answer?: string
   currentPage?: number
-  id: string
+  id?: string
   itemsPerPage?: number
   orderBy?: string
   question?: string
@@ -123,4 +123,29 @@ export type GetDecksType = {
   minCardsCount?: string
   name?: string
   orderBy?: string
+}
+
+export type CardsResponse = {
+  items: CardsResponseItems[]
+  pagination: CardsResponsePagination
+}
+export type CardsResponseItems = {
+  answer: string
+  answerImg: string
+  answerVideo: string
+  created: string
+  deckId: string
+  id: string
+  question: string
+  questionImg: string
+  questionVideo: string
+  shots: number
+  updated: string
+  userId: string
+}
+export type CardsResponsePagination = {
+  currentPage: number
+  itemsPerPage: number
+  totalItems: number
+  totalPages: number
 }

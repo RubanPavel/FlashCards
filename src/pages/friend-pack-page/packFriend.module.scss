@@ -1,0 +1,26 @@
+.container {
+  padding: 0 10vw;
+}
+
+.fieldBack {
+  display: inline-flex;
+  gap: 5px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+
+.packsList {
+  display: flex;
+  justify-content: space-between;
+  padding: 80px 0 30px 0;
+}
+
+.onChangeVector {
+  cursor: pointer;
+}
+
+.searchInput {
+  flex-direction: row;
+  width: 100% !important;
+  margin-bottom: 30px;
+}

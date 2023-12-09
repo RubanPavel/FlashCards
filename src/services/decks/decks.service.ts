@@ -3,6 +3,7 @@ import { baseApi } from '@/services/base-api'
 
 import {
   CardResponse,
+  CardsResponse,
   CreateCardType,
   Deck,
   DecksResponse,
@@ -57,7 +58,7 @@ export const DecksService = baseApi.injectEndpoints({
           url: `v1/decks`,
         }),
       }),
-      getDecksCards: builder.query<DecksResponse, GetDecksCardsParams>({
+      getDecksCards: builder.query<CardsResponse, GetDecksCardsParams>({
         providesTags: ['Decks'],
         query: ({ id, ...args }) => ({
           method: 'GET',
@@ -96,4 +97,9 @@ export const DecksService = baseApi.injectEndpoints({
   },
 })
 
-export const { useCreateDeckMutation, useDeleteDeskMutation, useGetDecksQuery } = DecksService
+export const {
+  useCreateDeckMutation,
+  useDeleteDeskMutation,
+  useGetDecksCardsQuery,
+  useGetDecksQuery,
+} = DecksService
