@@ -1,1 +1,2 @@
-export * from 'src/pages/my-pack-page/myPack-page'
+export * from './myPack'
+export * from './myPack.module.scss'

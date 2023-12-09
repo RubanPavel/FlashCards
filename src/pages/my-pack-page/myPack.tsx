@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconEdit } from '@/assets/icons/IconEdit'
@@ -14,14 +14,24 @@ import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { useGetDecksCardsQuery } from '@/services/decks'
+import { useGetAuthMeQuery } from '@/services/auth'
+import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 
 import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const { iconVector, onVectorChange } = useSort()
+
   const { id } = useParams()
   const { data: CardsData } = useGetDecksCardsQuery({ id })
+  const { data: user } = useGetAuthMeQuery()
+
+  const { data: Datac } = useGetDeckByIdQuery({ id })
+
+  console.log('Datac---' + Datac)
+  console.log('id---' + id)
+  console.log(user?.id + '---' + Datac?.author.id)
+  console.log('---' + Datac?.cardsCount)
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -30,16 +40,13 @@ export const MyPackPage = () => {
     { id: '4', title: 'Grade' },
   ]
 
-  const onClickHandler = () => {
-    alert('Назад на Packs List')
-  }
-
   return (
     <div className={s.container}>
-      <div className={s.fieldBack} onClick={onClickHandler}>
+      <Link className={s.fieldBack} to={'/packs'}>
         <IconLeftArrow transform={'translate(0, 2)'} />
         <Typography variant={'body-2'}>Back to Packs List</Typography>
-      </div>
+      </Link>
+
       <div className={s.packsList}>
         <div className={s.myPackWrapper}>
           <Typography as={'h1'} variant={'large'}>

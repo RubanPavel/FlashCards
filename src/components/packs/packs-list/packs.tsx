@@ -26,6 +26,7 @@ import { useGetAuthMeQuery } from '@/services/auth'
 import { useDeleteDeskMutation, useGetDecksQuery } from '@/services/decks/decks.service'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
+import clsx from 'clsx'
 
 import s from './packs.module.scss'
 
@@ -41,7 +42,7 @@ export const Packs = () => {
 
   const { iconVector, onVectorChange } = useSort()
 
-  const { data: user } = useGetAuthMeQuery()
+  const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
 
@@ -80,8 +81,8 @@ export const Packs = () => {
   }
 
   const handleTabSwitcher = (tabValue: string) => {
-    if (user && tabValue === tabsData[0].value) {
-      dispatch(decksActions.setAuthorId({ authorId: user.id }))
+    if (userData && tabValue === tabsData[0].value) {
+      dispatch(decksActions.setAuthorId({ authorId: userData.id }))
     } else {
       dispatch(decksActions.setAuthorId({ authorId: undefined }))
     }
@@ -178,42 +179,49 @@ export const Packs = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {decks?.items.map(d => (
-              <TableRow key={d.id}>
-                <TableCell className={s.wrapCell}>
-                  {d.cover && (
-                    <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
-                  )}
-                  <Typography as={'p'} variant={'body-2'}>
-                    {d.name}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography as={'p'} variant={'body-2'}>
-                    {d.cardsCount}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography as={'p'} variant={'body-2'}>
-                    {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography as={'p'} variant={'body-2'}>
-                    {d.author.name}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <div className={s.lastCell}>
-                    <Link to={`/friend-pack/${d.id}`}>
-                      <IconLearn />
+            {decks?.items.map(d => {
+              const packPath =
+                d.author.id !== userData?.id ? `/friend-pack/${d.id}` : `/my-pack/${d.id}`
+
+              return (
+                <TableRow key={d.id}>
+                  <TableCell>
+                    <Link className={clsx(s.wrapCell, s.link)} to={packPath}>
+                      {d.cover && (
+                        <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
+                      )}
+                      <Typography as={'span'} variant={'subtitle-1'}>
+                        {d.name}
+                      </Typography>
                     </Link>
-                    <IconEdit />
-                    <IconDelete onClick={() => handleDelete(d.id)} />
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
+                  </TableCell>
+                  <TableCell>
+                    <Typography as={'p'} variant={'body-2'}>
+                      {d.cardsCount}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography as={'p'} variant={'body-2'}>
+                      {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography as={'p'} variant={'body-2'}>
+                      {d.author.name}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <div className={s.lastCell}>
+                      <Link to={`/friend-pack/${d.id}`}>
+                        <IconLearn />
+                      </Link>
+                      <IconEdit />
+                      <IconDelete onClick={() => handleDelete(d.id)} />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
           </TableBody>
         </Table>
         {decks?.items.length === 0 && (

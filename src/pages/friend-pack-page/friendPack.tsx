@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
@@ -17,11 +17,13 @@ export const FriendPackPage = () => {
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
   const { data: CardsData } = useGetDecksCardsQuery({ id })
-
   const { data: user } = useGetAuthMeQuery()
   const { data: Datac } = useGetDeckByIdQuery({ id })
 
+  console.log('Datac---' + Datac)
+  console.log('id---' + id)
   console.log(user?.id + '---' + Datac?.author.id)
+  console.log('---' + Datac?.cardsCount)
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -34,16 +36,12 @@ export const FriendPackPage = () => {
     return value
   }
 
-  const onClickHandler = () => {
-    alert('Назад на Packs List')
-  }
-
   return (
     <div className={s.container}>
-      <div className={s.fieldBack} onClick={onClickHandler}>
+      <Link className={s.fieldBack} to={'/packs'}>
         <IconLeftArrow transform={'translate(0, 2)'} />
         <Typography variant={'body-2'}>Back to Packs List</Typography>
-      </div>
+      </Link>
       <div className={s.packsList}>
         <Typography variant={'large'}>Friend&apos;s Pack</Typography>
         <Button onClick={() => {}}>
