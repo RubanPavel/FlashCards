@@ -1,4 +1,5 @@
 import { createRef } from 'react'
+import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
@@ -28,7 +29,7 @@ import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './packs.module.scss'
 
-const dateOptions: Intl.DateTimeFormatOptions = {
+export const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
   month: '2-digit',
   year: 'numeric',
@@ -204,7 +205,9 @@ export const Packs = () => {
                 </TableCell>
                 <TableCell>
                   <div className={s.lastCell}>
-                    <IconLearn />
+                    <Link to={`/friend-pack/${d.id}`}>
+                      <IconLearn />
+                    </Link>
                     <IconEdit />
                     <IconDelete onClick={() => handleDelete(d.id)} />
                   </div>

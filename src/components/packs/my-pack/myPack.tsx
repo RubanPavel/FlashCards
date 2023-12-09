@@ -1,9 +1,10 @@
-import { useParams } from 'react-router-dom'
+// import { FieldValues } from 'react-hook-form'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { StarRating } from '@/components/packs/common/StarRating'
+// import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
@@ -13,14 +14,11 @@ import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { useGetDecksCardsQuery } from '@/services/decks'
 
 import s from './myPack.module.scss'
 
 export const MyPack = () => {
   const { iconVector, onVectorChange } = useSort()
-  const { id } = useParams()
-  const { data: CardsData } = useGetDecksCardsQuery({ id })
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -28,6 +26,27 @@ export const MyPack = () => {
     { id: '3', title: 'Last Updated' },
     { id: '4', title: 'Grade' },
   ]
+
+  const data = [
+    {
+      answer: 'This is how "This" works in JavaScript',
+      id: 5,
+      lastUpdate: '28.11.2023',
+      question: 'How "This" works in JavaScript?',
+      rating: 3,
+    },
+    {
+      answer: 'This is how "This" works in JavaScript',
+      id: 6,
+      lastUpdate: '27.11.2023',
+      question: 'How "This" works in JavaScript?',
+      rating: 2,
+    },
+  ]
+
+  // const getValue = (value: FieldValues) => {
+  //   console.log(value)
+  // }
 
   const onClickHandler = () => {
     alert('Назад на Packs List')
@@ -44,6 +63,7 @@ export const MyPack = () => {
           <Typography as={'h1'} variant={'large'}>
             My Pack
           </Typography>
+
           <DropdownMenu position={'end'} trigger={<IconBurgerMenu />}>
             <DropDownItem className={s.dropItem}>
               <IconLearn />
@@ -84,7 +104,7 @@ export const MyPack = () => {
           ))}
         </TableRow>
         <TableBody>
-          {CardsData?.items.map(d => (
+          {data.map(d => (
             <TableRow key={d.id}>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
@@ -98,11 +118,11 @@ export const MyPack = () => {
               </TableCell>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.updated}
+                  {d.lastUpdate}
                 </Typography>
               </TableCell>
               <TableCell className={s.starsAndIcons}>
-                <StarRating filledStars={d.grade} />
+                <StarRating filledStars={d.rating} />
                 <div className={s.pointer}>
                   <IconEdit />
                   <IconDelete />

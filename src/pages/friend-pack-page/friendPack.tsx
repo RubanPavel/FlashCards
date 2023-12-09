@@ -4,15 +4,16 @@ import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { useSort } from '@/components/packs/hook/useSort'
+import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { useGetAuthMeQuery } from '@/services/auth'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 
-import s from './packFriend.module.scss'
+import s from './friendPack.module.scss'
 
-export const PackFriend = () => {
+export const FriendPackPage = () => {
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
   const { data: CardsData } = useGetDecksCardsQuery({ id })
@@ -91,7 +92,7 @@ export const PackFriend = () => {
               </TableCell>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.updated}
+                  {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
                 </Typography>
               </TableCell>
               <TableCell>

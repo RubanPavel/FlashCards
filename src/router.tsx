@@ -12,8 +12,9 @@ import { ForgotPassword } from '@/components/auth/forgot-password'
 import { ForgotPasswordCheckEmail } from '@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail'
 import { SignIn } from '@/components/auth/login-in'
 import { SignUp } from '@/components/auth/sign-up'
-import { PackFriend } from '@/components/packs/friends-pack'
 import { Packs } from '@/components/packs/packs-list'
+import { FriendPackPage } from '@/pages/friend-pack-page/friendPack'
+import { MyPackPage } from '@/pages/my-pack-page/myPack'
 
 import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
@@ -48,8 +49,12 @@ const privateRoutes: RouteObject[] = [
     path: '/packs',
   },
   {
-    element: <PackFriend />,
-    path: '/friends-packs',
+    element: <FriendPackPage />,
+    path: '/friend-pack/:id',
+  },
+  {
+    element: <MyPackPage />,
+    path: '/my-pack/:id',
   },
   {
     element: <CreatePassword />,
