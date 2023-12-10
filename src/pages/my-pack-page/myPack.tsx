@@ -1,6 +1,8 @@
+import { createRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
+import { IconClose } from '@/assets/icons/IconClose'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
@@ -13,10 +15,11 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
+import { Modals } from '@/components/ui/modals'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { DeletePack } from '@/pages/common/delete-modal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
-import { useDeleteCardMutation } from '@/services/cards'
 import { useCreateCardMutation, useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch } from '@/services/store'
@@ -31,13 +34,12 @@ export const MyPackPage = () => {
   const { data: packData } = useGetDeckByIdQuery({ id })
 
   const [createCard] = useCreateCardMutation()
-  const [deleteCard] = useDeleteCardMutation()
+
+  const closeRef = createRef<HTMLButtonElement>()
   const createCardHandler = () => {
     createCard({ answer: 'Hello world', id, question: 'Hello friend' })
   }
-  const deleteCardHandler = (id: string) => {
-    deleteCard(id)
-  }
+
   const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
   }
@@ -135,11 +137,18 @@ export const MyPackPage = () => {
                 <StarRating filledStars={d.grade} />
                 <div className={s.pointer}>
                   <IconEdit />
-                  <IconDelete
-                    onClick={() => {
-                      deleteCardHandler(d.id)
-                    }}
-                  />
+                  <Modals
+                    icon={<IconClose className={s.IconButton} />}
+                    ref={closeRef}
+                    trigger={<IconDelete />}
+                  >
+                    <DeletePack
+                      closeRef={closeRef}
+                      id={d.id}
+                      name={d.question}
+                      title={'Delete Card'}
+                    />
+                  </Modals>
                 </div>
               </TableCell>
             </TableRow>

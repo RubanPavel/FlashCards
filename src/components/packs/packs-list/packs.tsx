@@ -22,8 +22,9 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { DeletePack } from '@/pages/common/delete-modal/deletePack'
 import { useGetAuthMeQuery } from '@/services/auth'
-import { useDeleteDeskMutation, useGetDecksQuery } from '@/services/decks/decks.service'
+import { useGetDecksQuery } from '@/services/decks/decks.service'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
@@ -44,7 +45,6 @@ export const Packs = () => {
 
   const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
-  const [deleteDeck, {}] = useDeleteDeskMutation()
 
   const columnsData = [
     { id: '1', title: 'Name' },
@@ -65,9 +65,9 @@ export const Packs = () => {
   ]
   const closeRef = createRef<HTMLButtonElement>()
 
-  const handleDelete = (id: string) => {
+  /*  const handleDelete = (id: string) => {
     deleteDeck(id)
-  }
+  }*/
 
   const pageValue = (currentPage: number, itemsPerPage: number) => {
     dispatch(decksActions.setCurrentPage({ currentPage }))
@@ -218,7 +218,18 @@ export const Packs = () => {
                       {d.author.id === userData?.id && (
                         <>
                           <IconEdit />
-                          <IconDelete onClick={() => handleDelete(d.id)} />
+                          <Modals
+                            icon={<IconClose className={s.IconButton} />}
+                            ref={closeRef}
+                            trigger={<IconDelete />}
+                          >
+                            <DeletePack
+                              closeRef={closeRef}
+                              id={d.id}
+                              name={d.name}
+                              title={'Delete Pack'}
+                            />
+                          </Modals>
                         </>
                       )}
                     </div>
