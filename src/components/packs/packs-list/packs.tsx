@@ -22,7 +22,7 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { DeletePack } from '@/pages/common/delete-modal/deletePack'
+import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { useGetAuthMeQuery } from '@/services/auth'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 import { decksActions } from '@/services/decks/decks.slice'
@@ -223,7 +223,7 @@ export const Packs = () => {
                             ref={closeRef}
                             trigger={<IconDelete />}
                           >
-                            <DeletePack
+                            <DeleteModal
                               closeRef={closeRef}
                               id={d.id}
                               name={d.name}

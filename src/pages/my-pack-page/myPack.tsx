@@ -18,7 +18,7 @@ import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparat
 import { Modals } from '@/components/ui/modals'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { DeletePack } from '@/pages/common/delete-modal'
+import { DeleteModal } from '@/pages/common/delete-modal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
 import { useCreateCardMutation, useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
@@ -142,7 +142,7 @@ export const MyPackPage = () => {
                     ref={closeRef}
                     trigger={<IconDelete />}
                   >
-                    <DeletePack
+                    <DeleteModal
                       closeRef={closeRef}
                       id={d.id}
                       name={d.question}

@@ -5,16 +5,16 @@ import { Typography } from '@/components/ui/typography'
 import { useDeleteCardMutation } from '@/services/cards'
 import { useDeleteDeskMutation } from '@/services/decks'
 
-import s from './deletePack.module.scss'
+import s from './deleteModal.module.scss'
 
 type Props = {
   closeRef: RefObject<HTMLButtonElement>
   id: string
-  name?: string
+  name: string
   title: string
 }
 
-export const DeletePack = ({ closeRef, id, name, title }: Props) => {
+export const DeleteModal = ({ closeRef, id, name, title }: Props) => {
   /*const inputRef = React.useRef<HTMLInputElement | null>(null)*/
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const [deleteCard] = useDeleteCardMutation()
