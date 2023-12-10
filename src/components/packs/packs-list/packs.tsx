@@ -223,7 +223,12 @@ export const Packs = () => {
                             ref={closeRef}
                             trigger={<IconDelete />}
                           >
-                            <DeletePack closeRef={closeRef} id={d.id} name={d.name} />
+                            <DeletePack
+                              closeRef={closeRef}
+                              id={d.id}
+                              name={d.name}
+                              title={'Delete Pack'}
+                            />
                           </Modals>
                         </>
                       )}
