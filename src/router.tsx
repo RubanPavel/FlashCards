@@ -16,7 +16,6 @@ import { NotFoundPage } from '@/pages/not-found-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { RegisterPage } from '@/pages/register-page'
 import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
-// import { useAppSelector } from '@/services/store'
 
 import { Loader } from '@/components/ui/loader'
 import { useGetAuthMeQuery } from '@/services/auth'
