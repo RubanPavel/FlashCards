@@ -69,55 +69,12 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
-const notFoundRout: RouteObject[] = [
+const notFoundRoute: RouteObject[] = [
   {
     element: <NotFoundPage />,
     path: '*',
   },
 ]
-// const routes = createBrowserRouter([
-//   {
-//     children: [
-//       {
-//         children: publicRoutes,
-//         element: isAuthenticated ? <Navigate to={'/'} /> : <Outlet />,
-//       },
-//       {
-//         children: privateRoutes,
-//         element: isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />,
-//       },
-//       ...notFoundRout,
-//     ],
-//     // element: <ContentLayout />,
-//   },
-// ])
-// export const Router = () => {
-//   const { isError,isLoading } = useGetAuthMeQuery()
-//   // const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
-//   const isAuthenticated = !isErro
-//
-//
-//   return <RouterProvider router={routes} />
-// }
-//
-//
-// const router = createBrowserRouter([
-//   {
-//     children: [
-//       {
-//         children: privateRoutes,
-//         element: <PrivateRoutes />,
-//       },
-//       {
-//         children: publicRoutes,
-//         element: <PublicRoutes />,
-//       },
-//       ...notFoundRout,
-//     ],
-//     element: <ContentLayout />,
-//   },
-// ])
-//
 
 const router = createBrowserRouter([
   {
@@ -130,7 +87,7 @@ const router = createBrowserRouter([
         children: publicRoutes,
         element: <PublicRoutes />,
       },
-      ...notFoundRout,
+      ...notFoundRoute,
     ],
     element: <ContentLayout />,
   },

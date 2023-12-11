@@ -74,7 +74,7 @@ export const Packs = () => {
     dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
-  console.log(decks)
+  // console.log(decks)
   // TODO поменять имя функциям
   const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
