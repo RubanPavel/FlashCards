@@ -1,17 +1,17 @@
-import { createRef } from 'react'
+import {createRef, useState} from 'react'
 
-import { IconClose } from '@/assets/icons/IconClose'
-import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
-import { useSort } from '@/components/packs/hook/useSort'
-import { AddNewPack } from '@/components/packs/modals/addNewPack'
-import { Button } from '@/components/ui/button'
+import {IconClose} from '@/assets/icons/IconClose'
+import {DebouncedInput} from '@/components/packs/common/DebouncedInput'
+import {useSort} from '@/components/packs/hook/useSort'
+import {AddNewPack} from '@/components/packs/modals/addNewPack'
+import {Button} from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
-import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
-import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
-import { Modals } from '@/components/ui/modals'
-import { Pagination } from '@/components/ui/pagination'
-import { SliderRadix } from '@/components/ui/slider'
-import { TabSwitcher } from '@/components/ui/tab-switcher'
+import {IconEdit} from '@/components/ui/dropdown-menu/assets/IconEdit'
+import {IconLearn} from '@/components/ui/dropdown-menu/assets/IconLearn'
+import {Modals} from '@/components/ui/modals'
+import {Pagination} from '@/components/ui/pagination'
+import {SliderRadix} from '@/components/ui/slider'
+import {TabSwitcher} from '@/components/ui/tab-switcher'
 import {
   Table,
   TableBody,
@@ -20,13 +20,14 @@ import {
   TableHeadCell,
   TableRow,
 } from '@/components/ui/tables'
-import { Typography } from '@/components/ui/typography'
-import { useGetAuthMeQuery } from '@/services/auth'
-import { useDeleteDeskMutation, useGetDecksQuery } from '@/services/decks/decks.service'
-import { decksActions } from '@/services/decks/decks.slice'
-import { useAppDispatch, useAppSelector } from '@/services/store'
+import {Typography} from '@/components/ui/typography'
+import {useGetAuthMeQuery} from '@/services/auth'
+import {useDeleteDeskMutation, useGetDecksQuery} from '@/services/decks/decks.service'
+import {decksActions} from '@/services/decks/decks.slice'
+import {useAppDispatch, useAppSelector} from '@/services/store'
 
 import s from './packs.module.scss'
+import {useNavigate} from "react-router-dom";
 
 const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
@@ -38,17 +39,20 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
 
-  const { iconVector, onVectorChange } = useSort()
+  const {iconVector, onVectorChange} = useSort()
 
-  const { data: user } = useGetAuthMeQuery()
-  const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
+  const {data: user} = useGetAuthMeQuery()
+  const {data: decks, isLoading: decksIsLoading} = useGetDecksQuery(params)
   const [deleteDeck, {}] = useDeleteDeskMutation()
+  const [idMyPack, setIdMyPack] = useState('')
+  const navigate = useNavigate()
+
   const columnsData = [
-    { id: '1', title: 'Name' },
-    { id: '2', title: 'Cards' },
-    { id: '3', title: 'Last Updated' },
-    { id: '4', title: 'Create by' },
-    { id: '5', title: '' },
+    {id: '1', title: 'Name'},
+    {id: '2', title: 'Cards'},
+    {id: '3', title: 'Last Updated'},
+    {id: '4', title: 'Create by'},
+    {id: '5', title: ''},
   ]
   const tabsData = [
     {
@@ -67,42 +71,51 @@ export const Packs = () => {
   }
 
   const pageValue = (currentPage: number, itemsPerPage: number) => {
-    dispatch(decksActions.setCurrentPage({ currentPage }))
-    dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
+    dispatch(decksActions.setCurrentPage({currentPage}))
+    dispatch(decksActions.setItemsPerPage({itemsPerPage}))
   }
 
-  console.log(decks)
   // TODO поменять имя функциям
   const handleSearch = (searchValue: string) => {
-    dispatch(decksActions.setName({ name: searchValue }))
+    dispatch(decksActions.setName({name: searchValue}))
   }
 
   const handleTabSwitcher = (tabValue: string) => {
     if (user && tabValue === tabsData[0].value) {
-      dispatch(decksActions.setAuthorId({ authorId: user.id }))
+      dispatch(decksActions.setAuthorId({authorId: user.id}))
     } else {
-      dispatch(decksActions.setAuthorId({ authorId: undefined }))
+      dispatch(decksActions.setAuthorId({authorId: undefined}))
     }
   }
 
   const handleClearFilter = () => {
-    dispatch(decksActions.setAuthorId({ authorId: undefined }))
-    dispatch(decksActions.setName({ name: '' }))
-    dispatch(decksActions.setMinCardsCount({ minCardsCount: '0' }))
-    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: undefined }))
+    dispatch(decksActions.setAuthorId({authorId: undefined}))
+    dispatch(decksActions.setName({name: ''}))
+    dispatch(decksActions.setMinCardsCount({minCardsCount: '0'}))
+    dispatch(decksActions.setMaxCardsCount({maxCardsCount: undefined}))
   }
 
   const handleSliderValues = (sliderValues: number[]) => {
-    dispatch(decksActions.setMinCardsCount({ minCardsCount: sliderValues[0].toString() }))
-    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: sliderValues[1].toString() }))
+    dispatch(decksActions.setMinCardsCount({minCardsCount: sliderValues[0].toString()}))
+    dispatch(decksActions.setMaxCardsCount({maxCardsCount: sliderValues[1].toString()}))
   }
 
   const setCurrentPage = (currentPage: number) => {
-    dispatch(decksActions.setCurrentPage({ currentPage }))
+    dispatch(decksActions.setCurrentPage({currentPage}))
   }
 
   const setItemsPerPage = (itemsPerPage: number) => {
-    dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
+    dispatch(decksActions.setItemsPerPage({itemsPerPage}))
+  }
+
+  const getIdMyPack = (id: string) => {
+    setIdMyPack(id)
+  }
+  const onMyPackClick = (id: string) => {
+    debugger
+    if (id === idMyPack) {
+      navigate(`/packs/cards/${idMyPack}`)
+    }
   }
 
   return (
@@ -111,9 +124,7 @@ export const Packs = () => {
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
           icon={
-            // <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
-            <IconClose className={s.IconButton} />
-            // </Button>
+            <IconClose className={s.IconButton}/>
           }
           ref={closeRef}
           trigger={
@@ -122,7 +133,7 @@ export const Packs = () => {
             </Button>
           }
         >
-          <AddNewPack closeRef={closeRef} />
+          <AddNewPack getIdMyPack={getIdMyPack} closeRef={closeRef}/>
         </Modals>
       </div>
       <div className={s.controlPanel}>
@@ -132,20 +143,20 @@ export const Packs = () => {
           name={'search'}
           type={'search'}
         />
-        <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
+        <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData}/>
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
           {decksIsLoading ? (
             // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
             <p>SliderRadix...</p>
           ) : (
-            <SliderRadix max={decks?.maxCardsCount} min={0} onValueCommit={handleSliderValues} />
+            <SliderRadix max={decks?.maxCardsCount} min={0} onValueCommit={handleSliderValues}/>
           )}
         </div>
-        <div style={{ marginLeft: 20 }}>
+        <div style={{marginLeft: 20}}>
           <Button onClick={handleClearFilter} variant={'secondary'}>
-            <IconDelete />
-            <Typography style={{ whiteSpace: 'nowrap' }} variant={'subtitle-2'}>
+            <IconDelete/>
+            <Typography style={{whiteSpace: 'nowrap'}} variant={'subtitle-2'}>
               Clear Filter
             </Typography>
           </Button>
@@ -180,9 +191,9 @@ export const Packs = () => {
               <TableRow key={d.id}>
                 <TableCell className={s.wrapCell}>
                   {d.cover && (
-                    <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
+                    <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()}/>
                   )}
-                  <Typography as={'p'} variant={'body-2'}>
+                  <Typography onClick={() => onMyPackClick(d.id)} as={'p'} variant={'body-2'}>
                     {d.name}
                   </Typography>
                 </TableCell>
@@ -203,9 +214,9 @@ export const Packs = () => {
                 </TableCell>
                 <TableCell>
                   <div className={s.lastCell}>
-                    <IconLearn />
-                    <IconEdit />
-                    <IconDelete onClick={() => handleDelete(d.id)} />
+                    <IconLearn/>
+                    <IconEdit/>
+                    <IconDelete onClick={() => handleDelete(d.id)}/>
                   </div>
                 </TableCell>
               </TableRow>

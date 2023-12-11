@@ -1,3 +1,6 @@
+import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
+import {SerializedError} from "@reduxjs/toolkit";
+
 export type DecksResponse = {
   items: Deck[]
   maxCardsCount: number
@@ -31,7 +34,7 @@ export type Deck = {
   shots: number
   updated: string
   userId: string
-}
+} & {error: FetchBaseQueryError | SerializedError}
 
 /* export type CreateDeckType = Pick<Deck, 'cover' | 'isPrivate' | 'name'> */
 

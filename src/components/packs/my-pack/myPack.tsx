@@ -1,30 +1,35 @@
 // import { FieldValues } from 'react-hook-form'
 
-import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
-import { IconEdit } from '@/assets/icons/IconEdit'
-import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
-import { StarRating } from '@/components/packs/common/StarRating'
+import {IconBurgerMenu} from '@/assets/icons/IconBurgerMenu'
+import {IconEdit} from '@/assets/icons/IconEdit'
+import {IconLeftArrow} from '@/assets/icons/IconLeftArrow'
+import {StarRating} from '@/components/packs/common/StarRating'
 // import { SearchInput } from '@/components/packs/common/searchInput'
-import { useSort } from '@/components/packs/hook/useSort'
-import { Button } from '@/components/ui/button'
-import { DropdownMenu } from '@/components/ui/dropdown-menu'
+import {useSort} from '@/components/packs/hook/useSort'
+import {Button} from '@/components/ui/button'
+import {DropdownMenu} from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
-import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
-import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
-import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
-import { Typography } from '@/components/ui/typography'
+import {IconLearn} from '@/components/ui/dropdown-menu/assets/IconLearn'
+import {DropDownItem} from '@/components/ui/dropdown-menu/dropdownItem'
+import {DropdownSeparator} from '@/components/ui/dropdown-menu/dropdownSeparator'
+import {Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow} from '@/components/ui/tables'
+import {Typography} from '@/components/ui/typography'
 
 import s from './myPack.module.scss'
+import {Modals} from "@/components/ui/modals";
+import {IconClose} from "@/assets/icons/IconClose";
+import {createRef} from "react";
+import {AddNewCard} from "@/components/packs/modals/addNewCard";
 
 export const MyPack = () => {
-  const { iconVector, onVectorChange } = useSort()
+  const {iconVector, onVectorChange} = useSort()
+  const closeRef = createRef<HTMLButtonElement>()
 
   const columnsData = [
-    { id: '1', title: 'Question' },
-    { id: '2', title: 'Answer' },
-    { id: '3', title: 'Last Updated' },
-    { id: '4', title: 'Grade' },
+    {id: '1', title: 'Question'},
+    {id: '2', title: 'Answer'},
+    {id: '3', title: 'Last Updated'},
+    {id: '4', title: 'Grade'},
   ]
 
   const data = [
@@ -51,11 +56,12 @@ export const MyPack = () => {
   const onClickHandler = () => {
     alert('Назад на Packs List')
   }
+  const idMyPack = '1'
 
   return (
     <div className={s.container}>
       <div className={s.fieldBack} onClick={onClickHandler}>
-        <IconLeftArrow transform={'translate(0, 2)'} />
+        <IconLeftArrow transform={'translate(0, 2)'}/>
         <Typography variant={'body-2'}>Back to Packs List</Typography>
       </div>
       <div className={s.packsList}>
@@ -63,45 +69,58 @@ export const MyPack = () => {
           <Typography as={'h1'} variant={'large'}>
             My Pack
           </Typography>
-          <DropdownMenu position={'end'} trigger={<IconBurgerMenu />}>
+          <DropdownMenu position={'end'} trigger={<IconBurgerMenu/>}>
             <DropDownItem className={s.dropItem}>
-              <IconLearn />
+              <IconLearn/>
               <Typography variant={'caption'}>Learn</Typography>
             </DropDownItem>
-            <DropdownSeparator />
+            <DropdownSeparator/>
             <DropDownItem className={s.dropItem}>
-              <IconEdit />
+              <IconEdit/>
               <Typography variant={'caption'}>Edit</Typography>
             </DropDownItem>
-            <DropdownSeparator />
+            <DropdownSeparator/>
             <DropDownItem className={s.dropItem}>
-              <IconDelete />
+              <IconDelete/>
               <Typography variant={'caption'}>Delete</Typography>
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Button onClick={() => {}}>
-          <Typography variant={'subtitle-2'}>Add New Card</Typography>
-        </Button>
+        <Modals
+          trigger={
+            <Button onClick={() => {
+            }}>
+              <Typography variant={'subtitle-2'}>Add New Card</Typography>
+            </Button>
+          }
+          icon={
+            <IconClose className={s.IconButton} />
+          }
+          ref={closeRef}
+        >
+          <AddNewCard id={idMyPack} closeRef={closeRef}/>
+        </Modals>
       </div>
       {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
       <Table>
-        <TableRow>
-          {columnsData.map(el => (
-            <TableHeadCell key={el.id}>
-              {el.title === 'Last Updated' ? (
-                <>
-                  <Typography className={s.pointer} onClick={onVectorChange} variant={'subtitle-2'}>
-                    {el.title}
-                  </Typography>
-                  <span className={s.iconVector}>{iconVector}</span>
-                </>
-              ) : (
-                <Typography variant={'subtitle-2'}>{el.title}</Typography>
-              )}
-            </TableHeadCell>
-          ))}
-        </TableRow>
+        <TableHead>
+          <TableRow>
+            {columnsData.map(el => (
+              <TableHeadCell key={el.id}>
+                {el.title === 'Last Updated' ? (
+                  <>
+                    <Typography className={s.pointer} onClick={onVectorChange} variant={'subtitle-2'}>
+                      {el.title}
+                    </Typography>
+                    <span className={s.iconVector}>{iconVector}</span>
+                  </>
+                ) : (
+                  <Typography variant={'subtitle-2'}>{el.title}</Typography>
+                )}
+              </TableHeadCell>
+            ))}
+          </TableRow>
+        </TableHead>
         <TableBody>
           {data.map(d => (
             <TableRow key={d.id}>
@@ -121,10 +140,10 @@ export const MyPack = () => {
                 </Typography>
               </TableCell>
               <TableCell className={s.starsAndIcons}>
-                <StarRating filledStars={d.rating} />
+                <StarRating filledStars={d.rating}/>
                 <div className={s.pointer}>
-                  <IconEdit />
-                  <IconDelete />
+                  <IconEdit/>
+                  <IconDelete/>
                 </div>
               </TableCell>
             </TableRow>

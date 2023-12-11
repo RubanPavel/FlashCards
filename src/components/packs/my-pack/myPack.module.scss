@@ -1,3 +1,5 @@
+@import "/src/components/packs/packs-list/packs.module";
+
 .container {
   padding: 0 10vw;
 }
@@ -41,4 +43,8 @@
 .starsAndIcons {
   display: flex;
   justify-content: space-between;
+}
+
+.IconButton {
+  @include IButton
 }

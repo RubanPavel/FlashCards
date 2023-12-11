@@ -7,7 +7,7 @@ import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
-import { useCreateDeckMutation } from '@/services/decks'
+import { useCreateDeckMutation} from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch } from '@/services/store'
 
@@ -19,10 +19,11 @@ type FormValue = {
   private: boolean
 }
 type Props = {
+  getIdMyPack: (id: string) => void
   closeRef: RefObject<HTMLButtonElement>
 }
 
-export const AddNewPack = ({ closeRef }: Props) => {
+export const AddNewPack = ({ getIdMyPack, closeRef }: Props) => {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState('')
   const { control, getValues, handleSubmit, setValue } = useForm<FormValue>({
@@ -38,17 +39,21 @@ export const AddNewPack = ({ closeRef }: Props) => {
 
   const [createDeck, isFetching] = useCreateDeckMutation()
 
-  const onSubmit = (data: FormValue) => {
+
+  const onSubmit = async (values: FormValue) => {
     const cover = getValues('cover')
     const formData = new FormData()
 
     if (cover) {
       formData.append('cover', cover)
     }
-    formData.append('name', data.name)
-    formData.append('isPrivate', data.private.toString())
+    formData.append('name', values.name)
+    formData.append('isPrivate', values.private.toString())
 
-    createDeck(formData)
+    const res = await createDeck(formData)
+    if('data' in res) {
+      getIdMyPack(res.data.id)
+    }
     dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
 
     if (closeRef.current) {
