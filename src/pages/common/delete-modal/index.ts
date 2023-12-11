@@ -1,1 +1,1 @@
-export * from 'src/pages/common/delete-modal/deleteModal'
+export * from './deleteModal'
