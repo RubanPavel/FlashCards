@@ -6,36 +6,47 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { useAuth } from '@/assets/isAuthContext'
-import { CreatePassword } from '@/components/auth/create-password'
-import { ForgotPassword } from '@/components/auth/forgot-password'
-import { ForgotPasswordCheckEmail } from '@/components/auth/forgot-password-checkEmail/forgotPasswordCheckEmail'
-import { SignIn } from '@/components/auth/login-in'
-import { SignUp } from '@/components/auth/sign-up'
+import { PackFriend } from '@/components/packs/friends-pack'
 import { Packs } from '@/components/packs/packs-list'
-import { FriendPackPage } from '@/pages/friend-pack-page/friendPack'
+import { CheckEmailPage } from '@/pages/check-email-page'
+import { CreatePasswordPage } from '@/pages/create-password-page'
+import { ForgotPasswordPage } from '@/pages/forgot-password-page'
+import { LoginPage } from '@/pages/login-page'
+import { NotFoundPage } from '@/pages/not-found-page'
+import { ProfilePage } from '@/pages/profile-page'
+import { RegisterPage } from '@/pages/register-page'
+import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
+// import { useAppSelector } from '@/services/store'
+
+import { Loader } from '@/components/ui/loader'
+import { useGetAuthMeQuery } from '@/services/auth'
 
 import { ContentLayout } from './components/layout'
-import { MyProfile } from './components/user/my-profile'
-import { MyPackPage } from './pages/my-pack-page'
-//import {useGetDecksQuery} from "@/services/decks";
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <SignIn />,
+    element: <LoginPage />,
     path: '/login',
   },
   {
-    element: <SignUp />,
-    path: '/sign-up',
+    element: <RegisterPage />,
+    path: '/register',
   },
   {
-    element: <ForgotPassword />,
+    element: <ForgotPasswordPage />,
     path: '/forgot-password',
   },
   {
-    element: <ForgotPasswordCheckEmail />,
+    element: <CheckEmailPage />,
     path: '/check-email',
+  },
+  {
+    element: <VerifyEmailPage />,
+    path: '/verify-email/:userId',
+  },
+  {
+    element: <CreatePasswordPage />,
+    path: '/reset-password/:userId',
   },
 ]
 
@@ -49,29 +60,64 @@ const privateRoutes: RouteObject[] = [
     path: '/packs',
   },
   {
-    element: <FriendPackPage />,
-    path: '/friend-pack/:id',
+    element: <PackFriend />,
+    path: '/friends-packs',
   },
   {
-    element: <MyPackPage />,
-    path: '/my-pack/:id',
-  },
-  {
-    element: <CreatePassword />,
-    path: '/create-password',
-  },
-  {
-    element: <MyProfile />,
-    path: '/my-profile',
+    element: <ProfilePage />,
+    path: '/profile-profile',
   },
 ]
 
 const notFoundRout: RouteObject[] = [
   {
-    element: <div>404</div>,
+    element: <NotFoundPage />,
     path: '*',
   },
 ]
+// const routes = createBrowserRouter([
+//   {
+//     children: [
+//       {
+//         children: publicRoutes,
+//         element: isAuthenticated ? <Navigate to={'/'} /> : <Outlet />,
+//       },
+//       {
+//         children: privateRoutes,
+//         element: isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />,
+//       },
+//       ...notFoundRout,
+//     ],
+//     // element: <ContentLayout />,
+//   },
+// ])
+// export const Router = () => {
+//   const { isError,isLoading } = useGetAuthMeQuery()
+//   // const isAuthenticated = useAppSelector(state => state.auth.isAuthenticated)
+//   const isAuthenticated = !isErro
+//
+//
+//   return <RouterProvider router={routes} />
+// }
+//
+//
+// const router = createBrowserRouter([
+//   {
+//     children: [
+//       {
+//         children: privateRoutes,
+//         element: <PrivateRoutes />,
+//       },
+//       {
+//         children: publicRoutes,
+//         element: <PublicRoutes />,
+//       },
+//       ...notFoundRout,
+//     ],
+//     element: <ContentLayout />,
+//   },
+// ])
+//
 
 const router = createBrowserRouter([
   {
@@ -91,24 +137,27 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
-  // const { isLoading, isError} = useGetDecksQuery({name: ''})
-  //   // TODO потом поправить
-  //   if (isLoading) return <p>Loading...</p>
-  //   if (isError) return <p>error</p>
-
   return <RouterProvider router={router} />
 }
 
 function PrivateRoutes() {
-  //TODO удалить useAuth
-  const { isAuthenticated } = useAuth()
+  const { isError, isLoading } = useGetAuthMeQuery()
+
+  if (isLoading) {
+    return <Loader />
+  }
+  const isAuthenticated = !isError
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
 }
 
 function PublicRoutes() {
-  //TODO удалить useAuth
-  const { isAuthenticated } = useAuth()
+  const { isError, isLoading } = useGetAuthMeQuery()
+
+  if (isLoading) {
+    return <Loader />
+  }
+  const isAuthenticated = !isError
 
   return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
 }

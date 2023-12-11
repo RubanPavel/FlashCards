@@ -3,20 +3,18 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
-import { AuthProvider } from '@/assets/isAuthContext'
-import { ForgotPassword } from '@/components/auth/forgot-password/forgot-password'
 import { store } from '@/services/store'
+
+import { ForgotPassword } from './index'
 
 const meta = {
   component: ForgotPassword,
   decorators: [
     Story => (
       <Provider store={store}>
-        <AuthProvider>
-          <MemoryRouter>
-            <Story />
-          </MemoryRouter>
-        </AuthProvider>
+        <MemoryRouter>
+          <Story />
+        </MemoryRouter>
       </Provider>
     ),
   ],

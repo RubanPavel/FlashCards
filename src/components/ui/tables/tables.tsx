@@ -28,8 +28,12 @@ export const TableBody: FC<TableBodyProps> = props => {
 
 export type TableRowProps = ComponentProps<'tr'>
 
-export const TableRow: FC<TableRowProps> = props => {
-  return <tr {...props} />
+export const TableRow: FC<TableRowProps> = ({ className, ...rest }) => {
+  const classNames = {
+    tableRow: clsx(className, s.tableRow),
+  }
+
+  return <tr className={classNames.tableRow} {...rest} />
 }
 
 export type TableHeadCellProps = ComponentProps<'th'>

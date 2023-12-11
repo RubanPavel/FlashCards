@@ -1,3 +1,4 @@
+import { User } from '@/assets/userDataForTest'
 import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import { Meta, StoryObj } from '@storybook/react'
 
@@ -10,20 +11,20 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const WithImage: Story = {
+export const withImage: Story = {
   args: {
-    imageUrl: 'https://i.pinimg.com/736x/19/63/b2/1963b290b9856d479b432734029ff2ee.jpg',
-    userName: 'User',
+    imageUrl: User.avatar,
+    userName: User.name,
   },
   render: args => {
     return <AvatarRadix imageUrl={args.imageUrl} userName={args.userName} />
   },
 }
 
-export const WithoutImage: Story = {
+export const withoutImage: Story = {
   args: {
     imageUrl: '',
-    userName: 'User',
+    userName: User.name,
   },
   render: args => {
     return <AvatarRadix imageUrl={args.imageUrl} userName={args.userName} />

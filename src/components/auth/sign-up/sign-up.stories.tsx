@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
-import { AuthProvider } from '@/assets/isAuthContext'
 import { store } from '@/services/store'
 
 import { SignUp } from './sign-up'
@@ -13,11 +12,9 @@ const meta = {
   decorators: [
     Story => (
       <Provider store={store}>
-        <AuthProvider>
-          <MemoryRouter>
-            <Story />
-          </MemoryRouter>
-        </AuthProvider>
+        <MemoryRouter>
+          <Story />
+        </MemoryRouter>
       </Provider>
     ),
   ],

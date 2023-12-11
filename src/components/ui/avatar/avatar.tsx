@@ -19,6 +19,5 @@ export const AvatarRadix = forwardRef<HTMLButtonElement, Props>(
         {userName && userName[0]}
       </Avatar.Fallback>
     </Avatar.Root>
-    // </div>
   )
 )

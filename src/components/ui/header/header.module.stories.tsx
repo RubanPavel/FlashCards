@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { Provider } from 'react-redux'
+import { MemoryRouter } from 'react-router-dom'
+
 import { IconLogOut } from '@/assets/icons/IconLogOut'
 import { IconLogo } from '@/assets/icons/Iconlogo'
 import { AvatarRadix } from '@/components/ui/avatar/avatar'
@@ -9,6 +12,7 @@ import { IconPerson } from '@/components/ui/dropdown-menu/assets/IconPerson'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Typography } from '@/components/ui/typography'
+import { store } from '@/services/store'
 
 import s from '@/components/ui/dropdown-menu/dropdown-menu.module.scss'
 
@@ -16,6 +20,15 @@ import { Header } from './'
 
 const meta = {
   component: Header,
+  decorators: [
+    Story => (
+      <Provider store={store}>
+        <MemoryRouter>
+          <Story />
+        </MemoryRouter>
+      </Provider>
+    ),
+  ],
   tags: ['autodocs'],
   title: 'Components/Header',
 } satisfies Meta<typeof Header>

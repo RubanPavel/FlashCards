@@ -13,16 +13,15 @@ import {
   verifyEmailResendType,
   verifyEmailType,
 } from './auth.types'
+// import {setAuthError} from "@/services/auth/auth.slice";
 
 export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       createNewUser: builder.mutation<createNewUserResponse, createNewUserType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...args }) => ({
-          body: {
-            ...args,
-          },
+        query: args => ({
+          body: args,
           method: 'POST',
           url: `/v1/auth/sign-up`,
         }),
@@ -36,10 +35,8 @@ export const AuthService = baseApi.injectEndpoints({
       }),
       login: builder.mutation<loginResponse, loginType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...args }) => ({
-          body: {
-            ...args,
-          },
+        query: args => ({
+          body: args,
           method: 'POST',
           url: `/v1/auth/login`,
         }),
@@ -79,12 +76,10 @@ export const AuthService = baseApi.injectEndpoints({
           url: 'v1/auth/me',
         }),
       }),
-      verifyEmail: builder.mutation<void, verifyEmailType>({
+      verifyEmail: builder.mutation<unknown, verifyEmailType>({
         invalidatesTags: ['Auth'],
-        query: ({ ...args }) => ({
-          body: {
-            ...args,
-          },
+        query: args => ({
+          body: args,
           method: 'POST',
           url: `/v1/auth/verify-email`,
         }),
@@ -103,4 +98,13 @@ export const AuthService = baseApi.injectEndpoints({
   },
 })
 
-export const { useGetAuthMeQuery, useUpdateUserMutation } = AuthService
+export const {
+  useCreateNewUserMutation,
+  useGetAuthMeQuery,
+  useLoginMutation,
+  useLogoutMutation,
+  useRecoveryPasswordMutation,
+  useResetPasswordMutation,
+  useUpdateUserMutation,
+  useVerifyEmailMutation,
+} = AuthService
