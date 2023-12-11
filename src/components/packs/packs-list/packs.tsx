@@ -1,4 +1,5 @@
 import { createRef } from 'react'
+
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -39,8 +40,8 @@ export const Packs = () => {
 
   const { iconVector, onVectorChange } = useSort()
 
-  const { data: user } = useGetAuthMeQuery()
   const { currentData: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
+  const { data: user } = useGetAuthMeQuery()
   const [deleteDeck, {}] = useDeleteDeskMutation()
   const columnsData = [
     { id: '1', title: 'Name' },
@@ -100,12 +101,12 @@ export const Packs = () => {
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
-          ref={closeRef}
           icon={
             // <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
             <IconClose className={s.IconButton} />
             // </Button>
           }
+          ref={closeRef}
           trigger={
             <Button>
               <Typography variant={'subtitle-1'}>Add new Pack</Typography>
@@ -170,7 +171,7 @@ export const Packs = () => {
               <TableRow key={d.id}>
                 <TableCell className={s.wrapCell}>
                   {d.cover && (
-                    <img className={s.coverStyle} src={d.cover?.toString()} alt={'img'} />
+                    <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
                   )}
                   <Typography as={'p'} variant={'body-2'}>
                     {d.name}

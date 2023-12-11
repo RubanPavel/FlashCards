@@ -1,4 +1,5 @@
 import { baseApi } from '@/services/base-api'
+import { RootState } from '@/services/store'
 
 import {
   CardResponse,
@@ -13,7 +14,6 @@ import {
   getRandomCardType,
   saveGradeType,
 } from './decks.types'
-// import {RootState} from "@/services/store";
 
 export const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -28,41 +28,63 @@ export const decksApi = baseApi.injectEndpoints({
           url: `/v1/decks/${id}/cards`,
         }),
       }),
-      getDecks: builder.query<DecksResponse, GetDecksType | any>({
-        providesTags: ['Decks'],
-        query: args => ({
-          params: args,
-          url: `v1/decks`,
-        }),
-      }),
       createDeck: builder.mutation<Deck, FormData>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+          const result = await queryFulfilled
+          const state = getState() as RootState
+          const decksParams = state.decksParams
+
+          dispatch(
+            decksApi.util.updateQueryData('getDecks', { decksParams }, draft => {
+              draft.items.unshift(result.data)
+            })
+          )
+        },
         query: formData => ({
           body: formData,
           method: 'POST',
           url: `v1/decks`,
         }),
-        // async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
-        //   const result = await queryFulfilled
-        //   const state = getState() as RootState
-        //   const decksParams = state.decksParams
-        //   dispatch(
-        //       decksApi.util.updateQueryData('getDecks', { decksParams }, draft => {
-        //       draft.items.unshift(result.data)})
-        //   );
-        // },
       }),
       deleteDesk: builder.mutation<DeleteResponse, string>({
         invalidatesTags: ['Decks'],
-        query: id => ({ method: 'DELETE', url: `v1/decks/${id}` }),
-      }),
+        onQueryStarted: async (id, { dispatch, getState, queryFulfilled }) => {
+          const state = getState() as RootState
+          const decksParams = state.decksParams
+          const patchResult = dispatch(
+            decksApi.util.updateQueryData('getDecks', { decksParams }, draft => {
+              const index = draft.items.findIndex(item => item.id === id)
 
+              draft.items.splice(index, 1)
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch (e) {
+            // console.log(JSON.stringify(e))
+            patchResult.undo()
+          }
+        },
+        query: id => ({
+          method: 'DELETE',
+          url: `v1/decks/${id}`,
+        }),
+      }),
       getDeckById: builder.query<Deck, string>({
         providesTags: ['Decks'],
         query: id => ({
           id,
           method: 'GET',
           url: `v1/decks/${id}`,
+        }),
+      }),
+      getDecks: builder.query<DecksResponse, GetDecksType | any>({
+        providesTags: ['Decks'],
+        query: args => ({
+          params: args,
+          url: `v1/decks`,
         }),
       }),
       getDecksCards: builder.query<DecksResponse, GetDecksCardsParams>({

@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@//components/ui/button'
+import { passwordSchema } from '@/components/auth/validate/validate'
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
@@ -11,12 +12,16 @@ import { z } from 'zod'
 import s from './createPassword.module.scss'
 
 const createPasswordSchema = z.object({
-  password: z.string().min(3, { message: 'Password must contain at least 3 characters' }),
+  password: passwordSchema,
 })
 
-type FormValues = z.infer<typeof createPasswordSchema>
+export type FormValues = z.infer<typeof createPasswordSchema>
 
-export const CreatePassword = () => {
+type Props = {
+  handleCreatePassword: (formData: FormValues) => void
+}
+
+export const CreatePassword = ({ handleCreatePassword }: Props) => {
   const {
     control,
     formState: { errors },
@@ -31,7 +36,7 @@ export const CreatePassword = () => {
   })
 
   const onSubmit = (data: FormValues) => {
-    return data
+    handleCreatePassword(data)
   }
 
   return (

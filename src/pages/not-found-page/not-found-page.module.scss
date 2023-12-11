@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+  padding: 4.44rem 0;
+}
+
+.text {
+  padding: 1.75rem 0;
+}

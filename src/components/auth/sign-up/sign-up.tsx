@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@//components/ui/button'
 import {
@@ -10,7 +10,7 @@ import {
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
-import { DevTool } from '@hookform/devtools'
+// import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -29,8 +29,11 @@ export const signInFormSchema = z
 
 export type FormValues = z.infer<typeof signInFormSchema>
 
-export const SignUp = () => {
-  const navigate = useNavigate()
+type Props = {
+  handleRegister: (formData: FormValues) => void
+}
+
+export const SignUp = ({ handleRegister }: Props) => {
   const {
     control,
     formState: { errors },
@@ -46,23 +49,17 @@ export const SignUp = () => {
     resolver: zodResolver(signInFormSchema),
   })
 
-  // TODO
-  const onSubmit = (data: FormValues) => {
-    return data
-  }
-
-  // TODO
-  const handleNavButtonClicked = () => {
-    navigate('/login')
+  const onSubmit = (formData: FormValues) => {
+    handleRegister(formData)
   }
 
   return (
-    <Card className={s.wrapperSignUp}>
-      <Typography as={'h1'} className={s.headerSignUp} variant={'large'}>
+    <Card className={s.SignUpRoot}>
+      <Typography as={'h1'} className={s.SignUpHeader} variant={'large'}>
         Sign Up
       </Typography>
-      <form className={s.formSignUp} onSubmit={handleSubmit(onSubmit)}>
-        <DevTool control={control} />
+      <form className={s.SignUpForm} onSubmit={handleSubmit(onSubmit)}>
+        {/*<DevTool control={control} />*/}
         <ControlInput
           control={control}
           errorMessage={errors.email?.message}
@@ -83,14 +80,14 @@ export const SignUp = () => {
           name={'confirm'}
           type={'password'}
         />
-        <Button className={s.formButtonSignUp} fullWidth type={'submit'}>
+        <Button className={s.SignUpFormButton} fullWidth type={'submit'}>
           Sign Up
         </Button>
       </form>
-      <Typography as={'p'} className={s.messageSignUp} variant={'body-2'}>
+      <Typography as={'p'} className={s.SignUpText} variant={'body-2'}>
         Already have an account?
       </Typography>
-      <Button className={s.navButton} onClick={handleNavButtonClicked} variant={'link'}>
+      <Button as={Link} className={s.SignUpLoginLink} to={'/login'} variant={'link'}>
         Sign In
       </Button>
     </Card>

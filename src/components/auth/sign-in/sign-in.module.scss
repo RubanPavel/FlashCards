@@ -1,0 +1,43 @@
+.SignInRoot {
+  width: 420px;
+  padding: 33px 36px 29px;
+  background-color: var(--color-dark-700);
+}
+
+.SignInHeader {
+  margin-bottom: 27px;
+  color: var(--color-light-100);
+  text-align: center;
+}
+
+.SignInForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.SignInFormButton {
+  margin-top: 56px;
+}
+
+.SignInFormForgotLink {
+  align-self: end;
+
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+}
+
+.SignInText {
+  margin: 20px 0 11px;
+  color: var(--color-light-900);
+  text-align: center;
+}
+
+.SignInRegisterLink {
+  margin: 0;
+  padding: 0;
+  text-decoration-line: underline;
+}

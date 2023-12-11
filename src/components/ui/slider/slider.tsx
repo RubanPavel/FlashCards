@@ -6,8 +6,8 @@ import s from './slider.module.scss'
 
 export type Props = {
   className?: string
-  min: number
   max?: number
+  min: number
   onValueChange?: (value: number[]) => void
   onValueCommit?: (value: number[]) => void
 } & Pick<ComponentPropsWithoutRef<typeof Slider.Root>, 'value'>
@@ -22,17 +22,18 @@ export const SliderRadix = ({
 }: Props) => {
   // TODO почему max может быть undefined, хотелось бы убрать 13?
   const [limits, setLimits] = useState<number[]>([min, max ?? 13])
+
   return (
     <div className={s.wrapper}>
       <span className={s.value}>{limits[0]}</span>
       <Slider.Root
         className={`${s.SliderRoot} ${className}`}
-        value={limits}
         max={max}
         min={min}
         onValueChange={value => setLimits(value)}
         onValueCommit={onValueCommit}
         step={1}
+        value={limits}
         {...rest}
       >
         <Slider.Track className={s.SliderTrack}>
