@@ -38,7 +38,7 @@ export const AddNewPack = ({ closeRef }: Props) => {
 
   const [createDeck, isFetching] = useCreateDeckMutation()
 
-  const onSubmit = async (values: FormValue) => {
+  const onSubmit = (values: FormValue) => {
     const cover = getValues('cover')
     const formData = new FormData()
 
