@@ -38,15 +38,15 @@ export const AddNewPack = ({ closeRef }: Props) => {
 
   const [createDeck, isFetching] = useCreateDeckMutation()
 
-  const onSubmit = (data: FormValue) => {
+  const onSubmit = async (values: FormValue) => {
     const cover = getValues('cover')
     const formData = new FormData()
 
     if (cover) {
       formData.append('cover', cover)
     }
-    formData.append('name', data.name)
-    formData.append('isPrivate', data.private.toString())
+    formData.append('name', values.name)
+    formData.append('isPrivate', values.private.toString())
 
     createDeck(formData)
     dispatch(decksActions.setCurrentPage({ currentPage: 1 }))

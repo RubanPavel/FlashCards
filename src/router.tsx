@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { PackFriend } from '@/components/packs/friends-pack'
+import { MyPack } from '@/components/packs/my-pack'
 import { Packs } from '@/components/packs/packs-list'
 import { CheckEmailPage } from '@/pages/check-email-page'
 import { CreatePasswordPage } from '@/pages/create-password-page'
@@ -65,6 +66,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <ProfilePage />,
     path: '/profile-profile',
+  },
+  {
+    element: <MyPack />,
+    path: '/cards/:id',
   },
 ]
 
