@@ -16,7 +16,9 @@ type EmptyDeckProps = {
 export const EmptyPack = ({ id, isMyPack, packName }: EmptyDeckProps) => {
   const [createCard] = useCreateCardMutation()
   const createCardHandler = () => {
-    createCard({ answer: 'Hello world', id, question: 'Hello friend' })
+      if (id) {
+          createCard({answer: 'Hello world', id, question: 'Hello friend'})
+      }
   }
 
   return (

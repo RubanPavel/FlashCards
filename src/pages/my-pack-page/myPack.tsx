@@ -37,7 +37,9 @@ export const MyPackPage = () => {
 
   const closeRef = createRef<HTMLButtonElement>()
   const createCardHandler = () => {
-    createCard({ answer: 'Hello world', id, question: 'Hello friend' })
+    if (id) {
+      createCard({answer: 'Hello world', id, question: 'Hello friend'})
+    }
   }
 
   const handleSearch = (searchValue: string) => {

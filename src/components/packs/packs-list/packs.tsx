@@ -81,6 +81,7 @@ export const Packs = () => {
   }
 
   const handleTabSwitcher = (tabValue: string) => {
+    console.log(userData)
     if (userData && tabValue === tabsData[0].value) {
       dispatch(decksActions.setAuthorId({ authorId: userData.id }))
     } else {

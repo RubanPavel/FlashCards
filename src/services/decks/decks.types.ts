@@ -80,11 +80,11 @@ export type CardResponse = {
 }
 
 export type CreateCardType = {
-  answer: FormData
+  answer: string
   answerImg?: FormData
   answerVideo?: FormData
   id: string
-  question: FormData
+  question: string
   questionImg?: FormData
   questionVideo?: FormData
 }
