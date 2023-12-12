@@ -1,4 +1,4 @@
-.header {
+.Header {
   position: sticky;
   z-index: 10;
   top: 0;
@@ -16,3 +16,10 @@
   background: var(--color-dark-700);
   border-bottom: 1px solid var(--color-dark-500);
 }
+
+//TODO уточнить почему не работают @media запросы
+//@media screen and (width >= 500px) {
+//  .HeaderLogoLink {
+//    max-width: 50%;
+//  }
+//}

@@ -31,7 +31,7 @@ export const ForgotPassword = ({ handleForgotPassword }: Props) => {
       email: '',
     },
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: zodResolver(loginSchema),
   })
 

@@ -8,6 +8,7 @@ import {
 
 import { MyPack } from '@/components/packs/my-pack'
 import { Packs } from '@/components/packs/packs-list'
+import { Loader } from '@/components/ui/loader'
 import { CheckEmailPage } from '@/pages/check-email-page'
 import { CreatePasswordPage } from '@/pages/create-password-page'
 import { ForgotPasswordPage } from '@/pages/forgot-password-page'
@@ -16,8 +17,6 @@ import { NotFoundPage } from '@/pages/not-found-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { RegisterPage } from '@/pages/register-page'
 import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
-
-import { Loader } from '@/components/ui/loader'
 import { useGetAuthMeQuery } from '@/services/auth'
 
 import { ContentLayout } from './components/layout'
