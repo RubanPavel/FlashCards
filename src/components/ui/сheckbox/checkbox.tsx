@@ -1,11 +1,11 @@
 import { ElementRef, forwardRef } from 'react'
 
+import { Typography } from '@/components/ui/typography'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import { CheckIcon } from '@radix-ui/react-icons'
 import clsx from 'clsx'
 
 import s from './checkbox.module.scss'
-import { Typography } from '@/components/ui/typography'
 
 export type CheckboxProps = {
   checked?: boolean

@@ -1,5 +1,6 @@
-import s from './loader.module.scss'
 import { clsx } from 'clsx'
+
+import s from './loader.module.scss'
 
 type Props = {
   className?: string

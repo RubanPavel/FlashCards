@@ -8,6 +8,7 @@ import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { useSort } from '@/components/packs/hook/useSort'
+import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
@@ -20,7 +21,7 @@ import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/componen
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
-import { useCreateCardMutation, useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch } from '@/services/store'
 
@@ -33,14 +34,7 @@ export const MyPackPage = () => {
   const { data: CardsData } = useGetDecksCardsQuery({ id })
   const { data: packData } = useGetDeckByIdQuery({ id })
 
-  const [createCard] = useCreateCardMutation()
-
   const closeRef = createRef<HTMLButtonElement>()
-  const createCardHandler = () => {
-    if (id) {
-      createCard({ answer: 'Hello world', id, question: 'Hello friend' })
-    }
-  }
 
   const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
@@ -85,13 +79,17 @@ export const MyPackPage = () => {
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Button
-          onClick={() => {
-            createCardHandler()
-          }}
+        <Modals
+          icon={<IconClose className={s.IconButton} />}
+          ref={closeRef}
+          trigger={
+            <Button onClick={() => {}}>
+              <Typography variant={'subtitle-2'}>Add New Card</Typography>
+            </Button>
+          }
         >
-          <Typography variant={'subtitle-2'}>Add New Card</Typography>
-        </Button>
+          <AddNewCard closeRef={closeRef} id={id} />
+        </Modals>
       </div>
       <DebouncedInput
         callback={handleSearch}

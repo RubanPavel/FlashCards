@@ -26,4 +26,26 @@
   .text {
     color: var(--color-dark-100);
   }
+
+  .IconButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25px;
+    height: 25px;
+
+    font-family: inherit;
+    color: var(--violet-11);
+
+    border-radius: 100%;
+  }
+
+  .IconButton:hover {
+    background-color: var(--color-dark-100);
+  }
 }

@@ -22,8 +22,10 @@ export const DecksService = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
         query: args => {
           const id = args.get('id')
+
           args.delete('id')
           debugger
+
           return {
             body: args,
             method: 'POST',

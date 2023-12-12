@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+import Skeleton from 'react-loading-skeleton'
 import { Link, Outlet } from 'react-router-dom'
 
 import { IconLogOut } from '@/assets/icons/IconLogOut'
@@ -11,10 +13,9 @@ import { Header } from '@/components/ui/header'
 import { Typography } from '@/components/ui/typography'
 import { useGetAuthMeQuery, useLogoutMutation } from '@/services/auth'
 
-import s from './content-layout.module.scss'
-import { ReactNode } from 'react'
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+
+import s from './content-layout.module.scss'
 
 export const ContentLayout = () => {
   const { data: user, isError, isLoading } = useGetAuthMeQuery()
@@ -30,10 +31,10 @@ export const ContentLayout = () => {
   if (isLoading) {
     headerContent = (
       <Skeleton
+        baseColor={'var(--color-dark-700)'}
         containerClassName={s.Skeleton}
+        highlightColor={'var(--color-dark-500)'}
         width={100}
-        baseColor="var(--color-dark-700)"
-        highlightColor="var(--color-dark-500)"
       />
     )
   } else if (!isAuthenticated) {

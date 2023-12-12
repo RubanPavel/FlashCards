@@ -106,7 +106,7 @@ export const MyPack = () => {
             </Button>
           }
         >
-          <AddNewCard closeRef={closeRef} id={id ? id : null} />
+          <AddNewCard closeRef={closeRef} id={id} />
         </Modals>
       </div>
       {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
