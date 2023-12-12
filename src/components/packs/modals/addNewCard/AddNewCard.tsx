@@ -1,22 +1,22 @@
-import React, { RefObject, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import React, {RefObject, useState} from 'react'
+import {useForm} from 'react-hook-form'
 
-import { IconImage } from '@/assets/icons/IconImage'
-import { answerSchema, photoSchema, questionSchema } from '@/components/auth/validate/validate'
-import { Button } from '@/components/ui/button'
-import { ControlInput } from '@/components/ui/controlled/controlInput'
-import { Input } from '@/components/ui/input'
-import { Select } from '@/components/ui/select'
-import { Typography } from '@/components/ui/typography'
-import { useCreateCardMutation } from '@/services/decks'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import {IconImage} from '@/assets/icons/IconImage'
+import {answerSchema, photoSchema, questionSchema} from '@/components/auth/validate/validate'
+import {Button} from '@/components/ui/button'
+import {ControlInput} from '@/components/ui/controlled/controlInput'
+import {Input} from '@/components/ui/input'
+import {Select} from '@/components/ui/select'
+import {Typography} from '@/components/ui/typography'
+import {useCreateCardMutation} from '@/services/decks'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {z} from 'zod'
 
 import s from './AddNewCard.module.scss'
 
 type Props = {
   closeRef: RefObject<HTMLButtonElement>
-  id: null | string
+  id: string
 }
 
 const inputSchema = z.object({
@@ -28,14 +28,14 @@ const inputSchema = z.object({
 
 type FormValue = z.infer<typeof inputSchema>
 
-export function AddNewCard({ closeRef }: Props) {
+export function AddNewCard({id, closeRef}: Props) {
   const [selectedQuesImage, setSelectedQuesImage] = useState('')
   const [selectedAnsImage, setSelectedAnsImage] = useState('')
   const [currentOption, setCurrentOption] = useState<string>('Text')
   const inputQuesRef = React.useRef<HTMLInputElement | null>(null)
   const inputAnsRef = React.useRef<HTMLInputElement | null>(null)
 
-  const { control, handleSubmit, setValue } = useForm<FormValue>({
+  const {control, handleSubmit, setValue} = useForm<FormValue>({
     defaultValues: {
       answer: '',
       answerImg: undefined,
@@ -56,18 +56,19 @@ export function AddNewCard({ closeRef }: Props) {
     },
   ]
 
-  const [] = useCreateCardMutation()
+  const [creatCard, {}] = useCreateCardMutation()
 
   const onSubmit = (data: FormValue) => {
     const formData = new FormData()
 
+    formData.append('id', id)
     formData.append('question', data.question)
     formData.append('answer', data.answer)
     data.questionImg && formData.append('questionImg', data.questionImg)
     data.answerImg && formData.append('answerImg', data.answerImg)
 
     //TODO настроить запрос...проблема с типизацией
-    // creatCard({id, ...formData})
+    creatCard(formData)
 
     if (closeRef.current) {
       closeRef.current.click()
@@ -124,15 +125,15 @@ export function AddNewCard({ closeRef }: Props) {
         <form onSubmit={handleSubmit(onSubmit)}>
           {currentOption === 'Text' && (
             <>
-              <ControlInput control={control} label={'Question'} name={'question'} />
-              <ControlInput control={control} label={'Answer'} name={'answer'} />
+              <ControlInput control={control} label={'Question'} name={'question'}/>
+              <ControlInput control={control} label={'Answer'} name={'answer'}/>
             </>
           )}
           {currentOption === 'Picture' && (
             <>
               <div className={s.questionImg}>
                 {selectedQuesImage ? (
-                  <img alt={'image'} className={s.image} src={selectedQuesImage} />
+                  <img alt={'image'} className={s.image} src={selectedQuesImage}/>
                 ) : (
                   <Typography variant={'H3'}>No Image</Typography>
                 )}
@@ -151,7 +152,7 @@ export function AddNewCard({ closeRef }: Props) {
                     type={'button'}
                     variant={'secondary'}
                   >
-                    <IconImage />
+                    <IconImage/>
                     <Typography variant={'subtitle-2'}>Change Cover</Typography>
                   </Button>
                 </div>
@@ -159,7 +160,7 @@ export function AddNewCard({ closeRef }: Props) {
 
               <div className={s.answerImg}>
                 {selectedAnsImage ? (
-                  <img alt={'image'} className={s.image} src={selectedAnsImage} />
+                  <img alt={'image'} className={s.image} src={selectedAnsImage}/>
                 ) : (
                   <Typography variant={'H3'}>No Image</Typography>
                 )}
@@ -178,7 +179,7 @@ export function AddNewCard({ closeRef }: Props) {
                     type={'button'}
                     variant={'secondary'}
                   >
-                    <IconImage />
+                    <IconImage/>
                     <Typography variant={'subtitle-2'}>Change Cover</Typography>
                   </Button>
                 </div>

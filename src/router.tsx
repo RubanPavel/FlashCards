@@ -6,7 +6,6 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { PackFriend } from '@/components/packs/friends-pack'
 import { MyPack } from '@/components/packs/my-pack'
 import { Packs } from '@/components/packs/packs-list'
 import { CheckEmailPage } from '@/pages/check-email-page'
@@ -22,6 +21,7 @@ import { Loader } from '@/components/ui/loader'
 import { useGetAuthMeQuery } from '@/services/auth'
 
 import { ContentLayout } from './components/layout'
+import {FriendPackPage} from "@/pages/friend-pack-page";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -60,16 +60,16 @@ const privateRoutes: RouteObject[] = [
     path: '/packs',
   },
   {
-    element: <PackFriend />,
-    path: '/friends-packs',
-  },
-  {
     element: <ProfilePage />,
     path: '/profile-profile',
   },
   {
+    path: '/my-pack/:id',
     element: <MyPack />,
-    path: '/cards/:id',
+  },
+  {
+    path: '/friends-pack/:id',
+    element: <FriendPackPage />,
   },
 ]
 
