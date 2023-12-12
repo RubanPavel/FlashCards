@@ -38,7 +38,7 @@ export const MyPackPage = () => {
   const closeRef = createRef<HTMLButtonElement>()
   const createCardHandler = () => {
     if (id) {
-      createCard({answer: 'Hello world', id, question: 'Hello friend'})
+      createCard({ answer: 'Hello world', id, question: 'Hello friend' })
     }
   }
 

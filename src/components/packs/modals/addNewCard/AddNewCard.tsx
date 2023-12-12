@@ -16,7 +16,7 @@ import s from './AddNewCard.module.scss'
 
 type Props = {
   closeRef: RefObject<HTMLButtonElement>
-  id: null | string
+  id: string
 }
 
 const inputSchema = z.object({
@@ -28,7 +28,7 @@ const inputSchema = z.object({
 
 type FormValue = z.infer<typeof inputSchema>
 
-export function AddNewCard({ closeRef }: Props) {
+export function AddNewCard({ id, closeRef }: Props) {
   const [selectedQuesImage, setSelectedQuesImage] = useState('')
   const [selectedAnsImage, setSelectedAnsImage] = useState('')
   const [currentOption, setCurrentOption] = useState<string>('Text')
@@ -56,18 +56,19 @@ export function AddNewCard({ closeRef }: Props) {
     },
   ]
 
-  const [] = useCreateCardMutation()
+  const [creatCard, {}] = useCreateCardMutation()
 
   const onSubmit = (data: FormValue) => {
     const formData = new FormData()
 
+    formData.append('id', id)
     formData.append('question', data.question)
     formData.append('answer', data.answer)
     data.questionImg && formData.append('questionImg', data.questionImg)
     data.answerImg && formData.append('answerImg', data.answerImg)
 
     //TODO настроить запрос...проблема с типизацией
-    // creatCard({id, ...formData})
+    creatCard(formData)
 
     if (closeRef.current) {
       closeRef.current.click()

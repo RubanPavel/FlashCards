@@ -5,7 +5,7 @@ import { CheckIcon } from '@radix-ui/react-icons'
 import clsx from 'clsx'
 
 import s from './checkbox.module.scss'
-import {Typography} from "@/components/ui/typography";
+import { Typography } from '@/components/ui/typography'
 
 export type CheckboxProps = {
   checked?: boolean
@@ -36,7 +36,9 @@ export const CheckboxRadix = forwardRef<ElementRef<typeof Checkbox.Root>, Checkb
             </Checkbox.Indicator>
           </Checkbox.Root>
         </div>
-          <Typography as={"label"} className={clsx(s.CheckboxLabel)} variant={'body-2'}>{title}</Typography>
+        <Typography as={'label'} className={clsx(s.CheckboxLabel)} variant={'body-2'}>
+          {title}
+        </Typography>
       </div>
     )
   }

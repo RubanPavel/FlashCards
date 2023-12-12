@@ -4,7 +4,7 @@ import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Packs } from './'
-import {Router} from "@/router";
+import { Router } from '@/router'
 
 const meta = {
   component: Packs,
