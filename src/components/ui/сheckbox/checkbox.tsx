@@ -5,6 +5,7 @@ import { CheckIcon } from '@radix-ui/react-icons'
 import clsx from 'clsx'
 
 import s from './checkbox.module.scss'
+import {Typography} from "@/components/ui/typography";
 
 export type CheckboxProps = {
   checked?: boolean
@@ -20,7 +21,7 @@ export type CheckboxProps = {
 export const CheckboxRadix = forwardRef<ElementRef<typeof Checkbox.Root>, CheckboxProps>(
   ({ checked, className, disabled, onValueChange, title, ...rest }, ref) => {
     return (
-      <div className={clsx(s.wrapper, s.ExempleButton)}>
+      <div className={clsx(s.CheckboxRoot, className)}>
         <div className={clsx(s.checkboxWrapper, { [s.disabled]: disabled })}>
           <Checkbox.Root
             {...rest}
@@ -35,7 +36,7 @@ export const CheckboxRadix = forwardRef<ElementRef<typeof Checkbox.Root>, Checkb
             </Checkbox.Indicator>
           </Checkbox.Root>
         </div>
-        <label className={s.label}>{title}</label>
+          <Typography as={"label"} className={clsx(s.CheckboxLabel)} variant={'body-2'}>{title}</Typography>
       </div>
     )
   }

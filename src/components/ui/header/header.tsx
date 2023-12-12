@@ -13,8 +13,8 @@ type Props = {
 export const Header = forwardRef<HTMLHeadElement, Props>(
   ({ children, className, logo, ...rest }, ref) => {
     return (
-      <header className={clsx(s.header, className)} ref={ref} {...rest}>
-        <Button as={Link} to={'/'} variant={'icon'}>
+      <header className={clsx(s.Header, className)} ref={ref} {...rest}>
+        <Button className={clsx(s.HeaderLogoLink)} as={Link} to={'/'} variant={'icon'}>
           {logo}
         </Button>
         {children}

@@ -1,11 +1,11 @@
-button {
-  all: unset;
-}
-
-.wrapper {
+.CheckboxRoot {
   display: flex;
-  gap: 0.5rem;
   align-items: center;
+  margin-left: -0.5625rem;
+
+  button {
+    all: unset;
+  }
 
   .checkboxWrapper {
     display: flex;
@@ -18,13 +18,8 @@ button {
     background-color: transparent;
     border-radius: 50%;
 
-    &:hover,
-    &:hover .root:not([data-state='checked']) {
+    &:hover {
       background: var(--color-dark-500);
-    }
-
-    &:active:not(.disabled) {
-      background: var(--color-dark-100);
     }
 
     &.disabled {
@@ -41,8 +36,8 @@ button {
       justify-content: center;
 
       box-sizing: border-box;
-      width: 18px;
-      height: 18px;
+      width: 1.125rem;
+      height: 1.125rem;
 
       background: var(--color-light-100);
       border-radius: 3px;
@@ -82,12 +77,5 @@ button {
         }
       }
     }
-  }
-
-  .label {
-    cursor: pointer;
-    font-size: var(--font-size-s);
-    font-weight: var(--font-weight-regular);
-    line-height: var(--line-height-m);
   }
 }

@@ -36,7 +36,7 @@ export const SignIn = ({ handleLogin }: Props) => {
       rememberMe: false,
     },
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: zodResolver(loginSchema),
   })
 

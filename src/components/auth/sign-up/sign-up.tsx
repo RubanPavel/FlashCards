@@ -45,7 +45,7 @@ export const SignUp = ({ handleRegister }: Props) => {
       password: '',
     },
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: zodResolver(signInFormSchema),
   })
 

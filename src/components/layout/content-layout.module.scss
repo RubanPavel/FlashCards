@@ -1,3 +1,9 @@
+.Skeleton {
+  display: flex;
+  width: 70px;
+  height: 100%;
+}
+
 // TODO откорректировать стили
 
 .root {
@@ -88,10 +94,6 @@
       opacity: 0.5;
     }
   }
-}
-
-.setPointer {
-  cursor: pointer;
 }
 
 .main {

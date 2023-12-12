@@ -32,7 +32,7 @@ export const AddNewPack = ({ closeRef }: Props) => {
       private: false,
     },
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    reValidateMode: 'onChange',
   })
   const dispatch = useAppDispatch()
 

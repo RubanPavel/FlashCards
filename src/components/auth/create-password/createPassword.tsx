@@ -31,7 +31,7 @@ export const CreatePassword = ({ handleCreatePassword }: Props) => {
       password: '',
     },
     mode: 'onBlur',
-    reValidateMode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: zodResolver(createPasswordSchema),
   })
 
