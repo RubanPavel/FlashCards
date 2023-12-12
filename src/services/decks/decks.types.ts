@@ -80,13 +80,13 @@ export type CardResponse = {
 }
 
 export type CreateCardType = {
-  answer: string
-  answerImg?: string
-  answerVideo?: string
-  id?: string
-  question: string
-  questionImg?: string
-  questionVideo?: string
+  answer: FormData
+  answerImg?: FormData
+  answerVideo?: FormData
+  id: string
+  question: FormData
+  questionImg?: FormData
+  questionVideo?: FormData
 }
 
 export type getRandomCardResponse = {

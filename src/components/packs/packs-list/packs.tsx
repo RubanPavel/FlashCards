@@ -113,11 +113,7 @@ export const Packs = () => {
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
         <Modals
-          icon={
-            // <Button as={'button'} className={s.IconButton} ref={closeRef} variant={'icon'}>
-            <IconClose className={s.IconButton} />
-            // </Button>
-          }
+          icon={<IconClose className={s.IconButton} />}
           ref={closeRef}
           trigger={
             <Button>

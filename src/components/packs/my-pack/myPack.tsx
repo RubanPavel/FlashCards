@@ -1,24 +1,40 @@
 // import { FieldValues } from 'react-hook-form'
 
+import { createRef } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
+import { IconClose } from '@/assets/icons/IconClose'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { StarRating } from '@/components/packs/common/StarRating'
 // import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
+import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
+import { Modals } from '@/components/ui/modals'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 
 import s from './myPack.module.scss'
 
 export const MyPack = () => {
   const { iconVector, onVectorChange } = useSort()
+  const closeRef = createRef<HTMLButtonElement>()
+  const { id } = useParams()
+  const navigate = useNavigate()
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -49,7 +65,7 @@ export const MyPack = () => {
   // }
 
   const onClickHandler = () => {
-    alert('Назад на Packs List')
+    navigate('/')
   }
 
   return (
@@ -81,28 +97,42 @@ export const MyPack = () => {
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Button onClick={() => {}}>
-          <Typography variant={'subtitle-2'}>Add New Card</Typography>
-        </Button>
+        <Modals
+          icon={<IconClose className={s.IconButton} />}
+          ref={closeRef}
+          trigger={
+            <Button onClick={() => {}}>
+              <Typography variant={'subtitle-2'}>Add New Card</Typography>
+            </Button>
+          }
+        >
+          <AddNewCard closeRef={closeRef} id={id ? id : null} />
+        </Modals>
       </div>
       {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
       <Table>
-        <TableRow>
-          {columnsData.map(el => (
-            <TableHeadCell key={el.id}>
-              {el.title === 'Last Updated' ? (
-                <>
-                  <Typography className={s.pointer} onClick={onVectorChange} variant={'subtitle-2'}>
-                    {el.title}
-                  </Typography>
-                  <span className={s.iconVector}>{iconVector}</span>
-                </>
-              ) : (
-                <Typography variant={'subtitle-2'}>{el.title}</Typography>
-              )}
-            </TableHeadCell>
-          ))}
-        </TableRow>
+        <TableHead>
+          <TableRow>
+            {columnsData.map(el => (
+              <TableHeadCell key={el.id}>
+                {el.title === 'Last Updated' ? (
+                  <>
+                    <Typography
+                      className={s.pointer}
+                      onClick={onVectorChange}
+                      variant={'subtitle-2'}
+                    >
+                      {el.title}
+                    </Typography>
+                    <span className={s.iconVector}>{iconVector}</span>
+                  </>
+                ) : (
+                  <Typography variant={'subtitle-2'}>{el.title}</Typography>
+                )}
+              </TableHeadCell>
+            ))}
+          </TableRow>
+        </TableHead>
         <TableBody>
           {data.map(d => (
             <TableRow key={d.id}>

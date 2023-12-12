@@ -4,13 +4,14 @@ import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 
 import { Packs } from './'
+import {Router} from "@/router";
 
 const meta = {
   component: Packs,
   decorators: [
-    Story => (
+    () => (
       <Provider store={store}>
-        <Story />
+        <Router />
       </Provider>
     ),
   ],

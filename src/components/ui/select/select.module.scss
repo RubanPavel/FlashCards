@@ -76,6 +76,7 @@ button {
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-300);
   border-radius: 0 0 2px 2px;
+  z-index: 1000;
 
   .item {
     user-select: none;

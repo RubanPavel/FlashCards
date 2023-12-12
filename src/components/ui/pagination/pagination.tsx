@@ -59,7 +59,7 @@ export const Pagination = ({
 
   useEffect(() => {
     getPage(page, limit)
-  }, [page, limit, getPage])
+  }, [page, limit])
 
   return (
     <div className={`${s.container} ${className}`}>
