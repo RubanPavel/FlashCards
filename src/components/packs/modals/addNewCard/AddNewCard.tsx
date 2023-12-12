@@ -1,26 +1,29 @@
+import React, { RefObject, useState } from 'react'
+import { useForm } from 'react-hook-form'
+
+import { IconImage } from '@/assets/icons/IconImage'
+import { answerSchema, photoSchema, questionSchema } from '@/components/auth/validate/validate'
+import { Button } from '@/components/ui/button'
+import { ControlInput } from '@/components/ui/controlled/controlInput'
+import { Input } from '@/components/ui/input'
+import { Select } from '@/components/ui/select'
+import { Typography } from '@/components/ui/typography'
+import { useCreateCardMutation } from '@/services/decks'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import s from './AddNewCard.module.scss'
-import {Typography} from "@/components/ui/typography";
-import {useForm} from "react-hook-form";
-import {Select} from "@/components/ui/select";
-import React, {RefObject, useState} from "react";
-import {ControlInput} from "@/components/ui/controlled/controlInput";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
-import {IconImage} from "@/assets/icons/IconImage";
-import {z} from "zod";
-import {answerSchema, photoSchema, questionSchema} from "@/components/auth/validate/validate";
-import {zodResolver} from "@hookform/resolvers/zod";
 
 type Props = {
-  id: string
   closeRef: RefObject<HTMLButtonElement>
+  id: null | string
 }
 
 const inputSchema = z.object({
-  questionTxt: questionSchema,
-  answerTxt: answerSchema,
+  answer: answerSchema,
+  answerImg: photoSchema,
+  question: questionSchema,
   questionImg: photoSchema,
-  answerImg: photoSchema
 })
 
 type FormValue = z.infer<typeof inputSchema>
@@ -32,16 +35,16 @@ export function AddNewCard({ closeRef }: Props) {
   const inputQuesRef = React.useRef<HTMLInputElement | null>(null)
   const inputAnsRef = React.useRef<HTMLInputElement | null>(null)
 
-  const {control, handleSubmit, setValue} = useForm<FormValue>({
+  const { control, handleSubmit, setValue } = useForm<FormValue>({
     defaultValues: {
-      questionTxt: '',
-      answerTxt: '',
+      answer: '',
+      answerImg: undefined,
+      question: '',
       questionImg: undefined,
-      answerImg: undefined
     },
     mode: 'onBlur',
     reValidateMode: 'onSubmit',
-    resolver: zodResolver(inputSchema)
+    resolver: zodResolver(inputSchema),
   })
 
   const selectOption = [
@@ -53,14 +56,18 @@ export function AddNewCard({ closeRef }: Props) {
     },
   ]
 
+  const [] = useCreateCardMutation()
+
   const onSubmit = (data: FormValue) => {
     const formData = new FormData()
 
-    formData.append('questionTxt', data.questionTxt)
-    formData.append('answerTxt', data.answerTxt)
+    formData.append('question', data.question)
+    formData.append('answer', data.answer)
     data.questionImg && formData.append('questionImg', data.questionImg)
     data.answerImg && formData.append('answerImg', data.answerImg)
 
+    //TODO настроить запрос...проблема с типизацией
+    // creatCard({id, ...formData})
 
     if (closeRef.current) {
       closeRef.current.click()
@@ -72,6 +79,7 @@ export function AddNewCard({ closeRef }: Props) {
 
     if (file) {
       const imageUrl = URL.createObjectURL(file)
+
       if (e.target.name === 'questionImg') {
         setSelectedQuesImage(imageUrl)
         setValue('questionImg', file)
@@ -109,63 +117,74 @@ export function AddNewCard({ closeRef }: Props) {
       <div className={s.content}>
         <Select
           className={s.selectFormat}
-          onValueChange={(val) => setCurrentOption(val)}
           label={'Choose a question format'}
+          onValueChange={val => setCurrentOption(val)}
           selectOptions={selectOption}
         />
         <form onSubmit={handleSubmit(onSubmit)}>
-          {currentOption === "Text" &&
+          {currentOption === 'Text' && (
             <>
-              <ControlInput name={'questionTxt'} control={control} label={'Question'}/>
-              <ControlInput name={'answerTxt'} control={control} label={'Answer'}/>
+              <ControlInput control={control} label={'Question'} name={'question'} />
+              <ControlInput control={control} label={'Answer'} name={'answer'} />
             </>
-          }
-          {currentOption === 'Picture' && <>
-            <div className={s.questionImg}>
-              {selectedQuesImage ? (
-                <img alt={'image'} className={s.image} src={selectedQuesImage}/>
-              ) : (
-                <Typography variant={'H3'}>No Image</Typography>
-              )}
-              <div>
-                <Input
-                  accept={'image/jpeg, image/jpg, image/png, image/webp'}
-                  className={s.cardImage}
-                  name={'questionImg'}
-                  onChange={onFileChange}
-                  ref={inputQuesRef}
-                  type={'file'}
-                />
-                <Button onClick={handleButtonClick} type={'button'} name={'question'} variant={'secondary'}>
-                  <IconImage/>
-                  <Typography variant={'subtitle-2'}>Change Cover</Typography>
-                </Button>
+          )}
+          {currentOption === 'Picture' && (
+            <>
+              <div className={s.questionImg}>
+                {selectedQuesImage ? (
+                  <img alt={'image'} className={s.image} src={selectedQuesImage} />
+                ) : (
+                  <Typography variant={'H3'}>No Image</Typography>
+                )}
+                <div>
+                  <Input
+                    accept={'image/jpeg, image/jpg, image/png, image/webp'}
+                    className={s.cardImage}
+                    name={'questionImg'}
+                    onChange={onFileChange}
+                    ref={inputQuesRef}
+                    type={'file'}
+                  />
+                  <Button
+                    name={'question'}
+                    onClick={handleButtonClick}
+                    type={'button'}
+                    variant={'secondary'}
+                  >
+                    <IconImage />
+                    <Typography variant={'subtitle-2'}>Change Cover</Typography>
+                  </Button>
+                </div>
               </div>
-            </div>
 
-            <div className={s.answerImg}>
-              {selectedAnsImage ? (
-                <img alt={'image'} className={s.image} src={selectedAnsImage}/>
-              ) : (
-                <Typography variant={'H3'}>No Image</Typography>
-              )}
-              <div>
-                <Input
-                  accept={'image/jpeg, image/jpg, image/png, image/webp'}
-                  className={s.cardImage}
-                  name={'answerImg'}
-                  onChange={onFileChange}
-                  ref={inputAnsRef}
-                  type={'file'}
-                />
-                <Button onClick={handleButtonClick} type={'button'} name={'answer'} variant={'secondary'}>
-                  <IconImage/>
-                  <Typography variant={'subtitle-2'}>Change Cover</Typography>
-                </Button>
+              <div className={s.answerImg}>
+                {selectedAnsImage ? (
+                  <img alt={'image'} className={s.image} src={selectedAnsImage} />
+                ) : (
+                  <Typography variant={'H3'}>No Image</Typography>
+                )}
+                <div>
+                  <Input
+                    accept={'image/jpeg, image/jpg, image/png, image/webp'}
+                    className={s.cardImage}
+                    name={'answerImg'}
+                    onChange={onFileChange}
+                    ref={inputAnsRef}
+                    type={'file'}
+                  />
+                  <Button
+                    name={'answer'}
+                    onClick={handleButtonClick}
+                    type={'button'}
+                    variant={'secondary'}
+                  >
+                    <IconImage />
+                    <Typography variant={'subtitle-2'}>Change Cover</Typography>
+                  </Button>
+                </div>
               </div>
-            </div>
-
-          </>}
+            </>
+          )}
           <div className={s.footer}>
             <Button onClick={onCloseClick} type={'button'}>
               <Typography as={'p'} variant={'subtitle-2'}>
@@ -181,5 +200,5 @@ export function AddNewCard({ closeRef }: Props) {
         </form>
       </div>
     </div>
-  );
+  )
 }

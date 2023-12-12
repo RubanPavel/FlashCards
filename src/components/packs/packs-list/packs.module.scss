@@ -70,7 +70,7 @@
 }
 
 .IconButton {
-  @include IButton
+  @include IButton;
 }
 
 .IconButton:hover {
@@ -93,4 +93,3 @@
   margin: 50px;
   text-align: center;
 }
-

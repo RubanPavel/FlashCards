@@ -21,9 +21,7 @@ export const DecksService = baseApi.injectEndpoints({
       createCard: builder.mutation<CardResponse, CreateCardType>({
         invalidatesTags: ['Decks'],
         query: ({ id, ...args }) => ({
-          body: {
-            ...args,
-          },
+          body: args,
           method: 'POST',
           url: `/v1/decks/${id}/cards`,
         }),
@@ -96,4 +94,9 @@ export const DecksService = baseApi.injectEndpoints({
   },
 })
 
-export const { useCreateDeckMutation, useDeleteDeskMutation, useGetDecksQuery } = DecksService
+export const {
+  useCreateCardMutation,
+  useCreateDeckMutation,
+  useDeleteDeskMutation,
+  useGetDecksQuery,
+} = DecksService

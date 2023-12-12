@@ -1,5 +1,5 @@
-import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
-import {SerializedError} from "@reduxjs/toolkit";
+import { SerializedError } from '@reduxjs/toolkit'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 export type DecksResponse = {
   items: Deck[]
@@ -34,7 +34,7 @@ export type Deck = {
   shots: number
   updated: string
   userId: string
-} & {error: FetchBaseQueryError | SerializedError}
+} & { error: FetchBaseQueryError | SerializedError }
 
 /* export type CreateDeckType = Pick<Deck, 'cover' | 'isPrivate' | 'name'> */
 
@@ -83,13 +83,13 @@ export type CardResponse = {
 }
 
 export type CreateCardType = {
-  answer: string
-  answerImg?: string
-  answerVideo?: string
+  answer: FormData
+  answerImg?: FormData
+  answerVideo?: FormData
   id: string
-  question: string
-  questionImg?: string
-  questionVideo?: string
+  question: FormData
+  questionImg?: FormData
+  questionVideo?: FormData
 }
 
 export type getRandomCardResponse = {

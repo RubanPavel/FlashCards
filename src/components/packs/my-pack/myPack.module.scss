@@ -1,4 +1,4 @@
-@import "/src/components/packs/packs-list/packs.module";
+@import '/src/components/packs/packs-list/packs.module';
 
 .container {
   padding: 0 10vw;
@@ -46,5 +46,5 @@
 }
 
 .IconButton {
-  @include IButton
+  @include IButton;
 }

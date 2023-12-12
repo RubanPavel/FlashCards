@@ -13,11 +13,11 @@ import { ForgotPasswordCheckEmail } from '@/components/auth/forgot-password-chec
 import { SignIn } from '@/components/auth/login-in'
 import { SignUp } from '@/components/auth/sign-up'
 import { PackFriend } from '@/components/packs/friends-pack'
+import { MyPack } from '@/components/packs/my-pack'
 import { Packs } from '@/components/packs/packs-list'
 
 import { ContentLayout } from './components/layout'
 import { MyProfile } from './components/user/my-profile'
-import {MyPack} from "@/components/packs/my-pack";
 //import {useGetDecksQuery} from "@/services/decks";
 
 const publicRoutes: RouteObject[] = [
@@ -62,8 +62,8 @@ const privateRoutes: RouteObject[] = [
   },
   {
     element: <MyPack />,
-    path: '/cards/:id'
-  }
+    path: '/cards/:id',
+  },
 ]
 
 const notFoundRout: RouteObject[] = [

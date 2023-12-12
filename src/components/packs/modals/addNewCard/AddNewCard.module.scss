@@ -28,8 +28,9 @@
   display: none;
 }
 
-.questionImg, .answerImg {
-  @include photo-text
+.questionImg,
+.answerImg {
+  @include photo-text;
 }
 
 .image {
