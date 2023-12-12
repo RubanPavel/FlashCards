@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2.5.0
+        uses: actions/checkout@v4
  
       - name: Merge dev -> storybook-deploy 🚀
         uses: devmasx/merge-branch@1.4.0
