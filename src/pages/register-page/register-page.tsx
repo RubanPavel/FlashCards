@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { FormValues, SignUp } from '@/components/auth/sign-up'
 import { useCreateNewUserMutation } from '@/services/auth'
 
+import s from './register-page.module.scss'
+
 export const RegisterPage = () => {
   const [createUser, {}] = useCreateNewUserMutation()
   const navigate = useNavigate()
@@ -26,5 +28,5 @@ export const RegisterPage = () => {
       })
   }
 
-  return <SignUp handleRegister={handleRegister} />
+  return <SignUp className={s.RegisterPageRoot} handleRegister={handleRegister} />
 }

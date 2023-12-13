@@ -28,7 +28,7 @@ const inputSchema = z.object({
 
 type FormValue = z.infer<typeof inputSchema>
 
-export function AddNewCard({ id, closeRef }: Props) {
+export function AddNewCard({ closeRef, id }: Props) {
   const [selectedQuesImage, setSelectedQuesImage] = useState('')
   const [selectedAnsImage, setSelectedAnsImage] = useState('')
   const [currentOption, setCurrentOption] = useState<string>('Text')

@@ -8,6 +8,7 @@ import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
 // import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
 import { z } from 'zod'
 
 import s from './forgot-password.module.scss'
@@ -19,9 +20,10 @@ const loginSchema = z.object({
 export type FormValues = z.infer<typeof loginSchema>
 
 type Props = {
+  className?: string
   handleForgotPassword: (formValuer: FormValues) => void
 }
-export const ForgotPassword = ({ handleForgotPassword }: Props) => {
+export const ForgotPassword = ({ className, handleForgotPassword }: Props) => {
   const {
     control,
     formState: { errors },
@@ -40,7 +42,7 @@ export const ForgotPassword = ({ handleForgotPassword }: Props) => {
   }
 
   return (
-    <Card className={s.ForgotPasswordRoot}>
+    <Card className={clsx(s.ForgotPasswordRoot, className)}>
       <Typography as={'h1'} className={s.ForgotPasswordHeader} variant={'large'}>
         Forgot your password?
       </Typography>

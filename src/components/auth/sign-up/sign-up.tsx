@@ -12,6 +12,7 @@ import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
 // import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
 import { z } from 'zod'
 
 import s from './sign-up.module.scss'
@@ -30,10 +31,11 @@ export const signInFormSchema = z
 export type FormValues = z.infer<typeof signInFormSchema>
 
 type Props = {
+  className?: string
   handleRegister: (formData: FormValues) => void
 }
 
-export const SignUp = ({ handleRegister }: Props) => {
+export const SignUp = ({ className, handleRegister }: Props) => {
   const {
     control,
     formState: { errors },
@@ -54,7 +56,7 @@ export const SignUp = ({ handleRegister }: Props) => {
   }
 
   return (
-    <Card className={s.SignUpRoot}>
+    <Card className={clsx(s.SignUpRoot, className)}>
       <Typography as={'h1'} className={s.SignUpHeader} variant={'large'}>
         Sign Up
       </Typography>

@@ -12,6 +12,7 @@ import { Loader } from '@/components/ui/loader'
 import { CheckEmailPage } from '@/pages/check-email-page'
 import { CreatePasswordPage } from '@/pages/create-password-page'
 import { ForgotPasswordPage } from '@/pages/forgot-password-page'
+import { FriendPackPage } from '@/pages/friend-pack-page'
 import { LoginPage } from '@/pages/login-page'
 import { NotFoundPage } from '@/pages/not-found-page'
 import { ProfilePage } from '@/pages/profile-page'
@@ -20,7 +21,6 @@ import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
 import { useGetAuthMeQuery } from '@/services/auth'
 
 import { ContentLayout } from './components/layout'
-import { FriendPackPage } from '@/pages/friend-pack-page'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -63,12 +63,12 @@ const privateRoutes: RouteObject[] = [
     path: '/profile-profile',
   },
   {
-    path: '/my-pack/:id',
     element: <MyPack />,
+    path: '/my-pack/:id',
   },
   {
-    path: '/friends-pack/:id',
     element: <FriendPackPage />,
+    path: '/friends-pack/:id',
   },
 ]
 

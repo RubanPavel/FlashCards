@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { ForgotPassword, FormValues } from '@/components/auth/forgot-password'
 import { useRecoveryPasswordMutation } from '@/services/auth'
 
+import s from './forgot-password-page.module.scss'
+
 export const ForgotPasswordPage = () => {
   const [recovery, {}] = useRecoveryPasswordMutation()
   const navigate = useNavigate()
@@ -20,5 +22,10 @@ export const ForgotPasswordPage = () => {
       })
   }
 
-  return <ForgotPassword handleForgotPassword={handleForgotPassword} />
+  return (
+    <ForgotPassword
+      className={s.ForgotPasswordPageRoot}
+      handleForgotPassword={handleForgotPassword}
+    />
+  )
 }

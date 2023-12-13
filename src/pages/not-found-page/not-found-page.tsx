@@ -12,12 +12,12 @@ type Props = ComponentPropsWithoutRef<'div'>
 
 export const NotFoundPage = forwardRef<HTMLDivElement, Props>(({ className, ...rest }, ref) => {
   return (
-    <div className={clsx(s.root, className)} ref={ref} {...rest}>
+    <div className={clsx(s.NotFoundPageRoot, className)} ref={ref} {...rest}>
       <IconNotFound />
-      <Typography as={'p'} className={clsx(s.text)} variant={'body-1'}>
+      <Typography as={'p'} className={clsx(s.NotFoundPageText)} variant={'body-1'}>
         Sorry! Page not found!
       </Typography>
-      <Button as={Link} className={clsx(s.link)} to={'/'} variant={'primary'}>
+      <Button as={Link} className={clsx(s.NotFoundPageLink)} to={'/'} variant={'primary'}>
         Back to home page
       </Button>
     </div>
