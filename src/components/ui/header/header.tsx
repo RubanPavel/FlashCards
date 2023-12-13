@@ -14,7 +14,7 @@ export const Header = forwardRef<HTMLHeadElement, Props>(
   ({ children, className, logo, ...rest }, ref) => {
     return (
       <header className={clsx(s.Header, className)} ref={ref} {...rest}>
-        <Button className={clsx(s.HeaderLogoLink)} as={Link} to={'/'} variant={'icon'}>
+        <Button as={Link} className={clsx(s.HeaderLogoLink)} to={'/'} variant={'icon'}>
           {logo}
         </Button>
         {children}

@@ -44,7 +44,7 @@
   justify-content: space-between;
 }
 
-.IconButton {
+.IconButtonMyPack {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -62,6 +62,6 @@
   border-radius: 100%;
 }
 
-.IconButton:hover {
+.IconButtonMyPack:hover {
   background-color: var(--color-dark-100);
 }

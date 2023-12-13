@@ -101,12 +101,12 @@ export const MyPack = () => {
           icon={<IconClose className={s.IconButton} />}
           ref={closeRef}
           trigger={
-            <Button onClick={() => {}}>
+            <Button>
               <Typography variant={'subtitle-2'}>Add New Card</Typography>
             </Button>
           }
         >
-          <AddNewCard closeRef={closeRef} id={id ? id : null} />
+          <AddNewCard closeRef={closeRef} id={id} />
         </Modals>
       </div>
       {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
