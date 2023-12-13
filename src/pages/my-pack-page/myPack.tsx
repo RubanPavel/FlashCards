@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from 'react'
+import { createRef, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
@@ -30,26 +30,25 @@ import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
-  const [searchValue, setSearchValue] = useState('')
   const dispatch = useAppDispatch()
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
     id: id,
-    question: searchValue ? searchValue : undefined,
     ...params,
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
 
   const closeRef = createRef<HTMLButtonElement>()
 
-  /* const handleSearch = (searchValue: string) => {
-    dispatch(decksActions.setName({ name: searchValue }))
-  }*/
+  const handleSearch = (searchValue: string) => {
+    dispatch(cardsActions.setQuestion({ question: searchValue }))
+  }
 
   useEffect(() => {
     dispatch(cardsActions.setItemsPerPage({ itemsPerPage: 10 }))
     dispatch(cardsActions.setCurrentPage({ currentPage: 1 }))
+    dispatch(cardsActions.setQuestion({ question: '' }))
   }, [dispatch])
 
   const columnsData = [
@@ -116,7 +115,7 @@ export const MyPackPage = () => {
         </Modals>
       </div>
       <DebouncedInput
-        callback={e => setSearchValue(e)}
+        callback={handleSearch}
         className={s.searchInput}
         id={'inputMy'}
         name={'search'}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
@@ -19,13 +19,12 @@ import s from './friendPack.module.scss'
 
 export const FriendPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
-  const [searchValue, setSearchValue] = useState('')
   const dispatch = useAppDispatch()
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
     id: id,
-    question: searchValue ? searchValue : undefined,
+
     ...params,
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
@@ -40,11 +39,12 @@ export const FriendPackPage = () => {
   useEffect(() => {
     dispatch(cardsActions.setItemsPerPage({ itemsPerPage: 10 }))
     dispatch(cardsActions.setCurrentPage({ currentPage: 1 }))
+    dispatch(cardsActions.setQuestion({ question: '' }))
   }, [dispatch])
 
-  /* const handleSearch = (searchValue: string) => {
-    dispatch(decksActions.setName({ name: searchValue }))
-  }*/
+  const handleSearch = (searchValue: string) => {
+    dispatch(cardsActions.setQuestion({ question: searchValue }))
+  }
 
   if (packData?.cardsCount === 0) {
     return <EmptyPack isMyPack={false} packName={packData?.name} />
@@ -74,7 +74,7 @@ export const FriendPackPage = () => {
         </Button>
       </div>
       <DebouncedInput
-        callback={e => setSearchValue(e)}
+        callback={handleSearch}
         className={s.searchInput}
         id={'inputFriends'}
         name={'search'}
