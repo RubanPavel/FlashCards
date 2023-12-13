@@ -44,6 +44,13 @@
   justify-content: space-between;
 }
 
+.image {
+  max-width: 150px;
+  max-height: 50px;
+  float: left;
+  margin-right: 10px;
+}
+
 .IconButtonMyPack {
   position: absolute;
   top: 20px;

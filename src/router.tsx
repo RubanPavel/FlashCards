@@ -68,7 +68,7 @@ const privateRoutes: RouteObject[] = [
   },
   {
     element: <FriendPackPage />,
-    path: '/friends-pack/:id',
+    path: '/friend-pack/:id',
   },
 ]
 

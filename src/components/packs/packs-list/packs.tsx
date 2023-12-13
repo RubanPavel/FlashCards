@@ -41,7 +41,7 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
 
-  const { iconVector, onVectorChange } = useSort()
+  const { iconVector, onVectorChange, sort } = useSort()
 
   const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
@@ -65,9 +65,10 @@ export const Packs = () => {
   ]
   const closeRef = createRef<HTMLButtonElement>()
 
-  /*  const handleDelete = (id: string) => {
-    deleteDeck(id)
-  }*/
+  const onSortByName = () => {
+    onVectorChange()
+    dispatch(decksActions.setOrderBy({ orderBy: sort }))
+  }
 
   const pageValue = (currentPage: number, itemsPerPage: number) => {
     dispatch(decksActions.setCurrentPage({ currentPage }))
@@ -160,7 +161,7 @@ export const Packs = () => {
                     <>
                       <Typography
                         className={s.onChangeVector}
-                        onClick={onVectorChange}
+                        onClick={onSortByName}
                         variant={'subtitle-2'}
                       >
                         {el.title}

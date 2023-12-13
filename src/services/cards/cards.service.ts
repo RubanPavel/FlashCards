@@ -6,7 +6,7 @@ export const CardsService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       deleteCard: builder.mutation<void, string>({
-        invalidatesTags: ['Cards'],
+        invalidatesTags: ['Cards', 'Decks'],
         query: id => ({
           method: 'DELETE',
           url: `/v1/cards/${id}`,

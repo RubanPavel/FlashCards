@@ -7,7 +7,6 @@ import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { StarRating } from '@/components/packs/common/StarRating'
-import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
@@ -29,7 +28,6 @@ import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const dispatch = useAppDispatch()
-  const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
   const { data: CardsData } = useGetDecksCardsQuery({ id })
   const { data: packData } = useGetDeckByIdQuery({ id })
@@ -102,16 +100,7 @@ export const MyPackPage = () => {
         <TableRow>
           {columnsData.map(el => (
             <TableHeadCell key={el.id}>
-              {el.title === 'Last Updated' ? (
-                <>
-                  <Typography className={s.pointer} onClick={onVectorChange} variant={'subtitle-2'}>
-                    {el.title}
-                  </Typography>
-                  <span className={s.iconVector}>{iconVector}</span>
-                </>
-              ) : (
-                <Typography variant={'subtitle-2'}>{el.title}</Typography>
-              )}
+              <Typography variant={'subtitle-2'}>{el.title}</Typography>
             </TableHeadCell>
           ))}
         </TableRow>
@@ -119,6 +108,7 @@ export const MyPackPage = () => {
           {CardsData?.items.map(d => (
             <TableRow key={d.id}>
               <TableCell>
+                {d.questionImg && <img alt={'img'} className={s.image} src={d.questionImg} />}
                 <Typography as={'p'} variant={'body-2'}>
                   {d.question}
                 </Typography>
