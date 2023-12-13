@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
@@ -6,23 +7,28 @@ import { StarRating } from '@/components/packs/common/StarRating'
 import { useSort } from '@/components/packs/hook/useSort'
 import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
+import { Pagination } from '@/components/ui/pagination'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
+import { EmptyPack } from '@/pages/empty-pack-page'
+import { cardsActions } from '@/services/cards/cards.slice'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
-import { decksActions } from '@/services/decks/decks.slice'
-import { useAppDispatch } from '@/services/store'
+import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './friendPack.module.scss'
 
-import { EmptyPack } from '../empty-pack-page/empty-pack'
-
 export const FriendPackPage = () => {
+  const params = useAppSelector(state => state.cardsParams)
+  const [searchValue, setSearchValue] = useState('')
   const dispatch = useAppDispatch()
   const { iconVector, onVectorChange } = useSort()
   const { id } = useParams()
-  const { data: cardsData } = useGetDecksCardsQuery({ id })
+  const { data: cardsData } = useGetDecksCardsQuery({
+    id: id,
+    question: searchValue ? searchValue : undefined,
+    ...params,
+  })
   const { data: packData } = useGetDeckByIdQuery({ id })
-  /*const { data: user } = useGetAuthMeQuery()*/
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -31,12 +37,28 @@ export const FriendPackPage = () => {
     { id: '4', title: 'Grade' },
   ]
 
-  const handleSearch = (searchValue: string) => {
+  useEffect(() => {
+    dispatch(cardsActions.setItemsPerPage({ itemsPerPage: 10 }))
+    dispatch(cardsActions.setCurrentPage({ currentPage: 1 }))
+  }, [dispatch])
+
+  /* const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
-  }
+  }*/
 
   if (packData?.cardsCount === 0) {
     return <EmptyPack isMyPack={false} packName={packData?.name} />
+  }
+  const pageValue = (currentPage: number, itemsPerPage: number) => {
+    dispatch(cardsActions.setCurrentPage({ currentPage }))
+    dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
+  }
+  const setCurrentPage = (currentPage: number) => {
+    dispatch(cardsActions.setCurrentPage({ currentPage }))
+  }
+
+  const setItemsPerPage = (itemsPerPage: number) => {
+    dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
   }
 
   return (
@@ -52,7 +74,7 @@ export const FriendPackPage = () => {
         </Button>
       </div>
       <DebouncedInput
-        callback={handleSearch}
+        callback={e => setSearchValue(e)}
         className={s.searchInput}
         id={'inputFriends'}
         name={'search'}
@@ -104,6 +126,14 @@ export const FriendPackPage = () => {
           ))}
         </TableBody>
       </Table>
+      <Pagination
+        getPage={pageValue}
+        limit={cardsData ? cardsData.pagination.itemsPerPage : 10}
+        page={cardsData ? cardsData.pagination.currentPage : 1}
+        setLimit={setItemsPerPage}
+        setPage={setCurrentPage}
+        totalPages={cardsData ? cardsData.pagination.totalPages : 1}
+      />
     </div>
   )
 }

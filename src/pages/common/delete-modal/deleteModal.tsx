@@ -16,7 +16,7 @@ type Props = {
 
 export const DeleteModal = ({ closeRef, id, name, title }: Props) => {
   /*const inputRef = React.useRef<HTMLInputElement | null>(null)*/
-  const [deleteDeck, {}] = useDeleteDeskMutation()
+  const [deleteDeck] = useDeleteDeskMutation()
   const [deleteCard] = useDeleteCardMutation()
   const onCloseClick = () => {
     if (closeRef.current) {

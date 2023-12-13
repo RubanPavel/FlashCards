@@ -65,10 +65,6 @@ export const Packs = () => {
   ]
   const closeRef = createRef<HTMLButtonElement>()
 
-  /*  const handleDelete = (id: string) => {
-    deleteDeck(id)
-  }*/
-
   const pageValue = (currentPage: number, itemsPerPage: number) => {
     dispatch(decksActions.setCurrentPage({ currentPage }))
     dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
