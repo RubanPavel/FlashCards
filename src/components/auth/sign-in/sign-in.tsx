@@ -8,6 +8,7 @@ import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
 // import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
 import { z } from 'zod'
 
 import s from './sign-in.module.scss'
@@ -21,10 +22,11 @@ const loginSchema = z.object({
 export type FormValues = z.infer<typeof loginSchema>
 
 type Props = {
+  className?: string
   handleLogin: (formData: FormValues) => void
 }
 
-export const SignIn = ({ handleLogin }: Props) => {
+export const SignIn = ({ className, handleLogin }: Props) => {
   const {
     control,
     formState: { errors },
@@ -45,7 +47,7 @@ export const SignIn = ({ handleLogin }: Props) => {
   }
 
   return (
-    <Card className={s.SignInRoot}>
+    <Card className={clsx(s.SignInRoot, className)}>
       <Typography as={'h1'} className={s.SignInHeader} variant={'large'}>
         Sign In
       </Typography>

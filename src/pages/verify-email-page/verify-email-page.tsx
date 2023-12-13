@@ -5,6 +5,8 @@ import { ConfirmEmail } from '@/components/auth/confirm-email'
 import { Loader } from '@/components/ui/loader'
 import { useVerifyEmailMutation } from '@/services/auth'
 
+import s from './verify-email.module.scss'
+
 export const VerifyEmailPage = () => {
   const { userId } = useParams()
   const [verifyMail, { data, isError, isLoading }] = useVerifyEmailMutation()
@@ -28,5 +30,5 @@ export const VerifyEmailPage = () => {
     return <Loader />
   }
 
-  return <ConfirmEmail trigger={trigger} />
+  return <ConfirmEmail className={s.VerifyEmailPageRoot} trigger={trigger} />
 }

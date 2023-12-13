@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
 import { AuthResponse } from '@/services/auth'
+import { clsx } from 'clsx'
 
 import s from './profile.module.scss'
 
@@ -19,11 +20,12 @@ export const formFieldsVariant = {
 } as const
 
 type Props = {
+  className?: string
   logout: () => void
   user: AuthResponse | undefined
 }
 
-export const Profile = ({ logout, user }: Props) => {
+export const Profile = ({ className, logout, user }: Props) => {
   const [editingVariant, setEditingVariant] = useState<Variant | null>(null)
 
   const handleEditClick = (variant: Variant) => {
@@ -39,15 +41,15 @@ export const Profile = ({ logout, user }: Props) => {
   }
 
   return (
-    <Card className={s.MyProfileRoot}>
-      <Typography as={'h1'} className={s.MyProfileHeader} variant={'large'}>
+    <Card className={clsx(s.ProfileRoot, className)}>
+      <Typography as={'h1'} className={s.ProfileHeader} variant={'large'}>
         Personal Information
       </Typography>
-      <div className={s.MyProfileAvatarWrapper}>
-        <AvatarRadix className={s.MyProfileAvatar} imageUrl={user?.avatar} userName={user?.name} />
+      <div className={s.ProfileAvatarWrapper}>
+        <AvatarRadix className={s.ProfileAvatar} imageUrl={user?.avatar} userName={user?.name} />
         {!editingVariant && (
           <Button
-            className={s.MyProfileAvatarButton}
+            className={s.ProfileAvatarButton}
             onClick={() => handleEditClick(formFieldsVariant.avatar)}
             variant={'icon'}
           >
@@ -58,20 +60,20 @@ export const Profile = ({ logout, user }: Props) => {
       {editingVariant ? (
         <ProfileForm onCancel={handleCancelEdit} variant={editingVariant} />
       ) : (
-        <div className={s.MyProfileContainer}>
-          <div className={s.MyProfileInfoWrapper}>
+        <div className={s.ProfileContainer}>
+          <div className={s.ProfileInfoWrapper}>
             <Typography as={'p'} variant={'H1'}>
               {user?.name}
             </Typography>
             <Button
-              className={s.MyProfileNicknameButton}
+              className={s.ProfileNicknameButton}
               onClick={() => handleEditClick(formFieldsVariant.nickname)}
               variant={'icon'}
             >
               <IconEdit height={16} width={16} />
             </Button>
           </div>
-          <Typography as={'p'} className={s.MyProfileEmail} variant={'body-2'}>
+          <Typography as={'p'} className={s.ProfileEmail} variant={'body-2'}>
             {user?.email}
           </Typography>
           <Button className={s.logoutButton} onClick={logoutButtonClicked} variant={'secondary'}>

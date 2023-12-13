@@ -5,12 +5,17 @@ import { User } from '@/assets/userDataForTest'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
+import { clsx } from 'clsx'
 
 import s from './check-email.module.scss'
 
-export const CheckEmail = () => {
+type Props = {
+  className?: string
+}
+
+export const CheckEmail = ({ className }: Props) => {
   return (
-    <Card className={s.CheckEmailRoot}>
+    <Card className={clsx(s.CheckEmailRoot, className)}>
       <Typography as={'h1'} className={s.CheckEmailHeader} variant={'large'}>
         Check Email
       </Typography>

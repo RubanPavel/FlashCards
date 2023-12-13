@@ -3,11 +3,12 @@ import { toast } from 'react-toastify'
 import { FormValues, SignIn } from '@/components/auth/sign-in'
 import { useLoginMutation } from '@/services/auth'
 
+import s from './login-page.module.scss'
+
 export const LoginPage = () => {
   const [login, {}] = useLoginMutation()
 
   const handleLogin = (formData: FormValues) => {
-    console.log(formData)
     login(formData)
       .unwrap()
       // TODO типизация ошибки и как обрабатывать ошибки отсутствия сети, в с пустой? Случай успеха не обрабатываем?
@@ -17,5 +18,5 @@ export const LoginPage = () => {
       })
   }
 
-  return <SignIn handleLogin={handleLogin} />
+  return <SignIn className={s.LoginPageRoot} handleLogin={handleLogin} />
 }
