@@ -1,4 +1,4 @@
-import { createRef } from 'react'
+import { createRef, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
@@ -16,27 +16,38 @@ import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Modals } from '@/components/ui/modals'
+import { Pagination } from '@/components/ui/pagination'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
+import { cardsActions } from '@/services/cards/cards.slice'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
-import { decksActions } from '@/services/decks/decks.slice'
-import { useAppDispatch } from '@/services/store'
+import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
+  const params = useAppSelector(state => state.cardsParams)
   const dispatch = useAppDispatch()
   const { id } = useParams()
-  const { data: CardsData } = useGetDecksCardsQuery({ id })
+  const { data: cardsData } = useGetDecksCardsQuery({
+    id: id,
+    ...params,
+  })
   const { data: packData } = useGetDeckByIdQuery({ id })
 
   const closeRef = createRef<HTMLButtonElement>()
 
   const handleSearch = (searchValue: string) => {
-    dispatch(decksActions.setName({ name: searchValue }))
+    dispatch(cardsActions.setQuestion({ question: searchValue }))
   }
+
+  useEffect(() => {
+    dispatch(cardsActions.setItemsPerPage({ itemsPerPage: 10 }))
+    dispatch(cardsActions.setCurrentPage({ currentPage: 1 }))
+    dispatch(cardsActions.setQuestion({ question: '' }))
+  }, [dispatch])
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -47,6 +58,18 @@ export const MyPackPage = () => {
 
   if (packData?.cardsCount === 0) {
     return <EmptyPack id={id} isMyPack packName={packData?.name} />
+  }
+
+  const pageValue = (currentPage: number, itemsPerPage: number) => {
+    dispatch(cardsActions.setCurrentPage({ currentPage }))
+    dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
+  }
+  const setCurrentPage = (currentPage: number) => {
+    dispatch(cardsActions.setCurrentPage({ currentPage }))
+  }
+
+  const setItemsPerPage = (itemsPerPage: number) => {
+    dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
   }
 
   return (
@@ -78,7 +101,7 @@ export const MyPackPage = () => {
           </DropdownMenu>
         </div>
         <Modals
-          icon={<IconClose className={s.IconButtonMyPack} />}
+          icon={<IconClose className={s.IconButton} />}
           ref={closeRef}
           trigger={
             <Button onClick={() => {}}>
@@ -105,7 +128,7 @@ export const MyPackPage = () => {
           ))}
         </TableRow>
         <TableBody>
-          {CardsData?.items.map(d => (
+          {cardsData?.items.map(d => (
             <TableRow key={d.id}>
               <TableCell>
                 {d.questionImg && <img alt={'img'} className={s.image} src={d.questionImg} />}
@@ -145,6 +168,14 @@ export const MyPackPage = () => {
           ))}
         </TableBody>
       </Table>
+      <Pagination
+        getPage={pageValue}
+        limit={cardsData ? cardsData.pagination.itemsPerPage : 10}
+        page={cardsData ? cardsData.pagination.currentPage : 1}
+        setLimit={setItemsPerPage}
+        setPage={setCurrentPage}
+        totalPages={cardsData ? cardsData.pagination.totalPages : 1}
+      />
     </div>
   )
 }

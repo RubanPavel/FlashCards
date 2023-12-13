@@ -1,4 +1,3 @@
-import { createRef } from 'react'
 import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
@@ -36,10 +35,10 @@ export const EmptyPack = ({ id, isMyPack, packName }: EmptyDeckProps) => {
             This pack is empty. Click add new card to fill this pack
           </Typography>
           <Modals
-            icon={<IconClose className={s.IconButtonEmpty} />}
+            icon={<IconClose className={s.IconButton} />}
             ref={closeRef}
             trigger={
-              <Button>
+              <Button onClick={() => {}}>
                 <Typography variant={'subtitle-2'}>Add New Card</Typography>
               </Button>
             }
