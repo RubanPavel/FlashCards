@@ -101,7 +101,7 @@ export const MyPackPage = () => {
           </DropdownMenu>
         </div>
         <Modals
-          icon={<IconClose className={s.IconButton} />}
+          icon={<IconClose className={s.IconButtonMyPack} />}
           ref={closeRef}
           trigger={
             <Button onClick={() => {}}>
