@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/button'
 import { ControlRadioGroup } from '@/components/ui/controlled/controlRadioGroup'
 import { Typography } from '@/components/ui/typography'
 import { CardsResponseItems, useSaveGradeMutation } from '@/services/decks'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './learnCard.module.scss'
-import {zodResolver} from "@hookform/resolvers/zod";
 
 const schema = z.object({
   radio: radioSchema,
@@ -42,7 +42,11 @@ export const LearnCard = React.memo(
       navigate(-1)
     }
 
-    const { control, handleSubmit, formState: {errors} } = useForm<FormValues>({
+    const {
+      control,
+      formState: { errors },
+      handleSubmit,
+    } = useForm<FormValues>({
       defaultValues: {
         radio: '',
       },
@@ -106,8 +110,8 @@ export const LearnCard = React.memo(
             <form onSubmit={handleSubmit(onSubmit)}>
               <ControlRadioGroup
                 className={s.radio}
-                errorMessage={errors.radio?.message}
                 control={control}
+                errorMessage={errors.radio?.message}
                 name={'radio'}
                 options={radioOptions}
               />
