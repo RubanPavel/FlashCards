@@ -10,6 +10,7 @@ import { CardsResponseItems, useSaveGradeMutation } from '@/services/decks'
 import { z } from 'zod'
 
 import s from './learnCard.module.scss'
+import {zodResolver} from "@hookform/resolvers/zod";
 
 const schema = z.object({
   radio: radioSchema,
@@ -41,10 +42,13 @@ export const LearnCard = React.memo(
       navigate(-1)
     }
 
-    const { control, handleSubmit } = useForm<FormValues>({
+    const { control, handleSubmit, formState: {errors} } = useForm<FormValues>({
       defaultValues: {
         radio: '',
       },
+      mode: 'onBlur',
+      reValidateMode: 'onChange',
+      resolver: zodResolver(schema),
     })
 
     const onSubmit = (data: FormValues) => {
@@ -102,6 +106,7 @@ export const LearnCard = React.memo(
             <form onSubmit={handleSubmit(onSubmit)}>
               <ControlRadioGroup
                 className={s.radio}
+                errorMessage={errors.radio?.message}
                 control={control}
                 name={'radio'}
                 options={radioOptions}

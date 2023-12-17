@@ -9,6 +9,7 @@ import s from './radio-group.module.scss'
 export type RadioGroupProps = {
   className?: string
   defaultValue?: string
+  errorMessage?: string
   disabled?: boolean
   onValueChange?: (value: string) => void
   options: string[]
@@ -17,7 +18,7 @@ export type RadioGroupProps = {
 
 export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadixUi.Root>, RadioGroupProps>(
   (
-    { className, defaultValue, disabled, onValueChange, options, value, ...rest }: RadioGroupProps,
+    { className, defaultValue, disabled, onValueChange, options, value, errorMessage, ...rest }: RadioGroupProps,
     ref
   ) => {
     return (
@@ -46,6 +47,9 @@ export const RadioGroup = forwardRef<ElementRef<typeof RadioGroupRadixUi.Root>, 
             </Typography>
           </div>
         ))}
+        <Typography className={s.errorMessage} variant={'caption'}>
+          {errorMessage}
+        </Typography>
       </RadioGroupRadixUi.Root>
     )
   }

@@ -50,4 +50,6 @@ export const photoSchema = z
     'Only .jpg, .jpeg, .png and .webp formats are supported.'
   )
   .optional()
-export const radioSchema = z.string().refine(field => radioOptions.includes(field))
+export const radioSchema = z.string().refine(
+  field => radioOptions.includes(field),
+  {message: 'select one of the options'})
