@@ -21,6 +21,14 @@ export const nicknameSchema = z
 const MAX_FILE_SIZE = 5 * 1024 * 1024
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
 
+export const radioOptions = [
+  'Did not know',
+  'Forgot',
+  'A lot of though',
+  'Confused',
+  'Knew the answer',
+]
+
 export const avatarSchema = z
   .instanceof(FileList)
   .refine(file => file && file?.[0].size <= MAX_FILE_SIZE, `Max image size is 5MB.`)
@@ -42,3 +50,4 @@ export const photoSchema = z
     'Only .jpg, .jpeg, .png and .webp formats are supported.'
   )
   .optional()
+export const radioSchema = z.string().refine(field => radioOptions.includes(field))

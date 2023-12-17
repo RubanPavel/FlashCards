@@ -107,4 +107,6 @@ export const {
   useGetDeckByIdQuery,
   useGetDecksCardsQuery,
   useGetDecksQuery,
+  useGetRandomCardQuery,
+  useSaveGradeMutation,
 } = DecksService

@@ -8,11 +8,19 @@ import { useSort } from '@/components/packs/hook/useSort'
 import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { Pagination } from '@/components/ui/pagination'
-import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { EmptyPack } from '@/pages/empty-pack-page'
+import { LearnPage } from '@/pages/learn-page/learn-page'
 import { cardsActions } from '@/services/cards/cards.slice'
-import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { useGetDeckByIdQuery, useGetDecksCardsQuery, useGetRandomCardQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './friendPack.module.scss'
@@ -21,13 +29,14 @@ export const FriendPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
   const dispatch = useAppDispatch()
   const { iconVector, onVectorChange } = useSort()
+
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
     id: id,
-
     ...params,
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
+  const { data: randomCard } = useGetRandomCardQuery({ id })
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -69,9 +78,12 @@ export const FriendPackPage = () => {
       </Link>
       <div className={s.packsList}>
         <Typography variant={'large'}>Friend&apos;s Pack/{packData?.name}</Typography>
-        <Button onClick={() => {}}>
-          <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
-        </Button>
+        <Link state={{ _: '', randomCard }} to={`/learn/${id}`}>
+          <Button>
+            <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
+          </Button>
+          <LearnPage />
+        </Link>
       </div>
       <DebouncedInput
         callback={handleSearch}
@@ -81,26 +93,28 @@ export const FriendPackPage = () => {
         type={'search'}
       />
       <Table>
-        <TableRow>
-          {columnsData.map(el => (
-            <TableHeadCell key={el.id}>
-              {el.title === 'Last Updated' ? (
-                <>
-                  <Typography
-                    className={s.onChangeVector}
-                    onClick={onVectorChange}
-                    variant={'subtitle-2'}
-                  >
-                    {el.title}
-                  </Typography>
-                  <span className={s.iconVector}>{iconVector}</span>
-                </>
-              ) : (
-                <Typography variant={'subtitle-2'}>{el.title}</Typography>
-              )}
-            </TableHeadCell>
-          ))}
-        </TableRow>
+        <TableHead>
+          <TableRow>
+            {columnsData.map(el => (
+              <TableHeadCell key={el.id}>
+                {el.title === 'Last Updated' ? (
+                  <>
+                    <Typography
+                      className={s.onChangeVector}
+                      onClick={onVectorChange}
+                      variant={'subtitle-2'}
+                    >
+                      {el.title}
+                    </Typography>
+                    <span className={s.iconVector}>{iconVector}</span>
+                  </>
+                ) : (
+                  <Typography variant={'subtitle-2'}>{el.title}</Typography>
+                )}
+              </TableHeadCell>
+            ))}
+          </TableRow>
+        </TableHead>
         <TableBody>
           {cardsData?.items.map(d => (
             <TableRow key={d.id}>

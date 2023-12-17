@@ -106,13 +106,13 @@ export type getRandomCardResponse = {
 }
 
 export type getRandomCardType = {
-  id: string
+  id?: string
   previousCardId?: string
 }
 export type saveGradeType = {
-  cardId: string
+  cardId?: string
   grade: number
-  id: string
+  id?: string
 }
 
 export type GetDecksType = {

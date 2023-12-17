@@ -12,6 +12,7 @@ import { CheckEmailPage } from '@/pages/check-email-page'
 import { CreatePasswordPage } from '@/pages/create-password-page'
 import { ForgotPasswordPage } from '@/pages/forgot-password-page'
 import { FriendPackPage } from '@/pages/friend-pack-page'
+import { LearnPage } from '@/pages/learn-page/learn-page'
 import { LoginPage } from '@/pages/login-page'
 import { MyPackPage } from '@/pages/my-pack-page'
 import { NotFoundPage } from '@/pages/not-found-page'
@@ -69,6 +70,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <FriendPackPage />,
     path: '/friend-pack/:id',
+  },
+  {
+    element: <LearnPage />,
+    path: '/learn/:id',
   },
 ]
 

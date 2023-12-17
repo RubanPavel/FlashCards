@@ -12,7 +12,7 @@ export const CardsService = baseApi.injectEndpoints({
           url: `/v1/cards/${id}`,
         }),
       }),
-      getCardsById: builder.query<CardsResponse, string>({
+      getCardsById: builder.query<CardsResponse, { id?: string }>({
         providesTags: ['Cards'],
         query: id => ({
           id,
