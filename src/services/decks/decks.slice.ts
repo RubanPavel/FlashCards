@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
+export type orderByUpdated = 'updated-asc' | 'updated-desc'
 type InitialState = {
   authorId: string | undefined
   currentPage: number
@@ -7,7 +8,7 @@ type InitialState = {
   maxCardsCount: string | undefined
   minCardsCount: string
   name: string
-  orderBy: string
+  orderBy: orderByUpdated
 }
 
 const initialState: InitialState = {
@@ -43,7 +44,7 @@ const slice = createSlice({
     setName: (state, action: PayloadAction<{ name: string }>) => {
       state.name = action.payload.name
     },
-    setOrderBy: (state, action: PayloadAction<{ orderBy: string }>) => {
+    setOrderBy: (state, action: PayloadAction<{ orderBy: orderByUpdated }>) => {
       state.orderBy = action.payload.orderBy
     },
   },

@@ -2,17 +2,19 @@ import { useState } from 'react'
 
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { IconVectorUp } from '@/assets/icons/IconVectorUp'
+import { orderByQuestion } from '@/services/cards/cards.slice'
+import { orderByUpdated } from '@/services/decks/decks.slice'
 
-export const useSort = () => {
-  const [sort, setSort] = useState('updated-asc')
+export const useSort = (sortBy: 'question' | 'updated') => {
+  const [sort, setSort] = useState<orderByQuestion | orderByUpdated>(`${sortBy}-asc`)
 
-  const iconVector = sort === 'updated-asc' ? <IconVectorDown /> : <IconVectorUp />
-  const onVectorChange = () => {
-    if (sort === 'updated-asc') {
-      setSort('updated-desc')
+  const iconVector = sort === `${sortBy}-asc` ? <IconVectorDown /> : <IconVectorUp />
+  const onVectorChange = (name: 'question' | 'updated') => {
+    if (sort === `${name}-asc`) {
+      setSort(`${name}-desc`)
     }
-    if (sort === 'updated-desc') {
-      setSort('updated-asc')
+    if (sort === `${name}-desc`) {
+      setSort(`${name}-asc`)
     }
 
     return sort

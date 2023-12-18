@@ -19,7 +19,7 @@ import {
 import { Typography } from '@/components/ui/typography'
 import { EmptyPack } from '@/pages/empty-pack-page'
 import { LearnPage } from '@/pages/learn-page/learn-page'
-import { cardsActions } from '@/services/cards/cards.slice'
+import { cardsActions, orderByQuestion } from '@/services/cards/cards.slice'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery, useGetRandomCardQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
@@ -28,7 +28,7 @@ import s from './friendPack.module.scss'
 export const FriendPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
   const dispatch = useAppDispatch()
-  const { iconVector, onVectorChange } = useSort()
+  const { iconVector, onVectorChange, sort } = useSort('question')
 
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
@@ -44,6 +44,11 @@ export const FriendPackPage = () => {
     { id: '3', title: 'Last Updated' },
     { id: '4', title: 'Grade' },
   ]
+
+  const onSortByQuestion = () => {
+    onVectorChange('question')
+    dispatch(cardsActions.setOrderBy({ orderBy: sort as orderByQuestion }))
+  }
 
   useEffect(() => {
     dispatch(cardsActions.setItemsPerPage({ itemsPerPage: 10 }))
@@ -97,11 +102,11 @@ export const FriendPackPage = () => {
           <TableRow>
             {columnsData.map(el => (
               <TableHeadCell key={el.id}>
-                {el.title === 'Last Updated' ? (
+                {el.title === 'Question' ? (
                   <>
                     <Typography
                       className={s.onChangeVector}
-                      onClick={onVectorChange}
+                      onClick={onSortByQuestion}
                       variant={'subtitle-2'}
                     >
                       {el.title}

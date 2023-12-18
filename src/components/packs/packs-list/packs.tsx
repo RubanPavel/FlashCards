@@ -25,7 +25,7 @@ import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { useGetAuthMeQuery } from '@/services/auth'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
-import { decksActions } from '@/services/decks/decks.slice'
+import { decksActions, orderByUpdated } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
 
@@ -41,7 +41,7 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
 
-  const { iconVector, onVectorChange, sort } = useSort()
+  const { iconVector, onVectorChange, sort } = useSort('updated')
 
   const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
@@ -66,8 +66,8 @@ export const Packs = () => {
   const closeRef = createRef<HTMLButtonElement>()
 
   const onSortByName = () => {
-    onVectorChange()
-    dispatch(decksActions.setOrderBy({ orderBy: sort }))
+    onVectorChange('updated')
+    dispatch(decksActions.setOrderBy({ orderBy: sort as orderByUpdated }))
   }
 
   const pageValue = (currentPage: number, itemsPerPage: number) => {
