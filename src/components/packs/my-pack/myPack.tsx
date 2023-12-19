@@ -31,7 +31,7 @@ import { Typography } from '@/components/ui/typography'
 import s from './myPack.module.scss'
 
 export const MyPack = () => {
-  const { iconVector, onVectorChange } = useSort()
+  const { iconVector, onVectorChange } = useSort('updated')
   const closeRef = createRef<HTMLButtonElement>()
   const { id } = useParams()
   const navigate = useNavigate()
@@ -119,7 +119,7 @@ export const MyPack = () => {
                   <>
                     <Typography
                       className={s.pointer}
-                      onClick={onVectorChange}
+                      onClick={() => onVectorChange('updated')}
                       variant={'subtitle-2'}
                     >
                       {el.title}
