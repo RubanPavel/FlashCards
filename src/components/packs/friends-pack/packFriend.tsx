@@ -9,7 +9,7 @@ import { Typography } from '@/components/ui/typography'
 import s from './packFriend.module.scss'
 
 export const PackFriend = () => {
-  const { iconVector, onVectorChange } = useSort()
+  const { iconVector, onVectorChange } = useSort('updated')
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -69,7 +69,7 @@ export const PackFriend = () => {
                 <>
                   <Typography
                     className={s.onChangeVector}
-                    onClick={onVectorChange}
+                    onClick={() => onVectorChange('updated')}
                     variant={'subtitle-2'}
                   >
                     {el.title}
