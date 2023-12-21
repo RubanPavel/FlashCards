@@ -67,6 +67,7 @@ export const FriendPackPage = () => {
     dispatch(cardsActions.setCurrentPage({ currentPage }))
     dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
   }
+
   const setCurrentPage = (currentPage: number) => {
     dispatch(cardsActions.setCurrentPage({ currentPage }))
   }
@@ -83,7 +84,7 @@ export const FriendPackPage = () => {
       </Link>
       <div className={s.packsList}>
         <Typography variant={'large'}>Friend&apos;s Pack/{packData?.name}</Typography>
-        <Link state={{ _: '', randomCard }} to={`/learn/${id}`}>
+        <Link state={{ randomCard }} to={`/learn/${id}`}>
           <Button>
             <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
           </Button>

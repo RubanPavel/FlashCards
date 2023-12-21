@@ -1,4 +1,4 @@
-import { createRef, useEffect } from 'react'
+import { createRef, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
@@ -16,6 +16,7 @@ import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { Modals } from '@/components/ui/modals'
+import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Pagination } from '@/components/ui/pagination'
 import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
@@ -29,6 +30,7 @@ import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
+  const [open, onClose] = useState(false)
   const dispatch = useAppDispatch()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
@@ -64,6 +66,7 @@ export const MyPackPage = () => {
     dispatch(cardsActions.setCurrentPage({ currentPage }))
     dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
   }
+
   const setCurrentPage = (currentPage: number) => {
     dispatch(cardsActions.setCurrentPage({ currentPage }))
   }
@@ -100,17 +103,24 @@ export const MyPackPage = () => {
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Modals
+        <ModalsNew
+          className={{ title: s.modalTitle }}
           icon={<IconClose className={s.IconButtonMyPack} />}
-          ref={closeRef}
+          onClose={onClose}
+          open={open}
+          title={
+            <Typography as={'p'} variant={'H2'}>
+              Add New Card
+            </Typography>
+          }
           trigger={
-            <Button onClick={() => {}}>
-              <Typography variant={'subtitle-2'}>Add New Card</Typography>
+            <Button>
+              <Typography variant={'subtitle-1'}>Add new Card</Typography>
             </Button>
           }
         >
-          <AddNewCard closeRef={closeRef} id={id} />
-        </Modals>
+          <AddNewCard id={id} onClose={val => onClose(val)} />
+        </ModalsNew>
       </div>
       <DebouncedInput
         callback={handleSearch}

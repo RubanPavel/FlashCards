@@ -1,4 +1,4 @@
-import { createRef } from 'react'
+import { createRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
@@ -10,6 +10,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { Modals } from '@/components/ui/modals'
+import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Pagination } from '@/components/ui/pagination'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
@@ -40,6 +41,7 @@ export const dateOptions: Intl.DateTimeFormatOptions = {
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
+  const [open, onClose] = useState(false)
 
   const { iconVector, onVectorChange, sort } = useSort('updated')
 
@@ -113,17 +115,24 @@ export const Packs = () => {
     <div className={s.container}>
       <div className={s.packsList}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Modals
+        <ModalsNew
+          className={{ title: s.modalTitle }}
           icon={<IconClose className={s.IconButton} />}
-          ref={closeRef}
+          onClose={onClose}
+          open={open}
+          title={
+            <Typography as={'p'} variant={'H2'}>
+              Add New Pack
+            </Typography>
+          }
           trigger={
             <Button>
               <Typography variant={'subtitle-1'}>Add new Pack</Typography>
             </Button>
           }
         >
-          <AddNewPack closeRef={closeRef} />
-        </Modals>
+          <AddNewPack onClose={val => onClose(val)} />
+        </ModalsNew>
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput

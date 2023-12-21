@@ -1,14 +1,14 @@
-import React, {useState} from 'react'
-import {useForm} from 'react-hook-form'
-import {useNavigate} from 'react-router-dom'
+import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
-import {radioOptions, radioSchema} from '@/components/auth/validate/validate'
-import {Button} from '@/components/ui/button'
-import {ControlRadioGroup} from '@/components/ui/controlled/controlRadioGroup'
-import {Typography} from '@/components/ui/typography'
-import {CardsResponseItems, useSaveGradeMutation} from '@/services/decks'
-import {zodResolver} from '@hookform/resolvers/zod'
-import {z} from 'zod'
+import { radioOptions, radioSchema } from '@/components/auth/validate/validate'
+import { Button } from '@/components/ui/button'
+import { ControlRadioGroup } from '@/components/ui/controlled/controlRadioGroup'
+import { Typography } from '@/components/ui/typography'
+import { CardsResponseItems, useSaveGradeMutation } from '@/services/decks'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 import s from './learnCard.module.scss'
 
@@ -27,7 +27,7 @@ type Props = {
 }
 
 export const LearnCard = React.memo(
-  ({answerText, cardId, cards, onClose, questionText}: Props) => {
+  ({ answerText, cardId, cards, onClose, questionText }: Props) => {
     const [show, setShow] = useState(false)
     const [index, setIndex] = useState(0)
     const [card, setCard] = useState({
@@ -35,7 +35,7 @@ export const LearnCard = React.memo(
       cardId,
       questionText,
     })
-    const [saveGrade, {isLoading}] = useSaveGradeMutation()
+    const [saveGrade, { isLoading }] = useSaveGradeMutation()
     const navigate = useNavigate()
     const onEndStudyClick = () => {
       onClose(false)
@@ -44,7 +44,7 @@ export const LearnCard = React.memo(
 
     const {
       control,
-      formState: {errors},
+      formState: { errors },
       handleSubmit,
     } = useForm<FormValues>({
       defaultValues: {
@@ -57,8 +57,9 @@ export const LearnCard = React.memo(
 
     const onSubmit = (data: FormValues) => {
       const grade = radioOptions.indexOf(data.radio) + 1
+
       setShow(false)
-      saveGrade({cardId: card.cardId, grade})
+      saveGrade({ cardId: card.cardId, grade })
       if (!isLoading) {
         getCard()
       }

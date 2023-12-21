@@ -28,22 +28,20 @@ export const LearnPage = React.memo(() => {
   const cardsWithoutRandomCard = cardsData?.items.filter(c => c.id !== randomCard?.id)
 
   return (
-    <div>
-      <ModalsNew
-        className={{ content: s.content, title: s.title }}
+    <ModalsNew
+      className={{ content: s.content, title: s.title }}
+      onClose={onClose}
+      open={open}
+      showCloseButton={false}
+      title={<Typography variant={'large'}>Learn {packData?.name}</Typography>}
+    >
+      <LearnCard
+        answerText={randomCard?.answer}
+        cardId={randomCard?.id}
+        cards={cardsWithoutRandomCard}
         onClose={onClose}
-        open={open}
-        showCloseButton={false}
-        title={<Typography variant={'large'}>Learn {packData?.name}</Typography>}
-      >
-        <LearnCard
-          answerText={randomCard?.answer}
-          cardId={randomCard?.id}
-          cards={cardsWithoutRandomCard}
-          onClose={onClose}
-          questionText={randomCard?.question}
-        />
-      </ModalsNew>
-    </div>
+        questionText={randomCard?.question}
+      />
+    </ModalsNew>
   )
 })

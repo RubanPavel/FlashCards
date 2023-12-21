@@ -1,7 +1,8 @@
-import React, { RefObject, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { IconImage } from '@/assets/icons/IconImage'
+import { namePackSchema, photoSchema, rememberMe } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
@@ -10,29 +11,41 @@ import { Typography } from '@/components/ui/typography'
 import { useCreateDeckMutation } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch } from '@/services/store'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 import s from './AddNewPack.module.scss'
 
-type FormValue = {
-  cover: File | null
-  name: string
-  private: boolean
-}
+const schema = z.object({
+  cover: photoSchema,
+  name: namePackSchema,
+  private: rememberMe,
+})
+
+type FormValue = z.infer<typeof schema>
+
 type Props = {
-  closeRef: RefObject<HTMLButtonElement>
+  onClose?: (val: boolean) => void
 }
 
-export const AddNewPack = ({ closeRef }: Props) => {
+export const AddNewPack = ({ onClose }: Props) => {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState('')
-  const { control, getValues, handleSubmit, setValue } = useForm<FormValue>({
+  const {
+    control,
+    formState: { errors },
+    getValues,
+    handleSubmit,
+    setValue,
+  } = useForm<FormValue>({
     defaultValues: {
-      cover: null,
+      cover: undefined,
       name: '',
       private: false,
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
+    resolver: zodResolver(schema),
   })
   const dispatch = useAppDispatch()
 
@@ -46,13 +59,13 @@ export const AddNewPack = ({ closeRef }: Props) => {
       formData.append('cover', cover)
     }
     formData.append('name', values.name)
-    formData.append('isPrivate', values.private.toString())
+    formData.append('isPrivate', values.private ? values.private.toString() : '')
 
     createDeck(formData)
     dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
 
-    if (closeRef.current) {
-      closeRef.current.click()
+    if (onClose) {
+      isFetching && onClose(false)
     }
   }
 
@@ -75,18 +88,13 @@ export const AddNewPack = ({ closeRef }: Props) => {
   }
 
   const onCloseClick = () => {
-    if (closeRef.current) {
-      closeRef.current.click()
+    if (onClose) {
+      onClose(false)
     }
   }
 
   return (
     <div className={s.container}>
-      <div className={s.header}>
-        <Typography as={'p'} variant={'H2'}>
-          Add New Pack
-        </Typography>
-      </div>
       <div className={s.content}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={s.item}>
@@ -120,7 +128,7 @@ export const AddNewPack = ({ closeRef }: Props) => {
           <Typography as={'p'} variant={'body-2'}>
             Name Pack
           </Typography>
-          <ControlInput control={control} name={'name'} />
+          <ControlInput control={control} errorMessage={errors.name?.message} name={'name'} />
           <div style={{ alignItems: 'center', display: 'flex' }}>
             <ControlledCheckbox control={control} name={'private'} />
             <Typography variant={'body-2'}>Private Pack</Typography>

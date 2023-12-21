@@ -1,4 +1,4 @@
-import React, { RefObject, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { IconImage } from '@/assets/icons/IconImage'
@@ -15,8 +15,8 @@ import { z } from 'zod'
 import s from './AddNewCard.module.scss'
 
 type Props = {
-  closeRef: RefObject<HTMLButtonElement>
   id?: string
+  onClose?: (val: boolean) => void
 }
 
 const inputSchema = z.object({
@@ -28,14 +28,19 @@ const inputSchema = z.object({
 
 type FormValue = z.infer<typeof inputSchema>
 
-export function AddNewCard({ closeRef, id }: Props) {
+export function AddNewCard({ id, onClose }: Props) {
   const [selectedQuesImage, setSelectedQuesImage] = useState('')
   const [selectedAnsImage, setSelectedAnsImage] = useState('')
   const [currentOption, setCurrentOption] = useState<string>('Text')
   const inputQuesRef = React.useRef<HTMLInputElement | null>(null)
   const inputAnsRef = React.useRef<HTMLInputElement | null>(null)
 
-  const { control, handleSubmit, setValue } = useForm<FormValue>({
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    setValue,
+  } = useForm<FormValue>({
     defaultValues: {
       answer: '',
       answerImg: undefined,
@@ -43,7 +48,7 @@ export function AddNewCard({ closeRef, id }: Props) {
       questionImg: undefined,
     },
     mode: 'onBlur',
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onChange',
     resolver: zodResolver(inputSchema),
   })
 
@@ -69,8 +74,8 @@ export function AddNewCard({ closeRef, id }: Props) {
 
     creatCard(formData)
 
-    if (closeRef.current) {
-      closeRef.current.click()
+    if (onClose) {
+      onClose(false)
     }
   }
 
@@ -102,18 +107,13 @@ export function AddNewCard({ closeRef, id }: Props) {
   }
 
   const onCloseClick = () => {
-    if (closeRef.current) {
-      closeRef.current.click()
+    if (onClose) {
+      onClose(false)
     }
   }
 
   return (
     <div>
-      <div className={s.header}>
-        <Typography as={'p'} variant={'H2'}>
-          Add New Card
-        </Typography>
-      </div>
       <div className={s.content}>
         <Select
           className={s.selectFormat}
@@ -124,8 +124,18 @@ export function AddNewCard({ closeRef, id }: Props) {
         <form onSubmit={handleSubmit(onSubmit)}>
           {currentOption === 'Text' && (
             <>
-              <ControlInput control={control} label={'Question'} name={'question'} />
-              <ControlInput control={control} label={'Answer'} name={'answer'} />
+              <ControlInput
+                control={control}
+                errorMessage={errors.question?.message}
+                label={'Question'}
+                name={'question'}
+              />
+              <ControlInput
+                control={control}
+                errorMessage={errors.answer?.message}
+                label={'Answer'}
+                name={'answer'}
+              />
             </>
           )}
           {currentOption === 'Picture' && (

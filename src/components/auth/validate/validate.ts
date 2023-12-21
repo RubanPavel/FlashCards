@@ -40,6 +40,7 @@ export const avatarSchema = z
 
 export const searchSchema = z.string().optional()
 
+export const namePackSchema = z.string().min(3, 'Name must contain at least 3 characters')
 export const questionSchema = z.string().min(3, 'Question must contain at least 3 characters')
 export const answerSchema = z.string().min(2, 'Answer must contain at least 2 characters')
 export const photoSchema = z
