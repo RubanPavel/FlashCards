@@ -1,6 +1,6 @@
 // import { FieldValues } from 'react-hook-form'
 
-import { createRef } from 'react'
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
@@ -17,7 +17,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { Modals } from '@/components/ui/modals'
+import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import {
   Table,
   TableBody,
@@ -32,7 +32,7 @@ import s from './myPack.module.scss'
 
 export const MyPack = () => {
   const { iconVector, onVectorChange } = useSort('updated')
-  const closeRef = createRef<HTMLButtonElement>()
+  const [open, onClose] = useState(false)
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -97,17 +97,24 @@ export const MyPack = () => {
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Modals
-          icon={<IconClose className={s.IconButton} />}
-          ref={closeRef}
+        <ModalsNew
+          className={{ title: s.modalTitle }}
+          icon={<IconClose className={s.IconButtonMyPack} />}
+          onClose={onClose}
+          open={open}
+          title={
+            <Typography as={'p'} variant={'H2'}>
+              Add New Card
+            </Typography>
+          }
           trigger={
             <Button>
-              <Typography variant={'subtitle-2'}>Add New Card</Typography>
+              <Typography variant={'subtitle-1'}>Add new Card</Typography>
             </Button>
           }
         >
-          <AddNewCard closeRef={closeRef} id={id} />
-        </Modals>
+          <AddNewCard id={id} onClose={val => onClose(val)} />
+        </ModalsNew>
       </div>
       {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
       <Table>

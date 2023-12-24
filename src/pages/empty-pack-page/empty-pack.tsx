@@ -1,11 +1,11 @@
-import { createRef } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { Button } from '@/components/ui/button'
-import { Modals } from '@/components/ui/modals'
+import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Typography } from '@/components/ui/typography'
 
 import s from './emptyPack.module.scss'
@@ -17,7 +17,7 @@ type EmptyDeckProps = {
 }
 
 export const EmptyPack = ({ id, isMyPack, packName }: EmptyDeckProps) => {
-  const closeRef = createRef<HTMLButtonElement>()
+  const [open, onClose] = useState(false)
 
   return (
     <div className={s.container}>
@@ -35,17 +35,24 @@ export const EmptyPack = ({ id, isMyPack, packName }: EmptyDeckProps) => {
           <Typography className={s.text} variant={'body-1'}>
             This pack is empty. Click add new card to fill this pack
           </Typography>
-          <Modals
+          <ModalsNew
+            className={{ title: s.modalTitle }}
             icon={<IconClose className={s.IconButton} />}
-            ref={closeRef}
+            onClose={onClose}
+            open={open}
+            title={
+              <Typography as={'p'} variant={'H2'}>
+                Add New Card
+              </Typography>
+            }
             trigger={
               <Button onClick={() => {}}>
                 <Typography variant={'subtitle-2'}>Add New Card</Typography>
               </Button>
             }
           >
-            <AddNewCard closeRef={closeRef} id={id} />
-          </Modals>
+            <AddNewCard id={id} onClose={val => onClose(val)} />
+          </ModalsNew>
         </div>
       ) : (
         <div className={s.content}>
