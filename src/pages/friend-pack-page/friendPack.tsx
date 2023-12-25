@@ -18,9 +18,8 @@ import {
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { EmptyPack } from '@/pages/empty-pack-page'
-import { LearnPage } from '@/pages/learn-page/learn-page'
 import { cardsActions, orderByQuestion } from '@/services/cards/cards.slice'
-import { useGetDeckByIdQuery, useGetDecksCardsQuery, useGetRandomCardQuery } from '@/services/decks'
+import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './friendPack.module.scss'
@@ -36,7 +35,6 @@ export const FriendPackPage = () => {
     ...params,
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
-  const { data: randomCard } = useGetRandomCardQuery({ id })
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -84,11 +82,10 @@ export const FriendPackPage = () => {
       </Link>
       <div className={s.packsList}>
         <Typography variant={'large'}>Friend&apos;s Pack/{packData?.name}</Typography>
-        <Link state={{ randomCard }} to={`/learn/${id}`}>
+        <Link to={`/learn/${id}`}>
           <Button>
             <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
           </Button>
-          <LearnPage />
         </Link>
       </div>
       <DebouncedInput
