@@ -218,7 +218,7 @@ export const Packs = () => {
                   </TableCell>
                   <TableCell>
                     <div className={s.lastCell}>
-                      <Link to={`/friend-pack/${d.id}`}>
+                      <Link to={`/learn/${d.id}`}>
                         <IconLearn />
                       </Link>
                       {d.author.id === userData?.id && (
