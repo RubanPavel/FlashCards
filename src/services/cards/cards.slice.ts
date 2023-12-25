@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 export type orderByQuestion = 'question-asc' | 'question-desc'
+
 type InitialState = {
   currentPage: number
   itemsPerPage: number
