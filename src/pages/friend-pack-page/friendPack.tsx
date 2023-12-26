@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
+import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { useSort } from '@/components/packs/hook/useSort'
 import { dateOptions } from '@/components/packs/packs-list'
@@ -123,12 +124,12 @@ export const FriendPackPage = () => {
             <TableRow key={d.id}>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.question}
+                  <ExpandableText maxLength={30} text={d.question} />
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.answer}
+                  <ExpandableText maxLength={30} text={d.answer} />
                 </Typography>
               </TableCell>
               <TableCell>

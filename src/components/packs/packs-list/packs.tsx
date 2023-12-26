@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
+import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
@@ -225,7 +226,7 @@ export const Packs = () => {
                             <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
                           )}
                           <Typography as={'span'} variant={'subtitle-1'}>
-                            {d.name}
+                            <ExpandableText maxLength={30} text={d.name} />
                           </Typography>
                         </Link>
                       </TableCell>

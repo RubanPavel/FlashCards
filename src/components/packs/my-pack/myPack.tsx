@@ -7,6 +7,7 @@ import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 // import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -145,12 +146,12 @@ export const MyPack = () => {
             <TableRow key={d.id}>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.question}
+                  <ExpandableText maxLength={30} text={d.question} />
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.answer}
+                  <ExpandableText maxLength={30} text={d.answer} />
                 </Typography>
               </TableCell>
               <TableCell>
