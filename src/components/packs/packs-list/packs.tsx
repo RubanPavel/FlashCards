@@ -1,14 +1,16 @@
-import { createRef, useState } from 'react'
+import { createRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
+import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
+import { Loader } from '@/components/ui/loader'
 import { Modals } from '@/components/ui/modals'
 import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Pagination } from '@/components/ui/pagination'
@@ -41,12 +43,24 @@ export const dateOptions: Intl.DateTimeFormatOptions = {
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-  const [open, onClose] = useState(false)
 
+  const [loading, setLoading] = useState(true)
+  const [open, onClose] = useState(false)
   const { iconVector, onVectorChange, sort } = useSort('updated')
+  const [externalValues, setExternalValues] = useState<number[]>([])
 
   const { data: userData } = useGetAuthMeQuery()
-  const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
+  const { data: decks, isLoading: decksIsLoading, originalArgs } = useGetDecksQuery(params)
+
+  const maxValueSlider = decks ? decks.maxCardsCount : 0
+  const minValuesSlider = 0
+
+  useEffect(() => {
+    if (originalArgs) {
+      setExternalValues([originalArgs.minCardsCount, originalArgs.maxCardsCount])
+    }
+    setLoading(false)
+  }, [])
 
   const columnsData = [
     { id: '1', title: 'Name' },
@@ -65,6 +79,7 @@ export const Packs = () => {
       value: 'All Cards',
     },
   ]
+
   const closeRef = createRef<HTMLButtonElement>()
 
   const onSortByName = () => {
@@ -95,7 +110,8 @@ export const Packs = () => {
     dispatch(decksActions.setAuthorId({ authorId: undefined }))
     dispatch(decksActions.setName({ name: '' }))
     dispatch(decksActions.setMinCardsCount({ minCardsCount: '0' }))
-    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: undefined }))
+    dispatch(decksActions.setMaxCardsCount({ maxCardsCount: maxValueSlider.toString() }))
+    setExternalValues([0, maxValueSlider])
   }
 
   const handleSliderValues = (sliderValues: number[]) => {
@@ -113,156 +129,171 @@ export const Packs = () => {
 
   return (
     <div className={s.container}>
-      <div className={s.packsList}>
-        <Typography variant={'large'}>Packs list</Typography>
-        <ModalsNew
-          className={{ title: s.modalTitle }}
-          icon={<IconClose className={s.IconButton} />}
-          onClose={onClose}
-          open={open}
-          title={
-            <Typography as={'p'} variant={'H2'}>
-              Add New Pack
-            </Typography>
-          }
-          trigger={
-            <Button>
-              <Typography variant={'subtitle-1'}>Add new Pack</Typography>
-            </Button>
-          }
-        >
-          <AddNewPack onClose={val => onClose(val)} />
-        </ModalsNew>
-      </div>
-      <div className={s.controlPanel}>
-        <DebouncedInput
-          callback={handleSearch}
-          className={s.searchInput}
-          name={'search'}
-          type={'search'}
-        />
-        <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
-        <div>
-          <Typography variant={'body-2'}>Number of cards</Typography>
-          {decksIsLoading ? (
-            // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
-            <p>SliderRadix...</p>
-          ) : (
-            <SliderRadix max={decks?.maxCardsCount} min={0} onValueCommit={handleSliderValues} />
-          )}
-        </div>
-        <div style={{ marginLeft: 20 }}>
-          <Button onClick={handleClearFilter} variant={'secondary'}>
-            <IconDelete />
-            <Typography style={{ whiteSpace: 'nowrap' }} variant={'subtitle-2'}>
-              Clear Filter
-            </Typography>
-          </Button>
-        </div>
-      </div>
-      <div className={s.wrapperTable}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {columnsData.map(el => (
-                <TableHeadCell key={el.id}>
-                  {el.title === 'Last Updated' ? (
-                    <>
-                      <Typography
-                        className={s.onChangeVector}
-                        onClick={onSortByName}
-                        variant={'subtitle-2'}
-                      >
-                        {el.title}
-                      </Typography>
-                      <span className={s.iconVector}>{iconVector}</span>
-                    </>
-                  ) : (
-                    <Typography variant={'subtitle-2'}>{el.title}</Typography>
-                  )}
-                </TableHeadCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {decks?.items.map(d => {
-              const packPath =
-                d.author.id !== userData?.id ? `/friend-pack/${d.id}` : `/my-pack/${d.id}`
-
-              return (
-                <TableRow key={d.id}>
-                  <TableCell>
-                    <Link className={clsx(s.wrapCell, s.link)} to={packPath}>
-                      {d.cover && (
-                        <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
-                      )}
-                      <Typography as={'span'} variant={'subtitle-1'}>
-                        {d.name}
-                      </Typography>
-                    </Link>
-                  </TableCell>
-                  <TableCell>
-                    <Typography as={'p'} variant={'body-2'}>
-                      {d.cardsCount}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography as={'p'} variant={'body-2'}>
-                      {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography as={'p'} variant={'body-2'}>
-                      {d.author.name}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <div className={s.lastCell}>
-                      <Link to={`/friend-pack/${d.id}`}>
-                        <IconLearn />
-                      </Link>
-                      {d.author.id === userData?.id && (
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className={s.packsList}>
+            <Typography variant={'large'}>Packs list</Typography>
+            <ModalsNew
+              className={{ title: s.modalTitle }}
+              icon={<IconClose className={s.IconButton} />}
+              onClose={onClose}
+              open={open}
+              title={
+                <Typography as={'p'} variant={'H2'}>
+                  Add New Pack
+                </Typography>
+              }
+              trigger={
+                <Button>
+                  <Typography variant={'subtitle-1'}>Add new Pack</Typography>
+                </Button>
+              }
+            >
+              <AddNewPack onClose={val => onClose(val)} />
+            </ModalsNew>
+          </div>
+          <div className={s.controlPanel}>
+            <DebouncedInput
+              callback={handleSearch}
+              className={s.searchInput}
+              name={'search'}
+              type={'search'}
+            />
+            <TabSwitcher
+              label={'Show packs cards'}
+              onValueChange={handleTabSwitcher}
+              tabs={tabsData}
+            />
+            <div>
+              <Typography variant={'body-2'}>Number of cards</Typography>
+              {decksIsLoading ? (
+                // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
+                <p>SliderRadix...</p>
+              ) : (
+                <SliderRadix
+                  externalValues={externalValues}
+                  max={maxValueSlider}
+                  min={minValuesSlider}
+                  onValueCommit={handleSliderValues}
+                />
+              )}
+            </div>
+            <div style={{ marginLeft: 20 }}>
+              <Button onClick={handleClearFilter} variant={'secondary'}>
+                <IconDelete />
+                <Typography style={{ whiteSpace: 'nowrap' }} variant={'subtitle-2'}>
+                  Clear Filter
+                </Typography>
+              </Button>
+            </div>
+          </div>
+          <div className={s.wrapperTable}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {columnsData.map(el => (
+                    <TableHeadCell key={el.id}>
+                      {el.title === 'Last Updated' ? (
                         <>
-                          <IconEdit />
-                          <Modals
-                            icon={<IconClose className={s.IconButton} />}
-                            ref={closeRef}
-                            trigger={
-                              <Button variant={'icon'}>
-                                <IconDelete />
-                              </Button>
-                            }
+                          <Typography
+                            className={s.onChangeVector}
+                            onClick={onSortByName}
+                            variant={'subtitle-2'}
                           >
-                            <DeleteModal
-                              closeRef={closeRef}
-                              id={d.id}
-                              name={d.name}
-                              title={'Delete Pack'}
-                            />
-                          </Modals>
+                            {el.title}
+                          </Typography>
+                          <span className={s.iconVector}>{iconVector}</span>
                         </>
+                      ) : (
+                        <Typography variant={'subtitle-2'}>{el.title}</Typography>
                       )}
-                    </div>
-                  </TableCell>
+                    </TableHeadCell>
+                  ))}
                 </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-        {decks?.items.length === 0 && (
-          <Typography as={'p'} className={s.notFound} variant={'H2'}>
-            По вашему запросу ничего не найдено
-          </Typography>
-        )}
-        <Pagination
-          getPage={pageValue}
-          limit={decks ? decks.pagination.itemsPerPage : 10}
-          page={decks ? decks.pagination.currentPage : 1}
-          setLimit={setItemsPerPage}
-          setPage={setCurrentPage}
-          totalPages={decks ? decks.pagination.totalPages : 1}
-        />
-      </div>
+              </TableHead>
+              <TableBody>
+                {decks?.items.map(d => {
+                  const packPath =
+                    d.author.id !== userData?.id ? `/friend-pack/${d.id}` : `/my-pack/${d.id}`
+
+                  return (
+                    <TableRow key={d.id}>
+                      <TableCell>
+                        <Link className={clsx(s.wrapCell, s.link)} to={packPath}>
+                          {d.cover && (
+                            <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
+                          )}
+                          <Typography as={'span'} variant={'subtitle-1'}>
+                            <ExpandableText maxLength={30} text={d.name} />
+                          </Typography>
+                        </Link>
+                      </TableCell>
+                      <TableCell>
+                        <Typography as={'p'} variant={'body-2'}>
+                          {d.cardsCount}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography as={'p'} variant={'body-2'}>
+                          {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography as={'p'} variant={'body-2'}>
+                          {d.author.name}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>
+                        <div className={s.lastCell}>
+                          <Link to={`/friend-pack/${d.id}`}>
+                            <IconLearn />
+                          </Link>
+                          {d.author.id === userData?.id && (
+                            <>
+                              <IconEdit />
+                              <Modals
+                                icon={<IconClose className={s.IconButton} />}
+                                ref={closeRef}
+                                trigger={
+                                  <Button variant={'icon'}>
+                                    <IconDelete />
+                                  </Button>
+                                }
+                              >
+                                <DeleteModal
+                                  closeRef={closeRef}
+                                  id={d.id}
+                                  name={d.name}
+                                  title={'Delete Pack'}
+                                />
+                              </Modals>
+                            </>
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+            {decks?.items.length === 0 && (
+              <Typography as={'p'} className={s.notFound} variant={'H2'}>
+                По вашему запросу ничего не найдено
+              </Typography>
+            )}
+            <Pagination
+              getPage={pageValue}
+              limit={decks ? decks.pagination.itemsPerPage : 10}
+              page={decks ? decks.pagination.currentPage : 1}
+              setLimit={setItemsPerPage}
+              setPage={setCurrentPage}
+              totalPages={decks ? decks.pagination.totalPages : 1}
+            />
+          </div>
+        </>
+      )}
     </div>
   )
 }

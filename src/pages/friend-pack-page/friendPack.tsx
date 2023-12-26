@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
+import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { useSort } from '@/components/packs/hook/useSort'
 import { dateOptions } from '@/components/packs/packs-list'
@@ -18,9 +19,8 @@ import {
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { EmptyPack } from '@/pages/empty-pack-page'
-import { LearnPage } from '@/pages/learn-page/learn-page'
 import { cardsActions, orderByQuestion } from '@/services/cards/cards.slice'
-import { useGetDeckByIdQuery, useGetDecksCardsQuery, useGetRandomCardQuery } from '@/services/decks'
+import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './friendPack.module.scss'
@@ -36,7 +36,6 @@ export const FriendPackPage = () => {
     ...params,
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
-  const { data: randomCard } = useGetRandomCardQuery({ id })
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -84,11 +83,10 @@ export const FriendPackPage = () => {
       </Link>
       <div className={s.packsList}>
         <Typography variant={'large'}>Friend&apos;s Pack/{packData?.name}</Typography>
-        <Link state={{ randomCard }} to={`/learn/${id}`}>
+        <Link to={`/learn/${id}`}>
           <Button>
             <Typography variant={'subtitle-2'}>Learn to Pack</Typography>
           </Button>
-          <LearnPage />
         </Link>
       </div>
       <DebouncedInput
@@ -126,12 +124,12 @@ export const FriendPackPage = () => {
             <TableRow key={d.id}>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.question}
+                  <ExpandableText maxLength={30} text={d.question} />
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.answer}
+                  <ExpandableText maxLength={30} text={d.answer} />
                 </Typography>
               </TableCell>
               <TableCell>

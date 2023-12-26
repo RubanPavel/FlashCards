@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useState } from 'react'
+import { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 
@@ -6,7 +6,8 @@ import s from './slider.module.scss'
 
 export type Props = {
   className?: string
-  max?: number
+  externalValues?: number[]
+  max: number
   min: number
   onValueChange?: (value: number[]) => void
   onValueCommit?: (value: number[]) => void
@@ -14,6 +15,7 @@ export type Props = {
 
 export const SliderRadix = ({
   className,
+  externalValues,
   max,
   min,
   onValueChange,
@@ -21,19 +23,26 @@ export const SliderRadix = ({
   ...rest
 }: Props) => {
   // TODO почему max может быть undefined, хотелось бы убрать 13?
-  const [limits, setLimits] = useState<number[]>([min, max ?? 13])
+
+  const [values, setValues] = useState<number[]>([min, max])
+
+  useEffect(() => {
+    if (externalValues && externalValues.length === 2) {
+      setValues(externalValues)
+    }
+  }, [externalValues])
 
   return (
     <div className={s.wrapper}>
-      <span className={s.value}>{limits[0]}</span>
+      <span className={s.value}>{values[0]}</span>
       <Slider.Root
         className={`${s.SliderRoot} ${className}`}
         max={max}
         min={min}
-        onValueChange={value => setLimits(value)}
+        onValueChange={val => setValues(val)}
         onValueCommit={onValueCommit}
         step={1}
-        value={limits}
+        value={values}
         {...rest}
       >
         <Slider.Track className={s.SliderTrack}>
@@ -42,7 +51,7 @@ export const SliderRadix = ({
         <Slider.Thumb aria-label={'Volume'} className={s.SliderThumb} />
         <Slider.Thumb aria-label={'Volume'} className={s.SliderThumb} />
       </Slider.Root>
-      <span className={s.value}>{limits[1]}</span>
+      <span className={s.value}>{values[1]}</span>
     </div>
   )
 }

@@ -24,8 +24,8 @@
   }
 
   .text {
-    color: var(--color-dark-100);
     margin-bottom: 30px;
+    color: var(--color-dark-100);
   }
 
   .IconButton {
@@ -71,4 +71,11 @@
 
 .IconButtonEmpty:hover {
   background-color: var(--color-dark-100);
+}
+
+.modalTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 20px 20px;
+  border-bottom: 1px solid var(--color-dark-500);
 }

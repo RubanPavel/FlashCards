@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { LearnCard } from '@/components/packs/modals/learnCard'
 import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Typography } from '@/components/ui/typography'
-import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { useGetDeckByIdQuery, useGetDecksCardsQuery, useGetRandomCardQuery } from '@/services/decks'
 
 import s from './learn-page.module.scss'
 
 export const LearnPage = React.memo(() => {
   const [open, onClose] = useState(false)
-  const { state } = useLocation()
-
   const { id } = useParams()
   const { data: packData } = useGetDeckByIdQuery({ id })
   const { data: cardsData } = useGetDecksCardsQuery({ id })
+  const { data: randomCard } = useGetRandomCardQuery({ id })
 
   useEffect(() => {
-    state && onClose(true)
+    randomCard && onClose(true)
 
     return () => {
-      state && onClose(false)
+      randomCard && onClose(false)
     }
-  }, [])
+  }, [randomCard])
 
-  const randomCard = state && state.randomCard
   const cardsWithoutRandomCard = cardsData?.items.filter(c => c.id !== randomCard?.id)
 
   return (

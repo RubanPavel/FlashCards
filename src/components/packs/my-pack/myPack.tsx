@@ -1,12 +1,13 @@
 // import { FieldValues } from 'react-hook-form'
 
-import { createRef } from 'react'
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 // import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
@@ -17,7 +18,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { Modals } from '@/components/ui/modals'
+import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import {
   Table,
   TableBody,
@@ -32,7 +33,7 @@ import s from './myPack.module.scss'
 
 export const MyPack = () => {
   const { iconVector, onVectorChange } = useSort('updated')
-  const closeRef = createRef<HTMLButtonElement>()
+  const [open, onClose] = useState(false)
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -97,17 +98,24 @@ export const MyPack = () => {
             </DropDownItem>
           </DropdownMenu>
         </div>
-        <Modals
-          icon={<IconClose className={s.IconButton} />}
-          ref={closeRef}
+        <ModalsNew
+          className={{ title: s.modalTitle }}
+          icon={<IconClose className={s.IconButtonMyPack} />}
+          onClose={onClose}
+          open={open}
+          title={
+            <Typography as={'p'} variant={'H2'}>
+              Add New Card
+            </Typography>
+          }
           trigger={
             <Button>
-              <Typography variant={'subtitle-2'}>Add New Card</Typography>
+              <Typography variant={'subtitle-1'}>Add new Card</Typography>
             </Button>
           }
         >
-          <AddNewCard closeRef={closeRef} id={id} />
-        </Modals>
+          <AddNewCard id={id} onClose={val => onClose(val)} />
+        </ModalsNew>
       </div>
       {/*<SearchInput className={s.searchInput} valueInput={getValue} />*/}
       <Table>
@@ -138,12 +146,12 @@ export const MyPack = () => {
             <TableRow key={d.id}>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.question}
+                  <ExpandableText maxLength={30} text={d.question} />
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography as={'p'} variant={'body-2'}>
-                  {d.answer}
+                  <ExpandableText maxLength={30} text={d.answer} />
                 </Typography>
               </TableCell>
               <TableCell>

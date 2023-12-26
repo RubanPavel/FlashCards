@@ -5,7 +5,7 @@ type InitialState = {
   authorId: string | undefined
   currentPage: number
   itemsPerPage: number
-  maxCardsCount: string | undefined
+  maxCardsCount: string
   minCardsCount: string
   name: string
   orderBy: orderByUpdated
@@ -15,7 +15,7 @@ const initialState: InitialState = {
   authorId: undefined,
   currentPage: 1,
   itemsPerPage: 10,
-  maxCardsCount: undefined,
+  maxCardsCount: '0',
   minCardsCount: '0',
   name: '',
   //TODO возможно поменять orderBy и протипизировать более узко, возможно строка слишком широко
@@ -35,7 +35,7 @@ const slice = createSlice({
     setItemsPerPage: (state, action: PayloadAction<{ itemsPerPage: number }>) => {
       state.itemsPerPage = action.payload.itemsPerPage
     },
-    setMaxCardsCount: (state, action: PayloadAction<{ maxCardsCount: string | undefined }>) => {
+    setMaxCardsCount: (state, action: PayloadAction<{ maxCardsCount: string }>) => {
       state.maxCardsCount = action.payload.maxCardsCount
     },
     setMinCardsCount: (state, action: PayloadAction<{ minCardsCount: string }>) => {
