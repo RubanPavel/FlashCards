@@ -52,11 +52,12 @@ export const Packs = () => {
   const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading, originalArgs } = useGetDecksQuery(params)
 
+
   const maxValueSlider = decks ? decks.maxCardsCount : 0
   const minValuesSlider = 0
 
   useEffect(() => {
-    if (originalArgs) {
+    if (originalArgs && originalArgs.maxCardsCount !== '0') {
       setExternalValues([originalArgs.minCardsCount, originalArgs.maxCardsCount])
     }
     setLoading(false)
