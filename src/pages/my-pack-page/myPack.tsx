@@ -18,7 +18,14 @@ import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
 import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Pagination } from '@/components/ui/pagination'
-import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
@@ -131,13 +138,15 @@ export const MyPackPage = () => {
         type={'search'}
       />
       <Table>
-        <TableRow>
-          {columnsData.map(el => (
-            <TableHeadCell key={el.id}>
-              <Typography variant={'subtitle-2'}>{el.title}</Typography>
-            </TableHeadCell>
-          ))}
-        </TableRow>
+        <TableHead>
+          <TableRow>
+            {columnsData.map(el => (
+              <TableHeadCell key={el.id}>
+                <Typography variant={'subtitle-2'}>{el.title}</Typography>
+              </TableHeadCell>
+            ))}
+          </TableRow>
+        </TableHead>
         <TableBody>
           {cardsData?.items.map(d => (
             <TableRow key={d.id}>

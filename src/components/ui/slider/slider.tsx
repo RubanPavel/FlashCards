@@ -22,11 +22,9 @@ export const SliderRadix = ({
   onValueCommit,
   ...rest
 }: Props) => {
-
   const [values, setValues] = useState<number[]>([min, max])
 
   useEffect(() => {
-
     if (externalValues && externalValues.length) {
       setValues(externalValues)
     }

@@ -52,7 +52,6 @@ export const Packs = () => {
   const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading, originalArgs } = useGetDecksQuery(params)
 
-
   const maxValueSlider = decks ? decks.maxCardsCount : 0
   const minValuesSlider = 0
 
