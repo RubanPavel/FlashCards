@@ -42,8 +42,6 @@ export const MyPackPage = () => {
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
 
-  // const closeRef = createRef<HTMLButtonElement>()
-
   const handleSearch = (searchValue: string) => {
     dispatch(cardsActions.setQuestion({ question: searchValue }))
   }
@@ -163,19 +161,6 @@ export const MyPackPage = () => {
                 <StarRating filledStars={d.grade} />
                 <div className={s.pointer}>
                   <IconEdit />
-                  {/*<Modals*/}
-                  {/*  icon={<IconClose className={s.IconButtonMyPack} />}*/}
-                  {/*  ref={closeRef}*/}
-                  {/*  trigger={<IconDelete />}*/}
-                  {/*>*/}
-                  {/*  <DeleteModal*/}
-                  {/*    closeRef={closeRef}*/}
-                  {/*    id={d.id}*/}
-                  {/*    name={d.question}*/}
-                  {/*    title={'Delete Card'}*/}
-                  {/*  />*/}
-                  {/*</Modals>*/}
-
                   <ModalsNew
                     className={{ title: s.modalTitle }}
                     icon={<IconClose className={s.IconButtonMyPack} />}

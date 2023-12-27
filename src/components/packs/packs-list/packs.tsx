@@ -80,8 +80,6 @@ export const Packs = () => {
     },
   ]
 
-  // const closeRef = createRef<HTMLButtonElement>()
-
   const onSortByName = () => {
     onVectorChange('updated')
     dispatch(decksActions.setOrderBy({ orderBy: sort as orderByUpdated }))
