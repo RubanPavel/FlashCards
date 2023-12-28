@@ -8,12 +8,10 @@ export type AuthResponse = {
   updated: string
 }
 
-export type updateUserType = FormData
-// {
-//   avatar?: string
-//   email?: string
-//   name?: string
-// }
+export type UpdateUser =
+    | { avatar: File; email?: string; name?: string }
+    | { email: string; avatar?: File; name?: string }
+    | { name: string; avatar?: File; email?: string }
 
 export type updateUserResponse = {
   avatar: string

@@ -1,44 +1,33 @@
-import { ComponentPropsWithoutRef } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-
+import {ComponentPropsWithoutRef} from 'react'
+import { useForm } from 'react-hook-form'
 import { User } from '@/assets/userDataForTest'
-import { avatarSchema, emailSchema, nicknameSchema } from '@/components/auth/validate/validate'
-import { formFieldsVariant } from '@/components/profile'
+import { nicknameSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
-import { Input } from '@/components/ui/input'
-import { useUpdateUserMutation } from '@/services/auth'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
 import s from './pfofile-form.module.scss'
+import {UpdateUser} from "@/services/auth";
 
 export const editEditProfileSchema = z.object({
-  avatar: avatarSchema,
-  email: emailSchema,
   nickname: nicknameSchema,
 })
 
 type FormValues = z.infer<typeof editEditProfileSchema>
 
-export type Variant = (typeof formFieldsVariant)[keyof typeof formFieldsVariant]
-
 type Props = {
-  onCancel: () => void
-  variant: Variant
+  handleCancelEdit: () => void
+  handleUpdateUser: (formData: UpdateUser) => void
 } & ComponentPropsWithoutRef<'form'>
 
-export const ProfileForm = ({ onCancel, variant }: Props) => {
-  const [updateUser] = useUpdateUserMutation()
+export const ProfileForm = ({ handleCancelEdit, handleUpdateUser}: Props) => {
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm<FormValues>({
     defaultValues: {
-      avatar: undefined,
-      email: User.email,
       nickname: User.name,
     },
     mode: 'onBlur',
@@ -48,46 +37,13 @@ export const ProfileForm = ({ onCancel, variant }: Props) => {
 
   // TODO
   const onSubmit = (updatedData: FormValues) => {
-    // console.log(updatedData)
-    const payload = new FormData()
-
-    if (updatedData.nickname) {
-      payload.append('name', 'testUser')
-    }
-
-    if (updatedData.avatar) {
-      payload.append('avatar', updatedData.avatar[0])
-    }
-
-    if (updatedData.email) {
-      payload.append('email', updatedData.email)
-    }
-    updateUser(payload)
-    onCancel()
+    handleUpdateUser({name: updatedData.nickname})
+    handleCancelEdit()
   }
 
   return (
     <form className={s.EditProfileFormRoot} onSubmit={handleSubmit(onSubmit)}>
       <DevTool control={control} />
-      {variant === formFieldsVariant.avatar && (
-        <Controller
-          control={control}
-          name={'avatar'}
-          render={({ field }) => (
-            // TODO поправить ограничения по аватару
-            <Input
-              accept={'image/jpeg, image/jpg, image/png, image/webp'}
-              errorMessage={errors.avatar?.message}
-              label={'Avatar'}
-              name={'avatar'}
-              onChange={e => field.onChange(e.target.files)}
-              size={5 * 1024 * 1024}
-              type={'file'}
-            />
-          )}
-        />
-      )}
-      {variant === formFieldsVariant.nickname && (
         <ControlInput
           control={control}
           errorMessage={errors.nickname?.message}
@@ -95,16 +51,6 @@ export const ProfileForm = ({ onCancel, variant }: Props) => {
           name={'nickname'}
           type={'text'}
         />
-      )}
-      {variant === formFieldsVariant.email && (
-        <ControlInput
-          control={control}
-          errorMessage={errors.email?.message}
-          label={'Email'}
-          name={'email'}
-          type={'text'}
-        />
-      )}
       <Button fullWidth type={'submit'}>
         Save Changes
       </Button>

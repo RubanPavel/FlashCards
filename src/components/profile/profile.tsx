@@ -1,39 +1,36 @@
 import { useState } from 'react'
-
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLogOut } from '@/assets/icons/IconLogOut'
-import { ProfileForm, Variant } from '@/components/profile/profile-form'
+import { ProfileForm } from '@/components/profile/profile-form'
 import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
-import { AuthResponse } from '@/services/auth'
+import {AuthResponse, UpdateUser} from '@/services/auth'
 import { clsx } from 'clsx'
 
 import s from './profile.module.scss'
-
-// TODO
-export const formFieldsVariant = {
-  avatar: 'avatar',
-  email: 'email',
-  nickname: 'nickname',
-} as const
+import {ProfilePageContent} from "@/assets/variable";
+import {EditAvatar} from "@/components/profile/edit-avatar/edit-avatar";
 
 type Props = {
   className?: string
   logout: () => void
+  handleUpdateUser: (formData: UpdateUser) => void
   user: AuthResponse | undefined
 }
 
-export const Profile = ({ className, logout, user }: Props) => {
-  const [editingVariant, setEditingVariant] = useState<Variant | null>(null)
+type Trigger = 'nickname' | 'avatar'
 
-  const handleEditClick = (variant: Variant) => {
-    setEditingVariant(variant)
+export const Profile = ({ className, logout, user, handleUpdateUser }: Props) => {
+  const [trigger, setTrigger] = useState<Trigger | null>(null)
+  const { title, logoutButton} = ProfilePageContent.profile
+  const handleEditClick = (variant: Trigger ) => {
+    setTrigger(variant)
   }
 
   const handleCancelEdit = () => {
-    setEditingVariant(null)
+    setTrigger(null)
   }
 
   const logoutButtonClicked = () => {
@@ -43,23 +40,26 @@ export const Profile = ({ className, logout, user }: Props) => {
   return (
     <Card className={clsx(s.ProfileRoot, className)}>
       <Typography as={'h1'} className={s.ProfileHeader} variant={'large'}>
-        Personal Information
+        {title}
       </Typography>
-      <div className={s.ProfileAvatarWrapper}>
-        <AvatarRadix className={s.ProfileAvatar} imageUrl={user?.avatar} userName={user?.name} />
-        {!editingVariant && (
-          <Button
-            className={s.ProfileAvatarButton}
-            onClick={() => handleEditClick(formFieldsVariant.avatar)}
-            variant={'icon'}
-          >
-            <IconEdit height={16} width={16} />
-          </Button>
-        )}
-      </div>
-      {editingVariant ? (
-        <ProfileForm onCancel={handleCancelEdit} variant={editingVariant} />
-      ) : (
+        {trigger === "avatar" ? (
+            <EditAvatar handleUpdateUser={handleUpdateUser} handleCancelEdit={handleCancelEdit} />
+        ):(
+            <div className={s.ProfileAvatarWrapper}>
+            <AvatarRadix className={s.ProfileAvatar} imageUrl={user?.avatar} userName={user?.name} />
+              {!trigger && (
+                  <Button
+                      className={s.ProfileAvatarButton}
+                      onClick={() => handleEditClick('avatar')}
+                      variant={'icon'}
+                  >
+                    <IconEdit height={16} width={16} />
+                  </Button>
+              )}
+            </div>
+          )}
+      {trigger === 'nickname' && <ProfileForm  handleUpdateUser={handleUpdateUser} handleCancelEdit={handleCancelEdit} />}
+      {!trigger && (
         <div className={s.ProfileContainer}>
           <div className={s.ProfileInfoWrapper}>
             <Typography as={'p'} variant={'H1'}>
@@ -67,7 +67,7 @@ export const Profile = ({ className, logout, user }: Props) => {
             </Typography>
             <Button
               className={s.ProfileNicknameButton}
-              onClick={() => handleEditClick(formFieldsVariant.nickname)}
+              onClick={() => handleEditClick('nickname')}
               variant={'icon'}
             >
               <IconEdit height={16} width={16} />
@@ -78,7 +78,7 @@ export const Profile = ({ className, logout, user }: Props) => {
           </Typography>
           <Button className={s.logoutButton} onClick={logoutButtonClicked} variant={'secondary'}>
             <IconLogOut height={16} width={16} />
-            Logout
+            {logoutButton}
           </Button>
         </div>
       )}

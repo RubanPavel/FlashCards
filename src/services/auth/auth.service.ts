@@ -9,7 +9,7 @@ import {
   recoveryPasswordType,
   resetPasswordType,
   updateUserResponse,
-  updateUserType,
+  UpdateUser,
   verifyEmailResendType,
   verifyEmailType,
 } from './auth.types'
@@ -68,13 +68,25 @@ export const AuthService = baseApi.injectEndpoints({
           url: `/v1/auth/reset-password/${token}`,
         }),
       }),
-      updateUser: builder.mutation<updateUserResponse, updateUserType>({
+      updateUser: builder.mutation<updateUserResponse, UpdateUser>({
         invalidatesTags: ['Auth'],
-        query: args => ({
-          body: args,
-          method: 'PATCH',
-          url: 'v1/auth/me',
-        }),
+        query: args => {
+          const payload = new FormData();
+          if ('avatar' in args && args.avatar) {
+            payload.append('avatar', args.avatar);
+          }
+          if ('email' in args && args.email) {
+            payload.append('email', args.email);
+          }
+          if ('name' in args && args.name) {
+            payload.append('name', args.name);
+          }
+          return {
+            body: payload,
+            method: 'PATCH',
+            url: 'v1/auth/me',
+          };
+        },
       }),
       verifyEmail: builder.mutation<unknown, verifyEmailType>({
         invalidatesTags: ['Auth'],

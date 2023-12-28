@@ -1,0 +1,18 @@
+.AvatarRoot {
+  display: grid;
+  place-content: center;
+  margin-top: 25px;
+}
+
+.AvatarWrapper {
+  transition: all 0.3s ease;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+}
+
+.AvatarButton {
+  margin-top: 16px
+}

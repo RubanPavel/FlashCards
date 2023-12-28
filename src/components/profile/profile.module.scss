@@ -15,8 +15,9 @@
   margin: 25px 0 6px;
 
   .ProfileAvatar {
-    min-width: 96px;
-    min-height: 96px;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
   }
 
   .ProfileAvatarButton {

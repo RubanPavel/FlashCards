@@ -4,6 +4,10 @@ import { FormValues, SignUp } from '@/components/auth/sign-up'
 import { useCreateNewUserMutation } from '@/services/auth'
 
 import s from './register-page.module.scss'
+import {ServerError} from "@/services/error.types";
+import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
+import {toast} from "react-toastify";
+import {errorText, registerPageContent} from "@/assets/variable";
 
 export const RegisterPage = () => {
   const [createUser, {}] = useCreateNewUserMutation()
@@ -12,10 +16,10 @@ export const RegisterPage = () => {
   const handleRegister = (formData: FormValues) => {
     const params = {
       email: formData.email,
-      html: '<b>Hello!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:5173/confirm-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:5173/confirm-email/##token##',
+      html: registerPageContent.html,
       password: formData.password,
       sendConfirmationEmail: true,
-      subject: 'Confirm your email',
+      subject: registerPageContent.subject,
     }
 
     createUser(params)
@@ -23,9 +27,11 @@ export const RegisterPage = () => {
       .then(() => {
         navigate('/login')
       })
-      .catch(error => {
-        console.error('Ошибка при создании пользователя', error)
-      })
+        .catch((e: ServerError & FetchBaseQueryError) => {
+          toast.error(e?.data?.message || errorText, {
+            position: toast.POSITION.BOTTOM_CENTER,
+          })
+        })
   }
 
   return <SignUp className={s.RegisterPageRoot} handleRegister={handleRegister} />

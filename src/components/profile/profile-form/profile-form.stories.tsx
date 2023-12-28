@@ -8,11 +8,6 @@ import { store } from '@/services/store'
 import { ProfileForm } from './index'
 
 const meta = {
-  argTypes: {
-    variant: {
-      options: ['Nickname', 'Avatar'],
-    },
-  },
   component: ProfileForm,
   decorators: [
     Story => (
@@ -30,20 +25,5 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const ProfileFormNickname: Story = {
-  args: {
-    variant: 'nickname',
-  },
-}
+export const ProfileFormDefault: Story = {}
 
-export const ProfileFormEmail: Story = {
-  args: {
-    variant: 'email',
-  },
-}
-
-export const ProfileFormAvatar: Story = {
-  args: {
-    variant: 'avatar',
-  },
-}

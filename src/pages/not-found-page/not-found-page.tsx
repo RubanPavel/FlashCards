@@ -7,6 +7,7 @@ import { Typography } from '@/components/ui/typography'
 import { clsx } from 'clsx'
 
 import s from './not-found-page.module.scss'
+import {notFoundPageContent} from "@/assets/variable";
 
 type Props = ComponentPropsWithoutRef<'div'>
 
@@ -15,10 +16,10 @@ export const NotFoundPage = forwardRef<HTMLDivElement, Props>(({ className, ...r
     <div className={clsx(s.NotFoundPageRoot, className)} ref={ref} {...rest}>
       <IconNotFound />
       <Typography as={'p'} className={clsx(s.NotFoundPageText)} variant={'body-1'}>
-        Sorry! Page not found!
+          {notFoundPageContent.text}
       </Typography>
       <Button as={Link} className={clsx(s.NotFoundPageLink)} to={'/'} variant={'primary'}>
-        Back to home page
+          {notFoundPageContent.link}
       </Button>
     </div>
   )
