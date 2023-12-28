@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
+import { errorText, registerPageContent } from '@/assets/variable'
 import { FormValues, SignUp } from '@/components/auth/sign-up'
 import { useCreateNewUserMutation } from '@/services/auth'
+import { ServerError } from '@/services/error.types'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import s from './register-page.module.scss'
-import {ServerError} from "@/services/error.types";
-import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
-import {toast} from "react-toastify";
-import {errorText, registerPageContent} from "@/assets/variable";
 
 export const RegisterPage = () => {
   const [createUser, {}] = useCreateNewUserMutation()
@@ -27,11 +27,11 @@ export const RegisterPage = () => {
       .then(() => {
         navigate('/login')
       })
-        .catch((e: ServerError & FetchBaseQueryError) => {
-          toast.error(e?.data?.message || errorText, {
-            position: toast.POSITION.BOTTOM_CENTER,
-          })
+      .catch((e: ServerError & FetchBaseQueryError) => {
+        toast.error(e?.data?.message || errorText, {
+          position: toast.POSITION.BOTTOM_CENTER,
         })
+      })
   }
 
   return <SignUp className={s.RegisterPageRoot} handleRegister={handleRegister} />

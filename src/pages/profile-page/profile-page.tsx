@@ -1,5 +1,10 @@
 import { Profile } from '@/components/profile'
-import {UpdateUser, useGetAuthMeQuery, useLogoutMutation, useUpdateUserMutation} from '@/services/auth'
+import {
+  UpdateUser,
+  useGetAuthMeQuery,
+  useLogoutMutation,
+  useUpdateUserMutation,
+} from '@/services/auth'
 
 import s from './profile-page.module.scss'
 
@@ -12,5 +17,12 @@ export const ProfilePage = () => {
     updateUser(formData)
   }
 
-  return <Profile className={s.ProfilePageRoot} handleUpdateUser={handleUpdateUser} logout={logout} user={user} />
+  return (
+    <Profile
+      className={s.ProfilePageRoot}
+      handleUpdateUser={handleUpdateUser}
+      logout={logout}
+      user={user}
+    />
+  )
 }

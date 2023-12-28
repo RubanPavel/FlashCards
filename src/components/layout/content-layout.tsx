@@ -45,18 +45,20 @@ export const ContentLayout = () => {
     )
   } else {
     const trigger = (
-      <AvatarRadix
-        className={s.trigger}
-        imageUrl={user?.avatar}
-        userName={user?.name}
-      ></AvatarRadix>
+      <div className={s.TriggerRoot}>
+        <Typography as={'h5'} className={s.TriggerName} variant={'subtitle-2'}>
+          {user?.name}
+        </Typography>
+        <AvatarRadix
+          className={s.TrigerAvatar}
+          imageUrl={user?.avatar}
+          userName={user?.name}
+        ></AvatarRadix>
+      </div>
     )
 
     headerContent = (
       <div className={s.root}>
-        <Typography as={'h5'} className={s.userName} variant={'subtitle-2'}>
-          {user?.name}
-        </Typography>
         <DropdownMenu position={'end'} trigger={trigger}>
           <DropDownItem className={s.dropdownItem} onSelect={e => e.preventDefault()}>
             <AvatarRadix imageUrl={user?.avatar} userName={user?.name} />

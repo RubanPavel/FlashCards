@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify'
 
+import { errorText } from '@/assets/variable'
 import { FormValues, SignIn } from '@/components/auth/sign-in'
 import { useLoginMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import s from './login-page.module.scss'
-import {errorText} from "@/assets/variable";
 export const LoginPage = () => {
   const [login, {}] = useLoginMutation()
   const handleLogin = (formData: FormValues) => {

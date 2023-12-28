@@ -12,14 +12,9 @@
   justify-content: center;
 }
 
-.trigger {
+.TriggerRoot {
+  position: relative;
   pointer-events: auto;
-
-  width: 36px;
-  height: 36px;
-
-  background-color: var(--color-dark-900);
-  border-radius: 50%;
 
   transition: opacity 0.3s ease;
 
@@ -29,8 +24,9 @@
   }
 }
 
-.userName {
-  margin-right: 0.875rem;
+.TriggerName {
+  position: absolute;
+  right: calc(100% + 0.875rem);
   border-bottom: 1px dashed var(--color-light-100);
 }
 

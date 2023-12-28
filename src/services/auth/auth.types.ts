@@ -9,9 +9,9 @@ export type AuthResponse = {
 }
 
 export type UpdateUser =
-    | { avatar: File; email?: string; name?: string }
-    | { email: string; avatar?: File; name?: string }
-    | { name: string; avatar?: File; email?: string }
+  | { avatar: File; email?: string; name?: string }
+  | { avatar?: File; email: string; name?: string }
+  | { avatar?: File; email?: string; name: string }
 
 export type updateUserResponse = {
   avatar: string

@@ -1,31 +1,32 @@
 import { useState } from 'react'
+
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLogOut } from '@/assets/icons/IconLogOut'
+import { ProfilePageContent } from '@/assets/variable'
+import { EditAvatar } from '@/components/profile/edit-avatar/edit-avatar'
 import { ProfileForm } from '@/components/profile/profile-form'
 import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Typography } from '@/components/ui/typography'
-import {AuthResponse, UpdateUser} from '@/services/auth'
+import { AuthResponse, UpdateUser } from '@/services/auth'
 import { clsx } from 'clsx'
 
 import s from './profile.module.scss'
-import {ProfilePageContent} from "@/assets/variable";
-import {EditAvatar} from "@/components/profile/edit-avatar/edit-avatar";
 
 type Props = {
   className?: string
-  logout: () => void
   handleUpdateUser: (formData: UpdateUser) => void
+  logout: () => void
   user: AuthResponse | undefined
 }
 
-type Trigger = 'nickname' | 'avatar'
+type Trigger = 'avatar' | 'nickname'
 
-export const Profile = ({ className, logout, user, handleUpdateUser }: Props) => {
+export const Profile = ({ className, handleUpdateUser, logout, user }: Props) => {
   const [trigger, setTrigger] = useState<Trigger | null>(null)
-  const { title, logoutButton} = ProfilePageContent.profile
-  const handleEditClick = (variant: Trigger ) => {
+  const { logoutButton, title } = ProfilePageContent.profile
+  const handleEditClick = (variant: Trigger) => {
     setTrigger(variant)
   }
 
@@ -42,23 +43,25 @@ export const Profile = ({ className, logout, user, handleUpdateUser }: Props) =>
       <Typography as={'h1'} className={s.ProfileHeader} variant={'large'}>
         {title}
       </Typography>
-        {trigger === "avatar" ? (
-            <EditAvatar handleUpdateUser={handleUpdateUser} handleCancelEdit={handleCancelEdit} />
-        ):(
-            <div className={s.ProfileAvatarWrapper}>
-            <AvatarRadix className={s.ProfileAvatar} imageUrl={user?.avatar} userName={user?.name} />
-              {!trigger && (
-                  <Button
-                      className={s.ProfileAvatarButton}
-                      onClick={() => handleEditClick('avatar')}
-                      variant={'icon'}
-                  >
-                    <IconEdit height={16} width={16} />
-                  </Button>
-              )}
-            </div>
+      {trigger === 'avatar' ? (
+        <EditAvatar handleCancelEdit={handleCancelEdit} handleUpdateUser={handleUpdateUser} />
+      ) : (
+        <div className={s.ProfileAvatarWrapper}>
+          <AvatarRadix className={s.ProfileAvatar} imageUrl={user?.avatar} userName={user?.name} />
+          {!trigger && (
+            <Button
+              className={s.ProfileAvatarButton}
+              onClick={() => handleEditClick('avatar')}
+              variant={'icon'}
+            >
+              <IconEdit height={16} width={16} />
+            </Button>
           )}
-      {trigger === 'nickname' && <ProfileForm  handleUpdateUser={handleUpdateUser} handleCancelEdit={handleCancelEdit} />}
+        </div>
+      )}
+      {trigger === 'nickname' && (
+        <ProfileForm handleCancelEdit={handleCancelEdit} handleUpdateUser={handleUpdateUser} />
+      )}
       {!trigger && (
         <div className={s.ProfileContainer}>
           <div className={s.ProfileInfoWrapper}>
