@@ -144,14 +144,16 @@ export const FriendPackPage = () => {
           ))}
         </TableBody>
       </Table>
-      <Pagination
-        getPage={pageValue}
-        limit={cardsData ? cardsData.pagination.itemsPerPage : 10}
-        page={cardsData ? cardsData.pagination.currentPage : 1}
-        setLimit={setItemsPerPage}
-        setPage={setCurrentPage}
-        totalPages={cardsData ? cardsData.pagination.totalPages : 1}
-      />
+      {packData?.cardsCount !== 0 && (
+        <Pagination
+          getPage={pageValue}
+          limit={cardsData ? cardsData.pagination.itemsPerPage : 10}
+          page={cardsData ? cardsData.pagination.currentPage : 1}
+          setLimit={setItemsPerPage}
+          setPage={setCurrentPage}
+          totalPages={cardsData ? cardsData.pagination.totalPages : 1}
+        />
+      )}
     </div>
   )
 }

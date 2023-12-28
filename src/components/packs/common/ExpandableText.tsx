@@ -22,7 +22,7 @@ export function ExpandableText({ maxLength, text }: Props) {
   const displayText = expanded && text.length > maxLength ? `${text.slice(0, maxLength)}...` : text
 
   return (
-    <div>
+    <>
       <span
         style={{ ...styles.text, wordWrap: text.length > maxLength ? 'break-word' : undefined }}
       >
@@ -33,6 +33,6 @@ export function ExpandableText({ maxLength, text }: Props) {
           {!expanded ? 'hide' : 'show all'}
         </button>
       )}
-    </div>
+    </>
   )
 }

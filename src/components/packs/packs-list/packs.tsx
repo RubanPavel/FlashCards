@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
@@ -11,7 +11,6 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { Loader } from '@/components/ui/loader'
-import { Modals } from '@/components/ui/modals'
 import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Pagination } from '@/components/ui/pagination'
 import { SliderRadix } from '@/components/ui/slider'
@@ -45,7 +44,8 @@ export const Packs = () => {
   const params = useAppSelector(state => state.decksParams)
 
   const [loading, setLoading] = useState(true)
-  const [open, onClose] = useState(false)
+  const [openModalNewPack, onCloseModalNewPack] = useState(false)
+  const [openModalDelete, onCloseModalDelete] = useState(false)
   const { iconVector, onVectorChange, sort } = useSort('updated')
   const [externalValues, setExternalValues] = useState<number[]>([])
 
@@ -56,7 +56,7 @@ export const Packs = () => {
   const minValuesSlider = 0
 
   useEffect(() => {
-    if (originalArgs) {
+    if (originalArgs && originalArgs.maxCardsCount !== '0') {
       setExternalValues([originalArgs.minCardsCount, originalArgs.maxCardsCount])
     }
     setLoading(false)
@@ -80,8 +80,6 @@ export const Packs = () => {
     },
   ]
 
-  const closeRef = createRef<HTMLButtonElement>()
-
   const onSortByName = () => {
     onVectorChange('updated')
     dispatch(decksActions.setOrderBy({ orderBy: sort as orderByUpdated }))
@@ -104,6 +102,7 @@ export const Packs = () => {
     } else {
       dispatch(decksActions.setAuthorId({ authorId: undefined }))
     }
+    setLoading(false)
   }
 
   const handleClearFilter = () => {
@@ -138,8 +137,8 @@ export const Packs = () => {
             <ModalsNew
               className={{ title: s.modalTitle }}
               icon={<IconClose className={s.IconButton} />}
-              onClose={onClose}
-              open={open}
+              onClose={onCloseModalNewPack}
+              open={openModalNewPack}
               title={
                 <Typography as={'p'} variant={'H2'}>
                   Add New Pack
@@ -151,7 +150,7 @@ export const Packs = () => {
                 </Button>
               }
             >
-              <AddNewPack onClose={val => onClose(val)} />
+              <AddNewPack onClose={val => onCloseModalNewPack(val)} />
             </ModalsNew>
           </div>
           <div className={s.controlPanel}>
@@ -247,15 +246,22 @@ export const Packs = () => {
                       </TableCell>
                       <TableCell>
                         <div className={s.lastCell}>
-                          <Link to={`/friend-pack/${d.id}`}>
+                          <Link to={packPath}>
                             <IconLearn />
                           </Link>
                           {d.author.id === userData?.id && (
                             <>
                               <IconEdit />
-                              <Modals
+                              <ModalsNew
+                                className={{ title: s.modalTitle }}
                                 icon={<IconClose className={s.IconButton} />}
-                                ref={closeRef}
+                                onClose={onCloseModalDelete}
+                                open={openModalDelete}
+                                title={
+                                  <Typography as={'p'} variant={'H2'}>
+                                    Delete Pack
+                                  </Typography>
+                                }
                                 trigger={
                                   <Button variant={'icon'}>
                                     <IconDelete />
@@ -263,12 +269,12 @@ export const Packs = () => {
                                 }
                               >
                                 <DeleteModal
-                                  closeRef={closeRef}
                                   id={d.id}
                                   name={d.name}
+                                  onClose={val => onCloseModalDelete(val)}
                                   title={'Delete Pack'}
                                 />
-                              </Modals>
+                              </ModalsNew>
                             </>
                           )}
                         </div>

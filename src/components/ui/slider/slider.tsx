@@ -22,12 +22,10 @@ export const SliderRadix = ({
   onValueCommit,
   ...rest
 }: Props) => {
-  // TODO почему max может быть undefined, хотелось бы убрать 13?
-
   const [values, setValues] = useState<number[]>([min, max])
 
   useEffect(() => {
-    if (externalValues && externalValues.length === 2) {
+    if (externalValues && externalValues.length) {
       setValues(externalValues)
     }
   }, [externalValues])

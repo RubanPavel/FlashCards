@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
@@ -16,10 +16,16 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { Modals } from '@/components/ui/modals'
 import { ModalsNew } from '@/components/ui/modals/modalsNew.'
 import { Pagination } from '@/components/ui/pagination'
-import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/components/ui/tables'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
@@ -31,7 +37,10 @@ import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
-  const [open, onClose] = useState(false)
+
+  const [openModalNewCard, onCloseModalNewCard] = useState(false)
+  const [openModalDelete, onCloseModalDelete] = useState(false)
+
   const dispatch = useAppDispatch()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
@@ -39,8 +48,6 @@ export const MyPackPage = () => {
     ...params,
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
-
-  const closeRef = createRef<HTMLButtonElement>()
 
   const handleSearch = (searchValue: string) => {
     dispatch(cardsActions.setQuestion({ question: searchValue }))
@@ -107,8 +114,8 @@ export const MyPackPage = () => {
         <ModalsNew
           className={{ title: s.modalTitle }}
           icon={<IconClose className={s.IconButtonMyPack} />}
-          onClose={onClose}
-          open={open}
+          onClose={onCloseModalNewCard}
+          open={openModalNewCard}
           title={
             <Typography as={'p'} variant={'H2'}>
               Add New Card
@@ -120,7 +127,7 @@ export const MyPackPage = () => {
             </Button>
           }
         >
-          <AddNewCard id={id} onClose={val => onClose(val)} />
+          <AddNewCard id={id} onClose={val => onCloseModalNewCard(val)} />
         </ModalsNew>
       </div>
       <DebouncedInput
@@ -131,13 +138,15 @@ export const MyPackPage = () => {
         type={'search'}
       />
       <Table>
-        <TableRow>
-          {columnsData.map(el => (
-            <TableHeadCell key={el.id}>
-              <Typography variant={'subtitle-2'}>{el.title}</Typography>
-            </TableHeadCell>
-          ))}
-        </TableRow>
+        <TableHead>
+          <TableRow>
+            {columnsData.map(el => (
+              <TableHeadCell key={el.id}>
+                <Typography variant={'subtitle-2'}>{el.title}</Typography>
+              </TableHeadCell>
+            ))}
+          </TableRow>
+        </TableHead>
         <TableBody>
           {cardsData?.items.map(d => (
             <TableRow key={d.id}>
@@ -161,18 +170,29 @@ export const MyPackPage = () => {
                 <StarRating filledStars={d.grade} />
                 <div className={s.pointer}>
                   <IconEdit />
-                  <Modals
+                  <ModalsNew
+                    className={{ title: s.modalTitle }}
                     icon={<IconClose className={s.IconButtonMyPack} />}
-                    ref={closeRef}
-                    trigger={<IconDelete />}
+                    onClose={onCloseModalDelete}
+                    open={openModalDelete}
+                    title={
+                      <Typography as={'p'} variant={'H2'}>
+                        Delete Card
+                      </Typography>
+                    }
+                    trigger={
+                      <Button variant={'icon'}>
+                        <IconDelete />
+                      </Button>
+                    }
                   >
                     <DeleteModal
-                      closeRef={closeRef}
                       id={d.id}
                       name={d.question}
+                      onClose={val => onCloseModalDelete(val)}
                       title={'Delete Card'}
                     />
-                  </Modals>
+                  </ModalsNew>
                 </div>
               </TableCell>
             </TableRow>

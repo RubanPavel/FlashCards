@@ -1,5 +1,3 @@
-import { RefObject } from 'react'
-
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
 import { useDeleteCardMutation } from '@/services/cards'
@@ -8,32 +6,29 @@ import { useDeleteDeskMutation } from '@/services/decks'
 import s from './deleteModal.module.scss'
 
 type Props = {
-  closeRef: RefObject<HTMLButtonElement>
   id: string
   name: string
+  onClose: (val: boolean) => void
   title: string
 }
 
-export const DeleteModal = ({ closeRef, id, name, title }: Props) => {
-  /*const inputRef = React.useRef<HTMLInputElement | null>(null)*/
+export const DeleteModal = ({ id, name, onClose, title }: Props) => {
   const [deleteDeck] = useDeleteDeskMutation()
   const [deleteCard] = useDeleteCardMutation()
 
   const onCloseClick = () => {
-    if (closeRef.current) {
-      closeRef.current.click()
-    }
+    onClose(false)
   }
 
   const isDeletePack = title === 'Delete Pack'
 
   return (
     <div className={s.container}>
-      <div className={s.header}>
-        <Typography as={'p'} variant={'H2'}>
-          {isDeletePack ? 'Delete Pack' : 'Delete Card'}
-        </Typography>
-      </div>
+      {/*<div className={s.header}>*/}
+      {/*  <Typography as={'p'} variant={'H2'}>*/}
+      {/*    {isDeletePack ? 'Delete Pack' : 'Delete Card'}*/}
+      {/*  </Typography>*/}
+      {/*</div>*/}
       <div className={s.content}>
         <div>
           <Typography variant={'body-1'}>
