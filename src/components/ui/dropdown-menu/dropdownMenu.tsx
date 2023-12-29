@@ -15,7 +15,7 @@ export const DropdownMenu = (props: Props) => {
 
   return (
     <DropdownMenuRadix.Root {...rest}>
-      <DropdownMenuRadix.Trigger>{trigger}</DropdownMenuRadix.Trigger>
+      <DropdownMenuRadix.Trigger asChild>{trigger}</DropdownMenuRadix.Trigger>
       <DropdownMenuRadix.Portal>
         <DropdownMenuRadix.Content
           align={position}

@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@//components/ui/button'
+import { createPasswordPageData } from '@/assets/variable'
 import { passwordSchema } from '@/components/auth/validate/validate'
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
@@ -24,6 +25,7 @@ type Props = {
 }
 
 export const CreatePassword = ({ className, handleCreatePassword }: Props) => {
+  const { button, info, inputs, title } = createPasswordPageData.createPassword
   const {
     control,
     formState: { errors },
@@ -42,24 +44,24 @@ export const CreatePassword = ({ className, handleCreatePassword }: Props) => {
   }
 
   return (
-    <Card className={clsx(s.wrapperCreatePassword, className)}>
-      <Typography as={'h1'} className={s.titleCreatePassword} variant={'large'}>
-        Create new password
+    <Card className={clsx(s.CreatePasswordWrapper, className)}>
+      <Typography as={'h1'} className={s.CreatePasswordTitle} variant={'large'}>
+        {title}
       </Typography>
-      <form className={s.formCreatePassword} onSubmit={handleSubmit(onSubmit)}>
+      <form className={s.CreatePasswordForm} onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <ControlInput
           control={control}
           errorMessage={errors.password?.message}
-          label={'Password'}
+          label={inputs.password}
           name={'password'}
           type={'password'}
         />
-        <Typography as={'p'} className={s.info} variant={'body-2'}>
-          Create new password and we will send you further instructions to email
+        <Typography as={'p'} className={s.CreatePasswordInfo} variant={'body-2'}>
+          {info}
         </Typography>
-        <Button className={s.submitCreatePassword} fullWidth type={'submit'}>
-          Create New Password
+        <Button className={s.CreatePasswordSubmit} fullWidth type={'submit'}>
+          {button}
         </Button>
       </form>
     </Card>

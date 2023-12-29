@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { Button } from '@//components/ui/button'
+import { forgotPasswordPageData } from '@/assets/variable'
 import { emailSchema } from '@/components/auth/validate/validate'
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
@@ -24,6 +25,7 @@ type Props = {
   handleForgotPassword: (formValuer: FormValues) => void
 }
 export const ForgotPassword = ({ className, handleForgotPassword }: Props) => {
+  const { button, info, inputs, link, text, title } = forgotPasswordPageData.forgotPassword
   const {
     control,
     formState: { errors },
@@ -44,30 +46,30 @@ export const ForgotPassword = ({ className, handleForgotPassword }: Props) => {
   return (
     <Card className={clsx(s.ForgotPasswordRoot, className)}>
       <Typography as={'h1'} className={s.ForgotPasswordHeader} variant={'large'}>
-        Forgot your password?
+        {title}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/*<DevTool control={control} />*/}
         <ControlInput
           control={control}
           errorMessage={errors.email?.message}
-          label={'Email'}
+          label={inputs.email}
           name={'email'}
         />
         <Typography as={'p'} className={s.ForgotPasswordText} variant={'body-2'}>
-          Enter your email address and we will send you further instructions
+          {text}
         </Typography>
         <Button fullWidth type={'submit'}>
           <Typography as={'h2'} variant={'subtitle-2'}>
-            Send instructions
+            {button}
           </Typography>
         </Button>
       </form>
       <Typography as={'p'} className={s.ForgotPasswordInfo} variant={'body-2'}>
-        Did you remember your password?
+        {info}
       </Typography>
       <Button as={Link} className={s.ForgotPasswordLinkButton} to={'/login'} variant={'link'}>
-        Try logging in
+        {link}
       </Button>
     </Card>
   )

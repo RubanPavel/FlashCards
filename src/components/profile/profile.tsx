@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLogOut } from '@/assets/icons/IconLogOut'
-import { ProfilePageContent } from '@/assets/variable'
+import { profilePageData } from '@/assets/variable'
 import { EditAvatar } from '@/components/profile/edit-avatar/edit-avatar'
 import { ProfileForm } from '@/components/profile/profile-form'
 import { AvatarRadix } from '@/components/ui/avatar/avatar'
@@ -25,7 +25,7 @@ type Trigger = 'avatar' | 'nickname'
 
 export const Profile = ({ className, handleUpdateUser, logout, user }: Props) => {
   const [trigger, setTrigger] = useState<Trigger | null>(null)
-  const { logoutButton, title } = ProfilePageContent.profile
+  const { logoutButton, title } = profilePageData.profile
   const handleEditClick = (variant: Trigger) => {
     setTrigger(variant)
   }

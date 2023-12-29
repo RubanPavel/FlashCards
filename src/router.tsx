@@ -61,7 +61,7 @@ const privateRoutes: RouteObject[] = [
   },
   {
     element: <ProfilePage />,
-    path: '/profile-profile',
+    path: '/profile',
   },
   {
     element: <MyPackPage />,

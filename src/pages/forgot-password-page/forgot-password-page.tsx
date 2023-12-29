@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { errorText, forgotPageContent } from '@/assets/variable'
+import { errorText, forgotPasswordPageData } from '@/assets/variable'
 import { ForgotPassword, FormValues } from '@/components/auth/forgot-password'
 import { useRecoveryPasswordMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
@@ -12,11 +12,12 @@ import s from './forgot-password-page.module.scss'
 export const ForgotPasswordPage = () => {
   const [recovery, {}] = useRecoveryPasswordMutation()
   const navigate = useNavigate()
+  const { html, subject } = forgotPasswordPageData
   const handleForgotPassword = (formData: FormValues) => {
     const payload = {
       email: formData.email,
-      html: forgotPageContent.html,
-      subject: forgotPageContent.subject,
+      html: html,
+      subject: subject,
     }
 
     recovery(payload)

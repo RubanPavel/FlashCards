@@ -23,16 +23,16 @@ export type updateUserResponse = {
   updated: string
 }
 
-export type loginType = {
+export type Login = {
   email: string
   password: string
   rememberMe: boolean
 }
-export type loginResponse = {
+export type LoginResponse = {
   accessToken: string
 }
 
-export type createNewUserType = {
+export type CreateNewUser = {
   email: string
   html?: string
   name?: string
@@ -41,7 +41,7 @@ export type createNewUserType = {
   subject?: string
 }
 
-export type createNewUserResponse = {
+export type CreateNewUserResponse = {
   avatar: string
   created: string
   email: string
@@ -61,11 +61,11 @@ export type verifyEmailResendType = {
   userId: string
 }
 
-export type resetPasswordType = {
+export type ResetPassword = {
   password: string
   token: string
 }
-export type recoveryPasswordType = {
+export type RecoveryPassword = {
   email: string
   html: string
   subject: string

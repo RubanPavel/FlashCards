@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
+import { loginPageData } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
@@ -27,6 +28,7 @@ type Props = {
 }
 
 export const SignIn = ({ className, handleLogin }: Props) => {
+  const { button, checkbox, forgotLink, inputs, link, text, title } = loginPageData.signIn
   const {
     control,
     formState: { errors },
@@ -49,41 +51,41 @@ export const SignIn = ({ className, handleLogin }: Props) => {
   return (
     <Card className={clsx(s.SignInRoot, className)}>
       <Typography as={'h1'} className={s.SignInHeader} variant={'large'}>
-        Sign In
+        {title}
       </Typography>
       <form className={s.SignInForm} onSubmit={handleSubmit(onSubmit)}>
         {/*<DevTool control={control} />*/}
         <ControlInput
           control={control}
           errorMessage={errors.email?.message}
-          label={'Email'}
+          label={inputs.email}
           name={'email'}
         />
         <ControlInput
           control={control}
           errorMessage={errors.password?.message}
-          label={'Password'}
+          label={inputs.password}
           name={'password'}
           type={'password'}
         />
-        <ControlledCheckbox control={control} name={'rememberMe'} title={'Remember me'} />
+        <ControlledCheckbox control={control} name={'rememberMe'} title={checkbox} />
         <Button
           as={Link}
           className={s.SignInFormForgotLink}
           to={'/forgot-password'}
           variant={'icon'}
         >
-          Forgot Password?
+          {forgotLink}
         </Button>
         <Button className={s.SignInFormButton} fullWidth type={'submit'}>
-          Sign In
+          {button}
         </Button>
       </form>
       <Typography as={'p'} className={s.SignInText} variant={'body-2'}>
-        Don&apos;t have an account?
+        {text}
       </Typography>
       <Button as={Link} className={s.SignInRegisterLink} to={'/register'} variant={'link'}>
-        Sign Up
+        {link}
       </Button>
     </Card>
   )

@@ -2,23 +2,22 @@ import { baseApi } from '@/services/base-api'
 
 import {
   AuthResponse,
+  CreateNewUser,
+  CreateNewUserResponse,
+  Login,
+  LoginResponse,
+  RecoveryPassword,
+  ResetPassword,
   UpdateUser,
-  createNewUserResponse,
-  createNewUserType,
-  loginResponse,
-  loginType,
-  recoveryPasswordType,
-  resetPasswordType,
   updateUserResponse,
   verifyEmailResendType,
   verifyEmailType,
 } from './auth.types'
-// import {setAuthError} from "@/services/auth/auth.slice";
 
 export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      createNewUser: builder.mutation<createNewUserResponse, createNewUserType>({
+      createNewUser: builder.mutation<CreateNewUserResponse, CreateNewUser>({
         invalidatesTags: ['Auth'],
         query: args => ({
           body: args,
@@ -33,7 +32,7 @@ export const AuthService = baseApi.injectEndpoints({
           url: `v1/auth/me`,
         }),
       }),
-      login: builder.mutation<loginResponse, loginType>({
+      login: builder.mutation<LoginResponse, Login>({
         invalidatesTags: ['Auth'],
         query: args => ({
           body: args,
@@ -48,7 +47,7 @@ export const AuthService = baseApi.injectEndpoints({
           url: `/v1/auth/logout`,
         }),
       }),
-      recoveryPassword: builder.mutation<void, recoveryPasswordType>({
+      recoveryPassword: builder.mutation<void, RecoveryPassword>({
         invalidatesTags: ['Auth'],
         query: ({ ...args }) => ({
           body: {
@@ -58,7 +57,7 @@ export const AuthService = baseApi.injectEndpoints({
           url: `/v1/auth/recover-password`,
         }),
       }),
-      resetPassword: builder.mutation<void, resetPasswordType>({
+      resetPassword: builder.mutation<void, ResetPassword>({
         invalidatesTags: ['Auth'],
         query: ({ token, ...args }) => ({
           body: {

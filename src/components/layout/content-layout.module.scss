@@ -4,9 +4,7 @@
   height: 100%;
 }
 
-// TODO откорректировать стили
-
-.root {
+.HeaderContentRoot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,12 +23,15 @@
 }
 
 .TriggerName {
+  line-height: 1rem;
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   right: calc(100% + 0.875rem);
   border-bottom: 1px dashed var(--color-light-100);
 }
 
-.dropdownItem {
+.HeaderContentDropdownItem {
   gap: 0.5rem;
 
   box-sizing: border-box;
@@ -40,59 +41,54 @@
 
   border-bottom: 1px solid var(--color-dark-500);
 
-  // TODO лучше убрать после редактирования dropdown
-  svg {
-    margin-right: 0;
-  }
-
   &:last-of-type {
     border-bottom: none;
   }
+}
 
-  .userInfoWrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 0.75rem 0;
+.HeaderContentUserInfoWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 0;
+}
 
-    .userInfoName {
-      color: var(--font-weight-bold);
-    }
+.HeaderContentUserInfoName {
+  color: var(--font-weight-bold);
+}
 
-    .userInfoEmail {
-      color: var(--color-dark-100);
-    }
-  }
+.HeaderContentUserInfoEmail {
+  color: var(--color-dark-100);
+}
 
-  .button {
-    --font-family-primary: 'Roboto', sans-serif;
+.HeaderContentButton {
+  --font-family-primary: 'Roboto', sans-serif;
 
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: start;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: start;
 
-    padding: 0.75rem 0;
+  padding: 0.75rem 0;
 
-    font-size: var(--font-size-s);
-    font-weight: var(--font-weight-regular);
-    font-style: normal;
-    line-height: var(--line-height-s);
-    color: var(--color-light-100);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  font-style: normal;
+  line-height: var(--line-height-s);
+  color: var(--color-light-100);
 
-    background-color: transparent;
-    outline: transparent;
-    box-shadow: none;
+  background-color: transparent;
+  outline: transparent;
+  box-shadow: none;
 
-    transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 
-    &:hover {
-      cursor: pointer;
-      opacity: 0.5;
-    }
+  &:hover {
+    cursor: pointer;
+    opacity: 0.5;
   }
 }
 
-.main {
+.Main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;

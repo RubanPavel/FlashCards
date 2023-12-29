@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 import { Button } from '@//components/ui/button'
+import { registerPageData } from '@/assets/variable'
 import {
   confirmPasswordSchema,
   emailSchema,
@@ -16,7 +17,6 @@ import { clsx } from 'clsx'
 import { z } from 'zod'
 
 import s from './sign-up.module.scss'
-
 export const signInFormSchema = z
   .object({
     confirm: confirmPasswordSchema,
@@ -36,6 +36,7 @@ type Props = {
 }
 
 export const SignUp = ({ className, handleRegister }: Props) => {
+  const { button, info, inputs, link, title } = registerPageData.signUp
   const {
     control,
     formState: { errors },
@@ -58,39 +59,39 @@ export const SignUp = ({ className, handleRegister }: Props) => {
   return (
     <Card className={clsx(s.SignUpRoot, className)}>
       <Typography as={'h1'} className={s.SignUpHeader} variant={'large'}>
-        Sign Up
+        {title}
       </Typography>
       <form className={s.SignUpForm} onSubmit={handleSubmit(onSubmit)}>
         {/*<DevTool control={control} />*/}
         <ControlInput
           control={control}
           errorMessage={errors.email?.message}
-          label={'Email'}
+          label={inputs.email}
           name={'email'}
         />
         <ControlInput
           control={control}
           errorMessage={errors.password?.message}
-          label={'Password'}
+          label={inputs.password}
           name={'password'}
           type={'password'}
         />
         <ControlInput
           control={control}
           errorMessage={errors.confirm?.message}
-          label={'Confirm password'}
+          label={inputs.confirmPassword}
           name={'confirm'}
           type={'password'}
         />
         <Button className={s.SignUpFormButton} fullWidth type={'submit'}>
-          Sign Up
+          {button}
         </Button>
       </form>
       <Typography as={'p'} className={s.SignUpText} variant={'body-2'}>
-        Already have an account?
+        {info}
       </Typography>
       <Button as={Link} className={s.SignUpLoginLink} to={'/login'} variant={'link'}>
-        Sign In
+        {link}
       </Button>
     </Card>
   )

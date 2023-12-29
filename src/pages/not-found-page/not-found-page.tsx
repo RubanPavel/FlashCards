@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 
-import IconNotFound from '@/assets/icons/IconNotFound'
-import { notFoundPageContent } from '@/assets/variable'
+import IconNotFound from '@/assets/icons/iconNotFound/IconNotFound'
+import { notFoundPageData } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
 import { clsx } from 'clsx'
@@ -16,10 +16,10 @@ export const NotFoundPage = forwardRef<HTMLDivElement, Props>(({ className, ...r
     <div className={clsx(s.NotFoundPageRoot, className)} ref={ref} {...rest}>
       <IconNotFound />
       <Typography as={'p'} className={clsx(s.NotFoundPageText)} variant={'body-1'}>
-        {notFoundPageContent.text}
+        {notFoundPageData.text}
       </Typography>
       <Button as={Link} className={clsx(s.NotFoundPageLink)} to={'/'} variant={'primary'}>
-        {notFoundPageContent.link}
+        {notFoundPageData.link}
       </Button>
     </div>
   )
