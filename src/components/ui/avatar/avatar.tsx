@@ -14,10 +14,13 @@ type Props = {
 export const AvatarRadix = forwardRef<HTMLButtonElement, Props>(
   ({ callback, className, imageUrl, userName, ...rest }, ref) => (
     <Avatar.Root className={`${s.AvatarRoot} ${className}`} onClick={callback} {...rest} ref={ref}>
-      <Avatar.Image alt={'img'} className={'AvatarImage'} src={imageUrl ? imageUrl : ''} />
-      <Avatar.Fallback className={s.AvatarFallback} delayMs={50}>
-        {userName && userName[0]}
-      </Avatar.Fallback>
+      {imageUrl ? (
+        <Avatar.Image alt={'img'} className={'AvatarImage'} src={imageUrl} />
+      ) : (
+        <Avatar.Fallback className={s.AvatarFallback} delayMs={50}>
+          {userName && userName[0]}
+        </Avatar.Fallback>
+      )}
     </Avatar.Root>
   )
 )

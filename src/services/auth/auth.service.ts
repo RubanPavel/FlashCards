@@ -10,8 +10,8 @@ import {
   ResetPassword,
   UpdateUser,
   UpdateUserResponse,
-  verifyEmailResendType,
-  verifyEmailType,
+  VerifyEmailResend,
+  VerifyEmail,
 } from './auth.types'
 
 export const AuthService = baseApi.injectEndpoints({
@@ -89,7 +89,7 @@ export const AuthService = baseApi.injectEndpoints({
           }
         },
       }),
-      verifyEmail: builder.mutation<unknown, verifyEmailType>({
+      verifyEmail: builder.mutation<void, VerifyEmail>({
         invalidatesTags: ['Auth'],
         query: args => ({
           body: args,
@@ -97,7 +97,7 @@ export const AuthService = baseApi.injectEndpoints({
           url: `/v1/auth/verify-email`,
         }),
       }),
-      verifyEmailResend: builder.mutation<void, verifyEmailResendType>({
+      verifyEmailResend: builder.mutation<void, VerifyEmailResend>({
         invalidatesTags: ['Auth'],
         query: ({ ...args }) => ({
           body: {

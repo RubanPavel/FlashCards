@@ -30,6 +30,7 @@ export const ProfileForm = ({ user, handleCancelEdit, handleUpdateUser }: Props)
     control,
     formState: { errors },
     handleSubmit,
+    formState,
   } = useForm<FormValues>({
     defaultValues: {
       nickname: user?.name || '',
@@ -38,9 +39,10 @@ export const ProfileForm = ({ user, handleCancelEdit, handleUpdateUser }: Props)
     reValidateMode: 'onChange',
     resolver: zodResolver(editEditProfileSchema),
   })
+  const { isDirty } = formState
 
   const onSubmit = (updatedData: FormValues) => {
-    handleUpdateUser({ name: updatedData.nickname })
+    isDirty && handleUpdateUser({ name: updatedData.nickname })
     handleCancelEdit()
   }
 

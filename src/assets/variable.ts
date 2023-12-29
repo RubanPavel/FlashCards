@@ -70,9 +70,21 @@ export const profilePageData = {
   profile: {
     logoutButton: 'Logout',
     title: 'Personal Information',
+    editAvatar: {
+      button: 'Save Changes',
+    },
     profileForm: {
       input: 'Nickname',
       button: 'Save Changes',
     },
   },
+}
+
+export const verifyEmailPageData = {
+  confirmEmail:  {
+    title: 'Email Verified',
+    text: 'Thank you for registering with our service. Your email address has been successfully verified.',
+    link: 'Proceed to Login',
+  }
+
 }

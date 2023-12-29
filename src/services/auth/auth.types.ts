@@ -51,11 +51,11 @@ export type CreateNewUserResponse = {
   updated: string
 }
 
-export type verifyEmailType = {
+export type VerifyEmail = {
   code: string
 }
 
-export type verifyEmailResendType = {
+export type VerifyEmailResend = {
   html: string
   subject: string
   userId: string

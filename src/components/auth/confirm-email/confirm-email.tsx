@@ -6,6 +6,7 @@ import { NotFoundPage } from '@/pages/not-found-page'
 import { clsx } from 'clsx'
 
 import s from './confirm-email.module.scss'
+import {verifyEmailPageData} from "@/assets/variable";
 
 type Props = {
   className?: string
@@ -13,17 +14,17 @@ type Props = {
 }
 
 export const ConfirmEmail = ({ className, trigger }: Props) => {
-  return trigger ? (
+    const {title, text, link} = verifyEmailPageData.confirmEmail
+    return trigger ? (
     <div className={clsx(s.ConfirmEmailRoot, className)}>
       <Typography as={'h1'} className={s.ConfirmEmailTitle} variant={'large'}>
-        Email Verified
+          {title}
       </Typography>
       <Typography as={'p'} className={s.ConfirmEmailText} variant={'subtitle-2'}>
-        Thank you for registering with our service. Your email address has been successfully
-        verified.
+          {text}
       </Typography>
       <Button as={Link} className={s.ConfirmEmailLink} to={'/login'} variant={'link'}>
-        Proceed to Login
+          {link}
       </Button>
     </div>
   ) : (
