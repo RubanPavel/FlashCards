@@ -13,7 +13,7 @@ export type UpdateUser =
   | { avatar?: File; email: string; name?: string }
   | { avatar?: File; email?: string; name: string }
 
-export type updateUserResponse = {
+export type UpdateUserResponse = {
   avatar: string
   created: string
   email: string

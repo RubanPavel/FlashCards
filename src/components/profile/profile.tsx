@@ -60,7 +60,11 @@ export const Profile = ({ className, handleUpdateUser, logout, user }: Props) =>
         </div>
       )}
       {trigger === 'nickname' && (
-        <ProfileForm handleCancelEdit={handleCancelEdit} handleUpdateUser={handleUpdateUser} />
+        <ProfileForm
+          user={user}
+          handleCancelEdit={handleCancelEdit}
+          handleUpdateUser={handleUpdateUser}
+        />
       )}
       {!trigger && (
         <div className={s.ProfileContainer}>

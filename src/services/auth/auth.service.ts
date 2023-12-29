@@ -9,7 +9,7 @@ import {
   RecoveryPassword,
   ResetPassword,
   UpdateUser,
-  updateUserResponse,
+  UpdateUserResponse,
   verifyEmailResendType,
   verifyEmailType,
 } from './auth.types'
@@ -67,7 +67,7 @@ export const AuthService = baseApi.injectEndpoints({
           url: `/v1/auth/reset-password/${token}`,
         }),
       }),
-      updateUser: builder.mutation<updateUserResponse, UpdateUser>({
+      updateUser: builder.mutation<UpdateUserResponse, UpdateUser>({
         invalidatesTags: ['Auth'],
         query: args => {
           const payload = new FormData()

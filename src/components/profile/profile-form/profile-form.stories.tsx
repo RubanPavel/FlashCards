@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { store } from '@/services/store'
 
 import { ProfileForm } from './index'
+import { User } from '@/assets/userDataForTest'
 
 const meta = {
   component: ProfileForm,
@@ -25,4 +26,8 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const ProfileFormDefault: Story = {}
+export const ProfileFormDefault: Story = {
+  args: {
+    user: User,
+  },
+}

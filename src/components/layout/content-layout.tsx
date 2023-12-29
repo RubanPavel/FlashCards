@@ -95,7 +95,7 @@ export const ContentLayout = () => {
             </div>
           </DropDownItem>
           <DropDownItem className={s.HeaderContentDropdownItem} onClick={handleCloseMenu}>
-            <Button as={Link} className={s.HeaderContentButton} fullWidth to={'/profile'}>
+            <Button as={Link} className={s.HeaderContentButton} variant={'fullWidth'} to={'/profile'}>
               <IconPerson height={16} width={16} />
               My Profile
             </Button>

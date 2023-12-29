@@ -70,5 +70,9 @@ export const profilePageData = {
   profile: {
     logoutButton: 'Logout',
     title: 'Personal Information',
+    profileForm: {
+      input: 'Nickname',
+      button: 'Save Changes',
+    },
   },
 }
