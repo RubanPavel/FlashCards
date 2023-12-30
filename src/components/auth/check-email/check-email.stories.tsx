@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
+import { User } from '@/assets/userDataForTest'
 import { store } from '@/services/store'
 
 import { CheckEmail } from './index'
-import { User } from '@/assets/userDataForTest'
 
 const meta = {
   component: CheckEmail,
@@ -28,7 +28,6 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    handleCleanEmail: () => console.log('handle clean email'),
     email: User.email,
   },
 }

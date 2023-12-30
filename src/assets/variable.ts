@@ -1,6 +1,4 @@
-const apiUrl = import.meta.env.PROD ? import.meta.env.PROD : import.meta.env.DEV
-
-// const apiUrl = 'https://flash-cards-jade.vercel.app'
+const apiUrl = import.meta.env.PROD ? import.meta.env.VITE_U_P : import.meta.env.VITE_U_D
 
 export const errorText = 'Some error occurred'
 
@@ -63,6 +61,7 @@ export const createPasswordPageData = {
     },
     title: 'Create new password',
   },
+  info: 'New password successfully created.',
 }
 
 export const notFoundPageData = {

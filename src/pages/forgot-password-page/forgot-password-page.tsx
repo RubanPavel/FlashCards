@@ -4,12 +4,12 @@ import { toast } from 'react-toastify'
 import { errorText, forgotPasswordPageData } from '@/assets/variable'
 import { ForgotPassword, FormValues } from '@/components/auth/forgot-password'
 import { useRecoveryPasswordMutation } from '@/services/auth'
+import { authActions } from '@/services/auth/auth.slice'
 import { ServerError } from '@/services/error.types'
+import { useAppDispatch } from '@/services/store'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import s from './forgot-password-page.module.scss'
-import { useAppDispatch } from '@/services/store'
-import { authActions } from '@/services/auth/auth.slice'
 
 export const ForgotPasswordPage = () => {
   const dispatch = useAppDispatch()

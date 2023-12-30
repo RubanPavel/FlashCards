@@ -9,12 +9,11 @@ import { clsx } from 'clsx'
 import s from './check-email.module.scss'
 
 type Props = {
-  email: string
-  handleCleanEmail: () => void
   className?: string
+  email: string
 }
 
-export const CheckEmail = ({ className, email, handleCleanEmail }: Props) => {
+export const CheckEmail = ({ className, email }: Props) => {
   return (
     <Card className={clsx(s.CheckEmailRoot, className)}>
       <Typography as={'h1'} className={s.CheckEmailHeader} variant={'large'}>
@@ -24,7 +23,7 @@ export const CheckEmail = ({ className, email, handleCleanEmail }: Props) => {
       <Typography as={'p'} className={s.CheckEmailText} variant={'body-2'}>
         We’ve sent an Email with instructions to {email}
       </Typography>
-      <Button as={Link} fullWidth to={'/login'} onClick={handleCleanEmail}>
+      <Button as={Link} fullWidth to={'/login'}>
         Back to Sign In
       </Button>
     </Card>

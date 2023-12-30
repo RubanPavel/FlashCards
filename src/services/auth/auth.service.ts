@@ -75,9 +75,6 @@ export const AuthService = baseApi.injectEndpoints({
           if ('avatar' in args && args.avatar) {
             payload.append('avatar', args.avatar)
           }
-          // if ('email' in args && args.email) {
-          //   payload.append('email', args.email)
-          // }
           if ('name' in args && args.name) {
             payload.append('name', args.name)
           }

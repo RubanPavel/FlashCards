@@ -8,10 +8,7 @@ export type AuthResponse = {
   updated: string
 }
 
-export type UpdateUser =
-  | { avatar: File; email?: string; name?: string }
-  | { avatar?: File; email: string; name?: string }
-  | { avatar?: File; email?: string; name: string }
+export type UpdateUser = { avatar: File; name?: string } | { avatar?: File; name: string }
 
 export type UpdateUserResponse = {
   avatar: string

@@ -6,7 +6,7 @@ import { passwordSchema } from '@/components/auth/validate/validate'
 import { Card } from '@/components/ui/card'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Typography } from '@/components/ui/typography'
-import { DevTool } from '@hookform/devtools'
+// import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
 import { z } from 'zod'
@@ -49,7 +49,7 @@ export const CreatePassword = ({ className, handleCreatePassword }: Props) => {
         {title}
       </Typography>
       <form className={s.CreatePasswordForm} onSubmit={handleSubmit(onSubmit)}>
-        <DevTool control={control} />
+        {/*<DevTool control={control} />*/}
         <ControlInput
           control={control}
           errorMessage={errors.password?.message}
