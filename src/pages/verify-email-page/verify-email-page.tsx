@@ -32,7 +32,7 @@
         };
 
         (async () => {
-          if (!isLoading) {
+          if (!isLoading && !requestSent) {
             await handleVerifyEmail();
           }
         })();
