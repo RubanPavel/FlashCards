@@ -18,7 +18,6 @@ export const AuthService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       createNewUser: builder.mutation<CreateNewUserResponse, CreateNewUser>({
-        invalidatesTags: ['Auth'],
         query: args => ({
           body: args,
           method: 'POST',
@@ -48,7 +47,6 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       recoveryPassword: builder.mutation<void, RecoveryPassword>({
-        invalidatesTags: ['Auth'],
         query: ({ ...args }) => ({
           body: {
             ...args,
@@ -58,7 +56,6 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       resetPassword: builder.mutation<void, ResetPassword>({
-        invalidatesTags: ['Auth'],
         query: ({ token, ...args }) => ({
           body: {
             ...args,
@@ -68,7 +65,6 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       updateUser: builder.mutation<UpdateUserResponse, UpdateUser>({
-        invalidatesTags: ['Auth'],
         query: args => {
           const payload = new FormData()
 
@@ -87,7 +83,6 @@ export const AuthService = baseApi.injectEndpoints({
         },
       }),
       verifyEmail: builder.mutation<void, VerifyEmail>({
-        invalidatesTags: ['Auth'],
         query: args => ({
           body: args,
           method: 'POST',
@@ -95,7 +90,6 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       verifyEmailResend: builder.mutation<void, VerifyEmailResend>({
-        invalidatesTags: ['Auth'],
         query: ({ ...args }) => ({
           body: {
             ...args,

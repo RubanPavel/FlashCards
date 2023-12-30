@@ -84,7 +84,6 @@ export const profilePageData = {
 }
 
 export const verifyEmailPageData = {
-  info: 'Password successfully confirmed.',
   confirmEmail: {
     link: 'Proceed to Login',
     text: 'Thank you for registering with our service. Your email address has been successfully verified.',
