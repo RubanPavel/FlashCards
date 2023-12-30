@@ -32,7 +32,7 @@ export const VerifyEmailPage = memo(() => {
   }
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       await handleVerifyEmail()
     })()
   }, [])
