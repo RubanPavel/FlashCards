@@ -1,4 +1,4 @@
-  import {useEffect, useState} from 'react'
+  import {useCallback, useEffect, useState} from 'react'
   import { useParams } from 'react-router-dom'
   import { toast } from 'react-toastify'
 
@@ -17,25 +17,25 @@
       // const trigger = !!data || !isError;
       const trigger = (!!data && !isError) || (!data && !isError);
 
-    useEffect(() => {
-      const handleVerifyEmail = async () => {
-        try {
-          if (userId && !requestSent) {
-            await verifyMail({ code: userId });
-            setRequestSent(true);
-          }
-        } catch (e: unknown) {
-          const err = e as ServerError;
-          toast.error(err?.data?.message || errorText, {
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
+    const handleVerifyEmail = useCallback(async () => {
+      try {
+        if (userId && !requestSent) {
+          await verifyMail({ code: userId });
+          setRequestSent(true);
         }
-      };
-
-      if (!isLoading && !requestSent) {
-        handleVerifyEmail().then();
+      } catch (e: unknown) {
+        const err = e as ServerError;
+        toast.error(err?.data?.message || errorText, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
-    }, [userId, verifyMail, requestSent, isLoading, data, isError]);
+    }, [userId, verifyMail, requestSent]);
+
+    useEffect(() => {
+      if (!isLoading && !requestSent) {
+        handleVerifyEmail();
+      }
+    }, [handleVerifyEmail, isLoading, requestSent]);
 
 
     if (isLoading) {
