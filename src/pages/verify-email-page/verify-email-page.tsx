@@ -36,18 +36,17 @@ export const VerifyEmailPage = () => {
   useEffect(() => {
     const handleVerifyEmail = async () => {
       try {
-        userId && await verifyMail({ code: userId })
+        userId && (await verifyMail({ code: userId }));
       } catch (e: unknown) {
-        const err = e as ServerError
-
-                toast.error(err?.data?.message || errorText, {
-                  position: toast.POSITION.BOTTOM_CENTER,
-                })
+        const err = e as ServerError;
+        toast.error(err?.data?.message || errorText, {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       }
     };
 
     handleVerifyEmail().then();
-  }, []);
+  }, [userId, verifyMail]);
 
   if (isLoading) {
     return <Loader />
