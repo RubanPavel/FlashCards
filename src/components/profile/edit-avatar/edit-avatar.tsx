@@ -1,11 +1,11 @@
 import { ComponentPropsWithoutRef, useState } from 'react'
 import Avatar from 'react-avatar-edit'
 
+import { profilePageData } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
 import { UpdateUser } from '@/services/auth'
 
 import s from './edit-avatar.module.scss'
-import { profilePageData } from '@/assets/variable'
 
 type Props = {
   handleCancelEdit: () => void

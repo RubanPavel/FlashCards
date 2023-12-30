@@ -10,8 +10,8 @@ import {
   ResetPassword,
   UpdateUser,
   UpdateUserResponse,
-  VerifyEmailResend,
   VerifyEmail,
+  VerifyEmailResend,
 } from './auth.types'
 
 export const AuthService = baseApi.injectEndpoints({

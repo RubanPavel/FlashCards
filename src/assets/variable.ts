@@ -68,22 +68,22 @@ export const notFoundPageData = {
 
 export const profilePageData = {
   profile: {
-    logoutButton: 'Logout',
-    title: 'Personal Information',
     editAvatar: {
       button: 'Save Changes',
     },
+    logoutButton: 'Logout',
     profileForm: {
-      input: 'Nickname',
       button: 'Save Changes',
+      input: 'Nickname',
     },
+    title: 'Personal Information',
   },
 }
 
 export const verifyEmailPageData = {
   confirmEmail: {
-    title: 'Email Verified',
-    text: 'Thank you for registering with our service. Your email address has been successfully verified.',
     link: 'Proceed to Login',
+    text: 'Thank you for registering with our service. Your email address has been successfully verified.',
+    title: 'Email Verified',
   },
 }

@@ -98,8 +98,8 @@ export const ContentLayout = () => {
             <Button
               as={Link}
               className={s.HeaderContentButton}
-              variant={'fullWidth'}
               to={'/profile'}
+              variant={'fullWidth'}
             >
               <IconPerson height={16} width={16} />
               My Profile

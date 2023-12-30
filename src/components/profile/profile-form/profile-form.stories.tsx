@@ -3,10 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
+import { User } from '@/assets/userDataForTest'
 import { store } from '@/services/store'
 
 import { ProfileForm } from './index'
-import { User } from '@/assets/userDataForTest'
 
 const meta = {
   component: ProfileForm,

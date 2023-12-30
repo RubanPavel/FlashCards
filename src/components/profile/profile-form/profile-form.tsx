@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { profilePageData } from '@/assets/variable'
 import { nicknameSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
@@ -10,7 +11,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './pfofile-form.module.scss'
-import { profilePageData } from '@/assets/variable'
 
 export const editEditProfileSchema = z.object({
   nickname: nicknameSchema,
@@ -19,18 +19,18 @@ export const editEditProfileSchema = z.object({
 type FormValues = z.infer<typeof editEditProfileSchema>
 
 type Props = {
-  user: AuthResponse | undefined
   handleCancelEdit: () => void
   handleUpdateUser: (formData: UpdateUser) => void
+  user: AuthResponse | undefined
 } & ComponentPropsWithoutRef<'form'>
 
-export const ProfileForm = ({ user, handleCancelEdit, handleUpdateUser }: Props) => {
-  const { input, button } = profilePageData.profile.profileForm
+export const ProfileForm = ({ handleCancelEdit, handleUpdateUser, user }: Props) => {
+  const { button, input } = profilePageData.profile.profileForm
   const {
     control,
     formState: { errors },
-    handleSubmit,
     formState,
+    handleSubmit,
   } = useForm<FormValues>({
     defaultValues: {
       nickname: user?.name || '',
