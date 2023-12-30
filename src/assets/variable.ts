@@ -1,3 +1,8 @@
+const apiUrl =
+  process.env.NODE_ENV === 'development'
+    ? process.env.VITE_URL_DEVELOPMENT
+    : process.env.VITE_URL_PRODUCTION
+
 export const errorText = 'Some error occurred'
 
 export const contentLayoutData = {
@@ -5,7 +10,7 @@ export const contentLayoutData = {
 }
 
 export const registerPageData = {
-  html: '<b>Hello!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:5173/confirm-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:5173/confirm-email/##token##',
+  html: `<b>Hello!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="${apiUrl}/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>${apiUrl}/confirm-email/##token##`,
   signUp: {
     button: 'Sign Up',
     info: 'Already have an account?',
@@ -30,7 +35,7 @@ export const loginPageData = {
       password: 'Password',
     },
     link: 'Sign Up',
-    text: 'Don&apos;t have an account?',
+    text: "Don't have an account?",
     title: 'Sign In',
   },
 }
@@ -46,7 +51,7 @@ export const forgotPasswordPageData = {
     text: 'Enter your email address and we will send you further instructions',
     title: 'Forgot your password?',
   },
-  html: '<h1>Hello!</h1><p>Click <a href="http://localhost:5173/reset-password/##token##">here</a> to recover your password</p>',
+  html: `<h1>Hello!</h1><p>Click <a href="${apiUrl}/reset-password/##token##">here</a> to recover your password</p>`,
   subject: 'Recover your password',
 }
 
