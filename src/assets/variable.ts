@@ -8,13 +8,13 @@ export const registerPageData = {
   html: '<b>Hello!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="http://localhost:5173/confirm-email/##token##">Confirm email</a>. If it doesn\'t work, copy and paste the following link in your browser:<br/>http://localhost:5173/confirm-email/##token##',
   signUp: {
     button: 'Sign Up',
-    info: 'Create new password and we will send you further instructions to email',
+    info: 'Already have an account?',
     inputs: {
       confirmPassword: 'Confirm password',
       email: 'Email',
       password: 'Password',
     },
-    link: 'Create New Password',
+    link: 'Sign In',
     title: 'Sign Up',
   },
   subject: 'Confirm your email',
