@@ -19,6 +19,7 @@ export const VerifyEmailPage = () => {
   const trigger = !!data || !isError
 
   useEffect(() => {
+    console.log('test')
     const handleVerifyEmail = async () => {
       if (userId) {
         try {
