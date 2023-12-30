@@ -81,10 +81,9 @@ export const profilePageData = {
 }
 
 export const verifyEmailPageData = {
-  confirmEmail:  {
+  confirmEmail: {
     title: 'Email Verified',
     text: 'Thank you for registering with our service. Your email address has been successfully verified.',
     link: 'Proceed to Login',
-  }
-
+  },
 }
