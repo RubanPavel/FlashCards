@@ -3,7 +3,8 @@ const apiUrl = import.meta.env.PROD ? import.meta.env.VITE_U_P : import.meta.env
 export const errorText = 'Some error occurred'
 
 export const contentLayoutData = {
-  button: 'Sign In',
+  buttonLogin: 'Sign In',
+  buttonRegister: 'Sign Up',
 }
 
 export const registerPageData = {

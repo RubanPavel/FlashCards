@@ -1,6 +1,6 @@
 import { MouseEvent, ReactNode, useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { IconLogOut } from '@/assets/icons/IconLogOut'
@@ -26,7 +26,9 @@ export const ContentLayout = () => {
   const isAuthenticated = !isError
   const [logout, {}] = useLogoutMutation()
   const [isDropDownMenuOpen, setIsDropDownMenuOpen] = useState(false)
-  const { button } = contentLayoutData
+  const { buttonLogin, buttonRegister } = contentLayoutData
+  const location = useLocation()
+
   const handleLogout = () => {
     logout()
       .unwrap()
@@ -55,10 +57,16 @@ export const ContentLayout = () => {
         width={100}
       />
     )
-  } else if (!isAuthenticated) {
+  } else if (!isAuthenticated && location.pathname !== '/login') {
     headerContent = (
       <Button as={Link} to={'login'} type={'primary'}>
-        {button}
+        {buttonLogin}
+      </Button>
+    )
+  } else if (!isAuthenticated && location.pathname === '/login') {
+    headerContent = (
+      <Button as={Link} to={'register'} type={'primary'}>
+        {buttonRegister}
       </Button>
     )
   } else {

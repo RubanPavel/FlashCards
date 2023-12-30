@@ -65,6 +65,7 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       updateUser: builder.mutation<UpdateUserResponse, UpdateUser>({
+        invalidatesTags: ['Auth'],
         query: args => {
           const payload = new FormData()
 

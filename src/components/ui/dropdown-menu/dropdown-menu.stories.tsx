@@ -43,21 +43,27 @@ export const DropDownMenuWithoutAvatar: Story = {
         <DropDownItem className={s.DropdownMenuItem}>
           <div className={s.iconAndDescription} onClick={() => {}}>
             <IconLearn />
-            <Typography variant={'caption'}>Learn</Typography>
+            <Typography className={s.description} variant={'caption'}>
+              Learn
+            </Typography>
           </div>
         </DropDownItem>
         <DropdownSeparator />
         <DropDownItem className={s.DropdownMenuItem}>
           <div className={s.iconAndDescription} onClick={() => {}}>
             <IconEdit />
-            <Typography variant={'caption'}>Edit</Typography>
+            <Typography className={s.description} variant={'caption'}>
+              Edit
+            </Typography>
           </div>
         </DropDownItem>
         <DropdownSeparator />
         <DropDownItem className={s.DropdownMenuItem}>
           <div className={s.iconAndDescription} onClick={() => {}}>
             <IconDelete />
-            <Typography variant={'caption'}>Delete</Typography>
+            <Typography className={s.description} variant={'caption'}>
+              Delete
+            </Typography>
           </div>
         </DropDownItem>
       </DropdownMenu>
@@ -108,14 +114,18 @@ export const DropDownMenuWithAvatar: Story = {
         <DropDownItem className={s.DropdownMenuItem}>
           <div className={s.iconAndDescription} onClick={() => {}}>
             <IconPerson />
-            <Typography variant={'caption'}>My Profile</Typography>
+            <Typography className={s.description} variant={'caption'}>
+              My Profile
+            </Typography>
           </div>
         </DropDownItem>
         <DropdownSeparator />
         <DropDownItem className={s.DropdownMenuItem}>
           <div className={s.iconAndDescription} onClick={() => {}}>
             <IconLogOut />
-            <Typography variant={'caption'}>Sign Out</Typography>
+            <Typography className={s.description} variant={'caption'}>
+              Sign Out
+            </Typography>
           </div>
         </DropDownItem>
       </DropdownMenu>

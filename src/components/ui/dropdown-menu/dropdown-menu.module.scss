@@ -56,3 +56,12 @@ button {
 .DropdownMenuArrow {
   fill: var(--color-dark-500);
 }
+
+.iconAndDescription {
+  display: flex;
+  align-items: center;
+}
+
+.description {
+  padding-left: 0.5rem;
+}
