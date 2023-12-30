@@ -8,12 +8,16 @@ import { ServerError } from '@/services/error.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import s from './forgot-password-page.module.scss'
+import { useAppDispatch } from '@/services/store'
+import { authActions } from '@/services/auth/auth.slice'
 
 export const ForgotPasswordPage = () => {
+  const dispatch = useAppDispatch()
   const [recovery, {}] = useRecoveryPasswordMutation()
   const navigate = useNavigate()
   const { html, subject } = forgotPasswordPageData
   const handleForgotPassword = (formData: FormValues) => {
+    dispatch(authActions.setEmail({ email: formData.email }))
     const payload = {
       email: formData.email,
       html: html,

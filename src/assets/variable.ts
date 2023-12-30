@@ -1,8 +1,6 @@
-// const apiUrl = import.meta.env.MODE === 'development'
-//     ? import.meta.env.VITE_API_URL_DEVELOPMENT
-//     : 'https://flash-cards-jade.vercel.app'
+const apiUrl = import.meta.env.PROD ? import.meta.env.PROD : import.meta.env.DEV
 
-const apiUrl = 'https://flash-cards-jade.vercel.app'
+// const apiUrl = 'https://flash-cards-jade.vercel.app'
 
 export const errorText = 'Some error occurred'
 

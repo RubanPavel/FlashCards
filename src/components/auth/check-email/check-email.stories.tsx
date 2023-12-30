@@ -6,6 +6,7 @@ import { MemoryRouter } from 'react-router-dom'
 import { store } from '@/services/store'
 
 import { CheckEmail } from './index'
+import { User } from '@/assets/userDataForTest'
 
 const meta = {
   component: CheckEmail,
@@ -25,4 +26,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  args: {
+    handleCleanEmail: () => console.log('handle clean email'),
+    email: User.email,
+  },
+}
