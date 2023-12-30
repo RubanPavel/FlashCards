@@ -7,7 +7,7 @@ export const contentLayoutData = {
 }
 
 export const registerPageData = {
-  html: `<b>Hello!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="${apiUrl}/confirm-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>${apiUrl}/confirm-email/##token##`,
+  html: `<b>Hello!</b><br/>Please confirm your email by clicking on the link below:<br/><a href="${apiUrl}/verify-email/##token##">Confirm email</a>. If it doesn't work, copy and paste the following link in your browser:<br/>${apiUrl}/confirm-email/##token##`,
   signUp: {
     button: 'Sign Up',
     info: 'Already have an account?',

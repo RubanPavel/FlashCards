@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { errorText } from '@/assets/variable'
@@ -9,8 +9,10 @@ import { useVerifyEmailMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
 
 import s from './verify-email.module.scss'
+import {FetchBaseQueryError} from "@reduxjs/toolkit/query";
 
 export const VerifyEmailPage = () => {
+  const navigate = useNavigate()
   const { userId } = useParams<string>()
   const [verifyMail, { data, isError, isLoading }] = useVerifyEmailMutation()
   const trigger = !!data || !isError
@@ -20,18 +22,26 @@ export const VerifyEmailPage = () => {
       if (userId) {
         try {
           await verifyMail({ code: userId }).unwrap()
-        } catch (e: unknown) {
-          const err = e as ServerError
+              .then(() => {
+                navigate('/login')
+                toast.success('succuess1', {
+                  position: toast.POSITION.BOTTOM_CENTER,
+                })
+              })
+              .catch((e: ServerError & FetchBaseQueryError) => {
+                toast.error(e?.data?.message || errorText, {
+                  position: toast.POSITION.BOTTOM_CENTER,
+                })
+              })
 
-          toast.error(err?.data?.message || errorText, {
-            position: toast.POSITION.BOTTOM_CENTER,
-          })
+        } catch (e: unknown) {
+          return e
         }
       }
     }
 
     handleVerifyEmail().then()
-  }, [userId, verifyMail])
+  }, [])
 
   if (isLoading) {
     return <Loader />
