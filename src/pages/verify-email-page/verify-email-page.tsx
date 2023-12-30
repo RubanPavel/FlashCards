@@ -14,29 +14,29 @@
       const { userId } = useParams<string>();
       const [verifyMail, { data, isError, isLoading }] = useVerifyEmailMutation();
       const [requestSent, setRequestSent] = useState<boolean>(false);
-      const trigger = !!data || !isError;
+      // const trigger = !!data || !isError;
+      const trigger = (!!data && !isError) || (!data && !isError);
 
-      useEffect(() => {
-        const handleVerifyEmail = async () => {
-          try {
-            if (userId && !requestSent) {
-              await verifyMail({ code: userId });
-              setRequestSent(true);
-            }
-          } catch (e: unknown) {
-            const err = e as ServerError;
-            toast.error(err?.data?.message || errorText, {
-              position: toast.POSITION.BOTTOM_CENTER,
-            });
+    useEffect(() => {
+      const handleVerifyEmail = async () => {
+        try {
+          if (userId && !requestSent) {
+            await verifyMail({ code: userId });
+            setRequestSent(true);
           }
-        };
+        } catch (e: unknown) {
+          const err = e as ServerError;
+          toast.error(err?.data?.message || errorText, {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
+      };
 
-        (async () => {
-          if (!isLoading && !requestSent) {
-            await handleVerifyEmail();
-          }
-        })();
-      }, [userId, verifyMail, requestSent, isLoading]);
+      if (!isLoading && !requestSent) {
+        handleVerifyEmail().then();
+      }
+    }, [userId, verifyMail, requestSent, isLoading, data, isError]);
+
 
     if (isLoading) {
       return <Loader />
