@@ -5,7 +5,9 @@ import { Router } from '@/router'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 export function App() {
-    console.log(import.meta.env.BASE_URL)
+    console.log('test', import.meta.env.BASE_URL)
+    console.log('prod', import.meta.env.PROD)
+    console.log('dev', import.meta.env.DEV)
   return (
     <>
       <Router />
