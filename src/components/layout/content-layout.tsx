@@ -1,5 +1,4 @@
 import { MouseEvent, ReactNode, useState } from 'react'
-import Skeleton from 'react-loading-skeleton'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -12,12 +11,11 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { Header } from '@/components/ui/header'
+import { Loader } from '@/components/ui/loader'
 import { Typography } from '@/components/ui/typography'
 import { useGetAuthMeQuery, useLogoutMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-
-import 'react-loading-skeleton/dist/skeleton.css'
 
 import s from './content-layout.module.scss'
 
@@ -48,16 +46,13 @@ export const ContentLayout = () => {
 
   let headerContent: ReactNode
 
+  const isAuth = !isError
+
   if (isLoading) {
-    headerContent = (
-      <Skeleton
-        baseColor={'var(--color-dark-700)'}
-        containerClassName={s.Skeleton}
-        highlightColor={'var(--color-dark-500)'}
-        width={100}
-      />
-    )
-  } else if (!isAuthenticated && location.pathname !== '/login') {
+    return <Loader />
+  }
+
+  if (!isAuthenticated && location.pathname !== '/login') {
     headerContent = (
       <Button as={Link} to={'login'} type={'primary'}>
         {buttonLogin}
@@ -128,7 +123,7 @@ export const ContentLayout = () => {
     <>
       <Header logo={<IconLogo />}>{headerContent}</Header>
       <main className={s.Main}>
-        <Outlet />
+        <Outlet context={isAuth} />
       </main>
     </>
   )

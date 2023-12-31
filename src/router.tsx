@@ -4,10 +4,10 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
+  useOutletContext,
 } from 'react-router-dom'
 
 import { Packs } from '@/components/packs/packs-list'
-import { Loader } from '@/components/ui/loader'
 import { CheckEmailPage } from '@/pages/check-email-page'
 import { CreatePasswordPage } from '@/pages/create-password-page'
 import { ForgotPasswordPage } from '@/pages/forgot-password-page'
@@ -19,7 +19,6 @@ import { NotFoundPage } from '@/pages/not-found-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { RegisterPage } from '@/pages/register-page'
 import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
-import { useGetAuthMeQuery } from '@/services/auth'
 
 import { ContentLayout } from './components/layout'
 
@@ -106,23 +105,13 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const { isError, isLoading } = useGetAuthMeQuery()
+  const isAuth = useOutletContext()
 
-  if (isLoading) {
-    return <Loader />
-  }
-  const isAuthenticated = !isError
-
-  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
+  return isAuth ? <Outlet /> : <Navigate to={'/login'} />
 }
 
 function PublicRoutes() {
-  const { isError, isLoading } = useGetAuthMeQuery()
+  const isAuth = useOutletContext()
 
-  if (isLoading) {
-    return <Loader />
-  }
-  const isAuthenticated = !isError
-
-  return isAuthenticated ? <Navigate to={'/'} /> : <Outlet />
+  return isAuth ? <Navigate to={'/'} /> : <Outlet />
 }

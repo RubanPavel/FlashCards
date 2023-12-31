@@ -126,180 +126,170 @@ export const Packs = () => {
     dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
+  if (loading) {
+    return <Loader />
+  }
+
   return (
     <div className={s.container}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className={s.packsList}>
-            <Typography variant={'large'}>Packs list</Typography>
-            <ModalsNew
-              className={{ title: s.modalTitle }}
-              icon={<IconClose className={s.IconButton} />}
-              onClose={onCloseModalNewPack}
-              open={openModalNewPack}
-              title={
-                <Typography as={'p'} variant={'H2'}>
-                  Add New Pack
-                </Typography>
-              }
-              trigger={
-                <Button>
-                  <Typography variant={'subtitle-1'}>Add new Pack</Typography>
-                </Button>
-              }
-            >
-              <AddNewPack onClose={val => onCloseModalNewPack(val)} />
-            </ModalsNew>
-          </div>
-          <div className={s.controlPanel}>
-            <DebouncedInput
-              callback={handleSearch}
-              className={s.searchInput}
-              name={'search'}
-              type={'search'}
+      <div className={s.packsList}>
+        <Typography variant={'large'}>Packs list</Typography>
+        <ModalsNew
+          className={{ title: s.modalTitle }}
+          icon={<IconClose className={s.IconButton} />}
+          onClose={onCloseModalNewPack}
+          open={openModalNewPack}
+          title={
+            <Typography as={'p'} variant={'H2'}>
+              Add New Pack
+            </Typography>
+          }
+          trigger={
+            <Button>
+              <Typography variant={'subtitle-1'}>Add new Pack</Typography>
+            </Button>
+          }
+        >
+          <AddNewPack onClose={val => onCloseModalNewPack(val)} />
+        </ModalsNew>
+      </div>
+      <div className={s.controlPanel}>
+        <DebouncedInput
+          callback={handleSearch}
+          className={s.searchInput}
+          name={'search'}
+          type={'search'}
+        />
+        <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
+        <div>
+          <Typography variant={'body-2'}>Number of cards</Typography>
+          {decksIsLoading ? (
+            // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
+            <p>SliderRadix...</p>
+          ) : (
+            <SliderRadix
+              externalValues={externalValues}
+              max={maxValueSlider}
+              min={minValuesSlider}
+              onValueCommit={handleSliderValues}
             />
-            <TabSwitcher
-              label={'Show packs cards'}
-              onValueChange={handleTabSwitcher}
-              tabs={tabsData}
-            />
-            <div>
-              <Typography variant={'body-2'}>Number of cards</Typography>
-              {decksIsLoading ? (
-                // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
-                <p>SliderRadix...</p>
-              ) : (
-                <SliderRadix
-                  externalValues={externalValues}
-                  max={maxValueSlider}
-                  min={minValuesSlider}
-                  onValueCommit={handleSliderValues}
-                />
-              )}
-            </div>
-            <div style={{ marginLeft: 20 }}>
-              <Button onClick={handleClearFilter} variant={'secondary'}>
-                <IconDelete />
-                <Typography style={{ whiteSpace: 'nowrap' }} variant={'subtitle-2'}>
-                  Clear Filter
-                </Typography>
-              </Button>
-            </div>
-          </div>
-          <div className={s.wrapperTable}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  {columnsData.map(el => (
-                    <TableHeadCell key={el.id}>
-                      {el.title === 'Last Updated' ? (
-                        <>
-                          <Typography
-                            className={s.onChangeVector}
-                            onClick={onSortByName}
-                            variant={'subtitle-2'}
-                          >
-                            {el.title}
-                          </Typography>
-                          <span className={s.iconVector}>{iconVector}</span>
-                        </>
-                      ) : (
-                        <Typography variant={'subtitle-2'}>{el.title}</Typography>
-                      )}
-                    </TableHeadCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {decks?.items.map(d => {
-                  const packPath =
-                    d.author.id !== userData?.id ? `/friend-pack/${d.id}` : `/my-pack/${d.id}`
+          )}
+        </div>
+        <Button className={s.ClearFilter} onClick={handleClearFilter} variant={'secondary'}>
+          <IconDelete />
+          <Typography variant={'subtitle-2'}>Clear Filter</Typography>
+        </Button>
+      </div>
+      <div className={s.wrapperTable}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {columnsData.map(el => (
+                <TableHeadCell key={el.id}>
+                  {el.title === 'Last Updated' ? (
+                    <>
+                      <Typography
+                        className={s.onChangeVector}
+                        onClick={onSortByName}
+                        variant={'subtitle-2'}
+                      >
+                        {el.title}
+                      </Typography>
+                      <span className={s.iconVector}>{iconVector}</span>
+                    </>
+                  ) : (
+                    <Typography variant={'subtitle-2'}>{el.title}</Typography>
+                  )}
+                </TableHeadCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {decks?.items.map(d => {
+              const packPath =
+                d.author.id !== userData?.id ? `/friend-pack/${d.id}` : `/my-pack/${d.id}`
 
-                  return (
-                    <TableRow key={d.id}>
-                      <TableCell>
-                        <Link className={clsx(s.wrapCell, s.link)} to={packPath}>
-                          {d.cover && (
-                            <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
-                          )}
-                          <Typography as={'span'} variant={'subtitle-1'}>
-                            <ExpandableText maxLength={30} text={d.name} />
-                          </Typography>
-                        </Link>
-                      </TableCell>
-                      <TableCell>
-                        <Typography as={'p'} variant={'body-2'}>
-                          {d.cardsCount}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography as={'p'} variant={'body-2'}>
-                          {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography as={'p'} variant={'body-2'}>
-                          {d.author.name}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <div className={s.lastCell}>
-                          <Link to={packPath}>
-                            <IconLearn />
-                          </Link>
-                          {d.author.id === userData?.id && (
-                            <>
-                              <IconEdit />
-                              <ModalsNew
-                                className={{ title: s.modalTitle }}
-                                icon={<IconClose className={s.IconButton} />}
-                                onClose={onCloseModalDelete}
-                                open={openModalDelete}
-                                title={
-                                  <Typography as={'p'} variant={'H2'}>
-                                    Delete Pack
-                                  </Typography>
-                                }
-                                trigger={
-                                  <Button variant={'icon'}>
-                                    <IconDelete />
-                                  </Button>
-                                }
-                              >
-                                <DeleteModal
-                                  id={d.id}
-                                  name={d.name}
-                                  onClose={val => onCloseModalDelete(val)}
-                                  title={'Delete Pack'}
-                                />
-                              </ModalsNew>
-                            </>
-                          )}
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-            {decks?.items.length === 0 && (
-              <Typography as={'p'} className={s.notFound} variant={'H2'}>
-                По вашему запросу ничего не найдено
-              </Typography>
-            )}
-            <Pagination
-              getPage={pageValue}
-              limit={decks ? decks.pagination.itemsPerPage : 10}
-              page={decks ? decks.pagination.currentPage : 1}
-              setLimit={setItemsPerPage}
-              setPage={setCurrentPage}
-              totalPages={decks ? decks.pagination.totalPages : 1}
-            />
-          </div>
-        </>
-      )}
+              return (
+                <TableRow key={d.id}>
+                  <TableCell>
+                    <Link className={clsx(s.wrapCell, s.link)} to={packPath}>
+                      {d.cover && (
+                        <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
+                      )}
+                      <Typography as={'span'} variant={'subtitle-1'}>
+                        <ExpandableText maxLength={30} text={d.name} />
+                      </Typography>
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <Typography as={'p'} variant={'body-2'}>
+                      {d.cardsCount}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography as={'p'} variant={'body-2'}>
+                      {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography as={'p'} variant={'body-2'}>
+                      {d.author.name}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <div className={s.lastCell}>
+                      <Button as={Link} to={packPath} variant={'icon'}>
+                        <IconLearn />
+                      </Button>
+                      {d.author.id === userData?.id && (
+                        <>
+                          <IconEdit />
+                          <ModalsNew
+                            className={{ title: s.modalTitle }}
+                            icon={<IconClose className={s.IconButton} />}
+                            onClose={onCloseModalDelete}
+                            open={openModalDelete}
+                            title={
+                              <Typography as={'p'} variant={'H2'}>
+                                Delete Pack
+                              </Typography>
+                            }
+                            trigger={
+                              <Button variant={'icon'}>
+                                <IconDelete />
+                              </Button>
+                            }
+                          >
+                            <DeleteModal
+                              id={d.id}
+                              name={d.name}
+                              onClose={val => onCloseModalDelete(val)}
+                              title={'Delete Pack'}
+                            />
+                          </ModalsNew>
+                        </>
+                      )}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+        {decks?.items.length === 0 && (
+          <Typography as={'p'} className={s.notFound} variant={'H2'}>
+            По вашему запросу ничего не найдено
+          </Typography>
+        )}
+        <Pagination
+          getPage={pageValue}
+          limit={decks ? decks.pagination.itemsPerPage : 10}
+          page={decks ? decks.pagination.currentPage : 1}
+          setLimit={setItemsPerPage}
+          setPage={setCurrentPage}
+          totalPages={decks ? decks.pagination.totalPages : 1}
+        />
+      </div>
     </div>
   )
 }
