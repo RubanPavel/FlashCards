@@ -18,17 +18,19 @@ type TabSwitcherProps = {
   label?: string
   tabs: TabType[]
 } & ComponentPropsWithoutRef<typeof TabsRadixUI.Root>
-export const TabSwitcher = ({ className, label, tabs, ...rest }: TabSwitcherProps) => {
+export const TabSwitcher = ({
+  className,
+  defaultValue,
+  label,
+  tabs,
+  ...rest
+}: TabSwitcherProps) => {
   return (
     <div>
       <Typography className={s.title} variant={'body-2'}>
         {label}
       </Typography>
-      <TabsRadixUI.Root
-        className={clsx(s.root, className)}
-        defaultValue={`${tabs[1].value}`}
-        {...rest}
-      >
+      <TabsRadixUI.Root className={clsx(s.root, className)} defaultValue={defaultValue} {...rest}>
         <TabsRadixUI.List className={s.list}>
           {tabs.map(tab => {
             return (

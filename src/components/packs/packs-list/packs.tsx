@@ -32,6 +32,8 @@ import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
 
 import s from './packs.module.scss'
+// import Skeleton from 'react-loading-skeleton'
+// import 'react-loading-skeleton/dist/skeleton.css'
 
 export const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
@@ -42,8 +44,8 @@ export const dateOptions: Intl.DateTimeFormatOptions = {
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-
-  const [loading, setLoading] = useState(true)
+  //
+  // const [loading, setLoading] = useState(true)
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
   const { iconVector, onVectorChange, sort } = useSort('updated')
@@ -59,7 +61,7 @@ export const Packs = () => {
     if (originalArgs && originalArgs.maxCardsCount !== '0') {
       setExternalValues([originalArgs.minCardsCount, originalArgs.maxCardsCount])
     }
-    setLoading(false)
+    // setLoading(false)
   }, [])
 
   const columnsData = [
@@ -96,13 +98,15 @@ export const Packs = () => {
     dispatch(decksActions.setName({ name: searchValue }))
   }
 
+  const defaultValueTabSwitcher = params.authorId ? tabsData[0].value : tabsData[1].value
+
   const handleTabSwitcher = (tabValue: string) => {
     if (userData && tabValue === tabsData[0].value) {
       dispatch(decksActions.setAuthorId({ authorId: userData.id }))
     } else {
       dispatch(decksActions.setAuthorId({ authorId: undefined }))
     }
-    setLoading(false)
+    // setLoading(false)
   }
 
   const handleClearFilter = () => {
@@ -126,7 +130,7 @@ export const Packs = () => {
     dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
-  if (loading) {
+  if (decksIsLoading) {
     return <Loader />
   }
 
@@ -160,20 +164,24 @@ export const Packs = () => {
           name={'search'}
           type={'search'}
         />
-        <TabSwitcher label={'Show packs cards'} onValueChange={handleTabSwitcher} tabs={tabsData} />
+        <TabSwitcher
+          label={'Show packs cards'}
+          onValueChange={handleTabSwitcher}
+          tabs={tabsData}
+          defaultValue={defaultValueTabSwitcher}
+        />
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
-          {decksIsLoading ? (
-            // TODO временно SliderRadix заменить что бы не ломалась верстка пока подгружаются данные
-            <p>SliderRadix...</p>
-          ) : (
-            <SliderRadix
-              externalValues={externalValues}
-              max={maxValueSlider}
-              min={minValuesSlider}
-              onValueCommit={handleSliderValues}
-            />
-          )}
+          {/*{decksIsLoading ? (*/}
+          {/*  <p>isLoading...</p>*/}
+          {/*) : (*/}
+          <SliderRadix
+            externalValues={externalValues}
+            max={maxValueSlider}
+            min={minValuesSlider}
+            onValueCommit={handleSliderValues}
+          />
+          {/*)}*/}
         </div>
         <Button className={s.ClearFilter} onClick={handleClearFilter} variant={'secondary'}>
           <IconDelete />
@@ -281,14 +289,15 @@ export const Packs = () => {
             По вашему запросу ничего не найдено
           </Typography>
         )}
-        <Pagination
-          getPage={pageValue}
-          limit={decks ? decks.pagination.itemsPerPage : 10}
-          page={decks ? decks.pagination.currentPage : 1}
-          setLimit={setItemsPerPage}
-          setPage={setCurrentPage}
-          totalPages={decks ? decks.pagination.totalPages : 1}
-        />
+        {/*//TODO временно отключила иногда падает ошибка*/}
+        {/*  <Pagination*/}
+        {/*    getPage={pageValue}*/}
+        {/*    limit={decks ? decks.pagination.itemsPerPage : 10}*/}
+        {/*    page={decks ? decks.pagination.currentPage : 1}*/}
+        {/*    setLimit={setItemsPerPage}*/}
+        {/*    setPage={setCurrentPage}*/}
+        {/*    totalPages={decks ? decks.pagination.totalPages : 1}*/}
+        {/*  />*/}
       </div>
     </div>
   )
