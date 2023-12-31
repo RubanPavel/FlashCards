@@ -1,5 +1,5 @@
 import { MouseEvent, ReactNode, useState } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation, useOutletContext } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { IconLogOut } from '@/assets/icons/IconLogOut'
@@ -18,6 +18,14 @@ import { ServerError } from '@/services/error.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import s from './content-layout.module.scss'
+
+type AuthContext = {
+  isAuth: boolean
+}
+
+export const useAuthContext = () => {
+  return useOutletContext<AuthContext>()
+}
 
 export const ContentLayout = () => {
   const { data: user, isError, isLoading } = useGetAuthMeQuery()
@@ -123,7 +131,7 @@ export const ContentLayout = () => {
     <>
       <Header logo={<IconLogo />}>{headerContent}</Header>
       <main className={s.Main}>
-        <Outlet context={isAuth} />
+        <Outlet context={{ isAuth } satisfies AuthContext} />
       </main>
     </>
   )

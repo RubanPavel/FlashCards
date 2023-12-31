@@ -30,7 +30,7 @@ export const TabSwitcher = ({
       <Typography className={s.title} variant={'body-2'}>
         {label}
       </Typography>
-      <TabsRadixUI.Root className={clsx(s.root, className)} defaultValue={defaultValue} {...rest}>
+      <TabsRadixUI.Root className={clsx(s.root, className)} value={defaultValue} {...rest}>
         <TabsRadixUI.List className={s.list}>
           {tabs.map(tab => {
             return (

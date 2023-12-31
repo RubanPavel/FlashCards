@@ -40,6 +40,7 @@ export const MyPackPage = () => {
 
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
+  const [inputValue, setInputValue] = useState<string>('')
 
   const dispatch = useAppDispatch()
   const { id } = useParams()
@@ -131,6 +132,8 @@ export const MyPackPage = () => {
         </ModalsNew>
       </div>
       <DebouncedInput
+        inputValue={inputValue}
+        setInputValue={setInputValue}
         callback={handleSearch}
         className={s.searchInput}
         id={'inputMy'}

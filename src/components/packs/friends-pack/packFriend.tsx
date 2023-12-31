@@ -8,9 +8,11 @@ import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/componen
 import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
+import { useState } from 'react'
 
 export const PackFriend = () => {
   const { iconVector, onVectorChange } = useSort('updated')
+  const [inputValue, setInputValue] = useState<string>('')
 
   const columnsData = [
     { id: '1', title: 'Question' },
@@ -57,6 +59,8 @@ export const PackFriend = () => {
         </Button>
       </div>
       <DebouncedInput
+        inputValue={inputValue}
+        setInputValue={setInputValue}
         callback={getValue}
         className={s.searchInput}
         name={'search'}

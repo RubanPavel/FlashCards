@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
@@ -27,6 +27,7 @@ import s from './friendPack.module.scss'
 
 export const FriendPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
+  const [inputValue, setInputValue] = useState<string>('')
   const dispatch = useAppDispatch()
   const { iconVector, onVectorChange, sort } = useSort('question')
 
@@ -90,6 +91,8 @@ export const FriendPackPage = () => {
         </Link>
       </div>
       <DebouncedInput
+        inputValue={inputValue}
+        setInputValue={setInputValue}
         callback={handleSearch}
         className={s.searchInput}
         id={'inputFriends'}

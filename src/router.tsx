@@ -4,7 +4,6 @@ import {
   RouteObject,
   RouterProvider,
   createBrowserRouter,
-  useOutletContext,
 } from 'react-router-dom'
 
 import { Packs } from '@/components/packs/packs-list'
@@ -20,7 +19,7 @@ import { ProfilePage } from '@/pages/profile-page'
 import { RegisterPage } from '@/pages/register-page'
 import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
 
-import { ContentLayout } from './components/layout'
+import { ContentLayout, useAuthContext } from './components/layout'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -105,13 +104,13 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuth = useOutletContext()
+  const { isAuth } = useAuthContext()
 
   return isAuth ? <Outlet /> : <Navigate to={'/login'} />
 }
 
 function PublicRoutes() {
-  const isAuth = useOutletContext()
+  const { isAuth } = useAuthContext()
 
   return isAuth ? <Navigate to={'/'} /> : <Outlet />
 }

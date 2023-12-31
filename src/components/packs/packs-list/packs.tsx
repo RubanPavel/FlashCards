@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
@@ -41,18 +40,40 @@ export const dateOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
 }
 
+const columnsData = [
+  { id: '1', title: 'Name' },
+  { id: '2', title: 'Cards' },
+  { id: '3', title: 'Last Updated' },
+  { id: '4', title: 'Create by' },
+  { id: '5', title: '' },
+]
+const tabsData = [
+  {
+    title: 'My Cards',
+    value: 'My Cards',
+  },
+  {
+    title: 'All Cards',
+    value: 'All Cards',
+  },
+]
+
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-  //
   // const [loading, setLoading] = useState(true)
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
   const { iconVector, onVectorChange, sort } = useSort('updated')
   const [externalValues, setExternalValues] = useState<number[]>([])
+  const [activeTab, setActiveTab] = useState<string>(
+    params.authorId ? tabsData[0].value : tabsData[1].value
+  )
 
   const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading, originalArgs } = useGetDecksQuery(params)
+
+  const [inputValue, setInputValue] = useState<string>(params.name || '')
 
   const maxValueSlider = decks ? decks.maxCardsCount : 0
   const minValuesSlider = 0
@@ -63,24 +84,6 @@ export const Packs = () => {
     }
     // setLoading(false)
   }, [])
-
-  const columnsData = [
-    { id: '1', title: 'Name' },
-    { id: '2', title: 'Cards' },
-    { id: '3', title: 'Last Updated' },
-    { id: '4', title: 'Create by' },
-    { id: '5', title: '' },
-  ]
-  const tabsData = [
-    {
-      title: 'My Cards',
-      value: 'My Cards',
-    },
-    {
-      title: 'All Cards',
-      value: 'All Cards',
-    },
-  ]
 
   const onSortByName = () => {
     onVectorChange('updated')
@@ -98,9 +101,8 @@ export const Packs = () => {
     dispatch(decksActions.setName({ name: searchValue }))
   }
 
-  const defaultValueTabSwitcher = params.authorId ? tabsData[0].value : tabsData[1].value
-
   const handleTabSwitcher = (tabValue: string) => {
+    setActiveTab(tabValue)
     if (userData && tabValue === tabsData[0].value) {
       dispatch(decksActions.setAuthorId({ authorId: userData.id }))
     } else {
@@ -115,6 +117,9 @@ export const Packs = () => {
     dispatch(decksActions.setMinCardsCount({ minCardsCount: '0' }))
     dispatch(decksActions.setMaxCardsCount({ maxCardsCount: maxValueSlider.toString() }))
     setExternalValues([0, maxValueSlider])
+    setInputValue('')
+    setActiveTab(tabsData[1].value)
+    // setDefaultValueTabSwitcher(tabsData[1].value)
   }
 
   const handleSliderValues = (sliderValues: number[]) => {
@@ -159,7 +164,8 @@ export const Packs = () => {
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
-          defaultValue={params.name || ''}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
           callback={handleSearch}
           className={s.searchInput}
           name={'search'}
@@ -169,7 +175,7 @@ export const Packs = () => {
           label={'Show packs cards'}
           onValueChange={handleTabSwitcher}
           tabs={tabsData}
-          defaultValue={defaultValueTabSwitcher}
+          value={activeTab}
         />
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
@@ -290,15 +296,16 @@ export const Packs = () => {
             По вашему запросу ничего не найдено
           </Typography>
         )}
-        {/*//TODO временно отключила иногда падает ошибка*/}
-        {/*  <Pagination*/}
-        {/*    getPage={pageValue}*/}
-        {/*    limit={decks ? decks.pagination.itemsPerPage : 10}*/}
-        {/*    page={decks ? decks.pagination.currentPage : 1}*/}
-        {/*    setLimit={setItemsPerPage}*/}
-        {/*    setPage={setCurrentPage}*/}
-        {/*    totalPages={decks ? decks.pagination.totalPages : 1}*/}
-        {/*  />*/}
+        {decks?.items.length !== 0 && (
+          <Pagination
+            getPage={pageValue}
+            limit={decks ? decks.pagination.itemsPerPage : 10}
+            page={decks ? decks.pagination.currentPage : 1}
+            setLimit={setItemsPerPage}
+            setPage={setCurrentPage}
+            totalPages={decks ? decks.pagination.totalPages : 1}
+          />
+        )}
       </div>
     </div>
   )

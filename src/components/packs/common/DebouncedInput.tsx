@@ -1,15 +1,19 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, Dispatch, useEffect, useState } from 'react'
 
 import { Input } from '@/components/ui/input'
 
 type Props = {
-  defaultValue?: string
+  inputValue: string
+  setInputValue: Dispatch<string>
   callback: (value: string) => void
 } & Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 
-export const DebouncedInput = ({ callback, defaultValue, ...rest }: Props) => {
+export const DebouncedInput = ({ callback, inputValue, setInputValue, ...rest }: Props) => {
   const [debouncedValue, setDebouncedValue] = useState<null | string>(null)
-  const [inputValue, setInputValue] = useState<string>('')
+  // const [inputValue, setInputValue] = useState<string>(defaultValue || '')
+  // if (handleClearInput) {
+  //   handleClearInput(setInputValue(''))
+  // }
 
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
@@ -33,6 +37,6 @@ export const DebouncedInput = ({ callback, defaultValue, ...rest }: Props) => {
   }
 
   return (
-    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={defaultValue || inputValue} />
+    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={inputValue} />
   )
 }
