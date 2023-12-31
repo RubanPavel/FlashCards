@@ -3,12 +3,20 @@ import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'reac
 import { Input } from '@/components/ui/input'
 
 type Props = {
+  defaultValue?: string
   callback: (value: string) => void
 } & Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 
-export const DebouncedInput = ({ callback, ...rest }: Props) => {
+export const DebouncedInput = ({ callback, defaultValue, ...rest }: Props) => {
   const [debouncedValue, setDebouncedValue] = useState<null | string>(null)
   const [inputValue, setInputValue] = useState<string>('')
+
+  // TODO if временно что бы не сломать другие элементы которые используют DebouncedInput
+  if (defaultValue) {
+    useEffect(() => {
+      setInputValue(defaultValue)
+    }, [defaultValue])
+  }
 
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {

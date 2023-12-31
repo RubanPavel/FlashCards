@@ -159,6 +159,7 @@ export const Packs = () => {
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
+          defaultValue={params.name || ''}
           callback={handleSearch}
           className={s.searchInput}
           name={'search'}
