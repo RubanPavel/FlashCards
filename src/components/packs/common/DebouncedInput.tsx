@@ -11,13 +11,6 @@ export const DebouncedInput = ({ callback, defaultValue, ...rest }: Props) => {
   const [debouncedValue, setDebouncedValue] = useState<null | string>(null)
   const [inputValue, setInputValue] = useState<string>('')
 
-  // TODO if временно что бы не сломать другие элементы которые используют DebouncedInput
-  if (defaultValue) {
-    useEffect(() => {
-      setInputValue(defaultValue)
-    }, [defaultValue])
-  }
-
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
       if (debouncedValue !== null) {
@@ -40,6 +33,6 @@ export const DebouncedInput = ({ callback, defaultValue, ...rest }: Props) => {
   }
 
   return (
-    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={inputValue} />
+    <Input {...rest} onChange={handleInputChange} setValue={handleInputValue} value={defaultValue || inputValue} />
   )
 }
