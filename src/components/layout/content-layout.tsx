@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { Link, Outlet, useLocation, useOutletContext } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -45,9 +45,9 @@ export const ContentLayout = () => {
       })
   }
 
-  const handleDropdownItemClick: (e: MouseEvent<HTMLDivElement>) => void = e => {
-    e.preventDefault()
-  }
+  // const handleDropdownItemClick: (e: MouseEvent<HTMLDivElement>) => void = e => {
+  //   e.preventDefault()
+  // }
   const handleCloseMenu = () => {
     setIsDropDownMenuOpen(false)
   }
@@ -94,7 +94,7 @@ export const ContentLayout = () => {
           position={'end'}
           trigger={trigger}
         >
-          <DropDownItem className={s.HeaderContentDropdownItem} onClick={handleDropdownItemClick}>
+          <DropDownItem className={s.HeaderContentDropdownItem} disabled={true}>
             <AvatarRadix imageUrl={user?.avatar} userName={user?.name} />
             <div className={s.HeaderContentUserInfoWrapper}>
               <Typography as={'h5'} className={s.HeaderContentUserInfoName} variant={'subtitle-2'}>
