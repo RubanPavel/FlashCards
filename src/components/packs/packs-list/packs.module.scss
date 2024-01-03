@@ -127,8 +127,9 @@
 
 .CellLink {
   position: relative;
-  align-items: center;
+
   display: inline-flex;
+  align-items: center;
 
   max-width: 100%;
   padding: 3px;
@@ -163,4 +164,5 @@
 
 .ModalCellText {
   max-width: 500%;
+  color: var(--color-dark-100);;
 }
