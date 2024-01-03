@@ -42,7 +42,7 @@ export const EditPack = ({ deck, onClose }: Props) => {
     defaultValues: {
       cover: undefined,
       name: deck.name || '',
-      private: false,
+      private: deck.isPrivate,
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
