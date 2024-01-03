@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import { IconClose } from '@/assets/icons/IconClose'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
@@ -164,11 +165,11 @@ export const Packs = () => {
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
-          inputValue={inputValue}
-          setInputValue={setInputValue}
           callback={handleSearch}
           className={s.searchInput}
+          inputValue={inputValue}
           name={'search'}
+          setInputValue={setInputValue}
           type={'search'}
         />
         <TabSwitcher
@@ -254,7 +255,9 @@ export const Packs = () => {
                   <TableCell>
                     <div className={s.lastCell}>
                       <Button as={Link} to={packPath} variant={'icon'}>
-                        <IconLearn />
+                        <Link to={`/learn/${d.id}`}>
+                          <IconLearn />
+                        </Link>
                       </Button>
                       {d.author.id === userData?.id && (
                         <>
