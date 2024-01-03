@@ -18,7 +18,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { ModalsNew } from '@/components/ui/modals/modalsNew.'
+import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import {
   Table,
   TableBody,

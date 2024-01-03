@@ -5,7 +5,7 @@ import { IconClose } from '@/assets/icons/IconClose'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { Button } from '@/components/ui/button'
-import { ModalsNew } from '@/components/ui/modals/modalsNew.'
+import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { Typography } from '@/components/ui/typography'
 
 import s from './emptyPack.module.scss'

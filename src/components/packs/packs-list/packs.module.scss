@@ -66,15 +66,6 @@
   justify-content: end;
 }
 
-.iconVector {
-  padding: 2px;
-
-  svg {
-    display: inline-grid;
-    place-content: center;
-  }
-}
-
 .onChangeVector {
   cursor: pointer;
 }
@@ -95,14 +86,7 @@
 .coverStyle {
   max-width: 150px;
   max-height: 50px;
-
-  //float: left;
   margin-right: 10px;
-}
-
-.wrapCell {
-  display: flex;
-  align-items: center;
 }
 
 .notFound {
@@ -110,11 +94,73 @@
   text-align: center;
 }
 
-.link {
-  color: var(--color-light-100);
-  text-decoration: none;
-}
-
 .ClearFilter {
   margin-left: auto;
+}
+
+.CellText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.HeadCellButton {
+  gap: 3px;
+  color: var(--color-light-100);
+
+  //border: 1px solid blue; // Стили по умолчанию
+
+  //@media (min-width: $minBreakpoint) and (max-width: $maxBreakpoint) {
+  //  border: 1px solid red; // Примените стили в диапазоне от 900 до 1000
+  //}
+}
+
+.HeadCellButtonIcon {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.HeadCellButtonIcon_Is_Flipped {
+  transform: rotate(-180deg);
+}
+
+.CellLink {
+  position: relative;
+  align-items: center;
+  display: inline-flex;
+
+  max-width: 100%;
+  padding: 3px;
+
+  color: var(--color-light-100);
+  text-decoration: none;
+
+  border: 1px solid transparent;
+}
+
+.ModalCell {
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+
+  display: none;
+
+  width: max-content;
+  max-width: 500%;
+  padding: 3px;
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-accent-500);
+  border-radius: 3px;
+}
+
+.CellLink:hover .ModalCell {
+  display: flex;
+  align-items: center;
+}
+
+.ModalCellText {
+  max-width: 500%;
 }

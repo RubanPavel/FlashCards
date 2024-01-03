@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
@@ -8,7 +10,6 @@ import { Table, TableBody, TableCell, TableHeadCell, TableRow } from '@/componen
 import { Typography } from '@/components/ui/typography'
 
 import s from './packFriend.module.scss'
-import { useState } from 'react'
 
 export const PackFriend = () => {
   const { iconVector, onVectorChange } = useSort('updated')
@@ -59,11 +60,11 @@ export const PackFriend = () => {
         </Button>
       </div>
       <DebouncedInput
-        inputValue={inputValue}
-        setInputValue={setInputValue}
         callback={getValue}
         className={s.searchInput}
+        inputValue={inputValue}
         name={'search'}
+        setInputValue={setInputValue}
         type={'search'}
       />
       <Table>

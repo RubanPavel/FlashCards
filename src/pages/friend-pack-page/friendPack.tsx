@@ -91,12 +91,12 @@ export const FriendPackPage = () => {
         </Link>
       </div>
       <DebouncedInput
-        inputValue={inputValue}
-        setInputValue={setInputValue}
         callback={handleSearch}
         className={s.searchInput}
         id={'inputFriends'}
+        inputValue={inputValue}
         name={'search'}
+        setInputValue={setInputValue}
         type={'search'}
       />
       <Table>

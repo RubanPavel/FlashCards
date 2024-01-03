@@ -16,7 +16,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
-import { ModalsNew } from '@/components/ui/modals/modalsNew.'
+import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { Pagination } from '@/components/ui/pagination'
 import {
   Table,
@@ -132,12 +132,12 @@ export const MyPackPage = () => {
         </ModalsNew>
       </div>
       <DebouncedInput
-        inputValue={inputValue}
-        setInputValue={setInputValue}
         callback={handleSearch}
         className={s.searchInput}
         id={'inputMy'}
+        inputValue={inputValue}
         name={'search'}
+        setInputValue={setInputValue}
         type={'search'}
       />
       <Table>

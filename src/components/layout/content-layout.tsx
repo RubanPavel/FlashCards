@@ -94,7 +94,7 @@ export const ContentLayout = () => {
           position={'end'}
           trigger={trigger}
         >
-          <DropDownItem className={s.HeaderContentDropdownItem} disabled={true}>
+          <DropDownItem className={s.HeaderContentDropdownItem} disabled>
             <AvatarRadix imageUrl={user?.avatar} userName={user?.name} />
             <div className={s.HeaderContentUserInfoWrapper}>
               <Typography as={'h5'} className={s.HeaderContentUserInfoName} variant={'subtitle-2'}>

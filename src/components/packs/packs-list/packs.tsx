@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import { IconClose } from '@/assets/icons/IconClose'
+import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
-import { ExpandableText } from '@/components/packs/common/ExpandableText'
-import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { Loader } from '@/components/ui/loader'
-import { ModalsNew } from '@/components/ui/modals/modalsNew.'
+import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { Pagination } from '@/components/ui/pagination'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
@@ -26,7 +26,7 @@ import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { useGetAuthMeQuery } from '@/services/auth'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
-import { decksActions, orderByUpdated } from '@/services/decks/decks.slice'
+import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
 
@@ -40,12 +40,12 @@ export const dateOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
 }
 
-const columnsData = [
-  { id: '1', title: 'Name' },
-  { id: '2', title: 'Cards' },
-  { id: '3', title: 'Last Updated' },
-  { id: '4', title: 'Create by' },
-  { id: '5', title: '' },
+const columnsData: { id: string; sort: Sort; title: string }[] = [
+  { id: '1', sort: 'name', title: 'Name' },
+  { id: '2', sort: 'cardsCount', title: 'Cards' },
+  { id: '3', sort: 'updated', title: 'Last Updated' },
+  { id: '4', sort: 'created', title: 'Create by' },
+  { id: '5', sort: '', title: '' },
 ]
 const tabsData = [
   {
@@ -58,13 +58,14 @@ const tabsData = [
   },
 ]
 
+type Sort = '' | 'cardsCount' | 'created' | 'name' | 'updated'
+type Direction = 'asc' | 'desc'
+
 export const Packs = () => {
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-  // const [loading, setLoading] = useState(true)
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
-  const { iconVector, onVectorChange, sort } = useSort('updated')
   const [externalValues, setExternalValues] = useState<number[]>([])
   const [activeTab, setActiveTab] = useState<string>(
     params.authorId ? tabsData[0].value : tabsData[1].value
@@ -82,12 +83,16 @@ export const Packs = () => {
     if (originalArgs && originalArgs.maxCardsCount !== '0') {
       setExternalValues([originalArgs.minCardsCount, originalArgs.maxCardsCount])
     }
-    // setLoading(false)
   }, [])
 
-  const onSortByName = () => {
-    onVectorChange('updated')
-    dispatch(decksActions.setOrderBy({ orderBy: sort as orderByUpdated }))
+  const onSortByName = (sort: Sort, currentSort: Sort, direction: Direction) => {
+    if (sort !== currentSort) {
+      dispatch(decksActions.setOrderBy({ orderBy: `${sort}-asc` }))
+    } else {
+      const newDirection = direction === 'desc' ? 'asc' : 'desc'
+
+      dispatch(decksActions.setOrderBy({ orderBy: `${sort}-${newDirection}` }))
+    }
   }
 
   const pageValue = (currentPage: number, itemsPerPage: number) => {
@@ -108,7 +113,6 @@ export const Packs = () => {
     } else {
       dispatch(decksActions.setAuthorId({ authorId: undefined }))
     }
-    // setLoading(false)
   }
 
   const handleClearFilter = () => {
@@ -119,7 +123,6 @@ export const Packs = () => {
     setExternalValues([0, maxValueSlider])
     setInputValue('')
     setActiveTab(tabsData[1].value)
-    // setDefaultValueTabSwitcher(tabsData[1].value)
   }
 
   const handleSliderValues = (sliderValues: number[]) => {
@@ -164,11 +167,11 @@ export const Packs = () => {
       </div>
       <div className={s.controlPanel}>
         <DebouncedInput
-          inputValue={inputValue}
-          setInputValue={setInputValue}
           callback={handleSearch}
           className={s.searchInput}
+          inputValue={inputValue}
           name={'search'}
+          setInputValue={setInputValue}
           type={'search'}
         />
         <TabSwitcher
@@ -179,16 +182,12 @@ export const Packs = () => {
         />
         <div>
           <Typography variant={'body-2'}>Number of cards</Typography>
-          {/*{decksIsLoading ? (*/}
-          {/*  <p>isLoading...</p>*/}
-          {/*) : (*/}
           <SliderRadix
             externalValues={externalValues}
             max={maxValueSlider}
             min={minValuesSlider}
             onValueCommit={handleSliderValues}
           />
-          {/*)}*/}
         </div>
         <Button className={s.ClearFilter} onClick={handleClearFilter} variant={'secondary'}>
           <IconDelete />
@@ -201,20 +200,26 @@ export const Packs = () => {
             <TableRow>
               {columnsData.map(el => (
                 <TableHeadCell key={el.id}>
-                  {el.title === 'Last Updated' ? (
-                    <>
-                      <Typography
-                        className={s.onChangeVector}
-                        onClick={onSortByName}
-                        variant={'subtitle-2'}
-                      >
-                        {el.title}
-                      </Typography>
-                      <span className={s.iconVector}>{iconVector}</span>
-                    </>
-                  ) : (
+                  <Button
+                    className={s.HeadCellButton}
+                    onClick={() =>
+                      onSortByName(
+                        el.sort,
+                        params.orderBy.split('-')[0],
+                        params.orderBy.split('-')[1]
+                      )
+                    }
+                    variant={'icon'}
+                  >
                     <Typography variant={'subtitle-2'}>{el.title}</Typography>
-                  )}
+                    {el.sort === params.orderBy.split('-')[0] && (
+                      <IconVectorDown
+                        className={`${s.HeadCellButtonIcon} ${
+                          params.orderBy.split('-')[1] === 'asc' && s.HeadCellButtonIcon_Is_Flipped
+                        }`}
+                      />
+                    )}
+                  </Button>
                 </TableHeadCell>
               ))}
             </TableRow>
@@ -227,13 +232,25 @@ export const Packs = () => {
               return (
                 <TableRow key={d.id}>
                   <TableCell>
-                    <Link className={clsx(s.wrapCell, s.link)} to={packPath}>
+                    <Link className={s.CellLink} to={packPath}>
                       {d.cover && (
                         <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
                       )}
-                      <Typography as={'span'} variant={'subtitle-1'}>
-                        <ExpandableText maxLength={30} text={d.name} />
+                      <Typography as={'span'} className={s.CellText} variant={'subtitle-1'}>
+                        {d.name}
                       </Typography>
+                      <div className={s.ModalCell}>
+                        {d.cover && (
+                          <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
+                        )}
+                        <Typography
+                          as={'span'}
+                          className={clsx(s.test, s.ModalCellText)}
+                          variant={'subtitle-1'}
+                        >
+                          {d.name}
+                        </Typography>
+                      </div>
                     </Link>
                   </TableCell>
                   <TableCell>

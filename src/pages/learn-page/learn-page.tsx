@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { LearnCard } from '@/components/packs/modals/learnCard'
-import { ModalsNew } from '@/components/ui/modals/modalsNew.'
+import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { Typography } from '@/components/ui/typography'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery, useGetRandomCardQuery } from '@/services/decks'
 

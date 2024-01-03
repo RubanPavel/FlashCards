@@ -3,9 +3,9 @@ import { ChangeEvent, ComponentPropsWithoutRef, Dispatch, useEffect, useState } 
 import { Input } from '@/components/ui/input'
 
 type Props = {
+  callback: (value: string) => void
   inputValue: string
   setInputValue: Dispatch<string>
-  callback: (value: string) => void
 } & Omit<ComponentPropsWithoutRef<'input'>, 'onChange' | 'value'>
 
 export const DebouncedInput = ({ callback, inputValue, setInputValue, ...rest }: Props) => {
