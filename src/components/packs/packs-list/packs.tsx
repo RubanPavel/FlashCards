@@ -6,6 +6,7 @@ import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewPack } from '@/components/packs/modals/addNewPack'
+import { EditPack } from '@/components/packs/modals/editPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
@@ -65,6 +66,7 @@ export const Packs = () => {
   // const [loading, setLoading] = useState(true)
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
+  const [openModalEditPack, onCloseModalEditPack] = useState(false)
   const { iconVector, onVectorChange, sort } = useSort('updated')
   const [externalValues, setExternalValues] = useState<number[]>([])
   const [activeTab, setActiveTab] = useState<string>(
@@ -254,14 +256,30 @@ export const Packs = () => {
                   </TableCell>
                   <TableCell>
                     <div className={s.lastCell}>
-                      <Button as={Link} to={packPath} variant={'icon'}>
-                        <Link to={`/learn/${d.id}`}>
-                          <IconLearn />
-                        </Link>
+                      <Button as={Link} to={`/learn/${d.id}`} variant={'icon'}>
+                        <IconLearn />
                       </Button>
                       {d.author.id === userData?.id && (
                         <>
-                          <IconEdit />
+                          <ModalsNew
+                            className={{ title: s.modalTitle }}
+                            icon={<IconClose className={s.IconButton} />}
+                            onClose={onCloseModalEditPack}
+                            open={openModalEditPack}
+                            title={
+                              <Typography as={'p'} variant={'H2'}>
+                                Edit Pack
+                              </Typography>
+                            }
+                            trigger={
+                              <Button variant={'icon'}>
+                                <IconEdit />
+                              </Button>
+                            }
+                          >
+                            <EditPack deck={d} onClose={val => onCloseModalEditPack(val)} />
+                          </ModalsNew>
+
                           <ModalsNew
                             className={{ title: s.modalTitle }}
                             icon={<IconClose className={s.IconButton} />}
