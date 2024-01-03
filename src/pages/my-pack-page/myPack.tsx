@@ -132,12 +132,12 @@ export const MyPackPage = () => {
         </ModalsNew>
       </div>
       <DebouncedInput
-        inputValue={inputValue}
-        setInputValue={setInputValue}
         callback={handleSearch}
         className={s.searchInput}
         id={'inputMy'}
+        inputValue={inputValue}
         name={'search'}
+        setInputValue={setInputValue}
         type={'search'}
       />
       <Table>
