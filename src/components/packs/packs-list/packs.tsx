@@ -124,6 +124,7 @@ export const Packs = () => {
     setExternalValues([0, maxValueSlider])
     setInputValue('')
     setActiveTab(tabsData[1].value)
+    dispatch(decksActions.setOrderBy({ orderBy: `updated-desc` }))
   }
 
   const handleSliderValues = (sliderValues: number[]) => {
