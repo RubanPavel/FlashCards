@@ -109,6 +109,7 @@ export const Packs = () => {
   const handleTabSwitcher = (tabValue: string) => {
     setActiveTab(tabValue)
     if (userData && tabValue === tabsData[0].value) {
+      dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
       dispatch(decksActions.setAuthorId({ authorId: userData.id }))
     } else {
       dispatch(decksActions.setAuthorId({ authorId: undefined }))
