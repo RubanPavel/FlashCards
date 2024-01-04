@@ -70,7 +70,6 @@ export const Packs = () => {
   const [activeTab, setActiveTab] = useState<string>(
     params.authorId ? tabsData[0].value : tabsData[1].value
   )
-
   const { data: userData } = useGetAuthMeQuery()
   const { data: decks, isLoading: decksIsLoading, originalArgs } = useGetDecksQuery(params)
 
@@ -143,6 +142,8 @@ export const Packs = () => {
   if (decksIsLoading) {
     return <Loader />
   }
+
+  console.log('DELETE', openModalDelete)
 
   return (
     <div className={s.container}>

@@ -16,19 +16,10 @@ export const DeleteModal = ({ id, name, onClose, title }: Props) => {
   const [deleteDeck] = useDeleteDeskMutation()
   const [deleteCard] = useDeleteCardMutation()
 
-  const onCloseClick = () => {
-    onClose(false)
-  }
-
   const isDeletePack = title === 'Delete Pack'
 
   return (
     <div className={s.container}>
-      {/*<div className={s.header}>*/}
-      {/*  <Typography as={'p'} variant={'H2'}>*/}
-      {/*    {isDeletePack ? 'Delete Pack' : 'Delete Card'}*/}
-      {/*  </Typography>*/}
-      {/*</div>*/}
       <div className={s.content}>
         <div>
           <Typography variant={'body-1'}>
@@ -42,7 +33,7 @@ export const DeleteModal = ({ id, name, onClose, title }: Props) => {
           {isDeletePack ? 'All cards will be deleted.' : 'Your card will be deleted.'}
         </Typography>
         <div className={s.button}>
-          <Button onClick={onCloseClick} type={'button'}>
+          <Button onClick={() => onClose(false)} type={'button'}>
             <Typography as={'p'} variant={'subtitle-2'}>
               Cancel
             </Typography>
@@ -50,6 +41,7 @@ export const DeleteModal = ({ id, name, onClose, title }: Props) => {
           <Button
             onClick={() => {
               isDeletePack ? deleteDeck(id) : deleteCard(id)
+              onClose(false)
             }}
             type={'button'}
             variant={'secondary'}
