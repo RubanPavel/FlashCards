@@ -8,7 +8,6 @@ import {
   DeleteResponse,
   GetDecksCardsParams,
   GetDecksType,
-  UpdateDeckRequest,
   getRandomCardResponse,
   getRandomCardType,
   saveGradeType,
@@ -91,9 +90,19 @@ export const DecksService = baseApi.injectEndpoints({
           url: `/v1/decks/${id}/learn`,
         }),
       }),
-      updateDeck: builder.mutation<Deck, UpdateDeckRequest>({
+      updateDeck: builder.mutation<Deck, FormData>({
         invalidatesTags: ['Decks'],
-        query: ({ id }) => ({ method: 'PATCH', url: `v1/decks/${id}` }),
+        query: args => {
+          const id = args.get('id')
+
+          args.delete('id')
+
+          return {
+            body: args,
+            method: 'PATCH',
+            url: `/v1/decks/${id}`,
+          }
+        },
       }),
     }
   },
@@ -108,4 +117,5 @@ export const {
   useGetDecksQuery,
   useGetRandomCardQuery,
   useSaveGradeMutation,
+  useUpdateDeckMutation,
 } = DecksService
