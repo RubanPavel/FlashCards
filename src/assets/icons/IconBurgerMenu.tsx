@@ -3,8 +3,18 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
   <>
     <svg
       fill={'none'}
+      height={'18'}
+      viewBox={'0 0 18 18'}
+      width={'18'}
+      xmlns={'http://www.w3.org/2000/svg'}
+    >
+      <circle cx={'9'} cy={'9'} r={'8.5'} stroke={'white'} />
+    </svg>
+    <svg
+      fill={'none'}
       height={12}
       ref={ref}
+      style={{ marginLeft: -30, marginTop: 2 }}
       width={12}
       xmlns={'http://www.w3.org/2000/svg'}
       {...props}
@@ -15,16 +25,6 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) =
         }
         fill={'white'}
       />
-    </svg>
-    <svg
-      fill={'none'}
-      height={'18'}
-      style={{ marginBottom: -3.5, marginLeft: -15.2 }}
-      viewBox={'0 0 18 18'}
-      width={'18'}
-      xmlns={'http://www.w3.org/2000/svg'}
-    >
-      <circle cx={'9'} cy={'9'} r={'8.5'} stroke={'white'} />
     </svg>
   </>
 )
