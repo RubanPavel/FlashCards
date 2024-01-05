@@ -9,6 +9,7 @@ import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
+import { EditCard } from '@/components/packs/modals/editCard'
 import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
@@ -41,6 +42,7 @@ export const MyPackPage = () => {
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
+  const [openModalEditCard, onCloseModalEditCard] = useState(false)
 
   const dispatch = useAppDispatch()
   const { id } = useParams()
@@ -65,6 +67,7 @@ export const MyPackPage = () => {
     { id: '2', title: 'Answer' },
     { id: '3', title: 'Last Updated' },
     { id: '4', title: 'Grade' },
+    { id: '5', title: '' },
   ]
 
   if (packData?.cardsCount === 0) {
@@ -171,8 +174,28 @@ export const MyPackPage = () => {
               </TableCell>
               <TableCell className={s.starsAndIcons}>
                 <StarRating filledStars={d.grade} />
+              </TableCell>
+              <TableCell>
                 <div className={s.pointer}>
-                  <IconEdit />
+                  <ModalsNew
+                    className={{ title: s.modalTitle }}
+                    icon={<IconClose className={s.IconButtonMyPack} />}
+                    onClose={onCloseModalEditCard}
+                    open={openModalEditCard}
+                    title={
+                      <Typography as={'p'} variant={'H2'}>
+                        Edit Сard
+                      </Typography>
+                    }
+                    trigger={
+                      <Button variant={'icon'}>
+                        <IconEdit />
+                      </Button>
+                    }
+                  >
+                    <EditCard card={d} onClose={val => onCloseModalEditCard(val)} />
+                  </ModalsNew>
+
                   <ModalsNew
                     className={{ title: s.modalTitle }}
                     icon={<IconClose className={s.IconButtonMyPack} />}

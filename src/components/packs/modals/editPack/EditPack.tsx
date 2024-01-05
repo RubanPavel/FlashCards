@@ -32,6 +32,7 @@ type Props = {
 export const EditPack = ({ deck, onClose }: Props) => {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState('')
+
   const {
     control,
     formState: { errors },
@@ -41,7 +42,7 @@ export const EditPack = ({ deck, onClose }: Props) => {
   } = useForm<FormValue>({
     defaultValues: {
       cover: undefined,
-      name: deck.name || '',
+      name: deck.id || '',
       private: deck.isPrivate,
     },
     mode: 'onBlur',
