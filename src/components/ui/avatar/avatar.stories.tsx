@@ -1,4 +1,4 @@
-import { User } from '@/assets/userDataForTest'
+import { User } from '@/assets/dataForTest'
 import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import { Meta, StoryObj } from '@storybook/react'
 

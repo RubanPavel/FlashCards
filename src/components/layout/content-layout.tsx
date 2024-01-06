@@ -45,9 +45,6 @@ export const ContentLayout = () => {
       })
   }
 
-  // const handleDropdownItemClick: (e: MouseEvent<HTMLDivElement>) => void = e => {
-  //   e.preventDefault()
-  // }
   const handleCloseMenu = () => {
     setIsDropDownMenuOpen(false)
   }

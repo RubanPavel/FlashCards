@@ -20,14 +20,14 @@ export type Deck = {
   author: DecksResponseItemsAuthor
   cardsCount: number
   // cover?: null | string
-  cover?: FormData
+  cover?: FormData | null | string
   created: string
   id: string
   isBlocked?: any
   isDeleted?: any
   isPrivate?: boolean
   name: string
-  rating: number
+  rating?: number
   shots: number
   updated: string
   userId: string
@@ -115,14 +115,19 @@ export type saveGradeType = {
   id?: string
 }
 
+export type Sort = 'cardsCount' | 'created' | 'name' | 'updated'
+export type Direction = 'asc' | 'desc'
+
+export type SortDirection = `${Sort}-${Direction}`
+
 export type GetDecksType = {
   authorId?: string
-  currentPage?: number
-  itemsPerPage?: number
-  maxCardsCount?: string
-  minCardsCount?: string
-  name?: string
-  orderBy?: string
+  currentPage: number
+  itemsPerPage: number
+  maxCardsCount: string
+  minCardsCount: string
+  name: string
+  orderBy: SortDirection
 }
 
 export type CardsResponse = {

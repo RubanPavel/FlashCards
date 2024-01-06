@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 
-import { User } from '@/assets/userDataForTest'
+import { User } from '@/assets/dataForTest'
 import { store } from '@/services/store'
 
 import { ProfileForm } from './index'

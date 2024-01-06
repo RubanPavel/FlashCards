@@ -10,8 +10,8 @@ import { Typography } from '../typography/typography'
 export type TabType = {
   /** A unique value that associates the trigger with a content. */
   disabled?: boolean
-  value: string
   id: string
+  value: string
 }
 type TabSwitcherProps = {
   className?: string

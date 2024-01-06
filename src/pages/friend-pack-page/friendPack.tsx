@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { dateOptions } from '@/assets/variable'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
@@ -23,7 +24,6 @@ import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './friendPack.module.scss'
-import { dateOptions } from '@/assets/variable'
 
 export const FriendPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)

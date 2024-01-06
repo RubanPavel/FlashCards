@@ -14,12 +14,12 @@ import { LearnPage } from '@/pages/learn-page/learn-page'
 import { LoginPage } from '@/pages/login-page'
 import { MyPackPage } from '@/pages/my-pack-page'
 import { NotFoundPage } from '@/pages/not-found-page'
+import { PacksPage } from '@/pages/packs-page/packs-page'
 import { ProfilePage } from '@/pages/profile-page'
 import { RegisterPage } from '@/pages/register-page'
 import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
 
 import { ContentLayout, useAuthContext } from './components/layout'
-import { PacksPage } from '@/pages/packs-page/packs-page'
 
 const publicRoutes: RouteObject[] = [
   {

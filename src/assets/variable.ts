@@ -108,8 +108,18 @@ export const packsPageData: PacksPageData = {
     { id: '4', sort: 'created', title: 'Create by' },
     { id: '5', sort: '', title: '' },
   ],
-  tabsData: [
-    { id: '1', value: 'My Cards' },
-    { id: '2', value: 'All Cards' },
-  ],
+  controls: {
+    buttonDelete: 'Clear Filter',
+    modal: {
+      title: 'Add New Pack',
+      trigger: 'Add New Pack',
+    },
+    sliderTitle: 'Number of cards',
+    tabSwitcherLabel: 'Show packs cards',
+    tabsData: [
+      { id: '1', value: 'My Cards' },
+      { id: '2', value: 'All Cards' },
+    ],
+    title: 'Packs list',
+  },
 }

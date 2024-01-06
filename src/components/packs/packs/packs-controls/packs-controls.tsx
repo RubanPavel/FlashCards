@@ -1,5 +1,7 @@
 import { useState } from 'react'
+
 import { IconClose } from '@/assets/icons/IconClose'
+import { packsPageData } from '@/assets/variable'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
@@ -9,20 +11,22 @@ import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { Typography } from '@/components/ui/typography'
 import { AuthResponse } from '@/services/auth'
+import { DecksResponse } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
-import s from './packs-controls.module.scss'
-import { packsPageData } from '@/assets/variable'
+
 import 'react-loading-skeleton/dist/skeleton.css'
-import { DecksResponse } from '@/services/decks'
+
+import s from './packs-controls.module.scss'
 
 type Props = {
-  user: AuthResponse
   decks: DecksResponse
+  user: AuthResponse
 }
 
-export const PacksControls = ({ user, decks }: Props) => {
-  const { tabsData } = packsPageData
+export const PacksControls = ({ decks, user }: Props) => {
+  const { buttonDelete, modal, sliderTitle, tabSwitcherLabel, tabsData, title } =
+    packsPageData.controls
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
   const [openModalNewPack, onCloseModalNewPack] = useState<boolean>(false)
@@ -71,7 +75,7 @@ export const PacksControls = ({ user, decks }: Props) => {
   return (
     <>
       <div className={s.packsList}>
-        <Typography variant={'large'}>Packs list</Typography>
+        <Typography variant={'large'}>{title}</Typography>
         <ModalsNew
           className={{ title: s.modalTitle }}
           icon={<IconClose className={s.IconButton} />}
@@ -79,12 +83,12 @@ export const PacksControls = ({ user, decks }: Props) => {
           open={openModalNewPack}
           title={
             <Typography as={'p'} variant={'H2'}>
-              Add New Pack
+              {modal.title}
             </Typography>
           }
           trigger={
             <Button>
-              <Typography variant={'subtitle-1'}>Add new Pack</Typography>
+              <Typography variant={'subtitle-1'}>{modal.trigger}</Typography>
             </Button>
           }
         >
@@ -101,13 +105,13 @@ export const PacksControls = ({ user, decks }: Props) => {
           type={'search'}
         />
         <TabSwitcher
-          label={'Show packs cards'}
+          label={tabSwitcherLabel}
           onValueChange={handleTabSwitcher}
           tabs={tabsData}
           value={activeTab}
         />
         <div>
-          <Typography variant={'body-2'}>Number of cards</Typography>
+          <Typography variant={'body-2'}>{sliderTitle}</Typography>
           <SliderRadix
             externalValues={externalValues}
             max={maxValueSlider}
@@ -117,7 +121,7 @@ export const PacksControls = ({ user, decks }: Props) => {
         </div>
         <Button className={s.ClearFilter} onClick={handleClearFilter} variant={'secondary'}>
           <IconDelete />
-          <Typography variant={'subtitle-2'}>Clear Filter</Typography>
+          <Typography variant={'subtitle-2'}>{buttonDelete}</Typography>
         </Button>
       </div>
     </>

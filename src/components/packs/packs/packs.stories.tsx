@@ -1,17 +1,17 @@
 import { Provider } from 'react-redux'
 
-import { Router } from '@/router'
+import { Decks, User } from '@/assets/dataForTest'
 import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 
-import { Packs } from './'
+import { Packs } from './packs'
 
 const meta = {
   component: Packs,
   decorators: [
-    () => (
+    Story => (
       <Provider store={store}>
-        <Router />
+        <Story />
       </Provider>
     ),
   ],
@@ -22,4 +22,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const PacksExample: Story = {}
+export const PacksExample: Story = {
+  args: {
+    decks: Decks,
+    user: User,
+  },
+}

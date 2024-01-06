@@ -1,24 +1,13 @@
+import { GetDecksType, SortDirection } from '@/services/decks/decks.types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-export type orderByUpdated = 'name-asc' | 'name-desc' | 'updated-asc' | 'updated-desc' | string
-type InitialState = {
-  authorId: string | undefined
-  currentPage: number
-  itemsPerPage: number
-  maxCardsCount: string
-  minCardsCount: string
-  name: string
-  orderBy: any
-}
-
-const initialState: InitialState = {
+const initialState: GetDecksType = {
   authorId: undefined,
   currentPage: 1,
   itemsPerPage: 10,
   maxCardsCount: '0',
   minCardsCount: '0',
   name: '',
-  //TODO возможно поменять orderBy и протипизировать более узко, возможно строка слишком широко
   orderBy: 'updated-desc',
 }
 
@@ -44,7 +33,7 @@ const slice = createSlice({
     setName: (state, action: PayloadAction<{ name: string }>) => {
       state.name = action.payload.name
     },
-    setOrderBy: (state, action: PayloadAction<{ orderBy: orderByUpdated }>) => {
+    setOrderBy: (state, action: PayloadAction<{ orderBy: SortDirection }>) => {
       state.orderBy = action.payload.orderBy
     },
   },

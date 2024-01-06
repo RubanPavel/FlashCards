@@ -5,6 +5,7 @@ import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
+import { dateOptions } from '@/assets/variable'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
@@ -33,7 +34,6 @@ import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './myPack.module.scss'
-import { dateOptions } from '@/assets/variable'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)

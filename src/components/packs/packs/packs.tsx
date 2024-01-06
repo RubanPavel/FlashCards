@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
+import { dateOptions, packsPageData } from '@/assets/variable'
 import { EditPack } from '@/components/packs/modals/editPack'
+import { PacksControls } from '@/components/packs/packs/packs-controls/packs-controls'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
@@ -21,35 +23,34 @@ import {
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { AuthResponse } from '@/services/auth'
+import { DecksResponse, Sort } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
 
-import s from './packs.module.scss'
-import { dateOptions, packsPageData } from '@/assets/variable'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { DecksResponse } from '@/services/decks'
-import { PacksControls } from '@/components/packs/packs/packs-controls/packs-controls'
 
-type Sort = '' | 'cardsCount' | 'created' | 'name' | 'updated'
-type Direction = 'asc' | 'desc'
+import s from './packs.module.scss'
 
 type Props = {
-  user: AuthResponse
   decks: DecksResponse
+  user: AuthResponse
 }
 
-export const Packs = ({ user, decks }: Props) => {
+export const Packs = ({ decks, user }: Props) => {
   const { columnsData } = packsPageData
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
   const [openModalDelete, onCloseModalDelete] = useState<boolean>(false)
   const [openModalEditPack, onCloseModalEditPack] = useState<boolean>(false)
 
-  const onSortByName = (sort: Sort, currentSort: Sort, direction: Direction) => {
-    if (sort !== currentSort) {
+  const handleSort = (sort: '' | Sort) => {
+    const currentSort = params.orderBy.split('-')[0]
+    const direction = params.orderBy.split('-')[1]
+
+    if (sort !== currentSort && sort !== '') {
       dispatch(decksActions.setOrderBy({ orderBy: `${sort}-asc` }))
-    } else {
+    } else if (sort !== '') {
       const newDirection = direction === 'desc' ? 'asc' : 'desc'
 
       dispatch(decksActions.setOrderBy({ orderBy: `${sort}-${newDirection}` }))
@@ -69,11 +70,9 @@ export const Packs = ({ user, decks }: Props) => {
     dispatch(decksActions.setItemsPerPage({ itemsPerPage }))
   }
 
-  // console.log('DELETE', openModalDelete)
-
   return (
     <div className={s.container}>
-      <PacksControls user={user} decks={decks} />
+      <PacksControls decks={decks} user={user} />
       <div className={s.wrapperTable}>
         <Table>
           <TableHead>
@@ -82,13 +81,7 @@ export const Packs = ({ user, decks }: Props) => {
                 <TableHeadCell key={el.id}>
                   <Button
                     className={s.HeadCellButton}
-                    onClick={() =>
-                      onSortByName(
-                        el.sort,
-                        params.orderBy.split('-')[0],
-                        params.orderBy.split('-')[1]
-                      )
-                    }
+                    onClick={() => handleSort(el.sort)}
                     variant={'icon'}
                   >
                     <Typography variant={'subtitle-2'}>{el.title}</Typography>

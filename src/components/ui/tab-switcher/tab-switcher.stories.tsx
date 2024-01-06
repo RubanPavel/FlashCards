@@ -18,30 +18,30 @@ type Story = StoryObj<typeof meta>
 
 const tabs = [
   {
+    id: '1',
     label: 'Tab1',
-    title: 'TabSwitcher1',
-    value: 'tab1',
+    value: 'TabSwitcher1',
   },
   {
     disabled: true,
+    id: '2',
     label: 'Tab2',
-    title: 'TabSwitcher2',
-    value: 'tab2',
+    value: 'TabSwitcher2',
   },
   {
+    id: '3',
     label: 'Tab3',
-    title: 'TabSwitcher3',
-    value: 'tab3',
+    value: 'TabSwitcher3',
   },
   {
+    id: '4',
     label: 'Tab4',
-    title: 'TabSwitcher4',
-    value: 'tab4',
+    value: 'TabSwitcher4',
   },
 ]
 
 const tabContents = tabs.map(tab => (
-  <TabContent key={tab.value} value={tab.value}>
+  <TabContent key={tab.id} value={tab.value}>
     Special information for {tab.label}
   </TabContent>
 ))
