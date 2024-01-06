@@ -29,6 +29,7 @@ import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { useGetAuthMeQuery } from '@/services/auth'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 import { decksActions } from '@/services/decks/decks.slice'
+import { Deck } from '@/services/decks/decks.types'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
 
@@ -68,7 +69,7 @@ export const Packs = () => {
   const [isModalDelOpen, setIsModalDelOpen] = useState(false)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [deckDel, setDeckDel] = useState('')
-  const [deckEdit, setDeckEdit] = useState('')
+  const [deckEdit, setDeckEdit] = useState<Deck | undefined>()
   const params = useAppSelector(state => state.decksParams)
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
   const [externalValues, setExternalValues] = useState<number[]>([])

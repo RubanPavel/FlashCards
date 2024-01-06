@@ -8,6 +8,7 @@ import {
   DeleteResponse,
   GetDecksCardsParams,
   GetDecksType,
+  UpdateDeckRequest,
   getRandomCardResponse,
   getRandomCardType,
   saveGradeType,
@@ -90,15 +91,19 @@ export const DecksService = baseApi.injectEndpoints({
           url: `/v1/decks/${id}/learn`,
         }),
       }),
-      updateDeck: builder.mutation<Deck, FormData>({
+      updateDeck: builder.mutation<Deck, UpdateDeckRequest>({
         invalidatesTags: ['Decks'],
-        query: args => {
-          const id = args.get('id')
+        query: ({ id, ...args }) => {
+          const payload = new FormData()
+          const isDeckPrivate = args.isPrivate ? 'true' : 'false'
 
-          args.delete('id')
+          payload.append('cover', args.cover)
+          payload.append('name', args.name)
+          payload.append('isPrivate', isDeckPrivate)
 
           return {
-            body: args,
+            body: payload,
+            formData: true,
             method: 'PATCH',
             url: `/v1/decks/${id}`,
           }
