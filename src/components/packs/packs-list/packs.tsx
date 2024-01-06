@@ -68,7 +68,7 @@ export const Packs = () => {
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
   const [openModalEditPack, onCloseModalEditPack] = useState(false)
-  const { iconVector, onVectorChange, sort } = useSort('updated')
+  // const { iconVector, onVectorChange, sort } = useSort('updated')
   const [externalValues, setExternalValues] = useState<number[]>([])
   const [activeTab, setActiveTab] = useState<string>(
     params.authorId ? tabsData[0].value : tabsData[1].value

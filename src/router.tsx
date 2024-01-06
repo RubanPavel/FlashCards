@@ -6,7 +6,6 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { Packs } from '@/components/packs/packs-list'
 import { CheckEmailPage } from '@/pages/check-email-page'
 import { CreatePasswordPage } from '@/pages/create-password-page'
 import { ForgotPasswordPage } from '@/pages/forgot-password-page'
@@ -20,6 +19,7 @@ import { RegisterPage } from '@/pages/register-page'
 import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
 
 import { ContentLayout, useAuthContext } from './components/layout'
+import { PacksListPage } from '@/pages/packs-list-page/packs-list-page'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -54,7 +54,7 @@ const privateRoutes: RouteObject[] = [
     path: '/',
   },
   {
-    element: <Packs />,
+    element: <PacksListPage />,
     path: '/packs',
   },
   {

@@ -4,7 +4,7 @@ import { authReducer } from '@/services/auth/auth.slice'
 import { baseApi } from '@/services/base-api'
 import { cardsReducer } from '@/services/cards/cards.slice'
 import { decksReducer } from '@/services/decks/decks.slice'
-import { configureStore } from '@reduxjs/toolkit/'
+import { configureStore } from '@reduxjs/toolkit/react'
 import { setupListeners } from '@reduxjs/toolkit/query'
 
 export const store = configureStore({
