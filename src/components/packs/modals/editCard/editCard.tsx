@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { IconImage } from '@/assets/icons/IconImage'
-import { answerSchema, photoSchema, questionSchema } from '@/components/auth/validate/validate'
+import { answerSchema, questionSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { Typography } from '@/components/ui/typography'
-import { useGetCardsByIdQuery, useUpdateCardMutation } from '@/services/cards'
+import { useUpdateCardMutation } from '@/services/cards'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -21,9 +22,9 @@ type Props = {
 
 const inputSchema = z.object({
   answer: answerSchema,
-  answerImg: photoSchema,
+  answerImg: z.any(),
   question: questionSchema,
-  questionImg: photoSchema,
+  questionImg: z.any(),
 })
 
 type FormValue = z.infer<typeof inputSchema>
@@ -34,17 +35,20 @@ export function EditCard({ card, onClose }: Props) {
   const [currentOption, setCurrentOption] = useState<string>('Text')
   const inputQuesRef = React.useRef<HTMLInputElement | null>(null)
   const inputAnsRef = React.useRef<HTMLInputElement | null>(null)
-  const { data: dataCard } = useGetCardsByIdQuery(card.id)
+  /*const { data: dataCard } = useGetCardsByIdQuery(card.id)*/
+  const [editCard] = useUpdateCardMutation()
+
   const {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
     setValue,
   } = useForm<FormValue>({
     defaultValues: {
-      answer: dataCard?.answer || '',
+      answer: card.answer || '',
       answerImg: undefined,
-      question: dataCard?.question || '',
+      question: card?.question || '',
       questionImg: undefined,
     },
     mode: 'onBlur',
@@ -61,21 +65,28 @@ export function EditCard({ card, onClose }: Props) {
     },
   ]
 
-  const [editCard, {}] = useUpdateCardMutation()
-
-  const onSubmit = (data: FormValue) => {
-    const formData = new FormData()
-
-    card.id && formData.append('id', card.id)
-    formData.append('question', data.question)
-    formData.append('answer', data.answer)
-    data.questionImg && formData.append('questionImg', data.questionImg)
-    data.answerImg && formData.append('answerImg', data.answerImg)
-
-    editCard(formData)
+  const onSubmit: SubmitHandler<FormValue> = data => {
+    editCard({
+      answer: data.answer,
+      answerImg: undefined,
+      /*answerImg: data.answerImg[0],*/
+      answerVideo: '',
+      id: card.id,
+      question: data.question,
+      /*questionImg: data.questionImg[0],*/
+      questionVideo: '',
+    })
+      .unwrap()
+      .then(() => {
+        toast.success(`Your card updated successfully`)
+      })
+      .catch(e => {
+        toast.error(e.data.message)
+      })
 
     if (onClose) {
       onClose(false)
+      reset()
     }
   }
 
@@ -109,6 +120,7 @@ export function EditCard({ card, onClose }: Props) {
   const onCloseClick = () => {
     if (onClose) {
       onClose(false)
+      reset()
     }
   }
 

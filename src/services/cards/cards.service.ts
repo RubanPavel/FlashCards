@@ -1,6 +1,6 @@
 import { baseApi } from '@/services/base-api'
 
-import { CardsResponse, updateCardResponse } from './cards.types'
+import { CardsResponse, updateCardResponse, updateCardType } from './cards.types'
 
 export const CardsService = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -20,15 +20,20 @@ export const CardsService = baseApi.injectEndpoints({
           url: `/v1/cards/${id}`,
         }),
       }),
-      updateCard: builder.mutation<updateCardResponse, FormData>({
+      updateCard: builder.mutation<updateCardResponse, updateCardType>({
         invalidatesTags: ['Cards', 'Decks'],
-        query: args => {
-          const id = args.get('id')
+        query: ({ id, ...args }) => {
+          const payload = new FormData()
 
-          args.delete('id')
+          args.answerImg && payload.append('answerImg', args.answerImg)
+          payload.append('answer', args.answer)
+
+          args.questionImg && payload.append('questionImg', args.questionImg)
+          payload.append('question', args.question)
 
           return {
-            body: args,
+            body: payload,
+            formData: true,
             method: 'PATCH',
             url: `/v1/cards/${id}`,
           }
