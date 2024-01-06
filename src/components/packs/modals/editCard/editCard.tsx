@@ -35,7 +35,6 @@ export function EditCard({ card, onClose }: Props) {
   const [currentOption, setCurrentOption] = useState<string>('Text')
   const inputQuesRef = React.useRef<HTMLInputElement | null>(null)
   const inputAnsRef = React.useRef<HTMLInputElement | null>(null)
-  /*const { data: dataCard } = useGetCardsByIdQuery(card.id)*/
   const [editCard] = useUpdateCardMutation()
 
   const {

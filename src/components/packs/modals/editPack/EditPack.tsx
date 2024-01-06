@@ -8,7 +8,7 @@ import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
-import { Deck, useUpdateDeckMutation } from '@/services/decks'
+import { useUpdateDeckMutation } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch } from '@/services/store'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -25,7 +25,7 @@ const schemaEdit = z.object({
 type FormValue = z.infer<typeof schemaEdit>
 
 type Props = {
-  deck: Deck
+  deck: any
   onClose?: (val: boolean) => void
 }
 

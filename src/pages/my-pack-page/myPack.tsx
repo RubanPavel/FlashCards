@@ -39,14 +39,13 @@ import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
-  /*const [openModalEditCard, onCloseModalEditCard] = useState(false)*/
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+  const [isModalDelOpen, setIsModalDelOpen] = useState(false)
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
-  const [openModalDelete, onCloseModalDelete] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
 
-  const [card, setCard] = useState('')
-
+  const [cardEdit, setCardEdit] = useState('')
+  const [cardDel, setCardDel] = useState('')
   const dispatch = useAppDispatch()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
@@ -55,6 +54,15 @@ export const MyPackPage = () => {
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
 
+  const editHandler = (card: any) => {
+    setIsModalEditOpen(true)
+    setCardEdit(card)
+  }
+
+  const deleteHandler = (card: any) => {
+    setIsModalDelOpen(true)
+    setCardDel(card)
+  }
   const handleSearch = (searchValue: string) => {
     dispatch(cardsActions.setQuestion({ question: searchValue }))
   }
@@ -88,11 +96,6 @@ export const MyPackPage = () => {
 
   const setItemsPerPage = (itemsPerPage: number) => {
     dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
-  }
-
-  const editHandler = (card: any) => {
-    setIsModalEditOpen(true)
-    setCard(card)
   }
 
   return (
@@ -191,30 +194,9 @@ export const MyPackPage = () => {
                     <Button onClick={() => editHandler(card)} variant={'icon'}>
                       <IconEdit />
                     </Button>
-
-                    <ModalsNew
-                      className={{ title: s.modalTitle }}
-                      icon={<IconClose className={s.IconButtonMyPack} />}
-                      onClose={onCloseModalDelete}
-                      open={openModalDelete}
-                      title={
-                        <Typography as={'p'} variant={'H2'}>
-                          Delete Card
-                        </Typography>
-                      }
-                      trigger={
-                        <Button variant={'icon'}>
-                          <IconDelete />
-                        </Button>
-                      }
-                    >
-                      <DeleteModal
-                        id={card.id}
-                        name={card.question}
-                        onClose={val => onCloseModalDelete(val)}
-                        title={'Delete Card'}
-                      />
-                    </ModalsNew>
+                    <Button onClick={() => deleteHandler(card)} variant={'icon'}>
+                      <IconDelete />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
@@ -222,14 +204,23 @@ export const MyPackPage = () => {
           })}
         </TableBody>
         <ModalsBest
-          className={{ title: s.modalTitle }}
           isModalOpen={isModalEditOpen}
-          /*   isOpen={openModalEditCard}
-          onClose={onCloseModalEditCard}*/
           setIsModalOpen={setIsModalEditOpen}
           title={'Edit Сard Test'}
         >
-          <EditCard card={card} onClose={val => setIsModalEditOpen(val)} />
+          <EditCard card={cardEdit} onClose={val => setIsModalEditOpen(val)} />
+        </ModalsBest>
+
+        <ModalsBest
+          isModalOpen={isModalDelOpen}
+          setIsModalOpen={setIsModalDelOpen}
+          title={'Delete Card Test'}
+        >
+          <DeleteModal
+            card={cardDel}
+            onClose={val => setIsModalDelOpen(val)}
+            title={'Delete Card '}
+          />
         </ModalsBest>
       </Table>
       <Pagination

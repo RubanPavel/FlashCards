@@ -6,13 +6,13 @@ import { useDeleteDeskMutation } from '@/services/decks'
 import s from './deleteModal.module.scss'
 
 type Props = {
-  id: string
-  name: string
+  card?: any
+  deck?: any
   onClose: (val: boolean) => void
   title: string
 }
 
-export const DeleteModal = ({ id, name, onClose, title }: Props) => {
+export const DeleteModal = ({ card, deck, onClose, title }: Props) => {
   const [deleteDeck] = useDeleteDeskMutation()
   const [deleteCard] = useDeleteCardMutation()
 
@@ -25,7 +25,7 @@ export const DeleteModal = ({ id, name, onClose, title }: Props) => {
           <Typography variant={'body-1'}>
             Do you really want to remove{' '}
             <Typography as={'span'} variant={'subtitle-1'}>
-              {isDeletePack ? `pack - ${name}?` : `card - ${name}?`}
+              {isDeletePack ? `pack - ${deck.name}?` : `card - ${card.question}?`}
             </Typography>
           </Typography>
         </div>
@@ -40,7 +40,7 @@ export const DeleteModal = ({ id, name, onClose, title }: Props) => {
           </Button>
           <Button
             onClick={() => {
-              isDeletePack ? deleteDeck(id) : deleteCard(id)
+              isDeletePack ? deleteDeck(deck.id) : deleteCard(card.id)
               onClose(false)
             }}
             type={'button'}

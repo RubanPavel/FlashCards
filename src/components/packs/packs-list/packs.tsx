@@ -11,6 +11,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { Loader } from '@/components/ui/loader'
+import { ModalsBest } from '@/components/ui/modals/modalsBest'
 import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { Pagination } from '@/components/ui/pagination'
 import { SliderRadix } from '@/components/ui/slider'
@@ -64,11 +65,12 @@ type Direction = 'asc' | 'desc'
 
 export const Packs = () => {
   const dispatch = useAppDispatch()
+  const [isModalDelOpen, setIsModalDelOpen] = useState(false)
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+  const [deckDel, setDeckDel] = useState('')
+  const [deckEdit, setDeckEdit] = useState('')
   const params = useAppSelector(state => state.decksParams)
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
-  const [openModalDelete, onCloseModalDelete] = useState(false)
-  const [openModalEditPack, onCloseModalEditPack] = useState(false)
-  /*const { iconVector, onVectorChange, sort } = useSort('updated')*/
   const [externalValues, setExternalValues] = useState<number[]>([])
   const [activeTab, setActiveTab] = useState<string>(
     params.authorId ? tabsData[0].value : tabsData[1].value
@@ -106,6 +108,15 @@ export const Packs = () => {
   // TODO поменять имя функциям
   const handleSearch = (searchValue: string) => {
     dispatch(decksActions.setName({ name: searchValue }))
+  }
+  const deleteHandler = (deck: any) => {
+    setIsModalDelOpen(true)
+    setDeckDel(deck)
+  }
+
+  const editHandler = (deck: any) => {
+    setIsModalEditOpen(true)
+    setDeckEdit(deck)
   }
 
   const handleTabSwitcher = (tabValue: string) => {
@@ -145,8 +156,6 @@ export const Packs = () => {
   if (decksIsLoading) {
     return <Loader />
   }
-
-  console.log('DELETE', openModalDelete)
 
   return (
     <div className={s.container}>
@@ -281,48 +290,12 @@ export const Packs = () => {
                       </Button>
                       {d.author.id === userData?.id && (
                         <>
-                          <ModalsNew
-                            className={{ title: s.modalTitle }}
-                            icon={<IconClose className={s.IconButton} />}
-                            onClose={onCloseModalEditPack}
-                            open={openModalEditPack}
-                            title={
-                              <Typography as={'p'} variant={'H2'}>
-                                Edit Pack
-                              </Typography>
-                            }
-                            trigger={
-                              <Button variant={'icon'}>
-                                <IconEdit />
-                              </Button>
-                            }
-                          >
-                            <EditPack deck={d} onClose={val => onCloseModalEditPack(val)} />
-                          </ModalsNew>
-
-                          <ModalsNew
-                            className={{ title: s.modalTitle }}
-                            icon={<IconClose className={s.IconButton} />}
-                            onClose={onCloseModalDelete}
-                            open={openModalDelete}
-                            title={
-                              <Typography as={'p'} variant={'H2'}>
-                                Delete Pack
-                              </Typography>
-                            }
-                            trigger={
-                              <Button variant={'icon'}>
-                                <IconDelete />
-                              </Button>
-                            }
-                          >
-                            <DeleteModal
-                              id={d.id}
-                              name={d.name}
-                              onClose={val => onCloseModalDelete(val)}
-                              title={'Delete Pack'}
-                            />
-                          </ModalsNew>
+                          <Button onClick={() => editHandler(d)} variant={'icon'}>
+                            <IconEdit />
+                          </Button>
+                          <Button onClick={() => deleteHandler(d)} variant={'icon'}>
+                            <IconDelete />
+                          </Button>
                         </>
                       )}
                     </div>
@@ -331,6 +304,24 @@ export const Packs = () => {
               )
             })}
           </TableBody>
+          <ModalsBest
+            isModalOpen={isModalEditOpen}
+            setIsModalOpen={setIsModalEditOpen}
+            title={'Edit Pack Test'}
+          >
+            <EditPack deck={deckEdit} onClose={val => setIsModalEditOpen(val)} />
+          </ModalsBest>
+          <ModalsBest
+            isModalOpen={isModalDelOpen}
+            setIsModalOpen={setIsModalDelOpen}
+            title={'Delete Pack Test'}
+          >
+            <DeleteModal
+              deck={deckDel}
+              onClose={val => setIsModalDelOpen(val)}
+              title={'Delete Pack'}
+            />
+          </ModalsBest>
         </Table>
         {decks?.items.length === 0 && (
           <Typography as={'p'} className={s.notFound} variant={'H2'}>

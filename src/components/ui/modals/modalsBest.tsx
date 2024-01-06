@@ -12,12 +12,10 @@ type Props = {
   className?: { content?: string; title?: string }
   icon?: ReactNode
   isModalOpen: boolean
-  /*isOpen: boolean*/
   onClose?: (val: boolean) => void
   setIsModalOpen: (open: boolean) => void
   showCloseButton?: boolean
   title: ReactNode
-  trigger?: ReactNode
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
 export const ModalsBest = ({
@@ -25,27 +23,26 @@ export const ModalsBest = ({
   className,
   isModalOpen,
   setIsModalOpen,
-  /*isOpen = false,
-  onClose,*/
+  showCloseButton = true,
   title,
-  /* trigger,*/
 }: Props) => {
   return (
     <DialogRadix.Root onOpenChange={setIsModalOpen} open={isModalOpen}>
-      {/* <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>*/}
       <DialogRadix.Overlay className={s.DialogOverlay} />
       <DialogRadix.Content className={clsx(s.DialogContent, className?.content)}>
-        <DialogRadix.Title className={className?.title}>
+        <DialogRadix.Title className={clsx(s.DialogTitle, className?.title)}>
           <Typography as={'p'} variant={'H2'}>
             {title}
           </Typography>
         </DialogRadix.Title>
-        <DialogRadix.Close asChild>
-          <button aria-label={'Close'}>
-            <IconClose className={s.IconButton} />
-          </button>
-        </DialogRadix.Close>
         {children}
+        <DialogRadix.Close asChild>
+          {showCloseButton && (
+            <button aria-label={'Close'}>
+              <IconClose className={s.IconButton} />
+            </button>
+          )}
+        </DialogRadix.Close>
       </DialogRadix.Content>
     </DialogRadix.Root>
   )
