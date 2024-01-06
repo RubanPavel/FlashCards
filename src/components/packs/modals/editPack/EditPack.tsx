@@ -42,7 +42,7 @@ export const EditPack = ({ deck, onClose }: Props) => {
   } = useForm<FormValue>({
     defaultValues: {
       cover: undefined,
-      name: deck.id || '',
+      name: deck.name || '',
       private: deck.isPrivate,
     },
     mode: 'onBlur',

@@ -17,6 +17,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
+import { ModalsBest } from '@/components/ui/modals/modalsBest'
 import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { Pagination } from '@/components/ui/pagination'
 import {
@@ -38,11 +39,13 @@ import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
-
+  /*const [openModalEditCard, onCloseModalEditCard] = useState(false)*/
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
   const [openModalDelete, onCloseModalDelete] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
-  const [openModalEditCard, onCloseModalEditCard] = useState(false)
+
+  const [card, setCard] = useState('')
 
   const dispatch = useAppDispatch()
   const { id } = useParams()
@@ -85,6 +88,11 @@ export const MyPackPage = () => {
 
   const setItemsPerPage = (itemsPerPage: number) => {
     dispatch(cardsActions.setItemsPerPage({ itemsPerPage }))
+  }
+
+  const editHandler = (card: any) => {
+    setIsModalEditOpen(true)
+    setCard(card)
   }
 
   return (
@@ -154,76 +162,75 @@ export const MyPackPage = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cardsData?.items.map(d => (
-            <TableRow key={d.id}>
-              <TableCell>
-                {d.questionImg && <img alt={'img'} className={s.image} src={d.questionImg} />}
-                <Typography as={'p'} variant={'body-2'}>
-                  <ExpandableText maxLength={30} text={d.question} />
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography as={'p'} variant={'body-2'}>
-                  <ExpandableText maxLength={30} text={d.answer} />
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography as={'p'} variant={'body-2'}>
-                  {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
-                </Typography>
-              </TableCell>
-              <TableCell className={s.starsAndIcons}>
-                <StarRating filledStars={d.grade} />
-              </TableCell>
-              <TableCell>
-                <div className={s.pointer}>
-                  <ModalsNew
-                    className={{ title: s.modalTitle }}
-                    icon={<IconClose className={s.IconButtonMyPack} />}
-                    onClose={onCloseModalEditCard}
-                    open={openModalEditCard}
-                    title={
-                      <Typography as={'p'} variant={'H2'}>
-                        Edit Сard
-                      </Typography>
-                    }
-                    trigger={
-                      <Button variant={'icon'}>
-                        <IconEdit />
-                      </Button>
-                    }
-                  >
-                    <EditCard card={d} onClose={val => onCloseModalEditCard(val)} />
-                  </ModalsNew>
+          {cardsData?.items.map(card => {
+            return (
+              <TableRow key={card.id}>
+                <TableCell>
+                  {card.questionImg && (
+                    <img alt={'img'} className={s.image} src={card.questionImg} />
+                  )}
+                  <Typography as={'p'} variant={'body-2'}>
+                    <ExpandableText maxLength={30} text={card.question} />
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography as={'p'} variant={'body-2'}>
+                    <ExpandableText maxLength={30} text={card.answer} />
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography as={'p'} variant={'body-2'}>
+                    {new Date(card.updated).toLocaleDateString('ru-RU', dateOptions)}
+                  </Typography>
+                </TableCell>
+                <TableCell className={s.starsAndIcons}>
+                  <StarRating filledStars={card.grade} />
+                </TableCell>
+                <TableCell>
+                  <div className={s.pointer}>
+                    <Button onClick={() => editHandler(card)} variant={'icon'}>
+                      <IconEdit />
+                    </Button>
 
-                  <ModalsNew
-                    className={{ title: s.modalTitle }}
-                    icon={<IconClose className={s.IconButtonMyPack} />}
-                    onClose={onCloseModalDelete}
-                    open={openModalDelete}
-                    title={
-                      <Typography as={'p'} variant={'H2'}>
-                        Delete Card
-                      </Typography>
-                    }
-                    trigger={
-                      <Button variant={'icon'}>
-                        <IconDelete />
-                      </Button>
-                    }
-                  >
-                    <DeleteModal
-                      id={d.id}
-                      name={d.question}
-                      onClose={val => onCloseModalDelete(val)}
-                      title={'Delete Card'}
-                    />
-                  </ModalsNew>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+                    <ModalsNew
+                      className={{ title: s.modalTitle }}
+                      icon={<IconClose className={s.IconButtonMyPack} />}
+                      onClose={onCloseModalDelete}
+                      open={openModalDelete}
+                      title={
+                        <Typography as={'p'} variant={'H2'}>
+                          Delete Card
+                        </Typography>
+                      }
+                      trigger={
+                        <Button variant={'icon'}>
+                          <IconDelete />
+                        </Button>
+                      }
+                    >
+                      <DeleteModal
+                        id={card.id}
+                        name={card.question}
+                        onClose={val => onCloseModalDelete(val)}
+                        title={'Delete Card'}
+                      />
+                    </ModalsNew>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
+        <ModalsBest
+          className={{ title: s.modalTitle }}
+          isModalOpen={isModalEditOpen}
+          /*   isOpen={openModalEditCard}
+          onClose={onCloseModalEditCard}*/
+          setIsModalOpen={setIsModalEditOpen}
+          title={'Edit Сard Test'}
+        >
+          <EditCard card={card} onClose={val => setIsModalEditOpen(val)} />
+        </ModalsBest>
       </Table>
       <Pagination
         getPage={pageValue}

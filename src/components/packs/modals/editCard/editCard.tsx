@@ -48,7 +48,7 @@ export function EditCard({ card, onClose }: Props) {
     defaultValues: {
       answer: card.answer || '',
       answerImg: undefined,
-      question: card?.question || '',
+      question: card.question || '',
       questionImg: undefined,
     },
     mode: 'onBlur',
