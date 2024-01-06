@@ -1,0 +1,53 @@
+.packsList {
+  display: flex;
+  justify-content: space-between;
+  padding: 104px 0 5px;
+}
+
+.modalTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 20px 20px;
+  border-bottom: 1px solid var(--color-dark-500);
+}
+
+.IconButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 25px;
+  height: 25px;
+
+  font-family: inherit;
+  color: var(--violet-11);
+
+  border-radius: 100%;
+}
+
+.IconButton:hover {
+  background-color: var(--color-dark-100);
+}
+
+.controlPanel {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 1.8vw;
+  align-items: end;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.searchInput {
+  flex-direction: row;
+  width: 250px;
+}
+
+.ClearFilter {
+  margin-left: auto;
+}

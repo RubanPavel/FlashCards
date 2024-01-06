@@ -10,8 +10,8 @@ import { Typography } from '../typography/typography'
 export type TabType = {
   /** A unique value that associates the trigger with a content. */
   disabled?: boolean
-  title: string
   value: string
+  id: string
 }
 type TabSwitcherProps = {
   className?: string
@@ -37,11 +37,11 @@ export const TabSwitcher = ({
               <TabsRadixUI.Trigger
                 className={s.trigger}
                 disabled={tab.disabled}
-                key={tab.value}
+                key={tab.id}
                 value={tab.value}
               >
                 <Typography style={{ whiteSpace: 'nowrap' }} variant={'body-1'}>
-                  {tab.title}
+                  {tab.value}
                 </Typography>
               </TabsRadixUI.Trigger>
             )

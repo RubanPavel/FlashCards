@@ -19,7 +19,7 @@ import { RegisterPage } from '@/pages/register-page'
 import { VerifyEmailPage } from '@/pages/verify-email-page/verify-email-page'
 
 import { ContentLayout, useAuthContext } from './components/layout'
-import { PacksListPage } from '@/pages/packs-list-page/packs-list-page'
+import { PacksPage } from '@/pages/packs-page/packs-page'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -54,7 +54,7 @@ const privateRoutes: RouteObject[] = [
     path: '/',
   },
   {
-    element: <PacksListPage />,
+    element: <PacksPage />,
     path: '/packs',
   },
   {

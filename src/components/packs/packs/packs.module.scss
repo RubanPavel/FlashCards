@@ -32,27 +32,11 @@
   margin-right: 15px;
 }
 
-.packsList {
-  display: flex;
-  justify-content: space-between;
-  padding: 104px 0 5px;
-}
-
 .modalTitle {
   display: flex;
   justify-content: space-between;
   padding: 0 0 20px 20px;
   border-bottom: 1px solid var(--color-dark-500);
-}
-
-.controlPanel {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 1.8vw;
-  align-items: end;
-  justify-content: space-between;
-
-  width: 100%;
 }
 
 .wrapperTable {
@@ -68,11 +52,6 @@
 
 .onChangeVector {
   cursor: pointer;
-}
-
-.searchInput {
-  flex-direction: row;
-  width: 250px;
 }
 
 .IconButton {
@@ -92,10 +71,6 @@
 .notFound {
   margin: 50px;
   text-align: center;
-}
-
-.ClearFilter {
-  margin-left: auto;
 }
 
 .CellText {

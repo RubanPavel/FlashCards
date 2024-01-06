@@ -9,7 +9,6 @@ import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
-import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
@@ -34,6 +33,7 @@ import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './myPack.module.scss'
+import { dateOptions } from '@/assets/variable'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)

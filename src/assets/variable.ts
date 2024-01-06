@@ -1,6 +1,14 @@
+import { PacksPageData } from '@/assets/types'
+
 const apiUrl = import.meta.env.PROD ? import.meta.env.VITE_U_P : import.meta.env.VITE_U_D
 
 export const errorText = 'Some error occurred'
+
+export const dateOptions: Intl.DateTimeFormatOptions = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+}
 
 export const contentLayoutData = {
   buttonLogin: 'Sign In',
@@ -90,4 +98,18 @@ export const verifyEmailPageData = {
     text: 'Thank you for registering with our service. Your email address has been successfully verified.',
     title: 'Email Verified',
   },
+}
+
+export const packsPageData: PacksPageData = {
+  columnsData: [
+    { id: '1', sort: 'name', title: 'Name' },
+    { id: '2', sort: 'cardsCount', title: 'Cards' },
+    { id: '3', sort: 'updated', title: 'Last Updated' },
+    { id: '4', sort: 'created', title: 'Create by' },
+    { id: '5', sort: '', title: '' },
+  ],
+  tabsData: [
+    { id: '1', value: 'My Cards' },
+    { id: '2', value: 'All Cards' },
+  ],
 }
