@@ -20,7 +20,7 @@ export const Decks: DecksResponse = {
         name: 'Anna',
       },
       cardsCount: 0,
-      cover: null,
+      cover: undefined,
       created: '2023-12-31T06:23:38.315Z',
       id: 'clqt3vl1n00l5zk2vbe56kvlm',
       isBlocked: null,

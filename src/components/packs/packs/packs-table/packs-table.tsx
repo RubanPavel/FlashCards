@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { IconClose } from '@/assets/icons/IconClose'
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { dateOptions, packsPageData } from '@/assets/variable'
 import { EditPack } from '@/components/packs/modals/editPack'
@@ -9,12 +8,12 @@ import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
-import { ModalsNew } from '@/components/ui/modals/modalsNew'
+import { ModalsBest } from '@/components/ui/modals/modalsBest'
 import { Table } from '@/components/ui/tables/newTablles'
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { AuthResponse } from '@/services/auth'
-import { DecksResponse, Sort } from '@/services/decks'
+import { Deck, DecksResponse, Sort } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
@@ -29,12 +28,22 @@ type Props = {
 }
 
 export const PacksTable = ({ decks, user }: Props) => {
-  const { columnsData, modalTitle } = packsPageData.packsTable
+  const { columnsData } = packsPageData.packsTable
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-  const [openModalDelete, onCloseModalDelete] = useState<boolean>(false)
-  const [openModalEditPack, onCloseModalEditPack] = useState<boolean>(false)
+  const [isModalDelOpen, setIsModalDelOpen] = useState(false)
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+  const [deckDel, setDeckDel] = useState('')
+  const [deckEdit, setDeckEdit] = useState<Deck>()
+  const deleteHandler = (deck: any) => {
+    setIsModalDelOpen(true)
+    setDeckDel(deck)
+  }
 
+  const editHandler = (deck: any) => {
+    setIsModalEditOpen(true)
+    setDeckEdit(deck)
+  }
   const handleSort = (sort: '' | Sort) => {
     const currentSort = params.orderBy.split('-')[0]
     const direction = params.orderBy.split('-')[1]
@@ -122,48 +131,12 @@ export const PacksTable = ({ decks, user }: Props) => {
                   </Button>
                   {d.author.id === user?.id && (
                     <>
-                      <ModalsNew
-                        className={{ title: s.ModalTitle }}
-                        icon={<IconClose className={s.IconButton} />}
-                        onClose={onCloseModalEditPack}
-                        open={openModalEditPack}
-                        title={
-                          <Typography as={'p'} variant={'H2'}>
-                            Edit Pack
-                          </Typography>
-                        }
-                        trigger={
-                          <Button variant={'icon'}>
-                            <IconEdit />
-                          </Button>
-                        }
-                      >
-                        <EditPack deck={d} onClose={val => onCloseModalEditPack(val)} />
-                      </ModalsNew>
-
-                      <ModalsNew
-                        className={{ title: s.ModalTitle }}
-                        icon={<IconClose className={s.IconButton} />}
-                        onClose={onCloseModalDelete}
-                        open={openModalDelete}
-                        title={
-                          <Typography as={'p'} variant={'H2'}>
-                            {modalTitle}
-                          </Typography>
-                        }
-                        trigger={
-                          <Button variant={'icon'}>
-                            <IconDelete />
-                          </Button>
-                        }
-                      >
-                        <DeleteModal
-                          id={d.id}
-                          name={d.name}
-                          onClose={val => onCloseModalDelete(val)}
-                          title={modalTitle}
-                        />
-                      </ModalsNew>
+                      <Button onClick={() => editHandler(d)} variant={'icon'}>
+                        <IconEdit />
+                      </Button>
+                      <Button onClick={() => deleteHandler(d)} variant={'icon'}>
+                        <IconDelete />
+                      </Button>
                     </>
                   )}
                 </div>
@@ -172,6 +145,20 @@ export const PacksTable = ({ decks, user }: Props) => {
           )
         })}
       </Table.Body>
+      <ModalsBest
+        isModalOpen={isModalEditOpen}
+        setIsModalOpen={setIsModalEditOpen}
+        title={'Edit Pack'}
+      >
+        <EditPack deck={deckEdit} onClose={val => setIsModalEditOpen(val)} />
+      </ModalsBest>
+      <ModalsBest
+        isModalOpen={isModalDelOpen}
+        setIsModalOpen={setIsModalDelOpen}
+        title={'Delete Pack'}
+      >
+        <DeleteModal deck={deckDel} onClose={val => setIsModalDelOpen(val)} title={'Delete Pack'} />
+      </ModalsBest>
     </Table.Root>
   )
 }
