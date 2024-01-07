@@ -1,31 +1,22 @@
-.packsList {
+.ControlsRoot {
   display: flex;
   justify-content: space-between;
   padding: 104px 0 5px;
 }
 
-.modalTitle {
+.ModalTitle {
   display: flex;
   justify-content: space-between;
   padding: 0 0 20px 20px;
   border-bottom: 1px solid var(--color-dark-500);
 }
 
-.IconButton {
+.ModalIconButton {
   position: absolute;
   top: 20px;
   right: 20px;
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
   width: 25px;
   height: 25px;
-
-  font-family: inherit;
-  color: var(--violet-11);
-
   border-radius: 100%;
 }
 
@@ -33,7 +24,7 @@
   background-color: var(--color-dark-100);
 }
 
-.controlPanel {
+.ControlsPanel {
   display: flex;
   flex-flow: row wrap;
   gap: 1.8vw;
@@ -43,11 +34,11 @@
   width: 100%;
 }
 
-.searchInput {
+.ControlsPanelSearchInput {
   flex-direction: row;
   width: 250px;
 }
 
-.ClearFilter {
+.ControlsClearFilter {
   margin-left: auto;
 }

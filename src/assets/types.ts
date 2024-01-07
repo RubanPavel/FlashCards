@@ -26,5 +26,6 @@ export type PacksPageData = {
   emptyTable: string
   packsTable: {
     columnsData: ColumnsData
+    modalTitle: string
   }
 }

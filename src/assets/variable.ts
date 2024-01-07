@@ -124,5 +124,6 @@ export const packsPageData: PacksPageData = {
       { id: '4', sort: 'created', title: 'Create by' },
       { id: '5', sort: '', title: '' },
     ],
+    modalTitle: 'Delete Pack',
   },
 }

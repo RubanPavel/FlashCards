@@ -74,11 +74,11 @@ export const PacksControls = ({ decks, user }: Props) => {
 
   return (
     <>
-      <div className={s.packsList}>
+      <div className={s.ControlsRoot}>
         <Typography variant={'large'}>{title}</Typography>
         <ModalsNew
-          className={{ title: s.modalTitle }}
-          icon={<IconClose className={s.IconButton} />}
+          className={{ title: s.ModalTitle }}
+          icon={<IconClose className={s.ModalIconButton} />}
           onClose={onCloseModalNewPack}
           open={openModalNewPack}
           title={
@@ -95,10 +95,10 @@ export const PacksControls = ({ decks, user }: Props) => {
           <AddNewPack onClose={val => onCloseModalNewPack(val)} />
         </ModalsNew>
       </div>
-      <div className={s.controlPanel}>
+      <div className={s.ControlsPanel}>
         <DebouncedInput
           callback={handleSearch}
-          className={s.searchInput}
+          className={s.ControlsPanelSearchInput}
           inputValue={inputValue}
           name={'search'}
           setInputValue={setInputValue}
@@ -119,7 +119,7 @@ export const PacksControls = ({ decks, user }: Props) => {
             onValueCommit={handleSliderValues}
           />
         </div>
-        <Button className={s.ClearFilter} onClick={handleClearFilter} variant={'secondary'}>
+        <Button className={s.ControlsClearFilter} onClick={handleClearFilter} variant={'secondary'}>
           <IconDelete />
           <Typography variant={'subtitle-2'}>{buttonDelete}</Typography>
         </Button>

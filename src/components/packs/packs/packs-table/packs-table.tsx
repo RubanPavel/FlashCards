@@ -10,14 +10,6 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { ModalsNew } from '@/components/ui/modals/modalsNew'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeadCell,
-  TableRow,
-} from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { AuthResponse } from '@/services/auth'
@@ -29,6 +21,7 @@ import clsx from 'clsx'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import s from './packs-table.module.scss'
+import { Table } from '@/components/ui/tables/newTablles'
 
 type Props = {
   decks: DecksResponse
@@ -36,7 +29,7 @@ type Props = {
 }
 
 export const PacksTable = ({ decks, user }: Props) => {
-  const { columnsData } = packsPageData.packsTable
+  const { columnsData, modalTitle } = packsPageData.packsTable
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
   const [openModalDelete, onCloseModalDelete] = useState<boolean>(false)
@@ -56,46 +49,46 @@ export const PacksTable = ({ decks, user }: Props) => {
   }
 
   return (
-    <Table className={s.wrapperTable}>
-      <TableHead>
-        <TableRow>
+    <Table.Root className={s.TableRoot}>
+      <Table.Head>
+        <Table.Row>
           {columnsData.map(el => (
-            <TableHeadCell key={el.id}>
+            <Table.HeadCell key={el.id}>
               <Button
-                className={s.HeadCellButton}
+                className={s.TableHeadCellButton}
                 onClick={() => handleSort(el.sort)}
                 variant={'icon'}
               >
                 <Typography variant={'subtitle-2'}>{el.title}</Typography>
                 {el.sort === params.orderBy.split('-')[0] && (
                   <IconVectorDown
-                    className={`${s.HeadCellButtonIcon} ${
-                      params.orderBy.split('-')[1] === 'asc' && s.HeadCellButtonIcon_Is_Flipped
+                    className={`${s.TableHeadCellButtonIcon} ${
+                      params.orderBy.split('-')[1] === 'asc' && s.TableHeadCellButtonIcon_Is_Flipped
                     }`}
                   />
                 )}
               </Button>
-            </TableHeadCell>
+            </Table.HeadCell>
           ))}
-        </TableRow>
-      </TableHead>
-      <TableBody>
+        </Table.Row>
+      </Table.Head>
+      <Table.Body>
         {decks?.items.map(d => {
           const packPath = d.author.id !== user?.id ? `/friend-pack/${d.id}` : `/my-pack/${d.id}`
 
           return (
-            <TableRow key={d.id}>
-              <TableCell>
-                <Link className={s.CellLink} to={packPath}>
+            <Table.Row key={d.id}>
+              <Table.BodyCell>
+                <Link className={s.BodyCellLink} to={packPath}>
                   {d.cover && (
-                    <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
+                    <img alt={'img'} className={s.BodyCellCover} src={d.cover?.toString()} />
                   )}
-                  <Typography as={'span'} className={s.CellText} variant={'subtitle-1'}>
+                  <Typography as={'span'} className={s.BodyCellText} variant={'subtitle-1'}>
                     {d.name}
                   </Typography>
                   <div className={s.ModalCell}>
                     {d.cover && (
-                      <img alt={'img'} className={s.coverStyle} src={d.cover?.toString()} />
+                      <img alt={'img'} className={s.ModalCellCover} src={d.cover?.toString()} />
                     )}
                     <Typography
                       as={'span'}
@@ -106,31 +99,31 @@ export const PacksTable = ({ decks, user }: Props) => {
                     </Typography>
                   </div>
                 </Link>
-              </TableCell>
-              <TableCell>
+              </Table.BodyCell>
+              <Table.BodyCell>
                 <Typography as={'p'} variant={'body-2'}>
                   {d.cardsCount}
                 </Typography>
-              </TableCell>
-              <TableCell>
+              </Table.BodyCell>
+              <Table.BodyCell>
                 <Typography as={'p'} variant={'body-2'}>
                   {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
                 </Typography>
-              </TableCell>
-              <TableCell>
+              </Table.BodyCell>
+              <Table.BodyCell>
                 <Typography as={'p'} variant={'body-2'}>
                   {d.author.name}
                 </Typography>
-              </TableCell>
-              <TableCell>
-                <div className={s.lastCell}>
+              </Table.BodyCell>
+              <Table.BodyCell>
+                <div className={s.LastBodyCell}>
                   <Button as={Link} to={`/learn/${d.id}`} variant={'icon'}>
                     <IconLearn />
                   </Button>
                   {d.author.id === user?.id && (
                     <>
                       <ModalsNew
-                        className={{ title: s.modalTitle }}
+                        className={{ title: s.ModalTitle }}
                         icon={<IconClose className={s.IconButton} />}
                         onClose={onCloseModalEditPack}
                         open={openModalEditPack}
@@ -149,13 +142,13 @@ export const PacksTable = ({ decks, user }: Props) => {
                       </ModalsNew>
 
                       <ModalsNew
-                        className={{ title: s.modalTitle }}
+                        className={{ title: s.ModalTitle }}
                         icon={<IconClose className={s.IconButton} />}
                         onClose={onCloseModalDelete}
                         open={openModalDelete}
                         title={
                           <Typography as={'p'} variant={'H2'}>
-                            Delete Pack
+                            {modalTitle}
                           </Typography>
                         }
                         trigger={
@@ -168,17 +161,17 @@ export const PacksTable = ({ decks, user }: Props) => {
                           id={d.id}
                           name={d.name}
                           onClose={val => onCloseModalDelete(val)}
-                          title={'Delete Pack'}
+                          title={modalTitle}
                         />
                       </ModalsNew>
                     </>
                   )}
                 </div>
-              </TableCell>
-            </TableRow>
+              </Table.BodyCell>
+            </Table.Row>
           )
         })}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }
