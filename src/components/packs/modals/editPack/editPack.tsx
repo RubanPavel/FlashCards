@@ -15,7 +15,7 @@ import { useAppDispatch } from '@/services/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './EditPack.module.scss'
+import s from './editPack.module.scss'
 
 const schemaEdit = z.object({
   cover: photoSchema,
@@ -54,7 +54,7 @@ export const EditPack = ({ deck, onClose }: Props) => {
 
   const onSubmit: SubmitHandler<FormValue> = data => {
     updateDeck({
-      cover: '',
+      cover: data.cover,
       id: deck?.id,
       isPrivate: data.isPrivate,
       name: data.name,
@@ -66,7 +66,6 @@ export const EditPack = ({ deck, onClose }: Props) => {
       .catch(e => {
         toast.error(e.data.message)
       })
-    /* const cover = getValues('cover')*/
     dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
     if (onClose) {
       isFetching && onClose(false)

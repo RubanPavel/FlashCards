@@ -3,28 +3,28 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { IconImage } from '@/assets/icons/IconImage'
-import { answerSchema, questionSchema } from '@/components/auth/validate/validate'
+import { answerSchema, photoSchema, questionSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { Select } from '@/components/ui/select'
 import { Typography } from '@/components/ui/typography'
-import { useUpdateCardMutation } from '@/services/cards'
+import { updateCardType, useUpdateCardMutation } from '@/services/cards'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './editCard.module.scss'
 
 type Props = {
-  card: any
+  card?: updateCardType
   onClose?: (val: boolean) => void
 }
 
 const inputSchema = z.object({
   answer: answerSchema,
-  answerImg: z.any(),
+  answerImg: photoSchema,
   question: questionSchema,
-  questionImg: z.any(),
+  questionImg: photoSchema,
 })
 
 type FormValue = z.infer<typeof inputSchema>
@@ -45,9 +45,9 @@ export function EditCard({ card, onClose }: Props) {
     setValue,
   } = useForm<FormValue>({
     defaultValues: {
-      answer: card.answer || '',
+      answer: card?.answer || '',
       answerImg: undefined,
-      question: card.question || '',
+      question: card?.question || '',
       questionImg: undefined,
     },
     mode: 'onBlur',
@@ -67,12 +67,11 @@ export function EditCard({ card, onClose }: Props) {
   const onSubmit: SubmitHandler<FormValue> = data => {
     editCard({
       answer: data.answer,
-      /*answerImg: undefined,*/
-      answerImg: data.answerImg[0],
+      answerImg: data.answerImg,
       answerVideo: '',
-      id: card.id,
+      id: card?.id,
       question: data.question,
-      /*questionImg: data.questionImg[0],*/
+      questionImg: data.questionImg,
       questionVideo: '',
     })
       .unwrap()
@@ -82,7 +81,6 @@ export function EditCard({ card, onClose }: Props) {
       .catch(e => {
         toast.error(e.data.message)
       })
-
     if (onClose) {
       onClose(false)
       reset()

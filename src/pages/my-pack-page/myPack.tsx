@@ -31,6 +31,7 @@ import {
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
+import { updateCardType } from '@/services/cards'
 import { cardsActions } from '@/services/cards/cards.slice'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
@@ -44,7 +45,7 @@ export const MyPackPage = () => {
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
 
-  const [cardEdit, setCardEdit] = useState('')
+  const [cardEdit, setCardEdit] = useState<updateCardType>()
   const [cardDel, setCardDel] = useState('')
   const dispatch = useAppDispatch()
   const { id } = useParams()
@@ -177,6 +178,7 @@ export const MyPackPage = () => {
                   </Typography>
                 </TableCell>
                 <TableCell>
+                  {card.answerImg && <img alt={'img'} className={s.image} src={card.answerImg} />}
                   <Typography as={'p'} variant={'body-2'}>
                     <ExpandableText maxLength={30} text={card.answer} />
                   </Typography>
@@ -206,7 +208,7 @@ export const MyPackPage = () => {
         <ModalsBest
           isModalOpen={isModalEditOpen}
           setIsModalOpen={setIsModalEditOpen}
-          title={'Edit Сard Test'}
+          title={'Edit Сard'}
         >
           <EditCard card={cardEdit} onClose={val => setIsModalEditOpen(val)} />
         </ModalsBest>
@@ -214,12 +216,12 @@ export const MyPackPage = () => {
         <ModalsBest
           isModalOpen={isModalDelOpen}
           setIsModalOpen={setIsModalDelOpen}
-          title={'Delete Card Test'}
+          title={'Delete Card'}
         >
           <DeleteModal
             card={cardDel}
             onClose={val => setIsModalDelOpen(val)}
-            title={'Delete Card '}
+            title={'Delete Card'}
           />
         </ModalsBest>
       </Table>

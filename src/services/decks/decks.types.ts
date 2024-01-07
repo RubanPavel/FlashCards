@@ -19,12 +19,11 @@ export type DecksResponseItemsAuthor = {
 export type Deck = {
   author: DecksResponseItemsAuthor
   cardsCount: number
-  cover?: null | string
-  /*cover?: FormData*/
+  cover?: File | undefined
   created: string
   id?: string
-  isBlocked?: any
-  isDeleted?: any
+  isBlocked?: boolean
+  isDeleted?: boolean
   isPrivate?: boolean
   name: string
   rating: number
@@ -48,8 +47,7 @@ export type DeleteResponse = {
 }
 
 export type UpdateDeckRequest = {
-  /*cover: File | undefined*/
-  cover: Blob | string
+  cover?: File | undefined
   id?: string
   isPrivate?: boolean
   name: string

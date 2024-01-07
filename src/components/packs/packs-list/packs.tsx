@@ -69,7 +69,7 @@ export const Packs = () => {
   const [isModalDelOpen, setIsModalDelOpen] = useState(false)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [deckDel, setDeckDel] = useState('')
-  const [deckEdit, setDeckEdit] = useState<Deck | undefined>()
+  const [deckEdit, setDeckEdit] = useState<Deck>()
   const params = useAppSelector(state => state.decksParams)
   const [openModalNewPack, onCloseModalNewPack] = useState(false)
   const [externalValues, setExternalValues] = useState<number[]>([])
@@ -308,14 +308,14 @@ export const Packs = () => {
           <ModalsBest
             isModalOpen={isModalEditOpen}
             setIsModalOpen={setIsModalEditOpen}
-            title={'Edit Pack Test'}
+            title={'Edit Pack'}
           >
             <EditPack deck={deckEdit} onClose={val => setIsModalEditOpen(val)} />
           </ModalsBest>
           <ModalsBest
             isModalOpen={isModalDelOpen}
             setIsModalOpen={setIsModalDelOpen}
-            title={'Delete Pack Test'}
+            title={'Delete Pack'}
           >
             <DeleteModal
               deck={deckDel}

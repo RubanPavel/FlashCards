@@ -1,1 +1,1 @@
-export * from './EditPack'
+export * from './editPack'

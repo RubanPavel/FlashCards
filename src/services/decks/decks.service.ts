@@ -97,7 +97,7 @@ export const DecksService = baseApi.injectEndpoints({
           const payload = new FormData()
           const isDeckPrivate = args.isPrivate ? 'true' : 'false'
 
-          payload.append('cover', args.cover)
+          args.cover && payload.append('cover', args.cover)
           payload.append('name', args.name)
           payload.append('isPrivate', isDeckPrivate)
 
