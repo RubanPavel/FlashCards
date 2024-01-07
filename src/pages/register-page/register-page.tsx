@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { errorText, registerPageData } from '@/assets/variable'
+import { errorText, optionsToast, registerPageData } from '@/assets/variable'
 import { FormValues, SignUp } from '@/components/auth/sign-up'
 import { useCreateNewUserMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
@@ -29,9 +29,7 @@ export const RegisterPage = () => {
         navigate('/login')
       })
       .catch((e: ServerError & FetchBaseQueryError) => {
-        toast.error(e?.data?.message || errorText, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        })
+        toast.error(e?.data?.message || errorText, optionsToast)
       })
   }
 

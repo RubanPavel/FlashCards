@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { errorText } from '@/assets/variable'
+import { errorText, optionsToast } from '@/assets/variable'
 import { ConfirmEmail } from '@/components/auth/confirm-email'
 import { Loader } from '@/components/ui/loader'
 import { useVerifyEmailMutation } from '@/services/auth'
@@ -21,13 +21,11 @@ export const VerifyEmailPage = memo(() => {
         await verifyMail({ code: userId })
           .unwrap()
           .catch((e: ServerError & FetchBaseQueryError) => {
-            toast.error(e?.data?.message || errorText, {
-              position: toast.POSITION.BOTTOM_CENTER,
-            })
+            toast.error(e?.data?.message || errorText, optionsToast)
           })
       }
     } catch (e: unknown) {
-      toast.error(errorText, { position: toast.POSITION.BOTTOM_CENTER })
+      toast.error(errorText, optionsToast)
     }
   }
 

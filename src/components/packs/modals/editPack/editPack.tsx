@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { IconImage } from '@/assets/icons/IconImage'
+import { optionsToast } from '@/assets/variable'
 import { namePackSchema, photoSchema, rememberMe } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
@@ -61,10 +62,10 @@ export const EditPack = ({ deck, onClose }: Props) => {
     })
       .unwrap()
       .then(() => {
-        toast.success(`Your deck updated successfully`)
+        toast.success(`Your deck updated successfully`, optionsToast)
       })
       .catch(e => {
-        toast.error(e.data.message)
+        toast.error(e.data.message, optionsToast)
       })
     dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
     if (onClose) {

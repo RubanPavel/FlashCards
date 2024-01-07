@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-import { errorText } from '@/assets/variable'
+import { errorText, optionsToast } from '@/assets/variable'
 import { FormValues, SignIn } from '@/components/auth/sign-in'
 import { useLoginMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
@@ -13,9 +13,7 @@ export const LoginPage = () => {
     login(formData)
       .unwrap()
       .catch((e: ServerError & FetchBaseQueryError) => {
-        toast.error(e?.data?.message || errorText, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        })
+        toast.error(e?.data?.message || errorText, optionsToast)
       })
   }
 

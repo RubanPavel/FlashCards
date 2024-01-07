@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { IconImage } from '@/assets/icons/IconImage'
+import { optionsToast } from '@/assets/variable'
 import { answerSchema, photoSchema, questionSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
@@ -76,10 +77,10 @@ export function EditCard({ card, onClose }: Props) {
     })
       .unwrap()
       .then(() => {
-        toast.success(`Your card updated successfully`)
+        toast.success(`Your card updated successfully`, optionsToast)
       })
       .catch(e => {
-        toast.error(e.data.message)
+        toast.error(e.data.message, optionsToast)
       })
     if (onClose) {
       onClose(false)

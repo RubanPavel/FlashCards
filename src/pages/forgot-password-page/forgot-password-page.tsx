@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { errorText, forgotPasswordPageData } from '@/assets/variable'
+import { errorText, forgotPasswordPageData, optionsToast } from '@/assets/variable'
 import { ForgotPassword, FormValues } from '@/components/auth/forgot-password'
 import { useRecoveryPasswordMutation } from '@/services/auth'
 import { authActions } from '@/services/auth/auth.slice'
@@ -30,9 +30,7 @@ export const ForgotPasswordPage = () => {
         navigate('/check-email')
       })
       .catch((e: ServerError & FetchBaseQueryError) => {
-        toast.error(e?.data?.message || errorText, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        })
+        toast.error(e?.data?.message || errorText, optionsToast)
       })
   }
 

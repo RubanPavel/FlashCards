@@ -1,3 +1,7 @@
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
+import { optionsToast } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
 import { useDeleteCardMutation } from '@/services/cards'
@@ -8,15 +12,33 @@ import s from './deleteModal.module.scss'
 type Props = {
   card?: any
   deck?: any
+  isNavigate?: boolean
   onClose: (val: boolean) => void
   title: string
 }
 
-export const DeleteModal = ({ card, deck, onClose, title }: Props) => {
+export const DeleteModal = ({ card, deck, isNavigate, onClose, title }: Props) => {
   const [deleteDeck] = useDeleteDeskMutation()
   const [deleteCard] = useDeleteCardMutation()
-
+  const navigate = useNavigate()
   const isDeletePack = title === 'Delete Pack'
+  const handleDelete = async () => {
+    try {
+      if (isDeletePack) {
+        await deleteDeck(deck.id)
+      } else {
+        await deleteCard(card.id)
+      }
+      toast.success(
+        isDeletePack ? 'Pack deleted successfully' : 'Card deleted successfully',
+        optionsToast
+      )
+      onClose(false)
+      isNavigate && navigate(-1)
+    } catch (error: any) {
+      toast.error('An error occurred while deleting.', optionsToast)
+    }
+  }
 
   return (
     <div className={s.container}>
@@ -38,14 +60,7 @@ export const DeleteModal = ({ card, deck, onClose, title }: Props) => {
               Cancel
             </Typography>
           </Button>
-          <Button
-            onClick={() => {
-              isDeletePack ? deleteDeck(deck.id) : deleteCard(card.id)
-              onClose(false)
-            }}
-            type={'button'}
-            variant={'secondary'}
-          >
+          <Button onClick={handleDelete} type={'button'} variant={'secondary'}>
             <Typography as={'p'} variant={'subtitle-2'}>
               Delete {isDeletePack ? 'Pack' : 'Card'}
             </Typography>

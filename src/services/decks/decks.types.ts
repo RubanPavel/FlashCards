@@ -19,7 +19,7 @@ export type DecksResponseItemsAuthor = {
 export type Deck = {
   author: DecksResponseItemsAuthor
   cardsCount: number
-  cover?: File | undefined
+  cover?: string
   created: string
   id: string
   isBlocked?: any

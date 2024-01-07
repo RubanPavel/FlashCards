@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { createPasswordPageData, errorText } from '@/assets/variable'
+import { createPasswordPageData, errorText, optionsToast } from '@/assets/variable'
 import { CreatePassword, FormValues } from '@/components/auth/create-password'
 import { useResetPasswordMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
@@ -25,14 +25,10 @@ export const CreatePasswordPage = () => {
         .unwrap()
         .then(() => {
           navigate('/login')
-          toast.success(info, {
-            position: toast.POSITION.BOTTOM_CENTER,
-          })
+          toast.success(info, optionsToast)
         })
         .catch((e: ServerError & FetchBaseQueryError) => {
-          toast.error(e?.data?.message || errorText, {
-            position: toast.POSITION.BOTTOM_CENTER,
-          })
+          toast.error(e?.data?.message || errorText, optionsToast)
         })
     }
   }

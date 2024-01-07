@@ -1,8 +1,11 @@
+import { toast } from 'react-toastify'
+
 import { PacksPageData } from '@/assets/types'
 
 const apiUrl = import.meta.env.PROD ? import.meta.env.VITE_U_P : import.meta.env.VITE_U_D
 
 export const errorText = 'Some error occurred'
+export const optionsToast = { position: toast.POSITION.BOTTOM_CENTER }
 
 export const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',

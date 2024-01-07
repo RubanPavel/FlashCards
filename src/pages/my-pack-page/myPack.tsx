@@ -11,6 +11,7 @@ import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { EditCard } from '@/components/packs/modals/editCard'
+import { EditPack } from '@/components/packs/modals/editPack'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
@@ -41,7 +42,9 @@ import s from './myPack.module.scss'
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+  const [isModalEditPackOpen, setIsModalEditPackOpen] = useState(false)
   const [isModalDelOpen, setIsModalDelOpen] = useState(false)
+  const [isModalDelPackOpen, setIsModalDelPackOpen] = useState(false)
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
 
@@ -55,6 +58,9 @@ export const MyPackPage = () => {
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
 
+  const editPackHandler = () => {
+    setIsModalEditPackOpen(true)
+  }
   const editHandler = (card: any) => {
     setIsModalEditOpen(true)
     setCardEdit(card)
@@ -63,6 +69,9 @@ export const MyPackPage = () => {
   const deleteHandler = (card: any) => {
     setIsModalDelOpen(true)
     setCardDel(card)
+  }
+  const deletePackHandler = () => {
+    setIsModalDelPackOpen(true)
   }
   const handleSearch = (searchValue: string) => {
     dispatch(cardsActions.setQuestion({ question: searchValue }))
@@ -107,23 +116,32 @@ export const MyPackPage = () => {
       </Link>
       <div className={s.packsList}>
         <div className={s.myPackWrapper}>
+          {packData?.cover && <img alt={'img'} className={s.image} src={packData.cover} />}
           <Typography as={'h1'} variant={'large'}>
             My Pack/{packData?.name}
           </Typography>
           <DropdownMenu position={'end'} trigger={<IconBurgerMenu />}>
             <DropDownItem className={s.dropItem}>
-              <IconLearn />
-              <Typography variant={'caption'}>Learn</Typography>
+              <Button as={Link} to={`/learn/${id}`} variant={'icon'}>
+                <IconLearn />
+                <Typography className={s.typText} variant={'caption'}>
+                  Learn
+                </Typography>
+              </Button>
             </DropDownItem>
             <DropdownSeparator />
             <DropDownItem className={s.dropItem}>
-              <IconEdit />
-              <Typography variant={'caption'}>Edit</Typography>
+              <Button onClick={() => editPackHandler()} variant={'icon'}>
+                <IconEdit />
+                <Typography variant={'caption'}>Edit</Typography>
+              </Button>
             </DropDownItem>
             <DropdownSeparator />
             <DropDownItem className={s.dropItem}>
-              <IconDelete />
-              <Typography variant={'caption'}>Delete</Typography>
+              <Button onClick={() => deletePackHandler()} variant={'icon'}>
+                <IconDelete />
+                <Typography variant={'caption'}>Delete</Typography>
+              </Button>
             </DropDownItem>
           </DropdownMenu>
         </div>
@@ -205,6 +223,26 @@ export const MyPackPage = () => {
             )
           })}
         </TableBody>
+
+        <ModalsBest
+          isModalOpen={isModalEditPackOpen}
+          setIsModalOpen={setIsModalEditPackOpen}
+          title={'Edit Pack'}
+        >
+          <EditPack deck={packData} onClose={val => setIsModalEditPackOpen(val)} />
+        </ModalsBest>
+        <ModalsBest
+          isModalOpen={isModalDelPackOpen}
+          setIsModalOpen={setIsModalDelPackOpen}
+          title={'Delete Pack'}
+        >
+          <DeleteModal
+            deck={packData}
+            isNavigate
+            onClose={val => setIsModalDelPackOpen(val)}
+            title={'Delete Pack'}
+          />
+        </ModalsBest>
         <ModalsBest
           isModalOpen={isModalEditOpen}
           setIsModalOpen={setIsModalEditOpen}
@@ -212,7 +250,6 @@ export const MyPackPage = () => {
         >
           <EditCard card={cardEdit} onClose={val => setIsModalEditOpen(val)} />
         </ModalsBest>
-
         <ModalsBest
           isModalOpen={isModalDelOpen}
           setIsModalOpen={setIsModalDelOpen}

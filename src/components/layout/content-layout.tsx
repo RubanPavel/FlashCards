@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { IconLogOut } from '@/assets/icons/IconLogOut'
 import IconPerson from '@/assets/icons/IconPerson'
 import { IconLogo } from '@/assets/icons/Iconlogo'
-import { contentLayoutData, errorText } from '@/assets/variable'
+import { contentLayoutData, errorText, optionsToast } from '@/assets/variable'
 import { AvatarRadix } from '@/components/ui/avatar/avatar'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
@@ -39,9 +39,7 @@ export const ContentLayout = () => {
     logout()
       .unwrap()
       .catch((e: ServerError & FetchBaseQueryError) => {
-        toast.error(e?.data?.message || errorText, {
-          position: toast.POSITION.BOTTOM_CENTER,
-        })
+        toast.error(e?.data?.message || errorText, optionsToast)
       })
   }
 
