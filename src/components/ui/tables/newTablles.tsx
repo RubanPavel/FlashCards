@@ -10,6 +10,7 @@ export const Root: FC<Props> = ({ className, ...rest }) => {
   const classNames = {
     table: clsx(className, s.table),
   }
+
   return <table className={classNames.table} {...rest} />
 }
 
@@ -57,9 +58,9 @@ export const BodyCell: FC<TableCellProps> = ({ className, ...rest }) => {
 
 export const Table = {
   Body,
-  HeadCell,
-  Head,
   BodyCell,
+  Head,
+  HeadCell,
   Root,
   Row,
 }

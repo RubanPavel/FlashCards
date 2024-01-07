@@ -16,7 +16,6 @@ type Props = {
 }
 
 export const Packs = ({ decks, user }: Props) => {
-  console.log(decks)
   const { emptyTable } = packsPageData
   const dispatch = useAppDispatch()
 

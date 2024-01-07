@@ -10,6 +10,7 @@ import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { ModalsNew } from '@/components/ui/modals/modalsNew'
+import { Table } from '@/components/ui/tables/newTablles'
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { AuthResponse } from '@/services/auth'
@@ -21,7 +22,6 @@ import clsx from 'clsx'
 import 'react-loading-skeleton/dist/skeleton.css'
 
 import s from './packs-table.module.scss'
-import { Table } from '@/components/ui/tables/newTablles'
 
 type Props = {
   decks: DecksResponse
