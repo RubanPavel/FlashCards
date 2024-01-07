@@ -67,8 +67,8 @@ export function EditCard({ card, onClose }: Props) {
   const onSubmit: SubmitHandler<FormValue> = data => {
     editCard({
       answer: data.answer,
-      answerImg: undefined,
-      /*answerImg: data.answerImg[0],*/
+      /*answerImg: undefined,*/
+      answerImg: data.answerImg[0],
       answerVideo: '',
       id: card.id,
       question: data.question,
