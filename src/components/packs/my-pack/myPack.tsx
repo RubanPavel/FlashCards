@@ -1,5 +1,3 @@
-// import { FieldValues } from 'react-hook-form'
-
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -9,7 +7,6 @@ import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
-// import { SearchInput } from '@/components/packs/common/searchInput'
 import { useSort } from '@/components/packs/hook/useSort'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { Button } from '@/components/ui/button'

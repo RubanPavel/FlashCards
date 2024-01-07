@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { IconImage } from '@/assets/icons/IconImage'
 import { namePackSchema, photoSchema, rememberMe } from '@/components/auth/validate/validate'
@@ -14,18 +15,18 @@ import { useAppDispatch } from '@/services/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './EditPack.module.scss'
+import s from './editPack.module.scss'
 
 const schemaEdit = z.object({
   cover: photoSchema,
+  isPrivate: rememberMe,
   name: namePackSchema,
-  private: rememberMe,
 })
 
 type FormValue = z.infer<typeof schemaEdit>
 
 type Props = {
-  deck: Deck
+  deck?: Deck
   onClose?: (val: boolean) => void
 }
 
@@ -35,14 +36,13 @@ export const EditPack = ({ deck, onClose }: Props) => {
   const {
     control,
     formState: { errors },
-    getValues,
     handleSubmit,
     setValue,
   } = useForm<FormValue>({
     defaultValues: {
       cover: undefined,
-      name: deck.name || '',
-      private: deck.isPrivate,
+      isPrivate: deck?.isPrivate,
+      name: deck?.name || '',
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -52,22 +52,21 @@ export const EditPack = ({ deck, onClose }: Props) => {
 
   const [updateDeck, isFetching] = useUpdateDeckMutation()
 
-  const onSubmit = (values: FormValue) => {
-    const cover = getValues('cover')
-    const formData = new FormData()
-
-    deck.id && formData.append('id', deck.id)
-
-    if (cover) {
-      formData.append('cover', cover)
-    }
-    formData.append('name', values.name)
-    formData.append('isPrivate', values.private ? values.private.toString() : '')
-
-    updateDeck(formData)
-
+  const onSubmit: SubmitHandler<FormValue> = data => {
+    updateDeck({
+      cover: data.cover,
+      id: deck?.id,
+      isPrivate: data.isPrivate,
+      name: data.name,
+    })
+      .unwrap()
+      .then(() => {
+        toast.success(`Your deck updated successfully`)
+      })
+      .catch(e => {
+        toast.error(e.data.message)
+      })
     dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
-
     if (onClose) {
       isFetching && onClose(false)
     }
@@ -134,7 +133,7 @@ export const EditPack = ({ deck, onClose }: Props) => {
           </Typography>
           <ControlInput control={control} errorMessage={errors.name?.message} name={'name'} />
           <div style={{ alignItems: 'center', display: 'flex' }}>
-            <ControlledCheckbox control={control} name={'private'} />
+            <ControlledCheckbox control={control} name={'isPrivate'} />
             <Typography variant={'body-2'}>Private Pack</Typography>
           </div>
           <div className={s.footer}>

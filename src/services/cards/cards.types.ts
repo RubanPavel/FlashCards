@@ -16,11 +16,11 @@ export type CardsResponse = {
 
 export type updateCardType = {
   answer: string
-  answerImg: string
+  answerImg?: any
   answerVideo: string
-  id: string
+  id?: string
   question: string
-  questionImg: string
+  questionImg?: File
   questionVideo: string
 }
 

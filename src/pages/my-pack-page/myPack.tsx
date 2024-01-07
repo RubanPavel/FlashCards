@@ -10,12 +10,15 @@ import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
+import { EditCard } from '@/components/packs/modals/editCard'
+import { dateOptions } from '@/components/packs/packs-list'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { DropdownSeparator } from '@/components/ui/dropdown-menu/dropdownSeparator'
+import { ModalsBest } from '@/components/ui/modals/modalsBest'
 import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { Pagination } from '@/components/ui/pagination'
 import {
@@ -29,6 +32,7 @@ import {
 import { Typography } from '@/components/ui/typography'
 import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
+import { updateCardType } from '@/services/cards'
 import { cardsActions } from '@/services/cards/cards.slice'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
@@ -37,11 +41,13 @@ import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
-
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
+  const [isModalDelOpen, setIsModalDelOpen] = useState(false)
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
-  const [openModalDelete, onCloseModalDelete] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
 
+  const [cardEdit, setCardEdit] = useState<updateCardType>()
+  const [cardDel, setCardDel] = useState('')
   const dispatch = useAppDispatch()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
@@ -50,6 +56,15 @@ export const MyPackPage = () => {
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
 
+  const editHandler = (card: any) => {
+    setIsModalEditOpen(true)
+    setCardEdit(card)
+  }
+
+  const deleteHandler = (card: any) => {
+    setIsModalDelOpen(true)
+    setCardDel(card)
+  }
   const handleSearch = (searchValue: string) => {
     dispatch(cardsActions.setQuestion({ question: searchValue }))
   }
@@ -65,6 +80,7 @@ export const MyPackPage = () => {
     { id: '2', title: 'Answer' },
     { id: '3', title: 'Last Updated' },
     { id: '4', title: 'Grade' },
+    { id: '5', title: '' },
   ]
 
   if (packData?.cardsCount === 0) {
@@ -151,56 +167,64 @@ export const MyPackPage = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {cardsData?.items.map(d => (
-            <TableRow key={d.id}>
-              <TableCell>
-                {d.questionImg && <img alt={'img'} className={s.image} src={d.questionImg} />}
-                <Typography as={'p'} variant={'body-2'}>
-                  <ExpandableText maxLength={30} text={d.question} />
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography as={'p'} variant={'body-2'}>
-                  <ExpandableText maxLength={30} text={d.answer} />
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography as={'p'} variant={'body-2'}>
-                  {new Date(d.updated).toLocaleDateString('ru-RU', dateOptions)}
-                </Typography>
-              </TableCell>
-              <TableCell className={s.starsAndIcons}>
-                <StarRating filledStars={d.grade} />
-                <div className={s.pointer}>
-                  <IconEdit />
-                  <ModalsNew
-                    className={{ title: s.modalTitle }}
-                    icon={<IconClose className={s.IconButtonMyPack} />}
-                    onClose={onCloseModalDelete}
-                    open={openModalDelete}
-                    title={
-                      <Typography as={'p'} variant={'H2'}>
-                        Delete Card
-                      </Typography>
-                    }
-                    trigger={
-                      <Button variant={'icon'}>
-                        <IconDelete />
-                      </Button>
-                    }
-                  >
-                    <DeleteModal
-                      id={d.id}
-                      name={d.question}
-                      onClose={val => onCloseModalDelete(val)}
-                      title={'Delete Card'}
-                    />
-                  </ModalsNew>
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+          {cardsData?.items.map(card => {
+            return (
+              <TableRow key={card.id}>
+                <TableCell>
+                  {card.questionImg && (
+                    <img alt={'img'} className={s.image} src={card.questionImg} />
+                  )}
+                  <Typography as={'p'} variant={'body-2'}>
+                    <ExpandableText maxLength={30} text={card.question} />
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  {card.answerImg && <img alt={'img'} className={s.image} src={card.answerImg} />}
+                  <Typography as={'p'} variant={'body-2'}>
+                    <ExpandableText maxLength={30} text={card.answer} />
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography as={'p'} variant={'body-2'}>
+                    {new Date(card.updated).toLocaleDateString('ru-RU', dateOptions)}
+                  </Typography>
+                </TableCell>
+                <TableCell className={s.starsAndIcons}>
+                  <StarRating filledStars={card.grade} />
+                </TableCell>
+                <TableCell>
+                  <div className={s.pointer}>
+                    <Button onClick={() => editHandler(card)} variant={'icon'}>
+                      <IconEdit />
+                    </Button>
+                    <Button onClick={() => deleteHandler(card)} variant={'icon'}>
+                      <IconDelete />
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
+        <ModalsBest
+          isModalOpen={isModalEditOpen}
+          setIsModalOpen={setIsModalEditOpen}
+          title={'Edit Сard'}
+        >
+          <EditCard card={cardEdit} onClose={val => setIsModalEditOpen(val)} />
+        </ModalsBest>
+
+        <ModalsBest
+          isModalOpen={isModalDelOpen}
+          setIsModalOpen={setIsModalDelOpen}
+          title={'Delete Card'}
+        >
+          <DeleteModal
+            card={cardDel}
+            onClose={val => setIsModalDelOpen(val)}
+            title={'Delete Card'}
+          />
+        </ModalsBest>
       </Table>
       <Pagination
         getPage={pageValue}
