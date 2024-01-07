@@ -12,7 +12,6 @@ type TabsData = {
 }[]
 
 export type PacksPageData = {
-  columnsData: ColumnsData
   controls: {
     buttonDelete: string
     modal: {
@@ -23,5 +22,9 @@ export type PacksPageData = {
     tabSwitcherLabel: string
     tabsData: TabsData
     title: string
+  }
+  emptyTable: string
+  packsTable: {
+    columnsData: ColumnsData
   }
 }

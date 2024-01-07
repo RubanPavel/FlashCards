@@ -1,4 +1,5 @@
 import { Provider } from 'react-redux'
+import { BrowserRouter } from 'react-router-dom'
 
 import { Decks, User } from '@/assets/dataForTest'
 import { store } from '@/services/store'
@@ -11,7 +12,9 @@ const meta = {
   decorators: [
     Story => (
       <Provider store={store}>
-        <Story />
+        <BrowserRouter>
+          <Story />
+        </BrowserRouter>
       </Provider>
     ),
   ],

@@ -101,13 +101,6 @@ export const verifyEmailPageData = {
 }
 
 export const packsPageData: PacksPageData = {
-  columnsData: [
-    { id: '1', sort: 'name', title: 'Name' },
-    { id: '2', sort: 'cardsCount', title: 'Cards' },
-    { id: '3', sort: 'updated', title: 'Last Updated' },
-    { id: '4', sort: 'created', title: 'Create by' },
-    { id: '5', sort: '', title: '' },
-  ],
   controls: {
     buttonDelete: 'Clear Filter',
     modal: {
@@ -121,5 +114,15 @@ export const packsPageData: PacksPageData = {
       { id: '2', value: 'All Cards' },
     ],
     title: 'Packs list',
+  },
+  emptyTable: 'No results found for your query.',
+  packsTable: {
+    columnsData: [
+      { id: '1', sort: 'name', title: 'Name' },
+      { id: '2', sort: 'cardsCount', title: 'Cards' },
+      { id: '3', sort: 'updated', title: 'Last Updated' },
+      { id: '4', sort: 'created', title: 'Create by' },
+      { id: '5', sort: '', title: '' },
+    ],
   },
 }
