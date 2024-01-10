@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -31,12 +31,17 @@ const inputSchema = z.object({
 type FormValue = z.infer<typeof inputSchema>
 
 export function EditCard({ card, onClose }: Props) {
-  const [selectedQuesImage, setSelectedQuesImage] = useState('')
-  const [selectedAnsImage, setSelectedAnsImage] = useState('')
+  const [selectedQuesImage, setSelectedQuesImage] = useState<File | string>()
+  const [selectedAnsImage, setSelectedAnsImage] = useState<File | string>()
   const [currentOption, setCurrentOption] = useState<string>('Text')
   const inputQuesRef = React.useRef<HTMLInputElement | null>(null)
   const inputAnsRef = React.useRef<HTMLInputElement | null>(null)
   const [editCard] = useUpdateCardMutation()
+
+  useEffect(() => {
+    setSelectedQuesImage(card?.questionImg)
+    setSelectedAnsImage(card?.answerImg)
+  }, [card?.questionImg, card?.answerImg])
 
   const {
     control,
@@ -79,8 +84,8 @@ export function EditCard({ card, onClose }: Props) {
       .then(() => {
         toast.success(`Your card updated successfully`, optionsToast)
       })
-      .catch(e => {
-        toast.error(e.data.message, optionsToast)
+      .catch(() => {
+        toast.error('Pack not found', optionsToast)
       })
     if (onClose) {
       onClose(false)
@@ -152,7 +157,7 @@ export function EditCard({ card, onClose }: Props) {
             <>
               <div className={s.questionImg}>
                 {selectedQuesImage ? (
-                  <img alt={'image'} className={s.image} src={selectedQuesImage} />
+                  <img alt={'image'} className={s.image} src={selectedQuesImage?.toString()} />
                 ) : (
                   <Typography variant={'H3'}>No Image</Typography>
                 )}
@@ -179,7 +184,7 @@ export function EditCard({ card, onClose }: Props) {
 
               <div className={s.answerImg}>
                 {selectedAnsImage ? (
-                  <img alt={'image'} className={s.image} src={selectedAnsImage} />
+                  <img alt={'image'} className={s.image} src={selectedAnsImage?.toString()} />
                 ) : (
                   <Typography variant={'H3'}>No Image</Typography>
                 )}
