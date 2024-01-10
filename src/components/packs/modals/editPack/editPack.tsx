@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -10,7 +10,7 @@ import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
-import { Deck, useUpdateDeckMutation } from '@/services/decks'
+import { UpdateDeckRequest, useUpdateDeckMutation } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch } from '@/services/store'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -27,13 +27,18 @@ const schemaEdit = z.object({
 type FormValue = z.infer<typeof schemaEdit>
 
 type Props = {
-  deck?: Deck
+  deck?: UpdateDeckRequest
   onClose?: (val: boolean) => void
 }
 
 export const EditPack = ({ deck, onClose }: Props) => {
   const inputRef = React.useRef<HTMLInputElement | null>(null)
-  const [selectedImage, setSelectedImage] = useState('')
+  const [selectedImage, setSelectedImage] = useState<File | string>()
+
+  useEffect(() => {
+    setSelectedImage(deck?.cover)
+  }, [deck?.cover])
+
   const {
     control,
     formState: { errors },
@@ -64,8 +69,8 @@ export const EditPack = ({ deck, onClose }: Props) => {
       .then(() => {
         toast.success(`Your deck updated successfully`, optionsToast)
       })
-      .catch(e => {
-        toast.error(e.data.message, optionsToast)
+      .catch(() => {
+        toast.error('Deck not found', optionsToast)
       })
     dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
     if (onClose) {
@@ -104,7 +109,7 @@ export const EditPack = ({ deck, onClose }: Props) => {
           <div className={s.item}>
             <div className={s.imageWrap}>
               {selectedImage ? (
-                <img alt={'image'} className={s.image} src={selectedImage} />
+                <img alt={'image'} className={s.image} src={selectedImage.toString()} />
               ) : (
                 <span>No Image</span>
               )}

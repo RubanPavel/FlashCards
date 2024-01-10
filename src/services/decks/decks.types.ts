@@ -22,8 +22,8 @@ export type Deck = {
   cover?: string
   created: string
   id: string
-  isBlocked?: any
-  isDeleted?: any
+  isBlocked?: boolean
+  isDeleted?: boolean
   isPrivate?: boolean
   name: string
   rating?: number
@@ -47,7 +47,7 @@ export type DeleteResponse = {
 }
 
 export type UpdateDeckRequest = {
-  cover?: File | undefined
+  cover?: File | string
   id?: string
   isPrivate?: boolean
   name: string

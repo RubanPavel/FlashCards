@@ -85,7 +85,7 @@ export function EditCard({ card, onClose }: Props) {
         toast.success(`Your card updated successfully`, optionsToast)
       })
       .catch(() => {
-        toast.error('Pack not found', optionsToast)
+        toast.error('Card not found', optionsToast)
       })
     if (onClose) {
       onClose(false)
