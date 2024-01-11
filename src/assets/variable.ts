@@ -104,6 +104,18 @@ export const verifyEmailPageData = {
 }
 
 export const packsPageData: PacksPageData = {
+  modals: {
+    editPack: {
+      title: 'Edit Pack',
+      imageSpan: 'No Image',
+      imageInfo: 'Cover',
+      inputLabel: 'Name Pack',
+      imageButton: 'Change Cover',
+      cancelButton: 'Cancel',
+      saveButton: 'Save Changes',
+      isPrivate: 'Private Pack',
+    },
+  },
   controls: {
     buttonDelete: 'Clear Filter',
     modal: {

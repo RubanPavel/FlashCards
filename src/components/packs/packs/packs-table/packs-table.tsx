@@ -8,7 +8,7 @@ import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
 import { Table } from '@/components/ui/tables/newTablles'
 import { Typography } from '@/components/ui/typography'
 import { AuthResponse } from '@/services/auth'
-import {Deck, DecksResponse, Sort} from '@/services/decks'
+import { Deck, DecksResponse, Sort } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
@@ -18,10 +18,10 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import s from './packs-table.module.scss'
 
 type Props = {
-    decks: DecksResponse
-    user: AuthResponse
-    handleDelete: (deck: Deck) => void
-    handleEdit: (deck: Deck) => void
+  decks: DecksResponse
+  user: AuthResponse
+  handleDelete: (deck: Deck) => void
+  handleEdit: (deck: Deck) => void
 }
 
 export const PacksTable = ({ decks, user, handleDelete, handleEdit }: Props) => {

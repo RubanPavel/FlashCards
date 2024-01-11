@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { IconImage } from '@/assets/icons/IconImage'
-import { optionsToast } from '@/assets/variable'
+import { optionsToast, packsPageData } from '@/assets/variable'
 import { namePackSchema, photoSchema, rememberMe } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
@@ -32,6 +32,8 @@ type Props = {
 }
 
 export const EditPack = ({ deck, onClose }: Props) => {
+  const { imageSpan, imageInfo, imageButton, inputLabel, cancelButton, saveButton, isPrivate } =
+    packsPageData.modals.editPack
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState<File | string>()
 
@@ -111,13 +113,13 @@ export const EditPack = ({ deck, onClose }: Props) => {
               {selectedImage ? (
                 <img alt={'image'} className={s.image} src={selectedImage.toString()} />
               ) : (
-                <span>No Image</span>
+                <span>{imageSpan}</span>
               )}
             </div>
             <div className={s.infoWrap}>
               <div style={{ textAlign: 'center' }}>
                 <Typography as={'p'} variant={'H3'}>
-                  Cover
+                  {imageInfo}
                 </Typography>
                 <Input
                   accept={'image/jpeg, image/jpg, image/png, image/webp'}
@@ -129,28 +131,28 @@ export const EditPack = ({ deck, onClose }: Props) => {
                 />
                 <Button onClick={handleButtonClick} type={'button'} variant={'secondary'}>
                   <IconImage />
-                  <Typography variant={'subtitle-2'}>Change Cover</Typography>
+                  <Typography variant={'subtitle-2'}>{imageButton}</Typography>
                 </Button>
               </div>
             </div>
           </div>
-          <Typography as={'p'} variant={'body-2'}>
-            Name Pack
+          <Typography as={'label'} variant={'body-2'}>
+            {inputLabel}
           </Typography>
           <ControlInput control={control} errorMessage={errors.name?.message} name={'name'} />
           <div style={{ alignItems: 'center', display: 'flex' }}>
             <ControlledCheckbox control={control} name={'isPrivate'} />
-            <Typography variant={'body-2'}>Private Pack</Typography>
+            <Typography variant={'body-2'}>{isPrivate}</Typography>
           </div>
           <div className={s.footer}>
             <Button onClick={onCloseClick} type={'button'}>
               <Typography as={'p'} variant={'subtitle-2'}>
-                Cancel
+                {cancelButton}
               </Typography>
             </Button>
             <Button disabled={!isFetching}>
               <Typography as={'p'} variant={'subtitle-2'}>
-                Save Changes
+                {saveButton}
               </Typography>
             </Button>
           </div>
