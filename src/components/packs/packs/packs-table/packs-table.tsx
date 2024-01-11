@@ -1,19 +1,14 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { dateOptions, packsPageData } from '@/assets/variable'
-import { EditPack } from '@/components/packs/modals/editPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
 import { IconEdit } from '@/components/ui/dropdown-menu/assets/IconEdit'
 import { IconLearn } from '@/components/ui/dropdown-menu/assets/IconLearn'
-import { ModalsBest } from '@/components/ui/modals/modalsBest'
 import { Table } from '@/components/ui/tables/newTablles'
 import { Typography } from '@/components/ui/typography'
-import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { AuthResponse } from '@/services/auth'
-import { Deck, DecksResponse, Sort } from '@/services/decks'
+import {Deck, DecksResponse, Sort} from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import clsx from 'clsx'
@@ -23,27 +18,17 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import s from './packs-table.module.scss'
 
 type Props = {
-  decks: DecksResponse
-  user: AuthResponse
+    decks: DecksResponse
+    user: AuthResponse
+    handleDelete: (deck: Deck) => void
+    handleEdit: (deck: Deck) => void
 }
 
-export const PacksTable = ({ decks, user }: Props) => {
+export const PacksTable = ({ decks, user, handleDelete, handleEdit }: Props) => {
   const { columnsData } = packsPageData.packsTable
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-  const [isModalDelOpen, setIsModalDelOpen] = useState(false)
-  const [isModalEditOpen, setIsModalEditOpen] = useState(false)
-  const [deckDel, setDeckDel] = useState('')
-  const [deckEdit, setDeckEdit] = useState<Deck>()
-  const deleteHandler = (deck: any) => {
-    setIsModalDelOpen(true)
-    setDeckDel(deck)
-  }
 
-  const editHandler = (deck: any) => {
-    setIsModalEditOpen(true)
-    setDeckEdit(deck)
-  }
   const handleSort = (sort: '' | Sort) => {
     const currentSort = params.orderBy.split('-')[0]
     const direction = params.orderBy.split('-')[1]
@@ -131,10 +116,10 @@ export const PacksTable = ({ decks, user }: Props) => {
                   </Button>
                   {d.author.id === user?.id && (
                     <>
-                      <Button onClick={() => editHandler(d)} variant={'icon'}>
+                      <Button onClick={() => handleEdit(d)} variant={'icon'}>
                         <IconEdit />
                       </Button>
-                      <Button onClick={() => deleteHandler(d)} variant={'icon'}>
+                      <Button onClick={() => handleDelete(d)} variant={'icon'}>
                         <IconDelete />
                       </Button>
                     </>
@@ -145,20 +130,6 @@ export const PacksTable = ({ decks, user }: Props) => {
           )
         })}
       </Table.Body>
-      <ModalsBest
-        isModalOpen={isModalEditOpen}
-        setIsModalOpen={setIsModalEditOpen}
-        title={'Edit Pack'}
-      >
-        <EditPack deck={deckEdit} onClose={val => setIsModalEditOpen(val)} />
-      </ModalsBest>
-      <ModalsBest
-        isModalOpen={isModalDelOpen}
-        setIsModalOpen={setIsModalDelOpen}
-        title={'Delete Pack'}
-      >
-        <DeleteModal deck={deckDel} onClose={val => setIsModalDelOpen(val)} title={'Delete Pack'} />
-      </ModalsBest>
     </Table.Root>
   )
 }
