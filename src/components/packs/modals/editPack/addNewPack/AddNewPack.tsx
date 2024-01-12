@@ -14,7 +14,7 @@ import { useAppDispatch } from '@/services/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import s from './AddNewPack.module.scss'
+import s from '@/components/packs/modals/editPack/addNewPack/AddNewPack.module.scss'
 
 const schema = z.object({
   cover: photoSchema,

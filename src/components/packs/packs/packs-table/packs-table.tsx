@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { dateOptions, packsPageData } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
@@ -28,7 +29,7 @@ export const PacksTable = ({
   decks,
   user,
   handleOpenModalDeleteDecks,
-  handleOpenModalEditDecks,
+  handleOpenModalEditDecks
 }: Props) => {
   const { columnsData } = packsPageData.packsTable
   const dispatch = useAppDispatch()
@@ -116,8 +117,13 @@ export const PacksTable = ({
               </Table.BodyCell>
               <Table.BodyCell>
                 <div className={s.LastBodyCell}>
-                  <Button as={Link} to={`/learn/${d.id}`} variant={'icon'}>
-                    <IconLearn />
+                  <Button
+                    as={Link}
+                    className={!d.cardsCount && s.disabledLink}
+                    to={`/learn/${d.id}`}
+                    variant={'icon'}
+                  >
+                    <IconLearn fill={!d.cardsCount ? 'grey' : 'white'} />
                   </Button>
                   {d.author.id === user?.id && (
                     <>

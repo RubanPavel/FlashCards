@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import { packsPageData } from '@/assets/variable'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { Button } from '@/components/ui/button'

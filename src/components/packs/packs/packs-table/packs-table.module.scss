@@ -73,7 +73,7 @@
 }
 
 .LastBodyCell {
-  cursor: pointer;
+  //cursor: pointer;
   display: flex;
   gap: 7px;
   justify-content: end;
@@ -99,4 +99,9 @@
 
 .IconButton:hover {
   background-color: var(--color-dark-100);
+}
+
+.disabledLink {
+  pointer-events: none;
+  cursor: default;
 }
