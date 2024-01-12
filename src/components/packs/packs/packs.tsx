@@ -1,18 +1,19 @@
+import { useState } from 'react'
+
 import { packsPageData } from '@/assets/variable'
+import { EditPack } from '@/components/packs/modals/editPack'
 import { PacksControls } from '@/components/packs/packs/packs-controls/packs-controls'
 import { PacksTable } from '@/components/packs/packs/packs-table/packs-table'
+import { ModalsBest } from '@/components/ui/modals/modalsBest'
 import { Pagination } from '@/components/ui/pagination'
 import { Typography } from '@/components/ui/typography'
+import { DeleteModal } from '@/pages/common/delete-modal'
 import { AuthResponse } from '@/services/auth'
 import { Deck, DecksResponse } from '@/services/decks'
 import { decksActions } from '@/services/decks/decks.slice'
 import { useAppDispatch } from '@/services/store'
 
 import s from './packs.module.scss'
-import { ModalsBest } from '@/components/ui/modals/modalsBest'
-import { EditPack } from '@/components/packs/modals/editPack'
-import { DeleteModal } from '@/pages/common/delete-modal'
-import { useState } from 'react'
 
 type Props = {
   decks: DecksResponse
@@ -57,9 +58,9 @@ export const Packs = ({ decks, user }: Props) => {
         <div className={s.PacksWrapper}>
           <PacksTable
             decks={decks}
-            user={user}
             handleDelete={handleDelete}
             handleEdit={handleEdit}
+            user={user}
           />
           {decks?.items.length === 0 && (
             <Typography as={'p'} className={s.PacksEmpty} variant={'H2'}>

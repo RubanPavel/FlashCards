@@ -32,7 +32,7 @@ type Props = {
 }
 
 export const EditPack = ({ deck, onClose }: Props) => {
-  const { imageSpan, imageInfo, imageButton, inputLabel, cancelButton, saveButton, isPrivate } =
+  const { cancelButton, imageButton, imageInfo, imageSpan, inputLabel, isPrivate, saveButton } =
     packsPageData.modals.editPack
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState<File | string>()

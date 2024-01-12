@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+
 import { IconVectorDown } from '@/assets/icons/IconVectorDown'
 import { dateOptions, packsPageData } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
@@ -19,12 +20,12 @@ import s from './packs-table.module.scss'
 
 type Props = {
   decks: DecksResponse
-  user: AuthResponse
   handleDelete: (deck: Deck) => void
   handleEdit: (deck: Deck) => void
+  user: AuthResponse
 }
 
-export const PacksTable = ({ decks, user, handleDelete, handleEdit }: Props) => {
+export const PacksTable = ({ decks, handleDelete, handleEdit, user }: Props) => {
   const { columnsData } = packsPageData.packsTable
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
@@ -111,8 +112,13 @@ export const PacksTable = ({ decks, user, handleDelete, handleEdit }: Props) => 
               </Table.BodyCell>
               <Table.BodyCell>
                 <div className={s.LastBodyCell}>
-                  <Button as={Link} to={`/learn/${d.id}`} variant={'icon'}>
-                    <IconLearn />
+                  <Button
+                    as={Link}
+                    className={!d.cardsCount && s.disabledLink}
+                    to={`/learn/${d.id}`}
+                    variant={'icon'}
+                  >
+                    <IconLearn fill={!d.cardsCount ? 'grey' : 'white'} />
                   </Button>
                   {d.author.id === user?.id && (
                     <>

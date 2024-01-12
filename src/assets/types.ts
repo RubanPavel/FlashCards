@@ -12,18 +12,6 @@ type TabsData = {
 }[]
 
 export type PacksPageData = {
-  modals: {
-    editPack: {
-      title: string
-      imageSpan: string
-      imageInfo: string
-      inputLabel: string
-      imageButton: string
-      cancelButton: string
-      saveButton: string
-      isPrivate: string
-    }
-  }
   controls: {
     buttonDelete: string
     modal: {
@@ -36,6 +24,18 @@ export type PacksPageData = {
     title: string
   }
   emptyTable: string
+  modals: {
+    editPack: {
+      cancelButton: string
+      imageButton: string
+      imageInfo: string
+      imageSpan: string
+      inputLabel: string
+      isPrivate: string
+      saveButton: string
+      title: string
+    }
+  }
   packsTable: {
     columnsData: ColumnsData
     modalTitle: string

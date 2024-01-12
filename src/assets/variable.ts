@@ -104,18 +104,6 @@ export const verifyEmailPageData = {
 }
 
 export const packsPageData: PacksPageData = {
-  modals: {
-    editPack: {
-      title: 'Edit Pack',
-      imageSpan: 'No Image',
-      imageInfo: 'Cover',
-      inputLabel: 'Name Pack',
-      imageButton: 'Change Cover',
-      cancelButton: 'Cancel',
-      saveButton: 'Save Changes',
-      isPrivate: 'Private Pack',
-    },
-  },
   controls: {
     buttonDelete: 'Clear Filter',
     modal: {
@@ -131,6 +119,18 @@ export const packsPageData: PacksPageData = {
     title: 'Packs list',
   },
   emptyTable: 'No results found for your query.',
+  modals: {
+    editPack: {
+      cancelButton: 'Cancel',
+      imageButton: 'Change Cover',
+      imageInfo: 'Cover',
+      imageSpan: 'No Image',
+      inputLabel: 'Name Pack',
+      isPrivate: 'Private Pack',
+      saveButton: 'Save Changes',
+      title: 'Edit Pack',
+    },
+  },
   packsTable: {
     columnsData: [
       { id: '1', sort: 'name', title: 'Name' },
