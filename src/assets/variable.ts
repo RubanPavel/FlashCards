@@ -103,17 +103,24 @@ export const verifyEmailPageData = {
   },
 }
 
+export const modalCommon = {
+  imageSpan: 'No Image',
+  imageInfo: 'Cover',
+  inputLabel: 'Name Pack',
+  imageButton: 'Change Cover',
+  cancelButton: 'Cancel',
+  isPrivate: 'Private Pack',
+}
+
 export const packsPageData: PacksPageData = {
   modals: {
+    addPack: {
+      title: 'Add New Pack',
+      submitButton: 'Add New Pack',
+    },
     editPack: {
       title: 'Edit Pack',
-      imageSpan: 'No Image',
-      imageInfo: 'Cover',
-      inputLabel: 'Name Pack',
-      imageButton: 'Change Cover',
-      cancelButton: 'Cancel',
-      saveButton: 'Save Changes',
-      isPrivate: 'Private Pack',
+      submitButton: 'Save Changes',
     },
   },
   controls: {

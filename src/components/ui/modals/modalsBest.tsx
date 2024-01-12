@@ -29,6 +29,7 @@ export const ModalsBest = ({
   return (
     <DialogRadix.Root onOpenChange={setIsModalOpen} open={isModalOpen}>
       <DialogRadix.Overlay className={s.DialogOverlay} />
+      {/*<DialogRadix.Content className={clsx(s.DialogContent)}>*/}
       <DialogRadix.Content className={clsx(s.DialogContent, className?.content)}>
         <DialogRadix.Title className={clsx(s.DialogTitle, className?.title)}>
           <Typography as={'p'} variant={'H2'}>

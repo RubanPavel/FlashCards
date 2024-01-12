@@ -22,8 +22,8 @@ export type Deck = {
   cover?: string
   created: string
   id: string
-  isBlocked?: boolean
-  isDeleted?: boolean
+  isBlocked?: boolean | null
+  isDeleted?: boolean | null
   isPrivate?: boolean
   name: string
   rating?: number
@@ -32,7 +32,13 @@ export type Deck = {
   userId: string
 }
 
-/* export type CreateDeckType = Pick<Deck, 'cover' | 'isPrivate' | 'name'> */
+export type CreateDeckRequest = {
+  cover?: File | string
+  isPrivate?: boolean
+  name: string
+}
+
+// export type CreateDeckRequest = Pick<Deck, 'cover' | 'isPrivate' | 'name'>
 
 export type DeleteResponse = {
   cardsCount: number

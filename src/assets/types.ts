@@ -13,15 +13,13 @@ type TabsData = {
 
 export type PacksPageData = {
   modals: {
+    addPack: {
+      title: string
+      submitButton: string
+    }
     editPack: {
       title: string
-      imageSpan: string
-      imageInfo: string
-      inputLabel: string
-      imageButton: string
-      cancelButton: string
-      saveButton: string
-      isPrivate: string
+      submitButton: string
     }
   }
   controls: {

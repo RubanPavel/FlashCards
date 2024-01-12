@@ -26,7 +26,7 @@ type Trigger = 'avatar' | 'nickname'
 export const Profile = ({ className, handleUpdateUser, logout, user }: Props) => {
   const [trigger, setTrigger] = useState<Trigger | null>(null)
   const { logoutButton, title } = profilePageData.profile
-  const handleEditClick = (variant: Trigger) => {
+  const handleOpenModalEditDecksClick = (variant: Trigger) => {
     setTrigger(variant)
   }
 
@@ -51,7 +51,7 @@ export const Profile = ({ className, handleUpdateUser, logout, user }: Props) =>
           {!trigger && (
             <Button
               className={s.ProfileAvatarButton}
-              onClick={() => handleEditClick('avatar')}
+              onClick={() => handleOpenModalEditDecksClick('avatar')}
               variant={'icon'}
             >
               <IconEdit height={16} width={16} />
@@ -74,7 +74,7 @@ export const Profile = ({ className, handleUpdateUser, logout, user }: Props) =>
             </Typography>
             <Button
               className={s.ProfileNicknameButton}
-              onClick={() => handleEditClick('nickname')}
+              onClick={() => handleOpenModalEditDecksClick('nickname')}
               variant={'icon'}
             >
               <IconEdit height={16} width={16} />

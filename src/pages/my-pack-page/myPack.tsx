@@ -11,7 +11,6 @@ import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { EditCard } from '@/components/packs/modals/editCard'
-import { EditPack } from '@/components/packs/modals/editPack'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
@@ -30,7 +29,7 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
+import { DeleteModalOld } from '@/pages/common/delete-modal/deleteModalOld'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
 import { updateCardType } from '@/services/cards'
 import { cardsActions } from '@/services/cards/cards.slice'
@@ -38,8 +37,10 @@ import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './myPack.module.scss'
+import { EditPackOld } from '@/components/packs/modals/editPack/editPackOld'
 
 export const MyPackPage = () => {
+  console.log('test')
   const params = useAppSelector(state => state.cardsParams)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isModalEditPackOpen, setIsModalEditPackOpen] = useState(false)
@@ -229,14 +230,14 @@ export const MyPackPage = () => {
           setIsModalOpen={setIsModalEditPackOpen}
           title={'Edit Pack'}
         >
-          <EditPack deck={packData} onClose={val => setIsModalEditPackOpen(val)} />
+          <EditPackOld deck={packData} onClose={val => setIsModalEditPackOpen(val)} />
         </ModalsBest>
         <ModalsBest
           isModalOpen={isModalDelPackOpen}
           setIsModalOpen={setIsModalDelPackOpen}
           title={'Delete Pack'}
         >
-          <DeleteModal
+          <DeleteModalOld
             deck={packData}
             isNavigate
             onClose={val => setIsModalDelPackOpen(val)}
@@ -255,7 +256,7 @@ export const MyPackPage = () => {
           setIsModalOpen={setIsModalDelOpen}
           title={'Delete Card'}
         >
-          <DeleteModal
+          <DeleteModalOld
             card={cardDel}
             onClose={val => setIsModalDelOpen(val)}
             title={'Delete Card'}

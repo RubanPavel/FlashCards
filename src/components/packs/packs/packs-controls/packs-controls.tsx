@@ -1,12 +1,9 @@
 import { useState } from 'react'
 
-import { IconClose } from '@/assets/icons/IconClose'
 import { packsPageData } from '@/assets/variable'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
-import { AddNewPack } from '@/components/packs/modals/addNewPack'
 import { Button } from '@/components/ui/button'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
-import { ModalsNew } from '@/components/ui/modals/modalsNew'
 import { SliderRadix } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { Typography } from '@/components/ui/typography'
@@ -22,14 +19,15 @@ import s from './packs-controls.module.scss'
 type Props = {
   decks: DecksResponse
   user: AuthResponse
+  handleOpenModalAddDecks: () => void
 }
 
-export const PacksControls = ({ decks, user }: Props) => {
+export const PacksControls = ({ decks, user, handleOpenModalAddDecks }: Props) => {
   const { buttonDelete, modal, sliderTitle, tabSwitcherLabel, tabsData, title } =
     packsPageData.controls
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
-  const [openModalNewPack, onCloseModalNewPack] = useState<boolean>(false)
+  // const [openModalNewPack, onCloseModalNewPack] = useState<boolean>(false)
   const [externalValues, setExternalValues] = useState<number[]>(
     params.maxCardsCount !== '0' ? [Number(params.minCardsCount), Number(params.maxCardsCount)] : []
   )
@@ -76,24 +74,9 @@ export const PacksControls = ({ decks, user }: Props) => {
     <>
       <div className={s.ControlsRoot}>
         <Typography variant={'large'}>{title}</Typography>
-        <ModalsNew
-          className={{ title: s.ModalTitle }}
-          icon={<IconClose className={s.ModalIconButton} />}
-          onClose={onCloseModalNewPack}
-          open={openModalNewPack}
-          title={
-            <Typography as={'p'} variant={'H2'}>
-              {modal.title}
-            </Typography>
-          }
-          trigger={
-            <Button>
-              <Typography variant={'subtitle-1'}>{modal.trigger}</Typography>
-            </Button>
-          }
-        >
-          <AddNewPack onClose={val => onCloseModalNewPack(val)} />
-        </ModalsNew>
+        <Button onClick={handleOpenModalAddDecks}>
+          <Typography variant={'subtitle-1'}>{modal.trigger}</Typography>
+        </Button>
       </div>
       <div className={s.ControlsPanel}>
         <DebouncedInput

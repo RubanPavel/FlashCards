@@ -1,19 +1,47 @@
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
+import { optionsToast } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
+import { useDeleteCardMutation } from '@/services/cards'
+import { useDeleteDeskMutation } from '@/services/decks'
+
 import s from './DeleteModal.module.scss'
 
 type Props = {
   card?: any
   deck?: any
-  handleDelete: () => void
+  isNavigate?: boolean
   onClose: (val: boolean) => void
   title: string
 }
 
-export const DeleteModal = ({ deck, card, onClose, handleDelete }: Props) => {
-  const isDeletePack = deck
-  const handleOpenModalDeleteDecks = () => {
-    handleDelete()
+export const DeleteModalOld = ({ card, deck, isNavigate, onClose, title }: Props) => {
+  console.log('card', card)
+  console.log('deck', deck)
+  const [deleteDeck] = useDeleteDeskMutation()
+  const [deleteCard] = useDeleteCardMutation()
+  const navigate = useNavigate()
+  const isDeletePack = title === 'Delete Pack'
+  const handleOpenModalDeleteDecks = async () => {
+    try {
+      if (isDeletePack) {
+        await deleteDeck(deck.id)
+        console.log(deck.id)
+      } else {
+        await deleteCard(card.id)
+        console.log(card.id)
+      }
+      toast.success(
+        isDeletePack ? 'Pack deleted successfully' : 'Card deleted successfully',
+        optionsToast
+      )
+      onClose(false)
+      isNavigate && navigate(-1)
+    } catch (error: any) {
+      toast.error('An error occurred while deleting.', optionsToast)
+    }
   }
 
   return (
