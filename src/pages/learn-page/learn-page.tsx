@@ -29,15 +29,18 @@ export const LearnPage = React.memo(() => {
     <ModalsNew
       className={{ content: s.content, title: s.title }}
       onClose={onClose}
+      onInteractOutside
       open={open}
       showCloseButton={false}
       title={<Typography variant={'large'}>Learn {packData?.name}</Typography>}
     >
       <LearnCard
+        answerImg={randomCard?.answerImg}
         answerText={randomCard?.answer}
         cardId={randomCard?.id}
         cards={cardsWithoutRandomCard}
         onClose={onClose}
+        questionImg={randomCard?.questionImg}
         questionText={randomCard?.question}
       />
     </ModalsNew>

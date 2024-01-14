@@ -10,6 +10,7 @@ type Props = {
   className?: { content?: string; title?: string }
   icon?: ReactNode
   onClose?: (val: boolean) => void
+  onInteractOutside?: boolean
   open: boolean
   showCloseButton?: boolean
   title: ReactNode
@@ -21,6 +22,7 @@ export const ModalsNew = ({
   className,
   icon,
   onClose,
+  onInteractOutside,
   open = false,
   showCloseButton = true,
   title,
@@ -29,12 +31,16 @@ export const ModalsNew = ({
   return (
     <DialogRadix.Root onOpenChange={onClose} open={open}>
       <DialogRadix.Trigger asChild>{trigger}</DialogRadix.Trigger>
-      <DialogRadix.Overlay className={s.DialogOverlay} />
-      <DialogRadix.Content className={clsx(s.DialogContent, className?.content)}>
-        <DialogRadix.Title className={className?.title}>{title}</DialogRadix.Title>
-        {children}
-        {showCloseButton && <DialogRadix.Close>{icon}</DialogRadix.Close>}
-      </DialogRadix.Content>
+      <DialogRadix.Overlay className={s.DialogOverlay}>
+        <DialogRadix.Content
+          className={clsx(s.DialogContent, className?.content)}
+          onInteractOutside={event => onInteractOutside && event.preventDefault()}
+        >
+          <DialogRadix.Title className={className?.title}>{title}</DialogRadix.Title>
+          {children}
+          {showCloseButton && <DialogRadix.Close>{icon}</DialogRadix.Close>}
+        </DialogRadix.Content>
+      </DialogRadix.Overlay>
     </DialogRadix.Root>
   )
 }

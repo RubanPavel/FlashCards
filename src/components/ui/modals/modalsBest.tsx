@@ -28,22 +28,23 @@ export const ModalsBest = ({
 }: Props) => {
   return (
     <DialogRadix.Root onOpenChange={setIsModalOpen} open={isModalOpen}>
-      <DialogRadix.Overlay className={s.DialogOverlay} />
-      <DialogRadix.Content className={clsx(s.DialogContent, className?.content)}>
-        <DialogRadix.Title className={clsx(s.DialogTitle, className?.title)}>
-          <Typography as={'p'} variant={'H2'}>
-            {title}
-          </Typography>
-        </DialogRadix.Title>
-        {children}
-        <DialogRadix.Close asChild>
-          {showCloseButton && (
-            <button aria-label={'Close'}>
-              <IconClose className={s.IconButton} />
-            </button>
-          )}
-        </DialogRadix.Close>
-      </DialogRadix.Content>
+      <DialogRadix.Overlay className={s.DialogOverlay}>
+        <DialogRadix.Content className={clsx(s.DialogContent, className?.content)}>
+          <DialogRadix.Title className={clsx(s.DialogTitle, className?.title)}>
+            <Typography as={'p'} variant={'H2'}>
+              {title}
+            </Typography>
+          </DialogRadix.Title>
+          {children}
+          <DialogRadix.Close asChild>
+            {showCloseButton && (
+              <button aria-label={'Close'}>
+                <IconClose className={s.IconButton} />
+              </button>
+            )}
+          </DialogRadix.Close>
+        </DialogRadix.Content>
+      </DialogRadix.Overlay>
     </DialogRadix.Root>
   )
 }

@@ -19,20 +19,24 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 type Props = {
+  answerImg?: string
   answerText?: string
   cardId?: string
   cards?: CardsResponseItems[]
   onClose: (val: boolean) => void
+  questionImg?: string
   questionText?: string
 }
 
 export const LearnCard = React.memo(
-  ({ answerText, cardId, cards, onClose, questionText }: Props) => {
+  ({ answerImg, answerText, cardId, cards, onClose, questionImg, questionText }: Props) => {
     const [show, setShow] = useState(false)
     const [index, setIndex] = useState(0)
     const [card, setCard] = useState({
+      answerImg,
       answerText,
       cardId,
+      questionImg,
       questionText,
     })
     const [saveGrade, { isLoading }] = useSaveGradeMutation()
@@ -71,8 +75,10 @@ export const LearnCard = React.memo(
       if (currentCard) {
         setCard(prev => ({
           ...prev,
+          answerImg: currentCard?.answerImg,
           answerText: currentCard?.answer,
           cardId: currentCard.id,
+          questionImg: currentCard?.questionImg,
           questionText: currentCard?.question,
         }))
         setIndex(prev => prev + 1)
@@ -92,6 +98,11 @@ export const LearnCard = React.memo(
         <Typography as={'p'} className={s.TenTryText} variant={'body-2'}>
           Количество попыток ответа на вопрос: 10
         </Typography>
+        {card.questionImg && (
+          <div className={s.boxImg}>
+            <img alt={'img'} className={s.learnImg} src={card.questionImg} />
+          </div>
+        )}
         {!show && (
           <Button fullWidth onClick={() => setShow(true)}>
             <Typography variant={'subtitle-2'}>Show Answer</Typography>
@@ -105,6 +116,11 @@ export const LearnCard = React.memo(
             <Typography className={s.colorText} variant={'body-1'}>
               {card.answerText}
             </Typography>
+            {card.answerImg && (
+              <div className={s.boxImg}>
+                <img alt={'img'} className={s.learnImg} src={card.answerImg} />
+              </div>
+            )}
             <Typography as={'p'} className={s.rateText} variant={'subtitle-1'}>
               Rate yourself:
             </Typography>
