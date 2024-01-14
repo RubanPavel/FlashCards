@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-
 import { IconImage } from '@/assets/icons/IconImage'
-import { optionsToast, packsPageData } from '@/assets/variable'
+import { modalCommon, packsPageData } from '@/assets/variable'
 import { namePackSchema, photoSchema, rememberMe } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlCheckbox'
 import { ControlInput } from '@/components/ui/controlled/controlInput'
 import { Input } from '@/components/ui/input'
 import { Typography } from '@/components/ui/typography'
-import { UpdateDeckRequest, useUpdateDeckMutation } from '@/services/decks'
-import { decksActions } from '@/services/decks/decks.slice'
-import { useAppDispatch } from '@/services/store'
+import { UpdateDeckRequest } from '@/services/decks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
 import s from './editPack.module.scss'
 
 const schemaEdit = z.object({
@@ -24,16 +19,26 @@ const schemaEdit = z.object({
   name: namePackSchema,
 })
 
-type FormValue = z.infer<typeof schemaEdit>
+export type FormValue = z.infer<typeof schemaEdit>
 
 type Props = {
   deck?: UpdateDeckRequest
   onClose?: (val: boolean) => void
+  submitButtonDisabled: boolean
+  handleSubmitDecks: (formData: FormValue) => void
+  variant: 'add' | 'edit'
 }
 
-export const EditPack = ({ deck, onClose }: Props) => {
-  const { cancelButton, imageButton, imageInfo, imageSpan, inputLabel, isPrivate, saveButton } =
-    packsPageData.modals.editPack
+export const EditPack = ({
+  deck,
+  onClose,
+  handleSubmitDecks,
+  submitButtonDisabled,
+  variant,
+}: Props) => {
+  const { imageSpan, imageInfo, imageButton, inputLabel, cancelButton, isPrivate } = modalCommon
+  const { addPack, editPack } = packsPageData.modals
+  const submitButton = variant === 'add' ? addPack.submitButton : editPack.submitButton
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [selectedImage, setSelectedImage] = useState<File | string>()
 
@@ -56,33 +61,13 @@ export const EditPack = ({ deck, onClose }: Props) => {
     reValidateMode: 'onChange',
     resolver: zodResolver(schemaEdit),
   })
-  const dispatch = useAppDispatch()
-
-  const [updateDeck, isFetching] = useUpdateDeckMutation()
 
   const onSubmit: SubmitHandler<FormValue> = data => {
-    updateDeck({
-      cover: data.cover,
-      id: deck?.id,
-      isPrivate: data.isPrivate,
-      name: data.name,
-    })
-      .unwrap()
-      .then(() => {
-        toast.success(`Your deck updated successfully`, optionsToast)
-      })
-      .catch(() => {
-        toast.error('Deck not found', optionsToast)
-      })
-    dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
-    if (onClose) {
-      isFetching && onClose(false)
-    }
+    handleSubmitDecks(data)
   }
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-
     if (file) {
       const imageUrl = URL.createObjectURL(file)
 
@@ -150,9 +135,9 @@ export const EditPack = ({ deck, onClose }: Props) => {
                 {cancelButton}
               </Typography>
             </Button>
-            <Button disabled={!isFetching}>
+            <Button disabled={submitButtonDisabled}>
               <Typography as={'p'} variant={'subtitle-2'}>
-                {saveButton}
+                {submitButton}
               </Typography>
             </Button>
           </div>

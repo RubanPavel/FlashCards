@@ -12,6 +12,7 @@ import {
   getRandomCardResponse,
   getRandomCardType,
   saveGradeType,
+  CreateDeckRequest,
 } from './decks.types'
 
 export const DecksService = baseApi.injectEndpoints({
@@ -32,13 +33,23 @@ export const DecksService = baseApi.injectEndpoints({
         },
       }),
 
-      createDeck: builder.mutation<Deck, FormData>({
+      createDeck: builder.mutation<Deck, CreateDeckRequest>({
         invalidatesTags: ['Decks'],
-        query: formData => ({
-          body: formData,
-          method: 'POST',
-          url: `v1/decks`,
-        }),
+        query: args => {
+          const payload = new FormData()
+          const isDeckPrivate = args.isPrivate ? 'true' : 'false'
+
+          args.cover && payload.append('cover', args.cover)
+          payload.append('name', args.name)
+          payload.append('isPrivate', isDeckPrivate)
+
+          return {
+            body: payload,
+            formData: true,
+            method: 'POST',
+            url: `v1/decks`,
+          }
+        },
       }),
       deleteDesk: builder.mutation<DeleteResponse, string>({
         invalidatesTags: ['Decks'],

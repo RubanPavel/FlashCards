@@ -20,12 +20,17 @@ import s from './packs-table.module.scss'
 
 type Props = {
   decks: DecksResponse
-  handleDelete: (deck: Deck) => void
-  handleEdit: (deck: Deck) => void
   user: AuthResponse
+  handleOpenModalDeleteDecks: (deck: Deck) => void
+  handleOpenModalEditDecks: (deck: Deck) => void
 }
 
-export const PacksTable = ({ decks, handleDelete, handleEdit, user }: Props) => {
+export const PacksTable = ({
+  decks,
+  user,
+  handleOpenModalDeleteDecks,
+  handleOpenModalEditDecks
+}: Props) => {
   const { columnsData } = packsPageData.packsTable
   const dispatch = useAppDispatch()
   const params = useAppSelector(state => state.decksParams)
@@ -122,10 +127,10 @@ export const PacksTable = ({ decks, handleDelete, handleEdit, user }: Props) => 
                   </Button>
                   {d.author.id === user?.id && (
                     <>
-                      <Button onClick={() => handleEdit(d)} variant={'icon'}>
+                      <Button onClick={() => handleOpenModalEditDecks(d)} variant={'icon'}>
                         <IconEdit />
                       </Button>
-                      <Button onClick={() => handleDelete(d)} variant={'icon'}>
+                      <Button onClick={() => handleOpenModalDeleteDecks(d)} variant={'icon'}>
                         <IconDelete />
                       </Button>
                     </>
