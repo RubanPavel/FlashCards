@@ -29,7 +29,7 @@ export const PacksTable = ({
   decks,
   user,
   handleOpenModalDeleteDecks,
-  handleOpenModalEditDecks
+  handleOpenModalEditDecks,
 }: Props) => {
   const { columnsData } = packsPageData.packsTable
   const dispatch = useAppDispatch()

@@ -1,18 +1,17 @@
 .DialogOverlay {
-  background: rgba(0 0 0 / 0.5);
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+
+  overflow-y: auto;
   display: grid;
   place-items: center;
-  overflow-y: auto;
+
+  background: rgba(0 0 0 / 50%);
 }
 
 .DialogContent {
+  width: 450px;
   margin-top: 80px;
-  min-width: 450px;
   background-color: var(--color-dark-700);
   border: 1px solid var(--color-dark-500);
 }

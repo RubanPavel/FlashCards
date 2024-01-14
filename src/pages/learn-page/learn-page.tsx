@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { LearnCard } from '@/components/packs/modals/learnCard'
-import { ModalsNew } from '@/components/ui/modals/modalsNew'
-import { Typography } from '@/components/ui/typography'
+import { ModalsBest } from '@/components/ui/modals/modalsBest'
 import { useGetDeckByIdQuery, useGetDecksCardsQuery, useGetRandomCardQuery } from '@/services/decks'
 
 import s from './learn-page.module.scss'
@@ -26,13 +25,11 @@ export const LearnPage = React.memo(() => {
   const cardsWithoutRandomCard = cardsData?.items.filter(c => c.id !== randomCard?.id)
 
   return (
-    <ModalsNew
+    <ModalsBest
       className={{ content: s.content, title: s.title }}
-      onClose={onClose}
-      onInteractOutside
-      open={open}
-      showCloseButton={false}
-      title={<Typography variant={'large'}>Learn {packData?.name}</Typography>}
+      isModalOpen={open}
+      setIsModalOpen={onClose}
+      title={`Learn ${packData?.name}`}
     >
       <LearnCard
         answerImg={randomCard?.answerImg}
@@ -43,6 +40,6 @@ export const LearnPage = React.memo(() => {
         questionImg={randomCard?.questionImg}
         questionText={randomCard?.question}
       />
-    </ModalsNew>
+    </ModalsBest>
   )
 })
