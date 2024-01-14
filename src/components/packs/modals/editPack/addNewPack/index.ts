@@ -1,1 +1,1 @@
-export * from 'src/components/packs/modals/editPack/addNewPack/AddNewPack'
+export * from './AddNewPack'
