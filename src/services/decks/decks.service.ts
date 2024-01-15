@@ -3,6 +3,7 @@ import { baseApi } from '@/services/base-api'
 import {
   CardResponse,
   CardsResponse,
+  CreateDeckRequest,
   Deck,
   DecksResponse,
   DeleteResponse,
@@ -12,7 +13,6 @@ import {
   getRandomCardResponse,
   getRandomCardType,
   saveGradeType,
-  CreateDeckRequest,
 } from './decks.types'
 
 export const DecksService = baseApi.injectEndpoints({

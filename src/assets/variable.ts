@@ -5,7 +5,7 @@ import { PacksPageData } from '@/assets/types'
 const apiUrl = import.meta.env.PROD ? import.meta.env.VITE_U_P : import.meta.env.VITE_U_D
 
 export const errorText = 'Some error occurred'
-export const optionsToast = { position: toast.POSITION.BOTTOM_CENTER }
+export const optionsToast = { position: toast.POSITION.BOTTOM_CENTER, theme: 'dark' } as const
 
 export const dateOptions: Intl.DateTimeFormatOptions = {
   day: '2-digit',
@@ -47,6 +47,13 @@ export const loginPageData = {
     text: "Don't have an account?",
     title: 'Sign In',
   },
+  toastInfo: '',
+}
+
+export const CheckEmailPage = {
+  button: 'Back to Sign In',
+  info: 'We’ve sent an Email with instructions to',
+  title: 'Check Email',
 }
 
 export const forgotPasswordPageData = {
@@ -73,7 +80,6 @@ export const createPasswordPageData = {
     },
     title: 'Create new password',
   },
-  info: 'New password successfully created.',
 }
 
 export const notFoundPageData = {
@@ -104,25 +110,15 @@ export const verifyEmailPageData = {
 }
 
 export const modalCommon = {
-  imageSpan: 'No Image',
-  imageInfo: 'Cover',
-  inputLabel: 'Name Pack',
-  imageButton: 'Change Cover',
   cancelButton: 'Cancel',
+  imageButton: 'Change Cover',
+  imageInfo: 'Cover',
+  imageSpan: 'No Image',
+  inputLabel: 'Name Pack',
   isPrivate: 'Private Pack',
 }
 
 export const packsPageData: PacksPageData = {
-  modals: {
-    addPack: {
-      title: 'Add New Pack',
-      submitButton: 'Add New Pack',
-    },
-    editPack: {
-      title: 'Edit Pack',
-      submitButton: 'Save Changes',
-    },
-  },
   controls: {
     buttonDelete: 'Clear Filter',
     modal: {
@@ -138,6 +134,25 @@ export const packsPageData: PacksPageData = {
     title: 'Packs list',
   },
   emptyTable: 'No results found for your query.',
+  modals: {
+    addPack: {
+      submitButton: 'Add New Pack',
+      title: 'Add New Pack',
+    },
+    deletePack: {
+      info: 'All cards will be deleted.',
+      question: {
+        main: 'Do you really want to remove',
+        span: 'pack',
+      },
+      submitButton: 'Delete Pack',
+      title: 'Delete Pack',
+    },
+    editPack: {
+      submitButton: 'Save Changes',
+      title: 'Edit Pack',
+    },
+  },
   packsTable: {
     columnsData: [
       { id: '1', sort: 'name', title: 'Name' },
@@ -148,4 +163,17 @@ export const packsPageData: PacksPageData = {
     ],
     modalTitle: 'Delete Pack',
   },
+}
+
+export const toastInfo = {
+  addDeckToast: `Your deck added successfully`,
+  createPasswordToast: 'New password successfully created.',
+  deleteDeckToast: 'Pack deleted successfully',
+  forgotPasswordToast: 'Instructions have been sent to your email address',
+  loginToast: 'Login successful',
+  logoutToast: 'Logout successful',
+  registerToast: 'Registration successful',
+  updateDeckToast: `Your deck updated successfully`,
+  updateUserToast: 'User information updated successfully',
+  verifyMailToast: 'Verification email sent successfully',
 }

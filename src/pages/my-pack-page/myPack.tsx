@@ -11,6 +11,7 @@ import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
 import { AddNewCard } from '@/components/packs/modals/addNewCard'
 import { EditCard } from '@/components/packs/modals/editCard'
+import { EditPackOld } from '@/components/packs/modals/editPack/editPackOld'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import IconDelete from '@/components/ui/dropdown-menu/assets/IconDelete'
@@ -37,7 +38,6 @@ import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 
 import s from './myPack.module.scss'
-import { EditPackOld } from '@/components/packs/modals/editPack/editPackOld'
 
 export const MyPackPage = () => {
   console.log('test')

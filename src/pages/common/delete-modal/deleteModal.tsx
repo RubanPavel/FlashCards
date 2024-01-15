@@ -1,7 +1,9 @@
+import { modalCommon, packsPageData } from '@/assets/variable'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import s from './DeleteModal.module.scss'
 
+import s from './deleteModal.module.scss'
+// TODO проверить что тут с типизацией по возможности сделать более универсальной
 type Props = {
   card?: any
   deck?: any
@@ -10,8 +12,9 @@ type Props = {
   title: string
 }
 
-export const DeleteModal = ({ deck, card, onClose, handleDelete }: Props) => {
-  const isDeletePack = deck
+export const DeleteModal = ({ card, deck, handleDelete, onClose }: Props) => {
+  const { info, question, submitButton } = packsPageData.modals.deletePack
+  const { cancelButton } = modalCommon
   const handleOpenModalDeleteDecks = () => {
     handleDelete()
   }
@@ -21,24 +24,22 @@ export const DeleteModal = ({ deck, card, onClose, handleDelete }: Props) => {
       <div className={s.content}>
         <div>
           <Typography variant={'body-1'}>
-            Do you really want to remove{' '}
+            {`${question.main} `}
             <Typography as={'span'} variant={'subtitle-1'}>
-              {isDeletePack ? `pack - ${deck.name}?` : `card - ${card.question}?`}
+              {`${question.span} - ${deck?.name || card?.question}?`}
             </Typography>
           </Typography>
         </div>
-        <Typography variant={'body-1'}>
-          {isDeletePack ? 'All cards will be deleted.' : 'Your card will be deleted.'}
-        </Typography>
+        <Typography variant={'body-1'}>{info}</Typography>
         <div className={s.button}>
           <Button onClick={() => onClose(false)} type={'button'}>
             <Typography as={'p'} variant={'subtitle-2'}>
-              Cancel
+              {cancelButton}
             </Typography>
           </Button>
           <Button onClick={handleOpenModalDeleteDecks} type={'button'} variant={'secondary'}>
             <Typography as={'p'} variant={'subtitle-2'}>
-              Delete {isDeletePack ? 'Pack' : 'Card'}
+              {submitButton}
             </Typography>
           </Button>
         </div>

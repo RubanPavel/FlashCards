@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+
 import { IconImage } from '@/assets/icons/IconImage'
 import { modalCommon, packsPageData } from '@/assets/variable'
 import { namePackSchema, photoSchema, rememberMe } from '@/components/auth/validate/validate'
@@ -11,6 +12,7 @@ import { Typography } from '@/components/ui/typography'
 import { UpdateDeckRequest } from '@/services/decks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
 import s from './editPack.module.scss'
 
 const schemaEdit = z.object({
@@ -23,20 +25,20 @@ export type FormValue = z.infer<typeof schemaEdit>
 
 type Props = {
   deck?: UpdateDeckRequest
+  handleSubmitDecks: (formData: FormValue) => void
   onClose?: (val: boolean) => void
   submitButtonDisabled: boolean
-  handleSubmitDecks: (formData: FormValue) => void
   variant: 'add' | 'edit'
 }
 
 export const EditPack = ({
   deck,
-  onClose,
   handleSubmitDecks,
+  onClose,
   submitButtonDisabled,
   variant,
 }: Props) => {
-  const { imageSpan, imageInfo, imageButton, inputLabel, cancelButton, isPrivate } = modalCommon
+  const { cancelButton, imageButton, imageInfo, imageSpan, inputLabel, isPrivate } = modalCommon
   const { addPack, editPack } = packsPageData.modals
   const submitButton = variant === 'add' ? addPack.submitButton : editPack.submitButton
   const inputRef = React.useRef<HTMLInputElement | null>(null)
@@ -68,6 +70,7 @@ export const EditPack = ({
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+
     if (file) {
       const imageUrl = URL.createObjectURL(file)
 

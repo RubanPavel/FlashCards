@@ -20,16 +20,16 @@ import s from './packs-table.module.scss'
 
 type Props = {
   decks: DecksResponse
-  user: AuthResponse
   handleOpenModalDeleteDecks: (deck: Deck) => void
   handleOpenModalEditDecks: (deck: Deck) => void
+  user: AuthResponse
 }
 
 export const PacksTable = ({
   decks,
-  user,
   handleOpenModalDeleteDecks,
   handleOpenModalEditDecks,
+  user,
 }: Props) => {
   const { columnsData } = packsPageData.packsTable
   const dispatch = useAppDispatch()

@@ -7,7 +7,7 @@ import { Typography } from '@/components/ui/typography'
 import { useDeleteCardMutation } from '@/services/cards'
 import { useDeleteDeskMutation } from '@/services/decks'
 
-import s from './DeleteModal.module.scss'
+import s from './deleteModal.module.scss'
 
 type Props = {
   card?: any

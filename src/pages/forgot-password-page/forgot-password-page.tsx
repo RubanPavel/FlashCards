@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { errorText, forgotPasswordPageData, optionsToast } from '@/assets/variable'
+import { errorText, forgotPasswordPageData, optionsToast, toastInfo } from '@/assets/variable'
 import { ForgotPassword, FormValues } from '@/components/auth/forgot-password'
+import { Progress } from '@/components/ui/progress'
 import { useRecoveryPasswordMutation } from '@/services/auth'
 import { authActions } from '@/services/auth/auth.slice'
 import { ServerError } from '@/services/error.types'
@@ -13,9 +14,10 @@ import s from './forgot-password-page.module.scss'
 
 export const ForgotPasswordPage = () => {
   const dispatch = useAppDispatch()
-  const [recovery, {}] = useRecoveryPasswordMutation()
+  const [recovery, { isLoading }] = useRecoveryPasswordMutation()
   const navigate = useNavigate()
   const { html, subject } = forgotPasswordPageData
+  const { forgotPasswordToast } = toastInfo
   const handleForgotPassword = (formData: FormValues) => {
     dispatch(authActions.setEmail({ email: formData.email }))
     const payload = {
@@ -28,6 +30,7 @@ export const ForgotPasswordPage = () => {
       .unwrap()
       .then(() => {
         navigate('/check-email')
+        toast.success(forgotPasswordToast, optionsToast)
       })
       .catch((e: ServerError & FetchBaseQueryError) => {
         toast.error(e?.data?.message || errorText, optionsToast)
@@ -35,9 +38,12 @@ export const ForgotPasswordPage = () => {
   }
 
   return (
-    <ForgotPassword
-      className={s.ForgotPasswordPageRoot}
-      handleForgotPassword={handleForgotPassword}
-    />
+    <>
+      {isLoading && <Progress />}
+      <ForgotPassword
+        className={s.ForgotPasswordPageRoot}
+        handleForgotPassword={handleForgotPassword}
+      />
+    </>
   )
 }

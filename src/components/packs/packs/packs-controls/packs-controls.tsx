@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import { packsPageData } from '@/assets/variable'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { Button } from '@/components/ui/button'
@@ -17,11 +18,11 @@ import s from './packs-controls.module.scss'
 
 type Props = {
   decks: DecksResponse
-  user: AuthResponse
   handleOpenModalAddDecks: () => void
+  user: AuthResponse
 }
 
-export const PacksControls = ({ decks, user, handleOpenModalAddDecks }: Props) => {
+export const PacksControls = ({ decks, handleOpenModalAddDecks, user }: Props) => {
   const { buttonDelete, modal, sliderTitle, tabSwitcherLabel, tabsData, title } =
     packsPageData.controls
   const dispatch = useAppDispatch()

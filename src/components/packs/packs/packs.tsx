@@ -12,18 +12,18 @@ import s from './packs.module.scss'
 
 type Props = {
   decks: DecksResponse
-  user: AuthResponse
   handleOpenModalAddDecks: () => void
-  handleOpenModalEditDecks: (deck: Deck) => void
   handleOpenModalDeleteDecks: (deck: Deck) => void
+  handleOpenModalEditDecks: (deck: Deck) => void
+  user: AuthResponse
 }
 
 export const Packs = ({
   decks,
-  user,
   handleOpenModalAddDecks,
-  handleOpenModalEditDecks,
   handleOpenModalDeleteDecks,
+  handleOpenModalEditDecks,
+  user,
 }: Props) => {
   const { emptyTable } = packsPageData
   const dispatch = useAppDispatch()
@@ -46,15 +46,15 @@ export const Packs = ({
       <div className={s.PacksRoot}>
         <PacksControls
           decks={decks}
-          user={user}
           handleOpenModalAddDecks={handleOpenModalAddDecks}
+          user={user}
         />
         <div className={s.PacksWrapper}>
           <PacksTable
             decks={decks}
-            user={user}
             handleOpenModalDeleteDecks={handleOpenModalDeleteDecks}
             handleOpenModalEditDecks={handleOpenModalEditDecks}
+            user={user}
           />
           {decks?.items.length === 0 && (
             <Typography as={'p'} className={s.PacksEmpty} variant={'H2'}>

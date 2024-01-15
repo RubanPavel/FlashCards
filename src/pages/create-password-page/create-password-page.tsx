@@ -1,8 +1,9 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { createPasswordPageData, errorText, optionsToast } from '@/assets/variable'
+import { errorText, optionsToast, toastInfo } from '@/assets/variable'
 import { CreatePassword, FormValues } from '@/components/auth/create-password'
+import { Progress } from '@/components/ui/progress'
 import { useResetPasswordMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
@@ -12,8 +13,8 @@ import s from './create-password-page.module.scss'
 export const CreatePasswordPage = () => {
   const { userId } = useParams()
   const navigate = useNavigate()
-  const [resetPassword, {}] = useResetPasswordMutation()
-  const { info } = createPasswordPageData
+  const [resetPassword, { isLoading }] = useResetPasswordMutation()
+  const { createPasswordToast } = toastInfo
   const handleCreatePassword = (formData: FormValues) => {
     if (userId) {
       const payload = {
@@ -25,7 +26,7 @@ export const CreatePasswordPage = () => {
         .unwrap()
         .then(() => {
           navigate('/login')
-          toast.success(info, optionsToast)
+          toast.success(createPasswordToast, optionsToast)
         })
         .catch((e: ServerError & FetchBaseQueryError) => {
           toast.error(e?.data?.message || errorText, optionsToast)
@@ -34,9 +35,12 @@ export const CreatePasswordPage = () => {
   }
 
   return (
-    <CreatePassword
-      className={s.CreatePasswordPageRoot}
-      handleCreatePassword={handleCreatePassword}
-    />
+    <>
+      {isLoading && <Progress />}
+      <CreatePassword
+        className={s.CreatePasswordPageRoot}
+        handleCreatePassword={handleCreatePassword}
+      />
+    </>
   )
 }

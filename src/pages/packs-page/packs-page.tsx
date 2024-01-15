@@ -1,5 +1,13 @@
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+
+import { errorText, optionsToast, packsPageData, toastInfo } from '@/assets/variable'
+import { EditPack, FormValue } from '@/components/packs/modals/editPack'
 import { Packs } from '@/components/packs/packs'
 import { Loader } from '@/components/ui/loader'
+import { ModalsBest } from '@/components/ui/modals/modalsBest'
+import { Progress } from '@/components/ui/progress'
+import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { useGetAuthMeQuery } from '@/services/auth'
 import {
   Deck,
@@ -8,14 +16,10 @@ import {
   useGetDecksQuery,
   useUpdateDeckMutation,
 } from '@/services/decks'
-import { useAppDispatch, useAppSelector } from '@/services/store'
-import { EditPack, FormValue } from '@/components/packs/modals/editPack'
-import { ModalsBest } from '@/components/ui/modals/modalsBest'
-import { useState } from 'react'
-import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
-import { optionsToast, packsPageData } from '@/assets/variable'
-import { toast } from 'react-toastify'
 import { decksActions } from '@/services/decks/decks.slice'
+import { ServerError } from '@/services/error.types'
+import { useAppDispatch, useAppSelector } from '@/services/store'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 // import {useDeleteCardMutation} from "@/services/cards";
 
 export const PacksPage = () => {
@@ -25,7 +29,7 @@ export const PacksPage = () => {
   const { data: decks, isLoading: decksIsLoading } = useGetDecksQuery(params)
   const [updateDeck, { isLoading: updateDeckIsLoading }] = useUpdateDeckMutation()
   const [createDeck, { isLoading: createDeckIsLoading }] = useCreateDeckMutation()
-  const [deleteDeck] = useDeleteDeskMutation()
+  const [deleteDeck, { isLoading: deleteDeckIsLoading }] = useDeleteDeskMutation()
   // const [deleteCard] = useDeleteCardMutation()
   const [isModalAddOpen, setIsModalAddOpen] = useState<boolean>(false)
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState<boolean>(false)
@@ -34,40 +38,42 @@ export const PacksPage = () => {
   const [deckEdit, setDeckEdit] = useState<Deck>()
 
   const { modals } = packsPageData
-
+  const { addDeckToast, deleteDeckToast, updateDeckToast } = toastInfo
   const handleAddDeck = (formData: FormValue) => {
     const payload = {
       cover: formData.cover,
       isPrivate: formData.isPrivate,
       name: formData.name,
     }
+
     createDeck(payload)
       .unwrap()
       .then(() => {
-        toast.success(`Your deck added successfully`, optionsToast)
+        toast.success(addDeckToast, optionsToast)
         setIsModalAddOpen(false)
         dispatch(decksActions.setCurrentPage({ currentPage: 1 }))
       })
-      .catch(() => {
-        toast.error('Deck is not added', optionsToast)
+      .catch((e: ServerError & FetchBaseQueryError) => {
+        toast.error(e?.data?.message || errorText, optionsToast)
       })
   }
 
   const handleUpdateDeck = (formData: FormValue) => {
     const payload = {
-      id: deckEdit?.id,
       cover: formData.cover,
+      id: deckEdit?.id,
       isPrivate: formData.isPrivate,
       name: formData.name,
     }
+
     updateDeck(payload)
       .unwrap()
       .then(() => {
-        toast.success(`Your deck updated successfully`, optionsToast)
+        toast.success(updateDeckToast, optionsToast)
         setIsModalEditOpen(false)
       })
-      .catch(() => {
-        toast.error('Deck is not found', optionsToast)
+      .catch((e: ServerError & FetchBaseQueryError) => {
+        toast.error(e?.data?.message || errorText, optionsToast)
       })
   }
 
@@ -77,11 +83,11 @@ export const PacksPage = () => {
       deleteDeck(deckDel.id)
         .unwrap()
         .then(() => {
-          toast.success('Pack deleted successfully', optionsToast)
+          toast.success(deleteDeckToast, optionsToast)
           setIsModalDeleteOpen(false)
         })
-        .catch(() => {
-          toast.error('An error occurred while deleting.', optionsToast)
+        .catch((e: ServerError & FetchBaseQueryError) => {
+          toast.error(e?.data?.message || errorText, optionsToast)
         })
     }
   }
@@ -100,17 +106,19 @@ export const PacksPage = () => {
     setDeckDel(deck)
   }
 
-  if (userIsLoading || decksIsLoading) {
+  if (updateDeckIsLoading || createDeckIsLoading || deleteDeckIsLoading) {
+    return <Progress />
+  } else if (userIsLoading || decksIsLoading) {
     return <Loader />
   } else if (user && decks) {
     return (
       <>
         <Packs
           decks={decks}
-          user={user}
           handleOpenModalAddDecks={handleOpenModalAddDecks}
-          handleOpenModalEditDecks={handleOpenModalEditDecks}
           handleOpenModalDeleteDecks={handleOpenModalDeleteDecks}
+          handleOpenModalEditDecks={handleOpenModalEditDecks}
+          user={user}
         />
         <ModalsBest
           isModalOpen={isModalAddOpen}
@@ -119,10 +127,10 @@ export const PacksPage = () => {
         >
           {/*// TODO переименовать элемент (сделать более уневерсальным)*/}
           <EditPack
-            variant={'add'}
-            onClose={val => setIsModalAddOpen(val)}
             handleSubmitDecks={handleAddDeck}
+            onClose={val => setIsModalAddOpen(val)}
             submitButtonDisabled={updateDeckIsLoading}
+            variant={'add'}
           />
         </ModalsBest>
         <ModalsBest
@@ -132,24 +140,24 @@ export const PacksPage = () => {
         >
           {/*// TODO переименовать элемент (сделать более уневерсальным)*/}
           <EditPack
-            variant={'edit'}
             deck={deckEdit}
-            onClose={val => setIsModalEditOpen(val)}
             handleSubmitDecks={handleUpdateDeck}
+            onClose={val => setIsModalEditOpen(val)}
             submitButtonDisabled={createDeckIsLoading}
+            variant={'edit'}
           />
         </ModalsBest>
         <ModalsBest
           isModalOpen={isModalDeleteOpen}
           setIsModalOpen={setIsModalDeleteOpen}
-          title={'Delete Pack'}
+          title={modals.deletePack.title}
         >
           {/*// TODO переименовать элемент*/}
           <DeleteModal
             deck={deckDel}
             handleDelete={handleDeleteDeck}
             onClose={val => setIsModalDeleteOpen(val)}
-            title={'Delete Pack'}
+            title={modals.deletePack.title}
           />
         </ModalsBest>
       </>

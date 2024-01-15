@@ -16,14 +16,14 @@ import s from './profile.module.scss'
 
 type Props = {
   className?: string
+  handleLogout: () => void
   handleUpdateUser: (formData: UpdateUser) => void
-  logout: () => void
   user: AuthResponse | undefined
 }
 
 type Trigger = 'avatar' | 'nickname'
 
-export const Profile = ({ className, handleUpdateUser, logout, user }: Props) => {
+export const Profile = ({ className, handleLogout, handleUpdateUser, user }: Props) => {
   const [trigger, setTrigger] = useState<Trigger | null>(null)
   const { logoutButton, title } = profilePageData.profile
   const handleOpenModalEditDecksClick = (variant: Trigger) => {
@@ -32,10 +32,6 @@ export const Profile = ({ className, handleUpdateUser, logout, user }: Props) =>
 
   const handleCancelEdit = () => {
     setTrigger(null)
-  }
-
-  const logoutButtonClicked = () => {
-    logout()
   }
 
   return (
@@ -83,7 +79,7 @@ export const Profile = ({ className, handleUpdateUser, logout, user }: Props) =>
           <Typography as={'p'} className={s.ProfileEmail} variant={'body-2'}>
             {user?.email}
           </Typography>
-          <Button className={s.logoutButton} onClick={logoutButtonClicked} variant={'secondary'}>
+          <Button className={s.logoutButton} onClick={handleLogout} variant={'secondary'}>
             <IconLogOut height={16} width={16} />
             {logoutButton}
           </Button>
