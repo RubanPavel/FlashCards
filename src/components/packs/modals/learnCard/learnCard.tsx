@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { radioOptions, radioSchema } from '@/components/auth/validate/validate'
+import { LearnPageData, radioOptions } from '@/assets/variable'
+import { radioSchema } from '@/components/auth/validate/validate'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { ControlRadioGroup } from '@/components/ui/controlled/controlRadioGroup'
 import { Typography } from '@/components/ui/typography'
-import { CardsResponseItems, useSaveGradeMutation } from '@/services/decks'
+import { getRandomCardResponse, saveGrade, saveGradeResponse } from '@/services/decks'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { clsx } from 'clsx'
 import { z } from 'zod'
 
 import s from './learnCard.module.scss'
@@ -19,129 +22,103 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 type Props = {
-  answerImg?: string
-  answerText?: string
-  cardId?: string
-  cards?: CardsResponseItems[]
-  onClose: (val: boolean) => void
-  questionImg?: string
-  questionText?: string
+  card: getRandomCardResponse | saveGradeResponse
+  className: string
+  handleGiveGrade: (payload: saveGrade) => void
+  title: string
 }
 
-export const LearnCard = React.memo(
-  ({ answerImg, answerText, cardId, cards, onClose, questionImg, questionText }: Props) => {
-    const [show, setShow] = useState(false)
-    const [index, setIndex] = useState(0)
-    const [card, setCard] = useState({
-      answerImg,
-      answerText,
-      cardId,
-      questionImg,
-      questionText,
-    })
-    const [saveGrade, { isLoading }] = useSaveGradeMutation()
-    const navigate = useNavigate()
-    const onEndStudyClick = () => {
-      onClose(false)
-      navigate(-1)
-    }
-
-    const {
-      control,
-      formState: { errors },
-      handleSubmit,
-    } = useForm<FormValues>({
-      defaultValues: {
-        radio: '',
-      },
-      mode: 'onBlur',
-      reValidateMode: 'onChange',
-      resolver: zodResolver(schema),
-    })
-
-    const onSubmit = (data: FormValues) => {
-      const grade = radioOptions.indexOf(data.radio) + 1
-
-      setShow(false)
-      saveGrade({ cardId: card.cardId, grade })
-      if (!isLoading) {
-        getCard()
-      }
-    }
-
-    const getCard = () => {
-      const currentCard = cards?.splice(index, 1)[0]
-
-      if (currentCard) {
-        setCard(prev => ({
-          ...prev,
-          answerImg: currentCard?.answerImg,
-          answerText: currentCard?.answer,
-          cardId: currentCard.id,
-          questionImg: currentCard?.questionImg,
-          questionText: currentCard?.question,
-        }))
-        setIndex(prev => prev + 1)
-      } else {
-        navigate(-1)
-      }
-    }
-
-    return (
-      <div>
-        <Typography className={s.colorText} variant={'subtitle-1'}>
-          Question:&nbsp;
-        </Typography>
-        <Typography className={s.colorText} variant={'body-1'}>
-          {card.questionText}
-        </Typography>
-        <Typography as={'p'} className={s.TenTryText} variant={'body-2'}>
-          Количество попыток ответа на вопрос: 10
-        </Typography>
-        {card.questionImg && (
-          <div className={s.boxImg}>
-            <img alt={'img'} className={s.learnImg} src={card.questionImg} />
-          </div>
-        )}
-        {!show && (
-          <Button fullWidth onClick={() => setShow(true)}>
-            <Typography variant={'subtitle-2'}>Show Answer</Typography>
-          </Button>
-        )}
-        {show && (
-          <div>
-            <Typography className={s.colorText} variant={'subtitle-1'}>
-              Answer:&nbsp;
-            </Typography>
-            <Typography className={s.colorText} variant={'body-1'}>
-              {card.answerText}
-            </Typography>
-            {card.answerImg && (
-              <div className={s.boxImg}>
-                <img alt={'img'} className={s.learnImg} src={card.answerImg} />
-              </div>
-            )}
-            <Typography as={'p'} className={s.rateText} variant={'subtitle-1'}>
-              Rate yourself:
-            </Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <ControlRadioGroup
-                className={s.radio}
-                control={control}
-                errorMessage={errors.radio?.message}
-                name={'radio'}
-                options={radioOptions}
-              />
-              <Button fullWidth>
-                <Typography variant={'subtitle-2'}>Next Question</Typography>
-              </Button>
-            </form>
-          </div>
-        )}
-        <Button className={s.endStudy} fullWidth onClick={onEndStudyClick} variant={'secondary'}>
-          <Typography variant={'subtitle-2'}>End study session</Typography>
-        </Button>
-      </div>
-    )
+export const LearnCard = React.memo(({ card, className, handleGiveGrade, title }: Props) => {
+  const navigate = useNavigate()
+  const [show, setShow] = useState(false)
+  const { answer, buttonEnd, buttonNext, buttonShow, question, rateTitle, tryInfo } =
+    LearnPageData.learnCard
+  const onEndStudyClick = () => {
+    navigate(-1)
   }
-)
+
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<FormValues>({
+    defaultValues: {
+      radio: '',
+    },
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+    resolver: zodResolver(schema),
+  })
+
+  const onSubmit = (data: FormValues) => {
+    const grade = radioOptions.indexOf(data.radio) + 1
+    const payload = {
+      cardId: card.id,
+      grade,
+    }
+
+    handleGiveGrade(payload)
+    setShow(false)
+    reset()
+  }
+
+  return (
+    <Card className={clsx(s.LearnCardRoot, className)}>
+      <Typography as={'h2'} className={s.LearnCardTitle} variant={'H2'}>
+        {title}
+      </Typography>
+      <Typography as={'p'} className={s.LearnCardInfo} variant={'body-1'}>
+        <b>{question}</b> {card.question}
+      </Typography>
+      {card.questionImg && (
+        <div className={s.LearnCardBoxImg}>
+          <img alt={'img'} className={s.LearnCardImg} src={card.questionImg} />
+        </div>
+      )}
+      <Typography as={'p'} className={s.LearnCardTryInfo} variant={'body-2'}>
+        {tryInfo} {card.shots}
+      </Typography>
+      {!show && (
+        <Button fullWidth onClick={() => setShow(true)}>
+          <Typography variant={'subtitle-2'}>{buttonShow}</Typography>
+        </Button>
+      )}
+      {show && (
+        <>
+          <Typography as={'p'} className={s.LearnCardInfo} variant={'body-1'}>
+            <b>{answer}</b> {card.answer}
+          </Typography>
+          {card.answerImg && (
+            <div className={s.LearnCardBoxImg}>
+              <img alt={'img'} className={s.LearnCardImg} src={card.answerImg} />
+            </div>
+          )}
+          <Typography as={'h3'} className={s.LearnCardRateHeader} variant={'subtitle-1'}>
+            {rateTitle}
+          </Typography>
+          <form className={s.LearnCardForm} onSubmit={handleSubmit(onSubmit)}>
+            <ControlRadioGroup
+              className={s.LearnCardRadioGroup}
+              control={control}
+              errorMessage={errors.radio?.message}
+              name={'radio'}
+              options={radioOptions}
+            />
+            <Button fullWidth>
+              <Typography variant={'subtitle-2'}>{buttonNext}</Typography>
+            </Button>
+          </form>
+        </>
+      )}
+      <Button
+        className={s.LearnCardEndStudyButton}
+        fullWidth
+        onClick={onEndStudyClick}
+        variant={'secondary'}
+      >
+        <Typography variant={'subtitle-2'}>{buttonEnd}</Typography>
+      </Button>
+    </Card>
+  )
+})

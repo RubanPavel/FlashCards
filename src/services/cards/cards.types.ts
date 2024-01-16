@@ -1,4 +1,4 @@
-export type CardsResponse = {
+export type Card = {
   answer: string
   answerImg: string
   answerVideo: string
@@ -11,8 +11,13 @@ export type CardsResponse = {
   rating: number
   shots: number
   updated: string
+}
+
+export type CardWithUserId = Card & {
   userId: string
 }
+
+export type CardsResponse = CardWithUserId
 
 export type updateCardType = {
   answer: string

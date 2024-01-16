@@ -1,3 +1,5 @@
+import { Card, CardWithUserId } from '@/services/cards'
+
 export type DecksResponse = {
   items: Deck[]
   maxCardsCount: number
@@ -94,28 +96,16 @@ export type CreateCardType = {
   questionVideo?: FormData
 }
 
-export type getRandomCardResponse = {
-  answer: string
-  answerImg: string
-  answerVideo: string
-  created: string
-  deckId: string
-  id: string
-  question: string
-  questionImg: string
-  questionVideo: string
-  rating: number
-  shots: number
-  updated: string
-  userId: string
-}
+export type getRandomCardResponse = CardWithUserId
 
-export type getRandomCardType = {
+export type saveGradeResponse = Card
+
+export type getRandomCard = {
   id?: string
   previousCardId?: string
 }
-export type saveGradeType = {
-  cardId?: string
+export type saveGrade = {
+  // cardId?: string
   grade: number
   id?: string
 }
@@ -125,7 +115,7 @@ export type Direction = 'asc' | 'desc'
 
 export type SortDirection = `${Sort}-${Direction}`
 
-export type GetDecksType = {
+export type GetDecks = {
   authorId?: string
   currentPage: number
   itemsPerPage: number

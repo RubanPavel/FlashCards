@@ -1,3 +1,4 @@
+import { radioOptions } from '@/assets/variable'
 import { z } from 'zod'
 
 export const emailSchema = z.string().min(1, 'Email is required').email('Invalid email address')
@@ -20,14 +21,6 @@ export const nicknameSchema = z
 //TODO поправить ограничения по аватару
 const MAX_FILE_SIZE = 5 * 1024 * 1024
 const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp']
-
-export const radioOptions = [
-  'Did not know',
-  'Forgot',
-  'A lot of though',
-  'Confused',
-  'Knew the answer',
-]
 
 export const avatarSchema = z
   .instanceof(FileList)

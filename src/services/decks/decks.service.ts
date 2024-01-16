@@ -7,12 +7,13 @@ import {
   Deck,
   DecksResponse,
   DeleteResponse,
+  GetDecks,
   GetDecksCardsParams,
-  GetDecksType,
   UpdateDeckRequest,
+  getRandomCard,
   getRandomCardResponse,
-  getRandomCardType,
-  saveGradeType,
+  saveGrade,
+  saveGradeResponse,
 } from './decks.types'
 
 export const DecksService = baseApi.injectEndpoints({
@@ -64,7 +65,7 @@ export const DecksService = baseApi.injectEndpoints({
           url: `v1/decks/${id}`,
         }),
       }),
-      getDecks: builder.query<DecksResponse, GetDecksType>({
+      getDecks: builder.query<DecksResponse, GetDecks>({
         providesTags: ['Decks'],
         query: args => ({
           params: args,
@@ -82,7 +83,7 @@ export const DecksService = baseApi.injectEndpoints({
         }),
       }),
 
-      getRandomCard: builder.query<getRandomCardResponse, getRandomCardType>({
+      getRandomCard: builder.query<getRandomCardResponse, getRandomCard>({
         providesTags: ['Decks'],
         query: ({ id, ...args }) => ({
           method: 'GET',
@@ -92,8 +93,8 @@ export const DecksService = baseApi.injectEndpoints({
           url: `/v1/decks/${id}/learn`,
         }),
       }),
-      saveGrade: builder.mutation<{}, saveGradeType>({
-        invalidatesTags: ['Decks'],
+      saveGrade: builder.mutation<saveGradeResponse, saveGrade>({
+        // invalidatesTags: ['Decks'],
         query: ({ id, ...args }) => ({
           body: {
             ...args,

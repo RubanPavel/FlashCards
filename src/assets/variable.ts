@@ -165,11 +165,33 @@ export const packsPageData: PacksPageData = {
   },
 }
 
+export const LearnPageData = {
+  learnCard: {
+    answer: 'Answer:',
+    buttonEnd: 'End study session',
+    buttonNext: 'Next Question',
+    buttonShow: 'Show Answer',
+    question: 'Question:',
+    rateTitle: 'Rate yourself:',
+    tryInfo: 'Number of attempts to answer the question:',
+  },
+  title: 'Learn',
+}
+
+export const radioOptions = [
+  'Did not know',
+  'Forgot',
+  'A lot of though',
+  'Confused',
+  'Knew the answer',
+]
+
 export const toastInfo = {
   addDeckToast: `Your deck added successfully`,
   createPasswordToast: 'New password successfully created.',
   deleteDeckToast: 'Pack deleted successfully',
   forgotPasswordToast: 'Instructions have been sent to your email address',
+  giveGradeToast: 'Thank you for your grade',
   loginToast: 'Login successful',
   logoutToast: 'Logout successful',
   registerToast: 'Registration successful',

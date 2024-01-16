@@ -20,7 +20,6 @@ import { decksActions } from '@/services/decks/decks.slice'
 import { ServerError } from '@/services/error.types'
 import { useAppDispatch, useAppSelector } from '@/services/store'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
-// import {useDeleteCardMutation} from "@/services/cards";
 
 export const PacksPage = () => {
   const params = useAppSelector(state => state.decksParams)

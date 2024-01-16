@@ -40,7 +40,6 @@ import { useAppDispatch, useAppSelector } from '@/services/store'
 import s from './myPack.module.scss'
 
 export const MyPackPage = () => {
-  console.log('test')
   const params = useAppSelector(state => state.cardsParams)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isModalEditPackOpen, setIsModalEditPackOpen] = useState(false)

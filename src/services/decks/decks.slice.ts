@@ -1,7 +1,7 @@
-import { GetDecksType, SortDirection } from '@/services/decks/decks.types'
+import { GetDecks, SortDirection } from '@/services/decks/decks.types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-const initialState: GetDecksType = {
+const initialState: GetDecks = {
   authorId: undefined,
   currentPage: 1,
   itemsPerPage: 10,
