@@ -29,7 +29,6 @@ export const PacksPage = () => {
   const [updateDeck, { isLoading: updateDeckIsLoading }] = useUpdateDeckMutation()
   const [createDeck, { isLoading: createDeckIsLoading }] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: deleteDeckIsLoading }] = useDeleteDeskMutation()
-  // const [deleteCard] = useDeleteCardMutation()
   const [isModalAddOpen, setIsModalAddOpen] = useState<boolean>(false)
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState<boolean>(false)
   const [isModalEditOpen, setIsModalEditOpen] = useState<boolean>(false)
