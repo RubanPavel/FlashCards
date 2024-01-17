@@ -1,3 +1,4 @@
+/*
 .DialogOverlay {
   position: fixed;
   inset: 0;
@@ -29,6 +30,67 @@
 
 .IconButton {
   position: relative;
+  top: 20px;
+  right: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 25px;
+  height: 25px;
+
+  font-family: inherit;
+  color: var(--violet-11);
+
+  border-radius: 100%;
+}
+
+.IconButton:hover {
+  background-color: var(--color-dark-100);
+}
+*/
+
+
+.DialogOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--black-a9);
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent {
+  position: fixed;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 90vw;
+  max-width: 450px;
+  max-height: 85vh;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-500);
+  box-shadow: hsl(206deg 22% 7% / 35%) 0 10px 38px -10px,
+  hsl(206deg 22% 7% / 20%) 0 10px 20px -15px;
+
+  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.DialogContent:focus {
+  outline: none;
+}
+
+.DialogTitle {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0 20px 20px;
+  border-bottom: 1px solid var(--color-dark-500);
+}
+
+.IconButton {
+  position: absolute;
   top: 20px;
   right: 20px;
 
