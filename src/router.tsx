@@ -112,5 +112,5 @@ function PrivateRoutes() {
 function PublicRoutes() {
   const { isAuth } = useAuthContext()
 
-  return isAuth ? <Navigate to={'/'} /> : <Outlet />
+  return isAuth ? <Navigate to={'/'} /> : <LoginPage />
 }

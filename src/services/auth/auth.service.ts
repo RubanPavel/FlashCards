@@ -24,13 +24,14 @@ export const AuthService = baseApi.injectEndpoints({
           url: `/v1/auth/sign-up`,
         }),
       }),
-      getAuthMe: builder.query<AuthResponse, void>({
+      getAuthMe: builder.query<AuthResponse | null, void>({
         providesTags: ['Auth'],
         query: () => ({
           method: 'GET',
           url: `v1/auth/me`,
         }),
       }),
+
       login: builder.mutation<LoginResponse, Login>({
         invalidatesTags: ['Auth'],
         query: args => ({
@@ -41,6 +42,16 @@ export const AuthService = baseApi.injectEndpoints({
       }),
       logout: builder.mutation<void, void>({
         invalidatesTags: ['Auth'],
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(AuthService.util.updateQueryData('getAuthMe', _, () => null))
+
+          try {
+            await queryFulfilled
+            dispatch(baseApi.util?.resetApiState())
+          } catch {
+            patchResult.undo()
+          }
+        },
         query: () => ({
           method: 'POST',
           url: `/v1/auth/logout`,
