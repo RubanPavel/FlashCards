@@ -14,18 +14,10 @@ type Props = {
   isModalOpen: boolean
   onClose?: (val: boolean) => void
   setIsModalOpen: (open: boolean) => void
-  showCloseButton?: boolean
   title: ReactNode
 } & ComponentPropsWithoutRef<typeof DialogRadix.Root>
 
-export const ModalsBest = ({
-  children,
-  className,
-  isModalOpen,
-  setIsModalOpen,
-  showCloseButton = true,
-  title,
-}: Props) => {
+export const ModalsBest = ({ children, className, isModalOpen, setIsModalOpen, title }: Props) => {
   return (
     <DialogRadix.Root onOpenChange={setIsModalOpen} open={isModalOpen}>
       <DialogRadix.Overlay className={s.DialogOverlay}>
@@ -37,11 +29,9 @@ export const ModalsBest = ({
           </DialogRadix.Title>
           {children}
           <DialogRadix.Close asChild>
-            {showCloseButton && (
-              <button aria-label={'Close'}>
-                <IconClose className={s.IconButton} />
-              </button>
-            )}
+            <button aria-label={'Close'}>
+              <IconClose className={s.IconButton} />
+            </button>
           </DialogRadix.Close>
         </DialogRadix.Content>
       </DialogRadix.Overlay>
