@@ -33,7 +33,7 @@ export const AuthService = baseApi.injectEndpoints({
       }),
 
       login: builder.mutation<LoginResponse, Login>({
-        invalidatesTags: ['Auth'],
+        invalidatesTags: (data, error) => (data && !error ? ['Auth'] : []),
         query: args => ({
           body: args,
           method: 'POST',
@@ -41,7 +41,7 @@ export const AuthService = baseApi.injectEndpoints({
         }),
       }),
       logout: builder.mutation<void, void>({
-        invalidatesTags: ['Auth'],
+        // invalidatesTags: ['Auth'],
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(AuthService.util.updateQueryData('getAuthMe', _, () => null))
 

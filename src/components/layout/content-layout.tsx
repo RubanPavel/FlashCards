@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { DropdownMenu } from '@/components/ui/dropdown-menu'
 import { DropDownItem } from '@/components/ui/dropdown-menu/dropdownItem'
 import { Header } from '@/components/ui/header'
-import { Loader } from '@/components/ui/loader'
+import { Progress } from '@/components/ui/progress'
 import { Typography } from '@/components/ui/typography'
 import { useGetAuthMeQuery, useLogoutMutation } from '@/services/auth'
 import { ServerError } from '@/services/error.types'
@@ -29,7 +29,7 @@ export const useAuthContext = () => {
 
 export const ContentLayout = () => {
   const { data: user, isError, isLoading } = useGetAuthMeQuery()
-  const isAuthenticated = !isError
+  const isAuth = !isError
   const [logout, {}] = useLogoutMutation()
   const [isDropDownMenuOpen, setIsDropDownMenuOpen] = useState(false)
   const { buttonLogin, buttonRegister } = contentLayoutData
@@ -49,34 +49,28 @@ export const ContentLayout = () => {
 
   let headerContent: ReactNode
 
-  const isAuth = !isError
-
-  if (isLoading) {
-    return <Loader />
-  }
-
-  if (!isAuthenticated && location.pathname !== '/login') {
+  if (!isAuth && location.pathname !== '/login') {
     headerContent = (
       <Button as={Link} to={'login'} type={'primary'}>
         {buttonLogin}
       </Button>
     )
-  } else if (!isAuthenticated && location.pathname === '/login') {
+  } else if (!isAuth && location.pathname === '/login') {
     headerContent = (
       <Button as={Link} to={'register'} type={'primary'}>
         {buttonRegister}
       </Button>
     )
-  } else {
+  } else if (user) {
     const trigger = (
       <div className={s.TriggerRoot}>
         <Typography as={'h5'} className={s.TriggerName} variant={'subtitle-2'}>
-          {user?.name}
+          {user.name}
         </Typography>
         <AvatarRadix
           className={s.TrigerAvatar}
-          imageUrl={user?.avatar}
-          userName={user?.name}
+          imageUrl={user.avatar}
+          userName={user.name}
         ></AvatarRadix>
       </div>
     )
@@ -90,13 +84,13 @@ export const ContentLayout = () => {
           trigger={trigger}
         >
           <DropDownItem className={s.HeaderContentDropdownItem} disabled>
-            <AvatarRadix imageUrl={user?.avatar} userName={user?.name} />
+            <AvatarRadix imageUrl={user.avatar} userName={user.name} />
             <div className={s.HeaderContentUserInfoWrapper}>
               <Typography as={'h5'} className={s.HeaderContentUserInfoName} variant={'subtitle-2'}>
-                {user?.name}
+                {user.name}
               </Typography>
               <Typography as={'p'} className={s.HeaderContentUserInfoEmail} variant={'caption'}>
-                {user?.email}
+                {user.email}
               </Typography>
             </div>
           </DropDownItem>
@@ -125,9 +119,11 @@ export const ContentLayout = () => {
   return (
     <>
       <Header logo={<IconLogo />}>{headerContent}</Header>
+      {isLoading && <Progress />}
       <main className={s.Main}>
         <Outlet context={{ isAuth } satisfies AuthContext} />
       </main>
+      )
     </>
   )
 }

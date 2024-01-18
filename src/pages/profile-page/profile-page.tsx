@@ -2,6 +2,7 @@ import { toast } from 'react-toastify'
 
 import { errorText, optionsToast, toastInfo } from '@/assets/variable'
 import { Profile } from '@/components/profile'
+import { Loader } from '@/components/ui/loader'
 import {
   UpdateUser,
   useGetAuthMeQuery,
@@ -43,13 +44,15 @@ export const ProfilePage = () => {
 
   return (
     <>
-      {isLoadingLogout || isLoadingUpdateUser}
-      <Profile
-        className={s.ProfilePageRoot}
-        handleLogout={handleLogout}
-        handleUpdateUser={handleUpdateUser}
-        user={user}
-      />
+      {(isLoadingLogout || isLoadingUpdateUser) && <Loader />}
+      {user && (
+        <Profile
+          className={s.ProfilePageRoot}
+          handleLogout={handleLogout}
+          handleUpdateUser={handleUpdateUser}
+          user={user}
+        />
+      )}
     </>
   )
 }
