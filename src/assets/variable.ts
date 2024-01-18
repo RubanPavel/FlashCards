@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
 
-import { PacksPageData } from '@/assets/types'
+import { CardsPageData, PacksPageData } from '@/assets/types'
 
 const apiUrl = import.meta.env.PROD ? import.meta.env.VITE_U_P : import.meta.env.VITE_U_D
 
@@ -162,6 +162,20 @@ export const packsPageData: PacksPageData = {
       { id: '5', sort: '', title: '' },
     ],
     modalTitle: 'Delete Pack',
+  },
+}
+
+export const cardsPageData: CardsPageData = {
+  modals: {
+    deleteCard: {
+      info: 'Your card will be deleted.',
+      question: {
+        main: 'Do you really want to remove',
+        span: 'card',
+      },
+      submitButton: 'Delete Card',
+      title: 'Delete Card',
+    },
   },
 }
 

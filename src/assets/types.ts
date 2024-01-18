@@ -48,3 +48,17 @@ export type PacksPageData = {
     modalTitle: string
   }
 }
+
+export type CardsPageData = {
+  modals: {
+    deleteCard: {
+      info: string
+      question: {
+        main: string
+        span: string
+      }
+      submitButton: string
+      title: string
+    }
+  }
+}
