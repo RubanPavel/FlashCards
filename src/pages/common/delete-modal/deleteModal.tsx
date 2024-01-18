@@ -24,6 +24,7 @@ export const DeleteModal = ({ card, deck, handleDelete, isNavigate, onClose, tit
   const isDeletePack = title === 'Delete Pack'
   const handleOpenModalDelete = () => {
     handleDelete()
+    onClose(false)
     isNavigate && navigate(-1)
   }
 

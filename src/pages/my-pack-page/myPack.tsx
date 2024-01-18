@@ -1,11 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import { IconBurgerMenu } from '@/assets/icons/IconBurgerMenu'
 import { IconClose } from '@/assets/icons/IconClose'
 import { IconEdit } from '@/assets/icons/IconEdit'
 import { IconLeftArrow } from '@/assets/icons/IconLeftArrow'
-import { dateOptions } from '@/assets/variable'
+import {
+  cardsPageData,
+  dateOptions,
+  errorText,
+  optionsToast,
+  packsPageData,
+  toastInfo,
+} from '@/assets/variable'
 import { DebouncedInput } from '@/components/packs/common/DebouncedInput'
 import { ExpandableText } from '@/components/packs/common/ExpandableText'
 import { StarRating } from '@/components/packs/common/StarRating'
@@ -30,12 +38,14 @@ import {
   TableRow,
 } from '@/components/ui/tables'
 import { Typography } from '@/components/ui/typography'
-import { DeleteModalOld } from '@/pages/common/delete-modal/deleteModalOld'
+import { DeleteModal } from '@/pages/common/delete-modal/deleteModal'
 import { EmptyPack } from '@/pages/empty-pack-page/empty-pack'
-import { updateCardType } from '@/services/cards'
+import { updateCardType, useDeleteCardMutation } from '@/services/cards'
 import { cardsActions } from '@/services/cards/cards.slice'
-import { useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { useDeleteDeskMutation, useGetDeckByIdQuery, useGetDecksCardsQuery } from '@/services/decks'
+import { ServerError } from '@/services/error.types'
 import { useAppDispatch, useAppSelector } from '@/services/store'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 
 import s from './myPack.module.scss'
 
@@ -43,13 +53,13 @@ export const MyPackPage = () => {
   const params = useAppSelector(state => state.cardsParams)
   const [isModalEditOpen, setIsModalEditOpen] = useState(false)
   const [isModalEditPackOpen, setIsModalEditPackOpen] = useState(false)
-  const [isModalDelOpen, setIsModalDelOpen] = useState(false)
+  const [isModalDelCardOpen, setIsModalDelCardOpen] = useState(false)
   const [isModalDelPackOpen, setIsModalDelPackOpen] = useState(false)
   const [openModalNewCard, onCloseModalNewCard] = useState(false)
   const [inputValue, setInputValue] = useState<string>('')
 
   const [cardEdit, setCardEdit] = useState<updateCardType>()
-  const [cardDel, setCardDel] = useState('')
+  const [cardDel, setCardDel] = useState<any>()
   const dispatch = useAppDispatch()
   const { id } = useParams()
   const { data: cardsData } = useGetDecksCardsQuery({
@@ -57,6 +67,37 @@ export const MyPackPage = () => {
     ...params,
   })
   const { data: packData } = useGetDeckByIdQuery({ id })
+  const { deletePack } = packsPageData.modals
+  const { deleteCard } = cardsPageData.modals
+  const { deleteCardToast, deleteDeckToast } = toastInfo
+  const [deleteDeck] = useDeleteDeskMutation()
+  const [deleteCards] = useDeleteCardMutation()
+  const handleDeleteDeck = () => {
+    if (packData) {
+      deleteDeck(packData.id)
+        .unwrap()
+        .then(() => {
+          toast.success(deleteDeckToast, optionsToast)
+          setIsModalDelPackOpen(false)
+        })
+        .catch((e: ServerError & FetchBaseQueryError) => {
+          toast.error(e?.data?.message || errorText, optionsToast)
+        })
+    }
+  }
+  const handleDeleteCard = () => {
+    if (cardDel) {
+      deleteCards(cardDel.id)
+        .unwrap()
+        .then(() => {
+          toast.success(deleteCardToast, optionsToast)
+          setIsModalDelPackOpen(false)
+        })
+        .catch((e: ServerError & FetchBaseQueryError) => {
+          toast.error(e?.data?.message || errorText, optionsToast)
+        })
+    }
+  }
 
   const editPackHandler = () => {
     setIsModalEditPackOpen(true)
@@ -67,7 +108,7 @@ export const MyPackPage = () => {
   }
 
   const deleteHandler = (card: any) => {
-    setIsModalDelOpen(true)
+    setIsModalDelCardOpen(true)
     setCardDel(card)
   }
   const deletePackHandler = () => {
@@ -236,11 +277,12 @@ export const MyPackPage = () => {
           setIsModalOpen={setIsModalDelPackOpen}
           title={'Delete Pack'}
         >
-          <DeleteModalOld
+          <DeleteModal
             deck={packData}
+            handleDelete={handleDeleteDeck}
             isNavigate
             onClose={val => setIsModalDelPackOpen(val)}
-            title={'Delete Pack'}
+            title={deletePack.title}
           />
         </ModalsBest>
         <ModalsBest
@@ -251,14 +293,15 @@ export const MyPackPage = () => {
           <EditCard card={cardEdit} onClose={val => setIsModalEditOpen(val)} />
         </ModalsBest>
         <ModalsBest
-          isModalOpen={isModalDelOpen}
-          setIsModalOpen={setIsModalDelOpen}
+          isModalOpen={isModalDelCardOpen}
+          setIsModalOpen={setIsModalDelCardOpen}
           title={'Delete Card'}
         >
-          <DeleteModalOld
+          <DeleteModal
             card={cardDel}
-            onClose={val => setIsModalDelOpen(val)}
-            title={'Delete Card'}
+            handleDelete={handleDeleteCard}
+            onClose={val => setIsModalDelCardOpen(val)}
+            title={deleteCard.title}
           />
         </ModalsBest>
       </Table>

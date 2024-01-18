@@ -203,6 +203,7 @@ export const radioOptions = [
 export const toastInfo = {
   addDeckToast: `Your deck added successfully`,
   createPasswordToast: 'New password successfully created.',
+  deleteCardToast: 'Card deleted successfully',
   deleteDeckToast: 'Pack deleted successfully',
   forgotPasswordToast: 'Instructions have been sent to your email address',
   giveGradeToast: 'Thank you for your grade',
