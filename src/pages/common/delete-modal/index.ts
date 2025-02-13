@@ -1,1 +1,1 @@
-export * from './deleteModalOld'
+export * from './deleteModal'

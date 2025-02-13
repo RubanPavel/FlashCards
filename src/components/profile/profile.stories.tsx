@@ -28,7 +28,7 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    logout: () => console.log('logout'),
+    /* logout: () => console.log('logout'),*/
     user: User,
   },
 }
